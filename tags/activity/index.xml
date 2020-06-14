@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>activity on Zac</title>
+    <link>https://zacash.cn/tags/activity/</link>
+    <description>Recent content in activity on Zac</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Wed, 22 Apr 2020 08:10:27 +0800</lastBuildDate>
+    
+	<atom:link href="https://zacash.cn/tags/activity/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Activity Start</title>
+      <link>https://zacash.cn/posts/activity-launch/</link>
+      <pubDate>Wed, 22 Apr 2020 08:10:27 +0800</pubDate>
+      
+      <guid>https://zacash.cn/posts/activity-launch/</guid>
+      <description>Task and Back Stack Task 就是执行某项任务时开启的一系列 Activity 的集合，这些 Activity 会按照打开的顺序排列在回退栈 (Back Stack) 中。 Activity 的四种启动模式 (launchMode) 如通过 startActivity(Intent) 启动 Activity A standard 模式：标准模</description>
+    </item>
+    
+  </channel>
+</rss>

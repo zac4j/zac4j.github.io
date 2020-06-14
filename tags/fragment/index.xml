@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Fragment on Zac</title>
+    <link>https://zacash.cn/tags/fragment/</link>
+    <description>Recent content in Fragment on Zac</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Mon, 25 May 2020 20:55:31 +0800</lastBuildDate>
+    
+	<atom:link href="https://zacash.cn/tags/fragment/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Fragment in ViewPager</title>
+      <link>https://zacash.cn/posts/fragment-in-viewpager/</link>
+      <pubDate>Mon, 25 May 2020 20:55:31 +0800</pubDate>
+      
+      <guid>https://zacash.cn/posts/fragment-in-viewpager/</guid>
+      <description>使用 ViewPager 通常我们使用 ViewPager + TabLayout 主要有这些步骤： 页面的布局结构: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 &amp;lt;?xml version=&amp;#34;1.0&amp;#34; encoding=&amp;#34;utf-8&amp;#34;?&amp;gt; &amp;lt;androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android=&amp;#34;http://schemas.android.com/apk/res/android&amp;#34; xmlns:app=&amp;#34;http://schemas.android.com/apk/res-auto&amp;#34; xmlns:tools=&amp;#34;http://schemas.android.com/tools&amp;#34; android:layout_width=&amp;#34;match_parent&amp;#34; android:layout_height=&amp;#34;match_parent&amp;#34; tools:context=&amp;#34;.MainActivity&amp;#34;</description>
+    </item>
+    
+    <item>
+      <title>Intro to Fragments</title>
+      <link>https://zacash.cn/posts/fragments/</link>
+      <pubDate>Thu, 07 May 2020 20:30:50 +0800</pubDate>
+      
+      <guid>https://zacash.cn/posts/fragments/</guid>
+      <description>Activity 和 Fragment 生命周期的关联 Activity 状态 Fragment 生命周期方法回调 Fragment 状态 Created onAttach(), onCreate(), onCreateView(), onActivityCreated() Fragment 添加到 Activity 且视图已初始化 Started onStart() Fragment 活跃并可见 Resumed onResume() Fragment 活跃并获取焦点 Paused onPause() Fragment 暂停 Stopped onStop() Fragment 停止</description>
+    </item>
+    
+    <item>
+      <title>Check State Loss</title>
+      <link>https://zacash.cn/posts/check-state-loss/</link>
+      <pubDate>Tue, 11 Feb 2020 16:30:26 +0800</pubDate>
+      
+      <guid>https://zacash.cn/posts/check-state-loss/</guid>
+      <description>背景 最近做的一个 DialogFragment 在少数设备上会偶发闪退，Fabric 上的 Stacktrace 信息如下： 1 2 3 4 5 6 Fatal Exception: java.lang.IllegalStateException: Can not perform this action after onSaveInstanceState at android.support.v4.app.FragmentManagerImpl.checkStateLoss(SourceFile) at android.support.v4.app.FragmentManagerImpl.enqueueAction(SourceFile) at android.support.v4.app.BackStackRecord.commitInternal(SourceFile) at android.support.v4.app.BackStackRecord.commit(SourceFile) at android.su</description>
+    </item>
+    
+  </channel>
+</rss>

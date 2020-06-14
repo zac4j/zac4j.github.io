@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Fragment in ViewPager - Zac</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Zac" /><meta name="description" content="Fragment 在 ViewPager 中的应用" /><meta name="keywords" content="Android, developer, programming" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.68.1 with theme even" />
+
+
+<link rel="canonical" href="https://zacash.cn/posts/fragment-in-viewpager/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.8c3cbcb0324c2bb4875ceccba4007cbad4b4ac8377f33af9953c3e7684534a50.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="Fragment in ViewPager" />
+<meta property="og:description" content="Fragment 在 ViewPager 中的应用" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://zacash.cn/posts/fragment-in-viewpager/" />
+<meta property="article:published_time" content="2020-05-25T20:55:31+08:00" />
+<meta property="article:modified_time" content="2020-05-25T20:55:31+08:00" />
+<meta itemprop="name" content="Fragment in ViewPager">
+<meta itemprop="description" content="Fragment 在 ViewPager 中的应用">
+<meta itemprop="datePublished" content="2020-05-25T20:55:31&#43;08:00" />
+<meta itemprop="dateModified" content="2020-05-25T20:55:31&#43;08:00" />
+<meta itemprop="wordCount" content="662">
+
+
+
+<meta itemprop="keywords" content="fragment,viewpager," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Fragment in ViewPager"/>
+<meta name="twitter:description" content="Fragment 在 ViewPager 中的应用"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Zac</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Zac</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+  <div class="post-content">
+    <h3 id="使用-viewpager">使用 ViewPager</h3>
+<p>通常我们使用 ViewPager + TabLayout 主要有这些步骤：</p>
+<ul>
+<li>页面的布局结构:</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-xml" data-lang="xml"><span class="cp">&lt;?xml version=&#34;1.0&#34; encoding=&#34;utf-8&#34;?&gt;</span>
+<span class="nt">&lt;androidx.coordinatorlayout.widget.CoordinatorLayout</span> <span class="na">xmlns:android=</span><span class="s">&#34;http://schemas.android.com/apk/res/android&#34;</span>
+    <span class="na">xmlns:app=</span><span class="s">&#34;http://schemas.android.com/apk/res-auto&#34;</span>
+    <span class="na">xmlns:tools=</span><span class="s">&#34;http://schemas.android.com/tools&#34;</span>
+    <span class="na">android:layout_width=</span><span class="s">&#34;match_parent&#34;</span>
+    <span class="na">android:layout_height=</span><span class="s">&#34;match_parent&#34;</span>
+    <span class="na">tools:context=</span><span class="s">&#34;.MainActivity&#34;</span>
+    <span class="nt">&gt;</span>
+
+  <span class="nt">&lt;com.google.android.material.appbar.AppBarLayout</span>
+      <span class="na">android:layout_width=</span><span class="s">&#34;match_parent&#34;</span>
+      <span class="na">android:layout_height=</span><span class="s">&#34;wrap_content&#34;</span>
+      <span class="na">android:theme=</span><span class="s">&#34;@style/AppTheme.AppBarOverlay&#34;</span>
+      <span class="nt">&gt;</span>
+
+    ...
+
+    <span class="nt">&lt;com.google.android.material.tabs.TabLayout</span>
+        <span class="na">android:id=</span><span class="s">&#34;@+id/tabs&#34;</span>
+        <span class="na">android:layout_width=</span><span class="s">&#34;match_parent&#34;</span>
+        <span class="na">android:layout_height=</span><span class="s">&#34;wrap_content&#34;</span>
+        <span class="na">android:background=</span><span class="s">&#34;?attr/colorPrimary&#34;</span>
+        <span class="nt">/&gt;</span>
+
+    <span class="nt">&lt;androidx.viewpager.widget.ViewPager</span>
+      <span class="na">android:id=</span><span class="s">&#34;@+id/view_pager&#34;</span>
+      <span class="na">android:layout_width=</span><span class="s">&#34;match_parent&#34;</span>
+      <span class="na">android:layout_height=</span><span class="s">&#34;match_parent&#34;</span>
+      <span class="na">app:layout_behavior=</span><span class="s">&#34;@string/appbar_scrolling_view_behavior&#34;</span>
+      <span class="nt">/&gt;</span>
+  <span class="nt">&lt;/com.google.android.material.appbar.AppBarLayout&gt;</span>
+<span class="nt">&lt;/androidx.coordinatorlayout.widget.CoordinatorLayout&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>在 PagerAdapter 中会指定我们使用的 Fragment:</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="k">class</span> <span class="nc">SectionsPagerAdapter</span><span class="p">(</span><span class="k">private</span> <span class="k">val</span> <span class="py">context</span><span class="p">:</span> <span class="n">Context</span><span class="p">,</span>
+  <span class="n">fm</span><span class="p">:</span> <span class="n">FragmentManager</span>
+<span class="p">)</span> <span class="p">:</span> <span class="n">FragmentPagerAdapter</span><span class="p">(</span><span class="n">fm</span><span class="p">,</span> <span class="n">BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT</span><span class="p">)</span> <span class="p">{</span>
+
+  <span class="k">override</span> <span class="k">fun</span> <span class="nf">getItem</span><span class="p">(</span><span class="n">position</span><span class="p">:</span> <span class="n">Int</span><span class="p">):</span> <span class="n">Fragment</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">SampleFragment</span><span class="p">.</span><span class="n">newInstance</span><span class="p">(</span><span class="n">position</span><span class="p">)</span>
+  <span class="p">}</span>
+
+  <span class="k">override</span> <span class="k">fun</span> <span class="nf">getCount</span><span class="p">():</span> <span class="n">Int</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">TAB_TITLES</span><span class="p">.</span><span class="n">size</span>
+  <span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>给 ViewPager 设置 PagerAdapter:</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="n">viewPager</span><span class="p">.</span><span class="n">adapter</span> <span class="p">=</span> <span class="n">pagerAdapter</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>TabLayout 绑定 ViewPager:</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="n">tabs</span><span class="p">.</span><span class="n">setupWithViewPager</span><span class="p">(</span><span class="n">viewPager</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="pageradapter">PagerAdapter</h3>
+<p>目前官方提供的 PagerAdapter 有 2 种，在源码中已介绍各自的使用场景(假设 offscreenPageLimit=1)：</p>
+<ul>
+<li>
+<p>FragmentPagerAdapter</p>
+<p>适合有少量的几个 Fragment 页面，比如一组 tabs，用户访问的每个页面都会保存在内存中，内存占用可能比较大。</p>
+<p>对于满足 <code>offscreenPageLimit</code> 的 Fragment ，其回调的方法是：onStop -&gt; onDestroyView.</p>
+</li>
+<li>
+<p>FragmentStatePagerAdapter</p>
+<p>适合有大量 Fragment 页面，类似于 ListView 工作的场景，页面不可见时，整个 Fragment 都会被销毁，只有 SavedState 会被保存。相较 FragmentPagerAdapter 内存占用更小。</p>
+<p>对于满足 <code>offscreenPageLimit</code> 的 Fragment ，其回调的方法是：onStop -&gt; onDestroyView -&gt; onDestroy -&gt; onDetach.</p>
+</li>
+</ul>
+<h3 id="保存和恢复-state">保存和恢复 State</h3>
+<h4 id="保存-fragment-的-state">保存 Fragment 的 State</h4>
+<p>对于使用 <code>FragmentStatePagerAdapter</code> 的场景，我们可能需要在 Fragment 销毁时保存一些数据，通常的做法是在 <code>onSaveInstanceState(outState)</code> 中保存，在 <code>onCreate(savedInstanceState)</code>、<code>onCreateView(savedInstanceState)</code> 或 <code>onActivityCreated(savedInstanceState)</code> 中恢复：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="k">override</span> <span class="k">fun</span> <span class="nf">onSaveInstanceState</span><span class="p">(</span><span class="n">outState</span><span class="p">:</span> <span class="n">Bundle</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">super</span><span class="p">.</span><span class="n">onSaveInstanceState</span><span class="p">(</span><span class="n">outState</span><span class="p">)</span>
+    <span class="c1">// save instance state here
+</span><span class="c1"></span>  <span class="p">}</span>
+
+<span class="k">override</span> <span class="k">fun</span> <span class="nf">onCreate</span><span class="p">(</span><span class="n">savedInstanceState</span><span class="p">:</span> <span class="n">Bundle</span><span class="p">?)</span> <span class="p">{</span>
+    <span class="k">super</span><span class="p">.</span><span class="n">onCreate</span><span class="p">(</span><span class="n">savedInstanceState</span><span class="p">)</span>
+    <span class="n">savedInstanceState</span><span class="o">?.</span><span class="n">let</span> <span class="p">{</span>
+      <span class="c1">// restore instance state
+</span><span class="c1"></span>    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="保存-customview-的-state">保存 CustomView 的 State</h4>
+<p>官方提供的 UI 控件内部都实现了 <code>onSaveInstanceState</code> 和 <code>onRestoreInstanceState</code> 方法，在页面销毁-重建时，这些控件可以保存-恢复 ViewState。对于自定义的 View，我们也需要实现这两个方法：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java">  <span class="nd">@Override</span>
+  <span class="kd">public</span> <span class="n">Parcelable</span> <span class="nf">onSaveInstanceState</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">Parcelable</span> <span class="n">superState</span> <span class="o">=</span> <span class="kd">super</span><span class="o">.</span><span class="na">onSaveInstanceState</span><span class="o">();</span>
+    <span class="o">...</span>
+    <span class="n">SavedState</span> <span class="n">ss</span> <span class="o">=</span> <span class="k">new</span> <span class="n">SavedState</span><span class="o">(</span><span class="n">superState</span><span class="o">);</span>
+    <span class="o">...</span>
+    <span class="k">return</span> <span class="n">ss</span><span class="o">;</span>
+  <span class="o">}</span>
+
+  <span class="nd">@Override</span>
+  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onRestoreInstanceState</span><span class="o">(</span><span class="n">Parcelable</span> <span class="n">state</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">if</span> <span class="o">(!(</span><span class="n">state</span> <span class="k">instanceof</span> <span class="n">SavedState</span><span class="o">))</span> <span class="o">{</span>
+      <span class="kd">super</span><span class="o">.</span><span class="na">onRestoreInstanceState</span><span class="o">(</span><span class="n">state</span><span class="o">);</span>
+      <span class="k">return</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="n">SavedState</span> <span class="n">ss</span> <span class="o">=</span> <span class="o">(</span><span class="n">SavedState</span><span class="o">)</span> <span class="n">state</span><span class="o">;</span>
+    <span class="kd">super</span><span class="o">.</span><span class="na">onRestoreInstanceState</span><span class="o">(</span><span class="n">ss</span><span class="o">.</span><span class="na">getSuperState</span><span class="o">());</span>
+    <span class="o">...</span>
+  <span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+  </div>
+</article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="zac@zacash.com" class="iconfont icon-email" title="email"></a>
+  <a href="https://zacash.cn/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2020
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Zac</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.d7b7ada643c9c1a983026e177f141f7363b4640d619caf01d8831a6718cd44ea.js"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Intro to Coroutines - Zac</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Zac" /><meta name="description" content="Coroutines 的介绍" /><meta name="keywords" content="Android, developer, programming" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.68.1 with theme even" />
+
+
+<link rel="canonical" href="https://zacash.cn/posts/intro-to-coroutines/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.8c3cbcb0324c2bb4875ceccba4007cbad4b4ac8377f33af9953c3e7684534a50.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="Intro to Coroutines" />
+<meta property="og:description" content="Coroutines 的介绍" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://zacash.cn/posts/intro-to-coroutines/" />
+<meta property="article:published_time" content="2020-04-25T11:40:03+08:00" />
+<meta property="article:modified_time" content="2020-04-25T11:40:03+08:00" />
+<meta itemprop="name" content="Intro to Coroutines">
+<meta itemprop="description" content="Coroutines 的介绍">
+<meta itemprop="datePublished" content="2020-04-25T11:40:03&#43;08:00" />
+<meta itemprop="dateModified" content="2020-04-25T11:40:03&#43;08:00" />
+<meta itemprop="wordCount" content="1596">
+
+
+
+<meta itemprop="keywords" content="Coroutines," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Intro to Coroutines"/>
+<meta name="twitter:description" content="Coroutines 的介绍"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Zac</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Zac</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+  <div class="post-content">
+    <h3 id="协程用来解决什么问题">协程用来解决什么问题</h3>
+<p>Kotlin 的协程提供了一种全新的并发处理方式，我们可以使用它来简化安卓异步执行的代码。</p>
+<p>在 Android 平台上协程主要用来解决两个问题：</p>
+<ul>
+<li>处理耗时任务(Long running tasks)</li>
+<li>保证主线程安全(Main-safety)</li>
+</ul>
+<h4 id="处理耗时任务">处理耗时任务</h4>
+<p>我们常规处理耗时任务是通过异步回调的方式，比如：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="k">fun</span> <span class="nf">fetchDoc</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">get</span><span class="p">(</span><span class="s">&#34;https://doc.qq.com&#34;</span><span class="p">)</span> <span class="p">{</span> <span class="n">result</span> <span class="p">-&gt;</span>
+        <span class="n">show</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>通过协程的方式是这样：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="c1">// 主线程执行
+</span><span class="c1"></span><span class="k">suspend</span> <span class="k">fun</span> <span class="nf">fetchDoc</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// 直接返回结果
+</span><span class="c1"></span>    <span class="k">val</span> <span class="py">result</span> <span class="p">=</span> <span class="k">get</span><span class="p">(</span><span class="s">&#34;https://doc.qq.com&#34;</span><span class="p">)</span>
+    <span class="n">show</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="c1">// 主线程执行
+</span><span class="c1"></span><span class="k">suspend</span> <span class="k">fun</span> <span class="nf">get</span><span class="p">(</span><span class="n">url</span><span class="p">:</span> <span class="n">String</span><span class="p">)</span> <span class="p">=</span> <span class="n">withContext</span><span class="p">(</span><span class="n">Dispatchers</span><span class="p">.</span><span class="n">IO</span><span class="p">)</span> <span class="p">{</span>
+    <span class="cm">/*IO 线程池执行*/</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>可以看到通过协程可以直接返回请求结果，而不用管理请求延迟和线程阻塞，这是如何实现的呢？</p>
+<p>协程在常规的函数操作 —— invoke 和 return 之外，还新增了2项：</p>
+<ul>
+<li>suspend —— 称为挂起或暂停，用于暂停执行当前协程，并保存所有局部变量</li>
+<li>resume —— 让暂停的协程继续执行</li>
+</ul>
+<p>那么 suspend 是如何实现的呢？</p>
+<blockquote>
+<p>Kotlin 使用堆栈帧来管理需要运行哪个函数及所有局部变量。suspend 协程时，系统会复制并保存当前的栈帧供后续使用，resume 协程时，系统会还原保存的栈帧，然后函数从暂停的位置继续执行。</p>
+</blockquote>
+<p>在上面的协程示例中，<code>get()</code>函数在主线程上运行，但会在网络请求前暂停协程，请求完成时，<code>get()</code>函数恢复协程。</p>
+<h4 id="保证线程安全">保证线程安全</h4>
+<p>Kotlin 提供了三种调度器(Dispatcher)供协程执行任务。协程可以自行暂停，调度器(Dispatcher)负责恢复。</p>
+<table>
+<thead>
+<tr>
+<th>Dispatcher</th>
+<th align="center">线程</th>
+<th align="center">任务设计</th>
+<th align="center">用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Dispatcher.Main</td>
+<td align="center">主线程</td>
+<td align="center">UI 交互和轻量级任务</td>
+<td align="center">调用 suspend 函数、调用 UI 函数、 更新 LiveData</td>
+</tr>
+<tr>
+<td>Dispatcher.IO</td>
+<td align="center">非主线程</td>
+<td align="center">磁盘和网络 IO 任务</td>
+<td align="center">数据库、文件、网络处理</td>
+</tr>
+<tr>
+<td>Dispatcher.Default</td>
+<td align="center">非主线程</td>
+<td align="center">CPU 密集型任务</td>
+<td align="center">数组排序、JSON 解析、处理 Diff 判断</td>
+</tr>
+</tbody>
+</table>
+<p>上面的示例中，<code>get()</code>函数 通过 <code>withContext(Dispatcher.IO)</code> 创建一个在 IO 线程池内运行的代码块。</p>
+<p>如果某个函数任务涉及到磁盘、网络或者占用过多的 CPU 资源，都应该使用 <code>withContext(Dispatcher)</code> 来确保可以在主线程安全地调用。</p>
+<h3 id="追踪协程">追踪协程</h3>
+<blockquote>
+<p>协程自身并不能追踪正在处理的任务，使用代码来手动追踪上千个协程是十分困难的，我们虽然可以尝试对所有协程进行追踪，手动确保它们都完成或取消任务，但这样代码会十分复杂和臃肿。如果没有追踪协程，则可能诱发任务泄漏(work leak)，即耗时任务会持续地占用资源执行下去。</p>
+</blockquote>
+<p>为了能够避免这种情况，Kotlin 引入了 <strong>结构化并发(structured concurrency)</strong> 机制，遵循它可以帮助我们追踪所有运行的任务。我们可以使用结构化并发做到下面三件事：</p>
+<ul>
+<li>取消任务 —— 取消某项无用的任务</li>
+<li>追踪任务 —— 追踪某项正在执行的任务</li>
+<li>发出错误信号 —— 任务异常时发出错误信号</li>
+</ul>
+<h4 id="使用-scope-来追踪协程">使用 Scope 来追踪协程</h4>
+<p>Kotlin 中定义启动协程必须指定其 CoroutineScope, CoroutineScope 可以追踪或取消所有由它启动的协程。</p>
+<p>有两种方式能够启动协程，分别用于不同的场景：</p>
+<ul>
+<li><code>launch</code> 方式启动新协程不会返回 result，适合不需要执行结果的场景</li>
+<li><code>async</code> 方式启动新协程并允许我们使用 await 的挂起函数返回 result.</li>
+</ul>
+<p>通常我们应该使用 <code>launch</code> 方式启动新协程。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="n">scope</span><span class="p">.</span><span class="n">launch</span> <span class="p">{</span>
+    <span class="c1">// launch 可以调用 suspend 函数
+</span><span class="c1"></span>    <span class="n">fetchDoc</span><span class="p">()</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="在-viewmodel-中启动协程">在 ViewModel 中启动协程</h4>
+<p>当协程和 Android Architecture Components 结合时，我们应该在哪个组件使用协程呢？</p>
+<p>答案是 ViewModel，我们大部分任务都是在 ViewModel 中处理，而且 <a href="https://developer.android.google.cn/topic/libraries/architecture/coroutines#lifecycle-aware">AndroidX Lifecycle</a> 从 2.1.0 版本开始已经引入扩展属性 <code>ViewModel.viewModelScope</code>，可以更方便地在 ViewModel 中使用协程：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="k">class</span> <span class="nc">MainViewModel</span><span class="p">():</span> <span class="n">ViewModel</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">fun</span> <span class="nf">setUserDoc</span><span class="p">()</span> <span class="p">{</span>
+        <span class="c1">// 启动新的协程
+</span><span class="c1"></span>        <span class="n">viewModelScope</span><span class="p">.</span><span class="n">launch</span> <span class="p">{</span>
+            <span class="n">fetchDoc</span><span class="p">()</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>当 viewModelScope 被清除时，它将自动取消所有它启动的协程，可以保证协程和 ViewModel 的生命周期是一致的。</p>
+<h4 id="启动多个协程">启动多个协程</h4>
+<p>可以使用 <a href="https://kotlin.github.io/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines/coroutine-scope.html"><code>coroutineScope</code></a> 或 <a href="https://kotlin.github.io/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines/supervisor-scope.html"><code>supervisorScope</code></a> 启动多个协程，结构化并发保证了当 <code>suspend</code> 函数返回时，它所处理的任务也都完成了。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="k">suspend</span> <span class="k">fun</span> <span class="nf">fetchDocs</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">coroutineScope</span> <span class="p">{</span>
+        <span class="n">async</span> <span class="p">{</span><span class="n">fetchDoc</span><span class="p">()}</span>
+        <span class="n">async</span> <span class="p">{</span><span class="n">fetchPdf</span><span class="p">()}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Kotlin 确保使用 <code>coroutineScope</code> 构造方法不让 <code>fetchDocs()</code> 方法发生泄漏，会先将 <code>coroutineScope</code> 自身挂起，等待它内部的所有协程完成时，再返回结果。</p>
+<h4 id="异常处理">异常处理</h4>
+<p><code>coroutineScope</code> 和 <code>supervisorScope</code> 两者都适合启动多个协程的场景，区别在于当启动的某一子协程出错时，coroutineScope 将会取消所有协程，而 supervisorScope 会继续执行剩余的协程。</p>
+<p>协程中来自 suspend 函数的异常会通过 resume 重新抛给调用方 (Invoker) 来处理，跟函数一样，我们可以用 try/catch 处理异常。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="k">suspend</span> <span class="k">fun</span> <span class="nf">getError</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">coroutineScope</span> <span class="p">{</span>
+        <span class="n">async</span> <span class="p">{</span>
+            <span class="k">throw</span> <span class="n">IllegalStateException</span><span class="p">(</span><span class="s">&#34;...&#34;</span><span class="p">)</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="参考">参考</h4>
+<p><a href="https://mp.weixin.qq.com/s/kPvWOCkMjYRKJSTX4I5VKg">在Android 开发中使用协程</a>
+<a href="https://www.reddit.com/r/androiddev/comments/ftqe6s/">Coroutines Discussion</a>
+<a href="https://www.youtube.com/watch?v=_hfBv0a09Jc">Introduction to Coroutines</a></p>
+
+  </div>
+</article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="zac@zacash.com" class="iconfont icon-email" title="email"></a>
+  <a href="https://zacash.cn/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2020
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Zac</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.d7b7ada643c9c1a983026e177f141f7363b4640d619caf01d8831a6718cd44ea.js"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>State Loss on Zac</title>
+    <link>https://zacash.cn/tags/state-loss/</link>
+    <description>Recent content in State Loss on Zac</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Tue, 11 Feb 2020 16:30:26 +0800</lastBuildDate>
+    
+	<atom:link href="https://zacash.cn/tags/state-loss/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Check State Loss</title>
+      <link>https://zacash.cn/posts/check-state-loss/</link>
+      <pubDate>Tue, 11 Feb 2020 16:30:26 +0800</pubDate>
+      
+      <guid>https://zacash.cn/posts/check-state-loss/</guid>
+      <description>背景 最近做的一个 DialogFragment 在少数设备上会偶发闪退，Fabric 上的 Stacktrace 信息如下： 1 2 3 4 5 6 Fatal Exception: java.lang.IllegalStateException: Can not perform this action after onSaveInstanceState at android.support.v4.app.FragmentManagerImpl.checkStateLoss(SourceFile) at android.support.v4.app.FragmentManagerImpl.enqueueAction(SourceFile) at android.support.v4.app.BackStackRecord.commitInternal(SourceFile) at android.support.v4.app.BackStackRecord.commit(SourceFile) at android.su</description>
+    </item>
+    
+  </channel>
+</rss>

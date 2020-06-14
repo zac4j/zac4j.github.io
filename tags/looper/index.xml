@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Looper on Zac</title>
+    <link>https://zacash.cn/tags/looper/</link>
+    <description>Recent content in Looper on Zac</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Tue, 14 Apr 2020 21:53:54 +0800</lastBuildDate>
+    
+	<atom:link href="https://zacash.cn/tags/looper/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Handler in Action</title>
+      <link>https://zacash.cn/posts/handler-in-action/</link>
+      <pubDate>Tue, 14 Apr 2020 21:53:54 +0800</pubDate>
+      
+      <guid>https://zacash.cn/posts/handler-in-action/</guid>
+      <description>Memory Leaks 1.1 背景 1.Handler 在使用下面这种实现方式处理消息时: 1 2 3 4 5 6 7 class MainActivity : Activity() { private val mLeakedHandler = object : Handler() { override fun handleMessage(msg: Message) { super.handleMessage(msg) } } Android Lint 会发出这样的警告: This Handler class should be static or leaks</description>
+    </item>
+    
+    <item>
+      <title>Handler in Code</title>
+      <link>https://zacash.cn/posts/handler-in-code/</link>
+      <pubDate>Sun, 12 Apr 2020 20:36:33 +0800</pubDate>
+      
+      <guid>https://zacash.cn/posts/handler-in-code/</guid>
+      <description>Handler 的创建 在主线程(UI Thread)中： 1 2 3 4 5 6 7 8 class MainActivity : Activity { private val mLeakedHandler = object : Handler() { override fun handleMessage(msg: Message) { super.handleMessage(msg) } } } 在子线程中： 1 2 3 4 5 6 7 8 9 10 11 val thread =</description>
+    </item>
+    
+  </channel>
+</rss>

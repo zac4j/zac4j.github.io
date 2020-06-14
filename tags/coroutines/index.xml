@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Coroutines on Zac</title>
+    <link>https://zacash.cn/tags/coroutines/</link>
+    <description>Recent content in Coroutines on Zac</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sat, 25 Apr 2020 11:40:03 +0800</lastBuildDate>
+    
+	<atom:link href="https://zacash.cn/tags/coroutines/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Intro to Coroutines</title>
+      <link>https://zacash.cn/posts/intro-to-coroutines/</link>
+      <pubDate>Sat, 25 Apr 2020 11:40:03 +0800</pubDate>
+      
+      <guid>https://zacash.cn/posts/intro-to-coroutines/</guid>
+      <description>协程用来解决什么问题 Kotlin 的协程提供了一种全新的并发处理方式，我们可以使用它来简化安卓异步执行的代码。 在 Android 平台上协程主要用来解决两个问题： 处理耗</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on Zac</title>
+    <link>https://zacash.cn/post/</link>
+    <description>Recent content in Posts on Zac</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Fri, 05 Jun 2020 14:49:15 +0800</lastBuildDate>
+    
+	<atom:link href="https://zacash.cn/post/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Intro to Build System</title>
+      <link>https://zacash.cn/posts/intro-to-build-system/</link>
+      <pubDate>Fri, 05 Jun 2020 14:49:15 +0800</pubDate>
+      
+      <guid>https://zacash.cn/posts/intro-to-build-system/</guid>
+      <description>构建流程（Build process） 简单来说构建流程就是涉及一系列工具和步骤将项目转换成 Android Application Package(APK)。典型的流程如下图所示：</description>
+    </item>
+    
+    <item>
+      <title>Fragment in ViewPager</title>
+      <link>https://zacash.cn/posts/fragment-in-viewpager/</link>
+      <pubDate>Mon, 25 May 2020 20:55:31 +0800</pubDate>
+      
+      <guid>https://zacash.cn/posts/fragment-in-viewpager/</guid>
+      <description>使用 ViewPager 通常我们使用 ViewPager + TabLayout 主要有这些步骤： 页面的布局结构: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 &amp;lt;?xml version=&amp;#34;1.0&amp;#34; encoding=&amp;#34;utf-8&amp;#34;?&amp;gt; &amp;lt;androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android=&amp;#34;http://schemas.android.com/apk/res/android&amp;#34; xmlns:app=&amp;#34;http://schemas.android.com/apk/res-auto&amp;#34; xmlns:tools=&amp;#34;http://schemas.android.com/tools&amp;#34; android:layout_width=&amp;#34;match_parent&amp;#34; android:layout_height=&amp;#34;match_parent&amp;#34; tools:context=&amp;#34;.MainActivity&amp;#34;</description>
+    </item>
+    
+    <item>
+      <title>Git Basic</title>
+      <link>https://zacash.cn/posts/git-basic/</link>
+      <pubDate>Fri, 15 May 2020 15:55:52 +0800</pubDate>
+      
+      <guid>https://zacash.cn/posts/git-basic/</guid>
+      <description>Problem Solving Authentication   Clear saved account &amp;amp; password
+Error: fatal:Authentication failed for &#39;remote-url&#39;
+git config --system --unset credential.helper
+  Save account &amp;amp; password
+git config --global credential.helper store
+  Remote   Check remote url
+git remote -v
+  Update remote url
+git remote set-url origin newRepoUrl
+  </description>
+    </item>
+    
+    <item>
+      <title>Intro to Fragments</title>
+      <link>https://zacash.cn/posts/fragments/</link>
+      <pubDate>Thu, 07 May 2020 20:30:50 +0800</pubDate>
+      
+      <guid>https://zacash.cn/posts/fragments/</guid>
+      <description>Activity 和 Fragment 生命周期的关联 Activity 状态 Fragment 生命周期方法回调 Fragment 状态 Created onAttach(), onCreate(), onCreateView(), onActivityCreated() Fragment 添加到 Activity 且视图已初始化 Started onStart() Fragment 活跃并可见 Resumed onResume() Fragment 活跃并获取焦点 Paused onPause() Fragment 暂停 Stopped onStop() Fragment 停止</description>
+    </item>
+    
+    <item>
+      <title>Intro to Coroutines</title>
+      <link>https://zacash.cn/posts/intro-to-coroutines/</link>
+      <pubDate>Sat, 25 Apr 2020 11:40:03 +0800</pubDate>
+      
+      <guid>https://zacash.cn/posts/intro-to-coroutines/</guid>
+      <description>协程用来解决什么问题 Kotlin 的协程提供了一种全新的并发处理方式，我们可以使用它来简化安卓异步执行的代码。 在 Android 平台上协程主要用来解决两个问题： 处理耗</description>
+    </item>
+    
+    <item>
+      <title>Activity Start</title>
+      <link>https://zacash.cn/posts/activity-launch/</link>
+      <pubDate>Wed, 22 Apr 2020 08:10:27 +0800</pubDate>
+      
+      <guid>https://zacash.cn/posts/activity-launch/</guid>
+      <description>Task and Back Stack Task 就是执行某项任务时开启的一系列 Activity 的集合，这些 Activity 会按照打开的顺序排列在回退栈 (Back Stack) 中。 Activity 的四种启动模式 (launchMode) 如通过 startActivity(Intent) 启动 Activity A standard 模式：标准模</description>
+    </item>
+    
+    <item>
+      <title>Handler in Action</title>
+      <link>https://zacash.cn/posts/handler-in-action/</link>
+      <pubDate>Tue, 14 Apr 2020 21:53:54 +0800</pubDate>
+      
+      <guid>https://zacash.cn/posts/handler-in-action/</guid>
+      <description>Memory Leaks 1.1 背景 1.Handler 在使用下面这种实现方式处理消息时: 1 2 3 4 5 6 7 class MainActivity : Activity() { private val mLeakedHandler = object : Handler() { override fun handleMessage(msg: Message) { super.handleMessage(msg) } } Android Lint 会发出这样的警告: This Handler class should be static or leaks</description>
+    </item>
+    
+    <item>
+      <title>Handler in Code</title>
+      <link>https://zacash.cn/posts/handler-in-code/</link>
+      <pubDate>Sun, 12 Apr 2020 20:36:33 +0800</pubDate>
+      
+      <guid>https://zacash.cn/posts/handler-in-code/</guid>
+      <description>Handler 的创建 在主线程(UI Thread)中： 1 2 3 4 5 6 7 8 class MainActivity : Activity { private val mLeakedHandler = object : Handler() { override fun handleMessage(msg: Message) { super.handleMessage(msg) } } } 在子线程中： 1 2 3 4 5 6 7 8 9 10 11 val thread =</description>
+    </item>
+    
+    <item>
+      <title>Hugo Basic</title>
+      <link>https://zacash.cn/posts/hugo-basic/</link>
+      <pubDate>Sat, 04 Apr 2020 09:25:04 +0800</pubDate>
+      
+      <guid>https://zacash.cn/posts/hugo-basic/</guid>
+      <description>Add new content hugo new posts/article-name.md Article mata info 1 2 3 4 5 6 7 8 --- title: &amp;#34;New Article&amp;#34; date: 2020-04-04T09:25:04+08:00 description: &amp;#34;Hugo 的简单用法&amp;#34; tags: [&amp;#34;hugo&amp;#34;, &amp;#34;pages&amp;#34;] categories: [&amp;#34;hugo&amp;#34;] draft: true --- Start server with drafts enabled hugo server -D Customize the theme Open up config.toml in a text editor: 1 2 3 4 baseURL=&amp;#34;https://example.org/&amp;#34;languageCode=&amp;#34;en-us&amp;#34;title=&amp;#34;My New Hugo Site&amp;#34;theme=&amp;#34;ananke&amp;#34; Build</description>
+    </item>
+    
+    <item>
+      <title>Check State Loss</title>
+      <link>https://zacash.cn/posts/check-state-loss/</link>
+      <pubDate>Tue, 11 Feb 2020 16:30:26 +0800</pubDate>
+      
+      <guid>https://zacash.cn/posts/check-state-loss/</guid>
+      <description>背景 最近做的一个 DialogFragment 在少数设备上会偶发闪退，Fabric 上的 Stacktrace 信息如下： 1 2 3 4 5 6 Fatal Exception: java.lang.IllegalStateException: Can not perform this action after onSaveInstanceState at android.support.v4.app.FragmentManagerImpl.checkStateLoss(SourceFile) at android.support.v4.app.FragmentManagerImpl.enqueueAction(SourceFile) at android.support.v4.app.BackStackRecord.commitInternal(SourceFile) at android.support.v4.app.BackStackRecord.commit(SourceFile) at android.su</description>
+    </item>
+    
+  </channel>
+</rss>

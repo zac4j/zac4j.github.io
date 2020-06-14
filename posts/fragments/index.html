@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Intro to Fragments - Zac</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Zac" /><meta name="description" content="Fragment 生命周期和使用" /><meta name="keywords" content="Android, developer, programming" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.68.1 with theme even" />
+
+
+<link rel="canonical" href="https://zacash.cn/posts/fragments/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.8c3cbcb0324c2bb4875ceccba4007cbad4b4ac8377f33af9953c3e7684534a50.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="Intro to Fragments" />
+<meta property="og:description" content="Fragment 生命周期和使用" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://zacash.cn/posts/fragments/" />
+<meta property="article:published_time" content="2020-05-07T20:30:50+08:00" />
+<meta property="article:modified_time" content="2020-05-07T20:30:50+08:00" />
+<meta itemprop="name" content="Intro to Fragments">
+<meta itemprop="description" content="Fragment 生命周期和使用">
+<meta itemprop="datePublished" content="2020-05-07T20:30:50&#43;08:00" />
+<meta itemprop="dateModified" content="2020-05-07T20:30:50&#43;08:00" />
+<meta itemprop="wordCount" content="830">
+
+
+
+<meta itemprop="keywords" content="Fragment,Lifecycle," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Intro to Fragments"/>
+<meta name="twitter:description" content="Fragment 生命周期和使用"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Zac</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Zac</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+  <div class="post-content">
+    <h3 id="activity-和-fragment-生命周期的关联">Activity 和 Fragment 生命周期的关联</h3>
+<table>
+<thead>
+<tr>
+<th>Activity 状态</th>
+<th>Fragment 生命周期方法回调</th>
+<th>Fragment 状态</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Created</td>
+<td>onAttach(), onCreate(), onCreateView(), onActivityCreated()</td>
+<td>Fragment 添加到 Activity 且视图已初始化</td>
+</tr>
+<tr>
+<td>Started</td>
+<td>onStart()</td>
+<td>Fragment 活跃并可见</td>
+</tr>
+<tr>
+<td>Resumed</td>
+<td>onResume()</td>
+<td>Fragment 活跃并获取焦点</td>
+</tr>
+<tr>
+<td>Paused</td>
+<td>onPause()</td>
+<td>Fragment 暂停</td>
+</tr>
+<tr>
+<td>Stopped</td>
+<td>onStop()</td>
+<td>Fragment 停止并不再可见</td>
+</tr>
+<tr>
+<td>Destroyed</td>
+<td>onDestroyView(), onDestroy(), onDetach()</td>
+<td>Fragment 销毁</td>
+</tr>
+</tbody>
+</table>
+<h4 id="fragment-重要的生命周期方法的使用">Fragment 重要的生命周期方法的使用</h4>
+<ul>
+<li><code>onAttach()</code>: Fragment 在被 attach 到宿主 Activity 时回调，可以在该方法里检查宿主 Activity 是否实现了某个接口。</li>
+<li><code>onCreateView()</code>: Fragment 的 XML 布局在这个回调方法里初始化，系统调用这个方法来绘制 Fragment 的 UI。</li>
+<li><code>onPause()</code>: 可以在 Fragment 销毁前在该回调方法保存必要数据或状态。</li>
+<li><code>onActivityCreated()</code>: 在宿主 Activity 的 <code>onCreate()</code> 方法调用后回调该方法。可以在该方法做最终的初始化，如检索 View <code>getView().findViewById(id)</code>或恢复状态(restore state)。如果 Fragmnt 设置了 <code>setRetainInstance()</code>，这个方法同样会被调用。</li>
+<li><code>onDestroyView()</code>: Fragment 的 UI 布局被移除时调用，可以在该方法标记 Fragment 不再可见。</li>
+</ul>
+<h3 id="fragment-和-activity-间的连接">Fragment 和 Activity 间的连接</h3>
+<ul>
+<li>Fragment 获取宿主 Activity：在 Fragment attach 到宿主 Activity 后，可以通过 <code>getActivity()</code> 获得宿主 Activity 实例。</li>
+<li>Activity 获取添加的 Fragment：可以通过 <code>FragmentManager.findFragmentById(containerId)</code>获取 Fragment 的实例。</li>
+</ul>
+<h4 id="fragment-的-backstack">Fragment 的 BackStack</h4>
+<p>对于 Activity，系统管理着 Activity 的回退栈，而对于 Fragment，是宿主 Activity 管理着回退栈，对于需要响应返回键的 Fragment 页面，我们需要调用 <code>addToBackStack(name)</code> 显式地将其添加到回退栈:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="n">fragmentTransaction</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">R</span><span class="p">.</span><span class="n">id</span><span class="p">.</span><span class="n">fragment_container</span><span class="p">,</span> <span class="n">fragment</span><span class="p">)</span>
+<span class="n">fragmentTransaction</span><span class="p">.</span><span class="n">addToBackStack</span><span class="p">(</span><span class="k">null</span><span class="p">)</span>
+<span class="n">fragmentTransaction</span><span class="p">.</span><span class="n">commit</span><span class="p">()</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>上面的代码中我们给 <code>addToBackStack()</code> 传入的 <code>null</code> ，如果是需要调用 <code>FragmentManager.BackStackEntry</code> 接口时，则必须传入具体的名称标记。
+对于添加到 Activity 回退栈的 Fragment，当按下返回键，某个 Fragment 实例出栈时，其视图重建回调 <code>onCreateView()</code> 方法。</p>
+<h4 id="activity-向-fragment-传递数据">Activity 向 Fragment 传递数据</h4>
+<p>通常从 Activity 向 Fragment 传递数据，推荐使用 Fragment 的 <code>setArguments(Bundle)</code> 方法，具体的流程是：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="k">companion</span> <span class="k">object</span> <span class="p">{</span>
+    <span class="k">fun</span> <span class="nf">newInstance</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="n">String</span><span class="p">)</span> <span class="p">:</span> <span class="n">SimpleFragment</span> <span class="p">{</span>
+        <span class="k">val</span> <span class="py">fragment</span> <span class="p">=</span> <span class="n">SimpleFragment</span><span class="p">()</span>
+        <span class="k">val</span> <span class="py">args</span> <span class="p">=</span> <span class="n">Bundle</span><span class="p">(</span><span class="n">ARGS_NAME</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+        <span class="n">fragment</span><span class="p">.</span><span class="n">arguments</span> <span class="p">=</span> <span class="n">argument</span>
+        <span class="k">return</span> <span class="n">fragment</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>在 Activity 初始化该 Fragment 传入 <code>name</code> 参数:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="k">val</span> <span class="py">name</span> <span class="p">=</span> <span class="s">&#34;SimpleApp&#34;</span>
+<span class="k">val</span> <span class="py">ft</span> <span class="p">=</span> <span class="n">supportFragmentManager</span><span class="p">.</span><span class="n">beginTransaction</span><span class="p">()</span>
+<span class="k">val</span> <span class="py">fragment</span> <span class="p">=</span> <span class="n">SimpleFragment</span><span class="p">.</span><span class="n">newInstance</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+<span class="n">ft</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">R</span><span class="p">.</span><span class="n">id</span><span class="p">.</span><span class="n">fragment_container</span><span class="p">,</span> <span class="n">fragment</span><span class="p">).</span><span class="n">commit</span><span class="p">()</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>在 Fragment 的 <code>onCreate()</code> 或 <code>onCreateView()</code> 的回调内，获取该参数：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="k">if</span> <span class="p">(</span><span class="n">arguments</span><span class="p">.</span><span class="n">containsKey</span><span class="p">(</span><span class="n">ARGS_NAME</span><span class="p">))</span> <span class="p">{</span>
+    <span class="n">mName</span> <span class="p">=</span> <span class="n">arguments</span><span class="p">.</span><span class="n">getString</span><span class="p">(</span><span class="n">ARGS_NAME</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="fragment-向-activity-传递数据">Fragment 向 Activity 传递数据</h4>
+<p>对于 Activity 内实现 Fragment 内定义的接口，在 <code>Fragment.onAttach()</code>方法获取宿主 Activity:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="k">interface</span> <span class="nc">OnPanelClickListener</span> <span class="p">{</span>
+    <span class="n">void</span> <span class="n">onClick</span><span class="p">()</span>
+<span class="p">}</span>
+
+<span class="k">override</span> <span class="k">fun</span> <span class="nf">onAttach</span><span class="p">(</span><span class="n">context</span><span class="p">:</span> <span class="n">Context</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">super</span><span class="p">.</span><span class="n">onAttach</span><span class="p">(</span><span class="n">context</span><span class="p">)</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">context</span> <span class="k">is</span> <span class="n">OnPanelClickListener</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">mListener</span> <span class="p">=</span> <span class="n">context</span> <span class="k">as</span> <span class="n">OnPanelClickListener</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+  </div>
+</article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="zac@zacash.com" class="iconfont icon-email" title="email"></a>
+  <a href="https://zacash.cn/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2020
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Zac</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.d7b7ada643c9c1a983026e177f141f7363b4640d619caf01d8831a6718cd44ea.js"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

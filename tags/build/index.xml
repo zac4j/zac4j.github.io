@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>build on Zac</title>
+    <link>https://zacash.cn/tags/build/</link>
+    <description>Recent content in build on Zac</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Fri, 05 Jun 2020 14:49:15 +0800</lastBuildDate>
+    
+	<atom:link href="https://zacash.cn/tags/build/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Intro to Build System</title>
+      <link>https://zacash.cn/posts/intro-to-build-system/</link>
+      <pubDate>Fri, 05 Jun 2020 14:49:15 +0800</pubDate>
+      
+      <guid>https://zacash.cn/posts/intro-to-build-system/</guid>
+      <description>构建流程（Build process） 简单来说构建流程就是涉及一系列工具和步骤将项目转换成 Android Application Package(APK)。典型的流程如下图所示：</description>
+    </item>
+    
+  </channel>
+</rss>
