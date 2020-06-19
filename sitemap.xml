@@ -2,14 +2,56 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://zacash.cn/tags/build/</loc>
-    <lastmod>2020-06-05T14:49:15+08:00</lastmod>
+    <loc>https://zacash.cn/categories/</loc>
+    <lastmod>2020-06-19T22:03:29+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://zacash.cn/categories/</loc>
+    <loc>https://zacash.cn/tags/kotlin/</loc>
+    <lastmod>2020-06-19T22:03:29+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://zacash.cn/categories/kotlin/</loc>
+    <lastmod>2020-06-19T22:03:29+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://zacash.cn/post/</loc>
+    <lastmod>2020-06-19T22:03:29+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://zacash.cn/tags/</loc>
+    <lastmod>2020-06-19T22:03:29+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://zacash.cn/post/top-10-kotlin-questions/</loc>
+    <lastmod>2020-06-19T22:03:29+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://zacash.cn/</loc>
+    <lastmod>2020-06-19T22:03:29+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://zacash.cn/tags/build/</loc>
     <lastmod>2020-06-05T14:49:15+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
@@ -31,27 +73,6 @@
   
   <url>
     <loc>https://zacash.cn/posts/intro-to-build-system/</loc>
-    <lastmod>2020-06-05T14:49:15+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://zacash.cn/post/</loc>
-    <lastmod>2020-06-05T14:49:15+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://zacash.cn/tags/</loc>
-    <lastmod>2020-06-05T14:49:15+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://zacash.cn/</loc>
     <lastmod>2020-06-05T14:49:15+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>

@@ -6,10 +6,19 @@
     <description>Recent content in Posts on Zac</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Fri, 05 Jun 2020 14:49:15 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 19 Jun 2020 22:03:29 +0800</lastBuildDate>
     
 	<atom:link href="https://zacash.cn/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Top 10 Kotlin Questions in StackOverflow</title>
+      <link>https://zacash.cn/post/top-10-kotlin-questions/</link>
+      <pubDate>Fri, 19 Jun 2020 22:03:29 +0800</pubDate>
+      
+      <guid>https://zacash.cn/post/top-10-kotlin-questions/</guid>
+      <description>IntArray vs. Array&amp;lt;Int&amp;gt; In java code IntArray: int[] Array&amp;lt;Int&amp;gt;: Integer[] Create method: IntArray: 1 val intArray : IntArray = intArrayOf(1, 2, 3, 4, 5) Array&amp;lt;Int&amp;gt;: 1 val arrayOfInts : Array&amp;lt;Int&amp;gt; = arrayOf(1, 2, 3, 4, 5) Iterable vs. Sequence Usage Iterable: 1 2 3 4 getPeople() .filter { it.age &amp;gt;= 18 } .map { it.name } .take(5) Sequence: start with asSequence() and end with toList() or toSet()&amp;hellip; 1 2 3</description>
+    </item>
     
     <item>
       <title>Intro to Build System</title>

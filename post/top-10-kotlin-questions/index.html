@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Top 10 Kotlin Questions in StackOverflow - Zac</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Zac" /><meta name="description" content="IntArray vs. Array&amp;lt;Int&amp;gt; In java code IntArray: int[] Array&amp;lt;Int&amp;gt;: Integer[] Create method: IntArray: 1 val intArray : IntArray = intArrayOf(1, 2, 3, 4, 5) Array&amp;lt;Int&amp;gt;: 1 val arrayOfInts : Array&amp;lt;Int&amp;gt; = arrayOf(1, 2, 3, 4, 5) Iterable vs. Sequence Usage Iterable: 1 2 3 4 getPeople() .filter { it.age &amp;gt;= 18 } .map { it.name } .take(5) Sequence: start with asSequence() and end with toList() or toSet()&amp;hellip; 1 2 3" /><meta name="keywords" content="Questions, Kotlin" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.68.1 with theme even" />
+
+
+<link rel="canonical" href="https://zacash.cn/post/top-10-kotlin-questions/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.8c3cbcb0324c2bb4875ceccba4007cbad4b4ac8377f33af9953c3e7684534a50.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="Top 10 Kotlin Questions in StackOverflow" />
+<meta property="og:description" content="IntArray vs. Array&lt;Int&gt; In java code IntArray: int[] Array&lt;Int&gt;: Integer[] Create method: IntArray: 1 val intArray : IntArray = intArrayOf(1, 2, 3, 4, 5) Array&lt;Int&gt;: 1 val arrayOfInts : Array&lt;Int&gt; = arrayOf(1, 2, 3, 4, 5) Iterable vs. Sequence Usage Iterable: 1 2 3 4 getPeople() .filter { it.age &gt;= 18 } .map { it.name } .take(5) Sequence: start with asSequence() and end with toList() or toSet()&hellip; 1 2 3" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://zacash.cn/post/top-10-kotlin-questions/" />
+<meta property="article:published_time" content="2020-06-19T22:03:29+08:00" />
+<meta property="article:modified_time" content="2020-06-19T22:03:29+08:00" />
+<meta itemprop="name" content="Top 10 Kotlin Questions in StackOverflow">
+<meta itemprop="description" content="IntArray vs. Array&lt;Int&gt; In java code IntArray: int[] Array&lt;Int&gt;: Integer[] Create method: IntArray: 1 val intArray : IntArray = intArrayOf(1, 2, 3, 4, 5) Array&lt;Int&gt;: 1 val arrayOfInts : Array&lt;Int&gt; = arrayOf(1, 2, 3, 4, 5) Iterable vs. Sequence Usage Iterable: 1 2 3 4 getPeople() .filter { it.age &gt;= 18 } .map { it.name } .take(5) Sequence: start with asSequence() and end with toList() or toSet()&hellip; 1 2 3">
+<meta itemprop="datePublished" content="2020-06-19T22:03:29&#43;08:00" />
+<meta itemprop="dateModified" content="2020-06-19T22:03:29&#43;08:00" />
+<meta itemprop="wordCount" content="1091">
+
+
+
+<meta itemprop="keywords" content="kotlin," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Top 10 Kotlin Questions in StackOverflow"/>
+<meta name="twitter:description" content="IntArray vs. Array&lt;Int&gt; In java code IntArray: int[] Array&lt;Int&gt;: Integer[] Create method: IntArray: 1 val intArray : IntArray = intArrayOf(1, 2, 3, 4, 5) Array&lt;Int&gt;: 1 val arrayOfInts : Array&lt;Int&gt; = arrayOf(1, 2, 3, 4, 5) Iterable vs. Sequence Usage Iterable: 1 2 3 4 getPeople() .filter { it.age &gt;= 18 } .map { it.name } .take(5) Sequence: start with asSequence() and end with toList() or toSet()&hellip; 1 2 3"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Zac</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Zac</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Top 10 Kotlin Questions in StackOverflow</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 19190-06-19 </span>
+        <div class="post-category">
+            <a href="/categories/kotlin/"> kotlin </a>
+            </div>
+          <span class="more-meta"> 约 1091 字 </span>
+          <span class="more-meta"> 预计阅读 3 分钟 </span>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h4 id="intarray-vs-arrayint">IntArray vs. <code>Array&lt;Int&gt;</code></h4>
+<ul>
+<li>
+<p>In java code</p>
+<ul>
+<li>IntArray: int[]</li>
+<li><code>Array&lt;Int&gt;</code>: Integer[]</li>
+</ul>
+</li>
+<li>
+<p>Create method:</p>
+<ul>
+<li>IntArray:</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-kt" data-lang="kt"><span class="k">val</span> <span class="py">intArray</span> <span class="p">:</span> <span class="n">IntArray</span> <span class="p">=</span> <span class="n">intArrayOf</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="m">3</span><span class="p">,</span> <span class="m">4</span><span class="p">,</span> <span class="m">5</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li><code>Array&lt;Int&gt;</code>:</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-kt" data-lang="kt"><span class="k">val</span> <span class="py">arrayOfInts</span> <span class="p">:</span> <span class="n">Array</span><span class="p">&lt;</span><span class="n">Int</span><span class="p">&gt;</span> <span class="p">=</span> <span class="n">arrayOf</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="m">3</span><span class="p">,</span> <span class="m">4</span><span class="p">,</span> <span class="m">5</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<h4 id="iterable-vs-sequence">Iterable vs. Sequence</h4>
+<ul>
+<li>
+<p>Usage</p>
+<ul>
+<li>Iterable:</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-kt" data-lang="kt"><span class="n">getPeople</span><span class="p">()</span>
+<span class="p">.</span><span class="n">filter</span> <span class="p">{</span> <span class="n">it</span><span class="p">.</span><span class="n">age</span> <span class="p">&gt;=</span> <span class="m">18</span> <span class="p">}</span>
+<span class="p">.</span><span class="n">map</span> <span class="p">{</span> <span class="n">it</span><span class="p">.</span><span class="n">name</span> <span class="p">}</span>
+<span class="p">.</span><span class="n">take</span><span class="p">(</span><span class="m">5</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>Sequence: start with <code>asSequence()</code> and end with <code>toList()</code> or <code>toSet()</code>&hellip;</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-kt" data-lang="kt"><span class="n">getPeople</span><span class="p">().</span><span class="n">asSequence</span><span class="p">()</span>
+<span class="p">.</span><span class="n">filter</span> <span class="p">{</span> <span class="n">it</span><span class="p">.</span><span class="n">age</span> <span class="p">&gt;=</span> <span class="m">18</span> <span class="p">}</span>
+<span class="p">.</span><span class="n">map</span> <span class="p">{</span> <span class="n">it</span><span class="p">.</span><span class="n">name</span> <span class="p">}</span>
+<span class="p">.</span><span class="n">take</span><span class="p">(</span><span class="m">5</span><span class="p">)</span>
+<span class="p">.</span><span class="n">toList</span><span class="p">()</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>Use for</p>
+<ul>
+<li>Iterable: use for small collections by default, might faster than the overhead using a <code>Sequence</code></li>
+<li>Sequence: use for <code>very large</code> collections.</li>
+</ul>
+</li>
+</ul>
+<h4 id="iterate-a-collection">Iterate a collection</h4>
+<ul>
+<li>
+<p>eg.1</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-kt" data-lang="kt"><span class="k">for</span><span class="p">(</span><span class="n">i</span> <span class="k">in</span> <span class="m">0.</span><span class="p">.</span><span class="n">args</span><span class="p">.</span><span class="n">size</span> <span class="p">-</span> <span class="m">1</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">println</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>eg.2, use Array&rsquo;s <code>lastIndex</code> extension property.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-kt" data-lang="kt"><span class="k">for</span><span class="p">(</span><span class="n">i</span> <span class="k">in</span> <span class="m">0.</span><span class="p">.</span><span class="n">args</span><span class="p">.</span><span class="n">lastIndex</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">println</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>eg., use <code>until</code> to create open ended range.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-kt" data-lang="kt"><span class="k">for</span><span class="p">(</span><span class="n">i</span> <span class="k">in</span> <span class="m">0</span> <span class="n">until</span> <span class="n">args</span><span class="p">.</span><span class="n">size</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">println</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>eg.4, use <code>indices</code> extension property.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-kt" data-lang="kt"><span class="k">for</span><span class="p">(</span><span class="n">i</span> <span class="k">in</span> <span class="n">args</span><span class="p">.</span><span class="n">indices</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">println</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>eg.5</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-kt" data-lang="kt"><span class="k">for</span> <span class="p">(</span><span class="n">arg</span> <span class="k">in</span> <span class="n">args</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">println</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>eg.6, use <code>forEach</code> extension function.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-kt" data-lang="kt"><span class="n">args</span><span class="p">.</span><span class="n">forEach</span> <span class="p">{</span> <span class="n">arg</span> <span class="p">-&gt;</span>
+    <span class="n">println</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>eg.7, use <code>withIndex</code> function.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-kt" data-lang="kt"><span class="k">for</span><span class="p">((</span><span class="n">index</span><span class="p">,</span> <span class="n">arg</span><span class="p">)</span> <span class="k">in</span> <span class="n">args</span><span class="p">.</span><span class="n">withIndex</span><span class="p">())</span> <span class="p">{</span>
+    <span class="n">println</span><span class="p">(</span><span class="s">&#34;index: $index, arg: $arg&#34;</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>eg.8, use <code>forEachIndexed</code> functions.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-kt" data-lang="kt"><span class="n">args</span><span class="p">.</span><span class="n">forEachIndexed</span> <span class="p">{</span> <span class="n">index</span><span class="p">,</span> <span class="n">arg</span> <span class="p">-&gt;</span>
+    <span class="n">println</span><span class="p">(</span><span class="s">&#34;index: $index, arg: $arg&#34;</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<h4 id="sam-conversion">SAM conversion</h4>
+<blockquote>
+<p>SAM conversions only work for interfaces, not for abstract classes</p>
+</blockquote>
+<ul>
+<li>
+<p>This code will work fine:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-kt" data-lang="kt"><span class="n">button</span><span class="p">.</span><span class="n">setListener</span> <span class="p">{</span>
+    <span class="n">println</span><span class="p">(</span><span class="s">&#34;Clicked!&#34;</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>The following will not work:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-kt" data-lang="kt"><span class="cm">/**
+</span><span class="cm">* This gives the button a lambda that will create an anonymous instance of an OnClickListener
+</span><span class="cm">* every time the button is clicked, which is then just thrown away (never assigned anywhere,
+</span><span class="cm">* never invoked).
+</span><span class="cm">*/</span>
+<span class="n">button</span><span class="p">.</span><span class="n">setListener</span> <span class="p">{</span>
+    <span class="k">object</span><span class="p">:</span> <span class="n">OnClickListener</span> <span class="p">{</span>
+        <span class="k">override</span> <span class="k">fun</span> <span class="nf">onClick</span><span class="p">(</span><span class="n">button</span><span class="p">:</span> <span class="n">Button</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">println</span><span class="p">(</span><span class="s">&#34;Clicked!&#34;</span><span class="p">)</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="cm">/**
+</span><span class="cm">* This one declares a useless local function in a very simliar fashion
+</span><span class="cm">*/</span>
+<span class="n">button</span><span class="p">.</span><span class="n">setListener</span> <span class="p">{</span>
+    <span class="k">fun</span> <span class="nf">onClick</span><span class="p">(</span><span class="n">button</span><span class="p">:</span> <span class="n">Button</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">println</span><span class="p">(</span><span class="s">&#34;Clicked!&#34;</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p><a href="https://stackoverflow.com/questions/48284994/lambda-implementation-of-interface-in-kotlin">SAM constructor</a></p>
+</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-kt" data-lang="kt"><span class="cm">/**
+</span><span class="cm"> * If the interface is defined in Java, but the function that takes an instance of its defined in Kotlin,
+</span><span class="cm"> * try to use a SAM constructor.
+</span><span class="cm"> */</span>
+ <span class="n">button</span><span class="p">.</span><span class="n">setListener</span><span class="p">(</span><span class="n">OnClickListener</span> <span class="p">{</span>
+    <span class="n">println</span><span class="p">(</span><span class="s">&#34;Clicked&#34;</span><span class="p">)</span>
+ <span class="p">})</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>Explanation
+|               | Java interface  | Kotlin interface  |
+|&mdash;&mdash;&mdash;&mdash;&mdash;|&mdash;&mdash;&mdash;&mdash;&mdash;&ndash;|&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;-|
+| Java method   | SAM conversion  | Object expression |
+| Kotlin method | SAM constructor | Object expression |</li>
+</ul>
+<h4 id="static-things">Static things</h4>
+<ul>
+<li>
+<p>If your class has &ldquo;non-static&rdquo; parts as well, put the &ldquo;static&rdquo; parts in a companion object:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-kt" data-lang="kt"><span class="k">class</span> <span class="nc">Foo</span> <span class="p">{</span>
+    <span class="k">companion</span> <span class="k">object</span> <span class="p">{</span>
+        <span class="k">fun</span> <span class="nf">x</span><span class="p">()</span> <span class="p">{...}</span>
+    <span class="p">}</span>
+    <span class="k">fun</span> <span class="nf">y</span><span class="p">()</span> <span class="p">{...}</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>If your class is completely static, replace <code>class</code> with a singleton <code>object</code> :</p>
+</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-kt" data-lang="kt"><span class="k">object</span> <span class="nc">Foo</span> <span class="p">{</span>
+    <span class="k">fun</span> <span class="nf">x</span><span class="p">()</span> <span class="p">{...}</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>And if you don&rsquo;t want to always scope your calls as <code>Foo.x()</code> but want to just use <code>x()</code> instead, use a top level function:</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-kt" data-lang="kt"><span class="c1">// file Foo.kt
+</span><span class="c1"></span><span class="k">fun</span> <span class="nf">x</span><span class="p">()</span> <span class="p">{...}</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>For function, there has this table:
+| Function declaration             | Kotlin usage | Java usage         |
+|&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;-|&mdash;&mdash;&mdash;&mdash;&ndash;|&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&ndash;|
+| Companion object                 | Foo.f()      | Foo.Companion.f(); |
+| Companion object with @JvmStatic | Foo.f()      | Foo.f();           |
+| Object                           | Foo.f()      | Foo.INSTANCE.f();  |
+| Object with @JvmStatic           | Foo.f()      | Foo.f();           |
+| Top level function               | f()          | UtilKt.f();        |
+| Top level function with @JvmName | f()          | Util.f();          |</li>
+<li>For variable, here&rsquo;s the reference:
+| Variable declaration                           | Kotlin usage | Java usage          |
+|&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;|&mdash;&mdash;&mdash;&mdash;&ndash;|&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;|
+| Companion object                               | X.x          | X.Companion.getX(); |
+| Companion object with @JvmStatic               | X.x          | X.getX();           |
+| Companion object with @JvmField                | X.x          | X.x;                |
+| Companion object with const                    | X.x          | X.x();              |
+| Object                                         | X.x          | X.INSTANCE.getX();  |
+| Object with @JvmStatic                         | X.x          | X.getX();           |
+| Object with @JvmField                          | X.x          | X.x;                |
+| Object with const                              | X.x          | X.x;                |
+| Top level variable                             | x            | ConstKt.getX();     |
+| Top level variable with @JvmField              | x            | ConstKt.x;          |
+| Top level variable with const                  | x            | ConstKt.x;          |
+| Top level variable with @JvmName               | x            | Const.getX();       |
+| Top level variable with @JvmName and @JvmField | x            | Const.x;            |
+| Top level variable with @JvmName and const     | x            | Const.x;            |</li>
+</ul>
+<h4 id="6smart-cast-on-mutable-properties">6.Smart cast on mutable properties</h4>
+<p>以下代码会报这种错：</p>
+<blockquote>
+<p>Kotlin: Smart cast to &lsquo;Toy&rsquo; is impossible, because &lsquo;toy&rsquo; is a mutable property that could have been changed by this time</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-kt" data-lang="kt"><span class="k">class</span> <span class="nc">Dog</span><span class="p">(</span><span class="k">var</span> <span class="py">toy</span><span class="p">:</span> <span class="n">Toy</span><span class="p">?</span> <span class="p">=</span> <span class="k">null</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">fun</span> <span class="nf">play</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">toy</span> <span class="p">!=</span> <span class="k">null</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">toy</span><span class="p">.</span><span class="n">chew</span><span class="p">()</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>原因：
+因为 mutable 的变量<code>Dog</code> 实例可能在<code>toy!=null</code>检查后在另一条线程上被修改，而在 <code>toy.chew()</code>执行时可能产生 NPE.</p>
+<p>可以做以下修改：</p>
+<ul>
+<li>使用局部变量</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-kt" data-lang="kt"><span class="k">class</span> <span class="nc">Dog</span><span class="p">(</span><span class="k">var</span> <span class="py">toy</span><span class="p">:</span> <span class="n">Toy</span><span class="p">?</span> <span class="p">=</span> <span class="k">null</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">fun</span> <span class="nf">play</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">val</span> <span class="py">_toy</span> <span class="p">=</span> <span class="n">toy</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">_toy</span> <span class="p">!=</span> <span class="k">null</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">_toy</span><span class="p">.</span><span class="n">chew</span><span class="p">()</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>临时 let 操作符，使用范围更广泛：</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-kt" data-lang="kt"><span class="k">class</span> <span class="nc">Dog</span><span class="p">(</span><span class="k">var</span> <span class="py">toy</span><span class="p">:</span> <span class="n">Toy</span><span class="p">?</span> <span class="p">=</span> <span class="k">null</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">fun</span> <span class="nf">play</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">toy</span><span class="o">?.</span><span class="n">let</span> <span class="p">{</span>
+            <span class="n">it</span><span class="p">.</span><span class="n">chew</span><span class="p">()</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>?. 操作符</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-kt" data-lang="kt"><span class="k">class</span> <span class="nc">Dog</span><span class="p">(</span><span class="k">var</span> <span class="py">toy</span><span class="p">:</span> <span class="n">Toy</span><span class="p">?</span> <span class="p">=</span> <span class="k">null</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">fun</span> <span class="nf">play</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">toy</span><span class="o">?.</span><span class="n">chew</span><span class="p">()</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="override-java-方法">override Java 方法</h4>
+<p>假设 Java 中定义了接口 <code>OnClickListener</code>:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">OnClickListener</span> <span class="o">{</span>
+    <span class="kt">void</span> <span class="nf">onClick</span><span class="o">(</span><span class="n">Button</span> <span class="n">button</span><span class="o">)</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>在 Kotlin 中实现该接口，如果使用IDEA生成：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-kt" data-lang="kt"><span class="k">class</span> <span class="nc">KtListener</span><span class="p">:</span> <span class="n">OnClickListener</span> <span class="p">{</span>
+    <span class="k">override</span> <span class="k">fun</span> <span class="nf">onClick</span><span class="p">(</span><span class="n">button</span><span class="p">:</span> <span class="n">Button</span><span class="p">?):</span> <span class="n">Unit</span> <span class="p">{</span>
+        <span class="k">val</span> <span class="py">name</span> <span class="p">=</span> <span class="n">button</span><span class="o">?.</span><span class="n">name</span> <span class="o">?:</span> <span class="s">&#34;Unknown button&#34;</span>
+        <span class="n">println</span><span class="p">(</span><span class="s">&#34;Clicked $name&#34;</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>对于我们知道不可能为 <code>null</code> 的场景，可以这样写：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-kt" data-lang="kt"><span class="k">class</span> <span class="nc">KtListener</span><span class="p">:</span> <span class="n">OnClickListener</span> <span class="p">{</span>
+    <span class="k">override</span> <span class="k">fun</span> <span class="nf">onClick</span><span class="p">(</span><span class="n">button</span><span class="p">:</span> <span class="n">Button</span><span class="p">):</span> <span class="n">Unit</span> <span class="p">{</span>
+        <span class="k">val</span> <span class="py">name</span> <span class="p">=</span> <span class="n">button</span><span class="p">.</span><span class="n">name</span>
+        <span class="n">println</span><span class="p">(</span><span class="s">&#34;Clicked $name&#34;</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Zac</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        19190-06-19
+        
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/kotlin/">kotlin</a>
+          </div>
+      <nav class="post-nav">
+        
+        <a class="next" href="/posts/intro-to-build-system/">
+            <span class="next-text nav-default">Intro to Build System</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="zac@zacash.com" class="iconfont icon-email" title="email"></a>
+  <a href="https://zacash.cn/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2020
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Zac</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.d7b7ada643c9c1a983026e177f141f7363b4640d619caf01d8831a6718cd44ea.js"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>
