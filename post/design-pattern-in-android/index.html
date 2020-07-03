@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Essential Design Pattern in Android - Zac</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Zac" /><meta name="description" content="什么是设计模式 设计模式的经典解释：软件工程中，设计模式是针对软件设计中给定上下文的常见问题的通用、可复用的解决方案。设计模式并非可以直接转换" /><meta name="keywords" content="Android, developer, programming" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.68.1 with theme even" />
+
+
+<link rel="canonical" href="https://zacash.cn/post/design-pattern-in-android/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.8c3cbcb0324c2bb4875ceccba4007cbad4b4ac8377f33af9953c3e7684534a50.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="Essential Design Pattern in Android" />
+<meta property="og:description" content="什么是设计模式 设计模式的经典解释：软件工程中，设计模式是针对软件设计中给定上下文的常见问题的通用、可复用的解决方案。设计模式并非可以直接转换" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://zacash.cn/post/design-pattern-in-android/" />
+<meta property="article:published_time" content="2020-06-20T20:22:10+08:00" />
+<meta property="article:modified_time" content="2020-06-20T20:22:10+08:00" />
+<meta itemprop="name" content="Essential Design Pattern in Android">
+<meta itemprop="description" content="什么是设计模式 设计模式的经典解释：软件工程中，设计模式是针对软件设计中给定上下文的常见问题的通用、可复用的解决方案。设计模式并非可以直接转换">
+<meta itemprop="datePublished" content="2020-06-20T20:22:10&#43;08:00" />
+<meta itemprop="dateModified" content="2020-06-20T20:22:10&#43;08:00" />
+<meta itemprop="wordCount" content="1101">
+
+
+
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Essential Design Pattern in Android"/>
+<meta name="twitter:description" content="什么是设计模式 设计模式的经典解释：软件工程中，设计模式是针对软件设计中给定上下文的常见问题的通用、可复用的解决方案。设计模式并非可以直接转换"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Zac</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Zac</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Essential Design Pattern in Android</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 20200-06-20 </span>
+        
+          <span class="more-meta"> 约 1101 字 </span>
+          <span class="more-meta"> 预计阅读 3 分钟 </span>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#什么是设计模式">什么是设计模式</a></li>
+    <li><a href="#创造型模式">创造型模式</a>
+      <ul>
+        <li><a href="#builder">Builder</a></li>
+        <li><a href="#dependency-injection">Dependency injection</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h2 id="什么是设计模式">什么是设计模式</h2>
+<p>设计模式的<a href="https://en.wikipedia.org/wiki/Software_design_pattern">经典解释</a>：软件工程中，设计模式是针对软件设计中给定上下文的常见问题的<strong>通用、可复用的解决方案</strong>。设计模式并非可以直接转换为源码或机器码的最终设计。相反，它是可以在不同场景下使用的解决问题的描述或模版。设计模式是程序员在设计 App 或系统时解决常见问题的最佳实践。</p>
+<p>面向对象的设计模式通常展示了类和对象之间的关系和交互，而不是指定 App 的类或对象。</p>
+<p>设计模式可以看作是一种编程的结构化方法，介于编程范式和具体算法之间。</p>
+<p>设计模式根据其解决的问题分为三个类别：</p>
+<ul>
+<li>创造型模式（Creational Patterns）：提供创建类，对象的方法（Singleton, Dependency Inject, Builder等）。</li>
+<li>结构型模式（Structural Patterns）：提供对象和类之间组合的方法（Composite, Bridge, Adapter 等）。</li>
+<li>行为型模式（Bahavioral Patterns）：提供对象和类之间相互交流的方法（Command, Observer, Strategy 等）。</li>
+</ul>
+<h2 id="创造型模式">创造型模式</h2>
+<p>当我们用最基本的形式创建创建对象可能导致设计问题，或增加设计的复杂性。创造型设计模式通过<strong>控制对象的创建方式</strong>来解决这种问题。</p>
+<p>Android 常用的创造型模式：</p>
+<h3 id="builder">Builder</h3>
+<p>Builder 模式主要解决创建复杂对象过程中遇到的问题：</p>
+<ul>
+<li>类如何创建复杂对象不同的表现形式(different presentations)</li>
+<li>如何简化包含创建复杂对象的类</li>
+</ul>
+<p>Builder 模式在 Android 中常见的应用是 AlertDialog 的创建过程：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-kt" data-lang="kt"><span class="n">AlertDialog</span><span class="p">.</span><span class="n">Builder</span><span class="p">(</span><span class="n">context</span><span class="p">)</span>
+ <span class="p">.</span><span class="n">setTitle</span><span class="p">(</span><span class="s">&#34;Builder Sample&#34;</span><span class="p">)</span>
+ <span class="p">.</span><span class="n">setMessage</span><span class="p">(</span><span class="s">&#34;Builder Nessage&#34;</span><span class="p">)</span>
+ <span class="p">.</span><span class="n">setNegativeButton</span><span class="p">(</span><span class="s">&#34;Cancel&#34;</span><span class="p">,</span> <span class="p">{</span><span class="n">_</span><span class="p">,</span><span class="n">_</span> <span class="p">-&gt;</span> <span class="p">})</span>
+ <span class="p">.</span><span class="n">setPositiveButton</span><span class="p">(</span><span class="s">&#34;OK&#34;</span><span class="p">,</span> <span class="p">{</span><span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="p">-&gt;</span> <span class="p">})</span>
+ <span class="p">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Builder 模式通过这种方式解决问题：</p>
+<ul>
+<li>将复杂对象的各个部分的创建(creating)和组装(assembling)封装在一个独立的 Builder 对象中。</li>
+<li>类将对象的创建委托给 Builder 对象，而不是直接创建。</li>
+</ul>
+<h3 id="dependency-injection">Dependency injection</h3>
+<p>依赖注入（Dependency injection, 简称 Di）通常表示某个对象接收(receives)它依赖的对象(objects)的技术，这些依赖的对象称为依赖项(dependencies)。在典型的使用关系中，接收者被称为客户端（client），传递的对象被称为服务（service）。将服务传递给客户端的代码可能有很多种，被称为注入器（injector）, 注入器提供给客户端需要使用哪些服务。注入(injection)是指将依赖项（服务）传递给使用依赖项的对象（客户端）。</p>
+<p>依赖注入的基本要求是将服务传递给客户端而不是让客户端创建或找到该服务。客户端不需要了解注入器，注入器实现构造服务然后将服务注入（传递）到客户端，客户端仅需要了解如何使用该服务。依赖注入的意图是实现对象构造和使用的分离，这可以提高代码的复用和可读性。</p>
+<p>依赖注入是<a href="https://en.wikipedia.org/wiki/Inversion_of_control">控制反转</a>（inversion of control, 简称 IoC）的一种技术形式，其他遵循控制反转原则的还有回调（callbacks），调度器（schedulers）等。</p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Zac</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        20200-06-20
+        
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      
+      <nav class="post-nav">
+        
+        <a class="next" href="/post/top-10-kotlin-questions/">
+            <span class="next-text nav-default">Top 10 Kotlin Questions in StackOverflow</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="zac@zacash.com" class="iconfont icon-email" title="email"></a>
+  <a href="https://zacash.cn/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2020
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Zac</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.d7b7ada643c9c1a983026e177f141f7363b4640d619caf01d8831a6718cd44ea.js"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

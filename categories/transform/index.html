@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>Hugo Basic - Zac</title>
+  <title>transform · Zac</title>
   <meta name="renderer" content="webkit" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 
@@ -16,7 +16,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
 
 
-<meta name="author" content="Zac" /><meta name="description" content="Hugo 的简单用法" /><meta name="keywords" content="Android, developer, programming" />
+<meta name="author" content="Zac" /><meta name="description" content="Android developer blog." /><meta name="keywords" content="Android, developer, programming" />
 
 
 
@@ -26,7 +26,9 @@
 <meta name="generator" content="Hugo 0.68.1 with theme even" />
 
 
-<link rel="canonical" href="https://zacash.cn/posts/hugo-basic/" />
+<link rel="canonical" href="https://zacash.cn/categories/transform/" />
+  <link href="https://zacash.cn/categories/transform/index.xml" rel="alternate" type="application/rss+xml" title="Zac" />
+  <link href="https://zacash.cn/categories/transform/index.xml" rel="feed" type="application/rss+xml" title="Zac" />
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -39,23 +41,15 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
 
 
-<meta property="og:title" content="Hugo Basic" />
-<meta property="og:description" content="Hugo 的简单用法" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="https://zacash.cn/posts/hugo-basic/" />
-<meta property="article:published_time" content="2020-04-04T09:25:04+08:00" />
-<meta property="article:modified_time" content="2020-04-04T09:25:04+08:00" />
-<meta itemprop="name" content="Hugo Basic">
-<meta itemprop="description" content="Hugo 的简单用法">
-<meta itemprop="datePublished" content="2020-04-04T09:25:04&#43;08:00" />
-<meta itemprop="dateModified" content="2020-04-04T09:25:04&#43;08:00" />
-<meta itemprop="wordCount" content="94">
-
-
-
-<meta itemprop="keywords" content="hugo,pages," /><meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Hugo Basic"/>
-<meta name="twitter:description" content="Hugo 的简单用法"/>
+<meta property="og:title" content="transform" />
+<meta property="og:description" content="Android developer blog." />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://zacash.cn/categories/transform/" />
+<meta property="og:updated_time" content="2020-06-10T08:34:13+08:00" />
+<meta itemprop="name" content="transform">
+<meta itemprop="description" content="Android developer blog."><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="transform"/>
+<meta name="twitter:description" content="Android developer blog."/>
 
 <!--[if lte IE 9]>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -115,62 +109,29 @@
     <main id="main" class="main">
       <div class="content-wrapper">
         <div id="content" class="content">
-          <article class="post">
-  <div class="post-content">
-    <h2 id="add-new-content">Add new content</h2>
-<p><code>hugo new posts/article-name.md</code></p>
-<h2 id="article-meta-info">Article meta info</h2>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span><span class="lnt">7
-</span><span class="lnt">8
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-md" data-lang="md">---
-title: &#34;New Article&#34;
-date: 2020-04-04T09:25:04+08:00
-description: &#34;Hugo 的简单用法&#34;
-tags: [&#34;hugo&#34;, &#34;pages&#34;]
-categories: [&#34;hugo&#34;]
-draft: true
----
-</code></pre></td></tr></table>
-</div>
-</div><h2 id="start-server-with-drafts-enabled">Start server with drafts enabled</h2>
-<p><code>hugo server -D</code></p>
-<h2 id="customize-the-theme">Customize the theme</h2>
-<p>Open up <code>config.toml</code> in a text editor:</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-yaml" data-lang="yaml">baseURL<span class="w"> </span>=<span class="w"> </span><span class="s2">&#34;https://example.org/&#34;</span><span class="w">
-</span><span class="w"></span>languageCode<span class="w"> </span>=<span class="w"> </span><span class="s2">&#34;en-us&#34;</span><span class="w">
-</span><span class="w"></span>title<span class="w"> </span>=<span class="w"> </span><span class="s2">&#34;My New Hugo Site&#34;</span><span class="w">
-</span><span class="w"></span>theme<span class="w"> </span>=<span class="w"> </span><span class="s2">&#34;ananke&#34;</span><span class="w">
-</span></code></pre></td></tr></table>
-</div>
-</div><h2 id="build-static-pages">Build static pages</h2>
-<p><code>hugo -D</code> output will be in <code>./public/</code> directory by default (<code>-d/--destination</code> flag to change it, or set <code>publishdir</code> in the config file)</p>
+          <section id="archive" class="archive">
+  <div class="archive-title category">
+        <h2 class="archive-name">transform</h2>
+      </div>
 
-  </div>
-</article>
+  <div class="archive-post">
+      <span class="archive-post-time">
+        10100-06-10
+      </span>
+      <span class="archive-post-title">
+        <a href="/post/intro-to-transform-api/" class="archive-post-link">
+          Intro to Transform Api
+        </a>
+      </span>
+    </div>
+</section>
+
+<nav class="pagination">
+  
+  
+</nav>
         </div>
         
-
-  
-
-  
 
       </div>
     </main>

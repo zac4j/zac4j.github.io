@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>transform on Zac</title>
+    <link>https://zacash.cn/categories/transform/</link>
+    <description>Recent content in transform on Zac</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Wed, 10 Jun 2020 08:34:13 +0800</lastBuildDate>
+    
+	<atom:link href="https://zacash.cn/categories/transform/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Intro to Transform Api</title>
+      <link>https://zacash.cn/post/intro-to-transform-api/</link>
+      <pubDate>Wed, 10 Jun 2020 08:34:13 +0800</pubDate>
+      
+      <guid>https://zacash.cn/post/intro-to-transform-api/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>
