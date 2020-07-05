@@ -6,10 +6,28 @@
     <description>Recent content in Posts on Zac</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Fri, 19 Jun 2020 22:03:29 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 04 Jul 2020 15:45:14 +0800</lastBuildDate>
     
 	<atom:link href="https://zacash.cn/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Intro to Hybrid App</title>
+      <link>https://zacash.cn/post/intro-to-hybrid-app/</link>
+      <pubDate>Sat, 04 Jul 2020 15:45:14 +0800</pubDate>
+      
+      <guid>https://zacash.cn/post/intro-to-hybrid-app/</guid>
+      <description>Hybrid App 的几种方案 PhoneGap/Cordova WebView 作为用户界面，以 Javascript 作为基本逻辑，以及和中间件通信，再由中间件访问底层 API 的方式，进行 App 开发。 React Native/Weex 使用前端技术开发，通过 JSBridge 将 Javascript</description>
+    </item>
+    
+    <item>
+      <title>Intro to Service</title>
+      <link>https://zacash.cn/post/intro-to-service/</link>
+      <pubDate>Sat, 04 Jul 2020 11:08:11 +0800</pubDate>
+      
+      <guid>https://zacash.cn/post/intro-to-service/</guid>
+      <description>查看进程基本信息 使用 adb shell ps|grep com.tencent.mobileqq 可以查看 QQ 应用进程相关的基本信息 1 2 3 4 5 Zac:tivi Zac$ adb shell ps | grep com.tencent.mobileqq # curr_user pid process name u0_a163 6779 669 1638852 27152 0 0 S com.tencent.mobileqq:MSF u0_a163 22001 669 1915536 224004 0 0 S com.tencent.mobileqq u0_a163 27829 669 1670960</description>
+    </item>
     
     <item>
       <title>Top 10 Kotlin Questions in StackOverflow</title>

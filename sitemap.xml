@@ -2,6 +2,34 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://zacash.cn/post/intro-to-hybrid-app/</loc>
+    <lastmod>2020-07-04T15:45:14+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://zacash.cn/post/</loc>
+    <lastmod>2020-07-04T15:45:14+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://zacash.cn/</loc>
+    <lastmod>2020-07-04T15:45:14+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://zacash.cn/post/intro-to-service/</loc>
+    <lastmod>2020-07-04T11:08:11+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>https://zacash.cn/categories/</loc>
     <lastmod>2020-06-19T22:03:29+08:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -23,13 +51,6 @@
   </url>
   
   <url>
-    <loc>https://zacash.cn/post/</loc>
-    <lastmod>2020-06-19T22:03:29+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
     <loc>https://zacash.cn/tags/</loc>
     <lastmod>2020-06-19T22:03:29+08:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -38,13 +59,6 @@
   
   <url>
     <loc>https://zacash.cn/post/top-10-kotlin-questions/</loc>
-    <lastmod>2020-06-19T22:03:29+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://zacash.cn/</loc>
     <lastmod>2020-06-19T22:03:29+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>

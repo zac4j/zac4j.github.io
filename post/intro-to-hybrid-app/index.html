@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Intro to Hybrid App - Zac</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Zac" /><meta name="description" content="Hybrid App 的几种方案 PhoneGap/Cordova WebView 作为用户界面，以 Javascript 作为基本逻辑，以及和中间件通信，再由中间件访问底层 API 的方式，进行 App 开发。 React Native/Weex 使用前端技术开发，通过 JSBridge 将 Javascript" /><meta name="keywords" content="Android, developer, programming" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.68.1 with theme even" />
+
+
+<link rel="canonical" href="https://zacash.cn/post/intro-to-hybrid-app/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.8c3cbcb0324c2bb4875ceccba4007cbad4b4ac8377f33af9953c3e7684534a50.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="Intro to Hybrid App" />
+<meta property="og:description" content="Hybrid App 的几种方案 PhoneGap/Cordova WebView 作为用户界面，以 Javascript 作为基本逻辑，以及和中间件通信，再由中间件访问底层 API 的方式，进行 App 开发。 React Native/Weex 使用前端技术开发，通过 JSBridge 将 Javascript" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://zacash.cn/post/intro-to-hybrid-app/" />
+<meta property="article:published_time" content="2020-07-04T15:45:14+08:00" />
+<meta property="article:modified_time" content="2020-07-04T15:45:14+08:00" />
+<meta itemprop="name" content="Intro to Hybrid App">
+<meta itemprop="description" content="Hybrid App 的几种方案 PhoneGap/Cordova WebView 作为用户界面，以 Javascript 作为基本逻辑，以及和中间件通信，再由中间件访问底层 API 的方式，进行 App 开发。 React Native/Weex 使用前端技术开发，通过 JSBridge 将 Javascript">
+<meta itemprop="datePublished" content="2020-07-04T15:45:14&#43;08:00" />
+<meta itemprop="dateModified" content="2020-07-04T15:45:14&#43;08:00" />
+<meta itemprop="wordCount" content="2107">
+
+
+
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Intro to Hybrid App"/>
+<meta name="twitter:description" content="Hybrid App 的几种方案 PhoneGap/Cordova WebView 作为用户界面，以 Javascript 作为基本逻辑，以及和中间件通信，再由中间件访问底层 API 的方式，进行 App 开发。 React Native/Weex 使用前端技术开发，通过 JSBridge 将 Javascript"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Zac</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Zac</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Intro to Hybrid App</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 4040-07-04 </span>
+        
+          <span class="more-meta"> 约 2107 字 </span>
+          <span class="more-meta"> 预计阅读 5 分钟 </span>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#hybrid-app-的几种方案">Hybrid App 的几种方案</a></li>
+    <li><a href="#phonegapcordova">PhoneGap/Cordova</a>
+      <ul>
+        <li><a href="#cordova-架构图">Cordova 架构图</a></li>
+        <li><a href="#cordova-的优缺点">Cordova 的优缺点</a></li>
+      </ul>
+    </li>
+    <li><a href="#nativeh5-混合开发">Native/H5 混合开发</a>
+      <ul>
+        <li><a href="#原生基础架构-infra">原生基础架构 Infra</a></li>
+        <li><a href="#nativeh5-技术原理jsbridge">Native/H5 技术原理——JsBridge</a></li>
+      </ul>
+    </li>
+    <li><a href="#react-native-实现原理">React Native 实现原理</a></li>
+    <li><a href="#页面调用方案">页面调用方案</a>
+      <ul>
+        <li><a href="#openurl-方案">openURL 方案</a></li>
+      </ul>
+    </li>
+    <li><a href="#react-native">React Native</a></li>
+    <li><a href="#常见问题">常见问题</a>
+      <ul>
+        <li><a href="#内存管理">内存管理</a></li>
+        <li><a href="#页面抖动空白">页面抖动/空白</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h2 id="hybrid-app-的几种方案">Hybrid App 的几种方案</h2>
+<ul>
+<li>
+<p><strong>PhoneGap/Cordova</strong></p>
+<p>WebView 作为用户界面，以 Javascript 作为基本逻辑，以及和中间件通信，再由中间件访问底层 API 的方式，进行 App 开发。</p>
+</li>
+<li>
+<p><strong>React Native/Weex</strong></p>
+<p>使用前端技术开发，通过 JSBridge 将 Javascript 代码解析的 Virtual DOM 传递到 Native 并使用原生进行渲染。</p>
+</li>
+<li>
+<p><strong>Native/H5 混合开发</strong></p>
+<p>在原生的架构基础上，嵌入 WebView 业务逻辑，一般有 Native 和 Web 前端开发人员组成。Native 写好基本的架构以及 API 让 Web 开发人员开发页面以及大部分渲染。</p>
+</li>
+</ul>
+<h2 id="phonegapcordova">PhoneGap/Cordova</h2>
+<p>PhoneGap 由 Apache 接管后改名为 Cordova，实际上是一个项目。Cordova 其实不应该称为 Hybrid 方案。因为，它的目标是全面使用前端技术开发移动应用，而不是前端和原生混合使用。不过，这些框架和 React Native 的目标是一致的：使用前端技术开发移动应用，提高工程效率。</p>
+<p>Cordova 让前端技术尽可能多的完成开发工作，只有在前端无法直接调用的原生系统功能方面提供了前端可用的接口。主流的 Cordova 项目都将业务逻辑实现在一个 WebView 中，目标是让开发者使用前端技术就能完成一个应用开发。这种做法需要一个前提——前端技术可以解决移动开发的所有需求。</p>
+<h3 id="cordova-架构图">Cordova 架构图</h3>
+<p><img src="https://user-gold-cdn.xitu.io/2018/7/23/164c7814e247d497?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt="cordova arch"></p>
+<ul>
+<li>Web App 是开发人员编写代码的地方，应用以网页的形式呈现，在一个 index.html 的本地页面文件中引用所需要的各种 Web 资源，如 CSS、Javascript、图片和影音文件等。App 的配置保存在 config.xml 文件中。</li>
+<li>WebView 层用来呈现 UI。</li>
+<li>Plugin 主要用于在 Javascript 代码中调用各平台的 native 功能。Cordova 项目已包含一些核心的插件，如电池、摄像头、通讯录等。开发人员也可以自定义插件，其原理就是 Native 获取 Javascript 环境上下文，并直接在上面挂在对象或者方法，</li>
+</ul>
+<h3 id="cordova-的优缺点">Cordova 的优缺点</h3>
+<h4 id="优点">优点</h4>
+<ul>
+<li>快速构建UI，全 Web 开发一定程度上有利于 Web 前端人员快速开发。</li>
+<li>样式统一，在不同平台可以获得相同的交互和展示。</li>
+<li>便于调试，可以在浏览器上进行调试，工具丰富。</li>
+</ul>
+<h4 id="缺点">缺点</h4>
+<ul>
+<li>兼容性，部分前端框架或语法在低版本 Android 手机上无法执行。</li>
+<li>功能有局限性，只适用于富UI场景，与底层交互需要做复杂的处理。</li>
+</ul>
+<h2 id="nativeh5-混合开发">Native/H5 混合开发</h2>
+<h3 id="原生基础架构-infra">原生基础架构 Infra</h3>
+<ul>
+<li>Hybrid-Navigator，使用 URL 来标识每个页面，在 App 中指明 URL 跳转到此页面。所以需要一个路由表，根据 URL 找到。</li>
+<li>Hybrid-Router，可以传递复杂对象，CRUD 功能。</li>
+<li>Hybrid-Scheme，使用 Scheme 标识 web 调用原生的功能，比如修改 WebView 标题栏和状态栏颜色，获取 user_code 等。</li>
+<li>Hybrid-Container，js 代码运行容器。它其实是一个内嵌浏览器（WebView），Container 需要提供一些必要的原生支持，比如 Cookie，OAuth 授权，图片缓存等。</li>
+</ul>
+<h3 id="nativeh5-技术原理jsbridge">Native/H5 技术原理——JsBridge</h3>
+<h4 id="h5-如何调原生方法">H5 如何调原生方法</h4>
+<p>基于 WebView 的机制和开发的 API，主要有三种方式：</p>
+<ul>
+<li>API 注入，原理就是 Native 获取 Javascript 环境的上下文，并在上面挂载对象或者方法，使 js 可以直接调用。</li>
+<li>WebView 响应 js prompt/console/alert 方法，对应 WebChromeClient 中的 <code>onJsPrompt()</code>/<code>onJsConsole()</code>/<code>onJsAlert()</code> 方法。</li>
+<li>WebView 拦截 URL Scheme，对应 WebViewClient 中的 <code>shouldOverrideUrlLoading()</code> 方法。</li>
+</ul>
+<h4 id="native-如何调-h5-函数">Native 如何调 H5 函数</h4>
+<p>原生 WebView 可以直接执行 js 代码</p>
+<ul>
+<li>
+<p>iOS:stringByEvaluatingJavaScriptFromString</p>
+<p><code>webview.stringByEvaluatingJavaScriptFromString(&quot;alert('NativeCall')&quot;)</code></p>
+</li>
+<li>
+<p>Android 4.4 以下</p>
+<p><code>mWebView.loadUrl(&quot;javascript:JSBridge.trigger('NativeCall')&quot;)</code></p>
+</li>
+<li>
+<p>Android 4.4+</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="n">mWebView</span><span class="o">.</span><span class="na">evaluateJavascript</span><span class="o">(</span><span class="s">&#34;JSBridge.trigger(&#39;NativeCall&#39;)&#34;</span><span class="o">,</span> <span class="k">new</span> <span class="n">ValueCallback</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;()</span> <span class="o">{</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onReceiveValue</span><span class="o">(</span><span class="n">String</span> <span class="n">value</span><span class="o">)</span> <span class="o">{</span>
+        <span class="c1">// js callback
+</span><span class="c1"></span>    <span class="o">}</span>
+<span class="o">});</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<h4 id="定义拦截规则">定义拦截规则</h4>
+<p>我们根据公司业务会制定一套 URL scheme 规则，比较类似常用的 <code>https://</code> 或 <code>file:///</code>，不过我们自定义的 scheme 可以是任意样式，比如：</p>
+<p><code>zapp://action?param1=xxx&amp;param2=xxx</code></p>
+<p>这样定义好的 scheme，h5 通过创建 iframe 方式发送请求。</p>
+<h4 id="scheme-的拦截">Scheme 的拦截</h4>
+<ul>
+<li>iOS 上：shouldStartLoadWithRequest</li>
+<li>Android: <code>WebViewClient.shouldOverrideUrlLoading()</code></li>
+</ul>
+<h4 id="scheme-的回调">Scheme 的回调</h4>
+<p>一般 Native 拦截 scheme ，处理完成后，调用 Bridge 的 callback 方法。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="n">mWebView</span><span class="o">.</span><span class="na">evaluateJavascript</span><span class="o">(</span><span class="s">&#34;JSBridge.trigger(&#39;NativeCall&#39;)&#34;</span><span class="o">,</span> <span class="k">new</span> <span class="n">ValueCallback</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;()</span> <span class="o">{</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onReceiveValue</span><span class="o">(</span><span class="n">String</span> <span class="n">value</span><span class="o">)</span> <span class="o">{</span>
+        <span class="c1">// js callback
+</span><span class="c1"></span>    <span class="o">}</span>
+<span class="o">});</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="react-native-实现原理">React Native 实现原理</h2>
+<p>React Native 并没有运行在浏览器引擎（WebView/V8）中。不像大部分前端框架是简化 DOM 树的处理，React Native 和 DOM 没有关系。React Native 重写了大部分系统 UI 组件，并在框架内处理好了 Javascript 和原生组件之间的调用和通信。开发者可以通过 React 风格的 Javascript 代码使用这些 React Native UI 组件来构建应用的UI。可以认为 React Native 实现了一个渲染引擎，使用 React 作为渲染引擎的编程语言。</p>
+<h2 id="页面调用方案">页面调用方案</h2>
+<p>简单的页面跳转，从 MainScreen 跳转到 SecondaryScreen</p>
+<p>Android 中的实现：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="n">startActivity</span><span class="p">(</span><span class="n">Intent</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="n">SecondaryScreen</span><span class="p">.</span><span class="k">class</span><span class="p">))</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>iOS 中的实现：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">SecondaryViewController *secondaryViewController = [[SecondaryViewController alloc] init];
+[self.navigationController pushViewController:secondViewController animated:YES];
+</code></pre></td></tr></table>
+</div>
+</div><p>随着项目逐渐增大，我们需要做一些模块化的工作。模块化基本的要求是解除模块间的依赖，我们需要一个间接的调用目标页面的方案。</p>
+<h3 id="openurl-方案">openURL 方案</h3>
+<p>在这些间接方案中，有很多是基于 iOS 提供的 UIApplicationDelegate 中的用于响应 URL 调用的钩子方法。</p>
+<p>在 iOS 8 中，该方法为：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">application:openURL:sourceApplication:annotation:
+</code></pre></td></tr></table>
+</div>
+</div><p>iOS 9 中该方法被标记为 Deprecated，并提供了一个替代方法：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">application:openURL:options:
+</code></pre></td></tr></table>
+</div>
+</div><p>我们将这两个方法称为 <code>openURL</code> 钩子方法。</p>
+<p>如果应用注册了一个 URL scheme。任何第三方应用，以及应用自身对该 URL 的调用，都会调起以上 <code>openURL</code> 钩子方法。这就提供了一个在应用间通信的方法。同时这也是目前为止，iOS 系统中，应用间通信的唯一方式。</p>
+<h2 id="react-native">React Native</h2>
+<p>React Native 需要的技术栈比较特别，比较适合 Web 经验特别丰富，前端工程师特别优秀，但又缺乏优秀的客户端工程师的情况，React Native 是一个快速切入移动应用市场的技术选择。</p>
+<h2 id="常见问题">常见问题</h2>
+<h3 id="内存管理">内存管理</h3>
+<p>根据 adb shell 查看 app 占用内存信息</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># 查看 app 基本信息</span>
+Zac:Sample Zac$ adb shell ps <span class="p">|</span> grep com.guotai.dazhihui
+u0_a674       <span class="m">9858</span>   <span class="m">669</span> <span class="m">2205104</span> <span class="m">268448</span> <span class="m">0</span>                   <span class="m">0</span> S com.guotai.dazhihui
+u0_a674      <span class="m">10039</span>   <span class="m">669</span> <span class="m">1973628</span> <span class="m">101852</span> <span class="m">0</span>                   <span class="m">0</span> S com.guotai.dazhihui:remote
+u0_a674      <span class="m">10129</span>   <span class="m">669</span> <span class="m">1988412</span> <span class="m">113528</span> <span class="m">0</span>                   <span class="m">0</span> S com.guotai.dazhihui:pushservice
+
+<span class="c1"># 未开启 WebView 时的内存占用信息</span>
+Zac:Sample Zac$ adb shell dumpsys meminfo com.guotai.dazhihui
+Applications Memory Usage <span class="o">(</span>in Kilobytes<span class="o">)</span>:
+...
+App Summary
+                       Pss<span class="o">(</span>KB<span class="o">)</span>
+                        ------
+           Java Heap:    <span class="m">21264</span>
+         Native Heap:    <span class="m">35988</span>
+                Code:    <span class="m">15648</span>
+               Stack:       <span class="m">52</span>
+            Graphics:    <span class="m">72324</span>
+       Private Other:     <span class="m">4528</span>
+              System:    <span class="m">18578</span>
+
+               TOTAL:   <span class="m">168382</span>       TOTAL SWAP PSS:      <span class="m">420</span>
+...
+
+<span class="c1"># 开启 WebView 之后的内存占用</span>
+...
+App Summary
+                       Pss<span class="o">(</span>KB<span class="o">)</span>
+                        ------
+           Java Heap:    <span class="m">25136</span>
+         Native Heap:    <span class="m">55420</span>
+                Code:    <span class="m">51480</span>
+               Stack:       <span class="m">52</span>
+            Graphics:    <span class="m">74704</span>
+       Private Other:     <span class="m">6244</span>
+              System:    <span class="m">29544</span>
+
+               TOTAL:   <span class="m">242580</span>       TOTAL SWAP PSS:      <span class="m">376</span>
+
+内存
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="页面抖动空白">页面抖动/空白</h3>
+<p>实现动画效果在低端设备下运行缓慢，页面抖动，不连贯。</p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Zac</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        4040-07-04
+        
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      
+      <nav class="post-nav">
+        
+        <a class="next" href="/post/intro-to-service/">
+            <span class="next-text nav-default">Intro to Service</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="zac@zacash.com" class="iconfont icon-email" title="email"></a>
+  <a href="https://zacash.cn/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2020
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Zac</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.d7b7ada643c9c1a983026e177f141f7363b4640d619caf01d8831a6718cd44ea.js"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>
