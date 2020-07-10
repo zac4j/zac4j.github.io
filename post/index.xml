@@ -30,6 +30,15 @@
     </item>
     
     <item>
+      <title>Java Basic</title>
+      <link>https://zacash.cn/post/java-basic/</link>
+      <pubDate>Fri, 03 Jul 2020 09:28:31 +0800</pubDate>
+      
+      <guid>https://zacash.cn/post/java-basic/</guid>
+      <description>🌟答案的组织策略：知道是什么，知道为什么，知道怎么用 0.JDK 和 JRE 有什么区别？ JDK 包含 JRE，同时还包含编译 Java 源码的编译器 javac，还包含了很多 Java 程</description>
+    </item>
+    
+    <item>
       <title>Top 10 Kotlin Questions in StackOverflow</title>
       <link>https://zacash.cn/post/top-10-kotlin-questions/</link>
       <pubDate>Fri, 19 Jun 2020 22:03:29 +0800</pubDate>

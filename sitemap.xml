@@ -30,6 +30,13 @@
   </url>
   
   <url>
+    <loc>https://zacash.cn/post/java-basic/</loc>
+    <lastmod>2020-07-03T09:28:31+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>https://zacash.cn/categories/</loc>
     <lastmod>2020-06-19T22:03:29+08:00</lastmod>
     <changefreq>weekly</changefreq>
