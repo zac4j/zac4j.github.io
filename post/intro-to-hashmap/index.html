@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Intro to HashMap - Zac</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Zac" /><meta name="description" content="HashMap 介绍 先看看Android SDK 中 HashMap 源码的描述： Hash table based implementation of the Map interface. This implementation provides all of the optional map operations, and permits null values and the null key. (The HashMap class is roughly equivalent to Hashtable, except that it is unsynchronized and permits nulls.) This class makes no guarantees as to" /><meta name="keywords" content="Android, developer, programming" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.68.1 with theme even" />
+
+
+<link rel="canonical" href="https://zacash.cn/post/intro-to-hashmap/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.8c3cbcb0324c2bb4875ceccba4007cbad4b4ac8377f33af9953c3e7684534a50.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="Intro to HashMap" />
+<meta property="og:description" content="HashMap 介绍 先看看Android SDK 中 HashMap 源码的描述： Hash table based implementation of the Map interface. This implementation provides all of the optional map operations, and permits null values and the null key. (The HashMap class is roughly equivalent to Hashtable, except that it is unsynchronized and permits nulls.) This class makes no guarantees as to" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://zacash.cn/post/intro-to-hashmap/" />
+<meta property="article:published_time" content="2020-07-15T15:11:27+08:00" />
+<meta property="article:modified_time" content="2020-07-15T15:11:27+08:00" />
+<meta itemprop="name" content="Intro to HashMap">
+<meta itemprop="description" content="HashMap 介绍 先看看Android SDK 中 HashMap 源码的描述： Hash table based implementation of the Map interface. This implementation provides all of the optional map operations, and permits null values and the null key. (The HashMap class is roughly equivalent to Hashtable, except that it is unsynchronized and permits nulls.) This class makes no guarantees as to">
+<meta itemprop="datePublished" content="2020-07-15T15:11:27&#43;08:00" />
+<meta itemprop="dateModified" content="2020-07-15T15:11:27&#43;08:00" />
+<meta itemprop="wordCount" content="1797">
+
+
+
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Intro to HashMap"/>
+<meta name="twitter:description" content="HashMap 介绍 先看看Android SDK 中 HashMap 源码的描述： Hash table based implementation of the Map interface. This implementation provides all of the optional map operations, and permits null values and the null key. (The HashMap class is roughly equivalent to Hashtable, except that it is unsynchronized and permits nulls.) This class makes no guarantees as to"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Zac</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Zac</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Intro to HashMap</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 15150-07-15 </span>
+        
+          <span class="more-meta"> 约 1797 字 </span>
+          <span class="more-meta"> 预计阅读 4 分钟 </span>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#hashmap-介绍">HashMap 介绍</a>
+      <ul>
+        <li><a href="#何为-constant-time">何为 constant time</a></li>
+        <li><a href="#何为-fast-fail">何为 fast fail</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h2 id="hashmap-介绍">HashMap 介绍</h2>
+<p>先看看Android SDK 中 HashMap 源码的描述：</p>
+<p>Hash table based implementation of the Map interface.  This implementation provides all of the optional map operations, and permits null values and the null key.  (The HashMap class is roughly equivalent to Hashtable, except that it is unsynchronized and permits nulls.) This class makes no guarantees as to the order of the map; in particular, it does not guarantee that the order will remain constant over time.</p>
+<p>HashMap 和 HashTable 大致等效，除了 HashMap 是非同步的，以及允许空值。无法保证顺序随着时间的推移保持不变。</p>
+<p>This implementation provides <strong>constant-time</strong> performance for the basic operations (get and put),assuming the hash function disperses the elements properly among the buckets.</p>
+<p>假设 hash 函数将元素分散在正确的 bucket 中，HashMap 对于基本操作(get 或 put) 会提供恒定时间的性能。</p>
+<h3 id="何为-constant-time">何为 constant time</h3>
+<p>constant time 是表示时间复杂度的一个示例，常见时间复杂度的描述：</p>
+<table>
+<thead>
+<tr>
+<th>Time complexity</th>
+<th>Time description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>O(1)</td>
+<td>Constant time</td>
+</tr>
+<tr>
+<td>O(log n)</td>
+<td>Logarithmic time</td>
+</tr>
+<tr>
+<td>O(n)</td>
+<td>Linear time</td>
+</tr>
+<tr>
+<td>O(n log n)</td>
+<td>Pseudo-linear time</td>
+</tr>
+<tr>
+<td>O(n^c)</td>
+<td>Polynomial time</td>
+</tr>
+<tr>
+<td>O(c^n)</td>
+<td>Exponential time</td>
+</tr>
+<tr>
+<td>O(n!)</td>
+<td>Factorial time</td>
+</tr>
+</tbody>
+</table>
+<p>Iteration over collection views requires time proportional to the &ldquo;capacity&rdquo; of the HashMap instance (the number of buckets) plus its size (the number of key-value mappings).</p>
+<p>从集合视角看，迭代所需的时间与 HashMap 实例的“容量”（ bucket 数量 ）及其大小（键-值映射数）成正比。</p>
+<p>Thus, it&rsquo;s very important not to set the initial capacity too high (or the load factor too low) if iteration performance is important.</p>
+<p>因此，如果迭代性能很重要，那么不要将初识容量设置过高（或负载因子设置过低），这很关键。</p>
+<p>An instance of HashMap has two parameters that affect its performance：</p>
+<p>有两个参数会影响 HashMap 实例的性能：</p>
+<ul>
+<li>initial capacity 初始容量</li>
+<li>load factor 负载因子</li>
+</ul>
+<p>The capacity is the number of buckets in the hash table, and the initial capacity is simply the capacity at the time the hash table is created. The load factor is a measure of how full the hash table is allowed to get before its capacity is automatically increased.</p>
+<p>容量是哈希表中 bucket 的数量，初始容量即是创建哈希表时的容量。负载因子用来评估哈希表填满的程度，以自动增长容量。</p>
+<p>When the number of entries in the hash table exceeds the product of the load factor and the current capacity, the hash table is rehashed (that is, internal data structures are rebuilt) so that the hash table has approximately twice the number of buckets.</p>
+<p>当哈希表中的条目数超过负载因子和当前容量的乘积时，哈希表将被重新映射（即内部数据结构将被重建），以使哈希表的 bucket 数大约为两倍。</p>
+<p>As a general rule, the default load factor (0.75) offers a good tradeoff between time and space costs. Higher values decrease the space overhead but increase the lookup cost (reflected in most of the operations of the HashMap class, including get and put).</p>
+<p>通常，默认负载因子（0.75）在时间和空间成本之间提供了一个很好的权衡。较高的值会减少空间开销，但会增加查找成本（反应在 HashMap 类的大多数操作中，包括 get 和 put）。</p>
+<p>The expected number of entries in the map and its load factor should be taken into account when setting its initial capacity, so as to minimize the number of rehash operations.</p>
+<p>设置其初始容量时，应考虑 map 中的预期条目数及其负载因子，以最大程度地减少重新映射操作的次数。</p>
+<p>If the initial capacity is greater than the maximum number of entries divided by the load factor, no rehash operations will ever occur.</p>
+<p>如果初始容量大于最大条目数除以负载因子，则将不会发生任何映射操作。</p>
+<p>If many mappings are to be stored in a HashMap instance, creating it with a sufficiently large capacity will allow the mappings to be stored more efficiently than letting it perform automatic rehashing as needed to grow the table.</p>
+<p>如果将许多映射关系存储在 HashMap 实例中，创建足够大容量的 map 将比让其按需自动增长哈希表重新映射，更有效的存储映射。</p>
+<p>Note that using many keys with the same {@code hashCode()} is a sure way to slow down performance of any hash table. To ameliorate impact, when keys are {@link Comparable}, this class may use comparison order among keys to help break ties.</p>
+<p>注意，使用许多具有相同 hashCode 的键是降低任何哈希表性能的方法。为了改善影响，当键是可比较时(Comparable)时，此类可以使用键之间的比较顺序来帮助打破平衡。</p>
+<p>Note that this implementation is not synchronized. If multiple threads access a hash map concurrently, and at least one of the threads modifies the map structurally, it must be synchronized externally. (A structural modification is any operation that adds or deletes one or more mappings; merely changing the value associated with a key that an instance already contains is not a structural modification.) This is typically accomplished by synchronizing on some object that naturally encapsulates the map.</p>
+<p>注意，这个实现并不是同步的。如果多线程同时访问 hash map，并且至少有一个线程在结构上修改了 map，则必须在外部进行同步。（结构型修改是指增删一个或多个映射关系，更新某个 key 对应的值并不是结构型修改）。通常是对封装 map 的某个对象加同步来实现。</p>
+<p>If no such object exists, the map should be &ldquo;wrapped&rdquo; using the {@link Collections#synchronizedMap Collections.synchronizedMap} method.  This is best done at creation time, to prevent accidental unsynchronized access to the map: Map m = Collections.synchronizedMap(new HashMap(&hellip;));</p>
+<p>如果没有这样的对象存在，则应该使用 Collections.synchronizedMap 方法来包装 map，最好是在创建时完成，以避免意外不同步地访问 map：<code>Map m = Collections.synchronizedMap(new HashMap(...));</code></p>
+<p>The iterators returned by all of this class&rsquo;s &ldquo;collection view methods&rdquo; are fail-fast: if the map is structurally modified at any time after the iterator is created, in any way except through the iterator&rsquo;s own remove method, the iterator will throw a {@link ConcurrentModificationException}.  Thus, in the face of concurrent modification, the iterator fails quickly and cleanly, rather than risking arbitrary, non-deterministic behavior at an undetermined time in the future.</p>
+<p>此类的所有“集合视角方法”返回的迭代器都是 <a href="https://whatis.techtarget.com/definition/fail-fast">fast fail</a> 的：在创建迭代器之后任何时刻对 map 结构进行了修改，除了通过迭代器自已的 remove 方法以外，该迭代器都会抛出 ConcurrentModificationException。因此，面对并发修改，迭代器会快速干净的 fail，而不是在未来的不确定时间冒着任意，不确定行为的风险。</p>
+<h3 id="何为-fast-fail">何为 fast fail</h3>
+<p>Note that the fail-fast behavior of an iterator cannot be guaranteed as it is, generally speaking, impossible to make any hard guarantees in the presence of unsynchronized concurrent modification.  Fail-fast iterators throw ConcurrentModificationException on a best-effort basis. Therefore, it would be wrong to write a program that depended on this exception for its correctness: the fail-fast behavior of iterators should be used only to detect bugs.</p>
+<p>注意不能保证迭代器的 fast fail 行为，一般来说，在存在不同步的并发修改情况下，不可能作出任何严格的保证。因此，编写依赖于此异常的程序的正确性是错误的：迭代器的 fast fail 行为仅用于错误检测。</p>
+<p>This class is a member of the Java Collections Framework<a href="https://docs.oracle.com/javase/8/docs/technotes/guides/collections/index.html">jcf</a></p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Zac</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        15150-07-15
+        
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      
+      <nav class="post-nav">
+        
+        <a class="next" href="/post/databinding-in-android/">
+            <span class="next-text nav-default">Data Binding in Android</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="zac@zacash.com" class="iconfont icon-email" title="email"></a>
+  <a href="https://zacash.cn/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2020
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Zac</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.d7b7ada643c9c1a983026e177f141f7363b4640d619caf01d8831a6718cd44ea.js"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

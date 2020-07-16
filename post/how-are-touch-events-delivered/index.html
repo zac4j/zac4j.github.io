@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>How Are Touch Events Delivered - Zac</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Zac" /><meta name="description" content="根据例子来理解 Android 的事件传递 页面的布局结构 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 &amp;lt;?xml version=&amp;#34;1.0&amp;#34; encoding=&amp;#34;utf-8&amp;#34;?&amp;gt; &amp;lt;layout xmlns:android=&amp;#34;http://schemas.android.com/apk/res/android&amp;#34; xmlns:app=&amp;#34;http://schemas.android.com/apk/res-auto&amp;#34;&amp;gt; &amp;lt;data&amp;gt; &amp;lt;variable name=&amp;#34;viewModel&amp;#34; type=&amp;#34;com.zac4j.system.data.TouchViewModel&amp;#34; /&amp;gt; &amp;lt;/data&amp;gt; &amp;lt;com.zac4j.system.ui.widget.CustomLayout android:id=&amp;#34;@id/touch_sample_container&amp;#34; android:layout_width=&amp;#34;match_parent&amp;#34; android:layout_height=&amp;#34;match_parent&amp;#34;&amp;gt; &amp;lt;Button android:id=&amp;#34;@id/touch_sample_btn&amp;#34; style=&amp;#34;@style/Widget.AppCompat.Button.Colored&amp;#34; android:layout_width=&amp;#34;match_parent&amp;#34; android:layout_height=&amp;#34;wrap_content&amp;#34; android:text=&amp;#34;Touch Me&amp;#34;" /><meta name="keywords" content="Android, developer, programming" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.68.1 with theme even" />
+
+
+<link rel="canonical" href="https://zacash.cn/post/how-are-touch-events-delivered/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.8c3cbcb0324c2bb4875ceccba4007cbad4b4ac8377f33af9953c3e7684534a50.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="How Are Touch Events Delivered" />
+<meta property="og:description" content="根据例子来理解 Android 的事件传递 页面的布局结构 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 &lt;?xml version=&#34;1.0&#34; encoding=&#34;utf-8&#34;?&gt; &lt;layout xmlns:android=&#34;http://schemas.android.com/apk/res/android&#34; xmlns:app=&#34;http://schemas.android.com/apk/res-auto&#34;&gt; &lt;data&gt; &lt;variable name=&#34;viewModel&#34; type=&#34;com.zac4j.system.data.TouchViewModel&#34; /&gt; &lt;/data&gt; &lt;com.zac4j.system.ui.widget.CustomLayout android:id=&#34;@id/touch_sample_container&#34; android:layout_width=&#34;match_parent&#34; android:layout_height=&#34;match_parent&#34;&gt; &lt;Button android:id=&#34;@id/touch_sample_btn&#34; style=&#34;@style/Widget.AppCompat.Button.Colored&#34; android:layout_width=&#34;match_parent&#34; android:layout_height=&#34;wrap_content&#34; android:text=&#34;Touch Me&#34;" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://zacash.cn/post/how-are-touch-events-delivered/" />
+<meta property="article:published_time" content="2020-07-11T08:37:45+08:00" />
+<meta property="article:modified_time" content="2020-07-11T08:37:45+08:00" />
+<meta itemprop="name" content="How Are Touch Events Delivered">
+<meta itemprop="description" content="根据例子来理解 Android 的事件传递 页面的布局结构 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 &lt;?xml version=&#34;1.0&#34; encoding=&#34;utf-8&#34;?&gt; &lt;layout xmlns:android=&#34;http://schemas.android.com/apk/res/android&#34; xmlns:app=&#34;http://schemas.android.com/apk/res-auto&#34;&gt; &lt;data&gt; &lt;variable name=&#34;viewModel&#34; type=&#34;com.zac4j.system.data.TouchViewModel&#34; /&gt; &lt;/data&gt; &lt;com.zac4j.system.ui.widget.CustomLayout android:id=&#34;@id/touch_sample_container&#34; android:layout_width=&#34;match_parent&#34; android:layout_height=&#34;match_parent&#34;&gt; &lt;Button android:id=&#34;@id/touch_sample_btn&#34; style=&#34;@style/Widget.AppCompat.Button.Colored&#34; android:layout_width=&#34;match_parent&#34; android:layout_height=&#34;wrap_content&#34; android:text=&#34;Touch Me&#34;">
+<meta itemprop="datePublished" content="2020-07-11T08:37:45&#43;08:00" />
+<meta itemprop="dateModified" content="2020-07-11T08:37:45&#43;08:00" />
+<meta itemprop="wordCount" content="1647">
+
+
+
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="How Are Touch Events Delivered"/>
+<meta name="twitter:description" content="根据例子来理解 Android 的事件传递 页面的布局结构 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 &lt;?xml version=&#34;1.0&#34; encoding=&#34;utf-8&#34;?&gt; &lt;layout xmlns:android=&#34;http://schemas.android.com/apk/res/android&#34; xmlns:app=&#34;http://schemas.android.com/apk/res-auto&#34;&gt; &lt;data&gt; &lt;variable name=&#34;viewModel&#34; type=&#34;com.zac4j.system.data.TouchViewModel&#34; /&gt; &lt;/data&gt; &lt;com.zac4j.system.ui.widget.CustomLayout android:id=&#34;@id/touch_sample_container&#34; android:layout_width=&#34;match_parent&#34; android:layout_height=&#34;match_parent&#34;&gt; &lt;Button android:id=&#34;@id/touch_sample_btn&#34; style=&#34;@style/Widget.AppCompat.Button.Colored&#34; android:layout_width=&#34;match_parent&#34; android:layout_height=&#34;wrap_content&#34; android:text=&#34;Touch Me&#34;"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Zac</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Zac</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">How Are Touch Events Delivered</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 11110-07-11 </span>
+        
+          <span class="more-meta"> 约 1647 字 </span>
+          <span class="more-meta"> 预计阅读 4 分钟 </span>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#touchevent-的传递">TouchEvent 的传递</a></li>
+    <li><a href="#viewgrouponintercepttouchevent">ViewGroup.onInterceptTouchEvent</a></li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <p>根据例子来理解 Android 的事件传递</p>
+<p>页面的布局结构</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-xml" data-lang="xml"><span class="cp">&lt;?xml version=&#34;1.0&#34; encoding=&#34;utf-8&#34;?&gt;</span>
+<span class="nt">&lt;layout</span> <span class="na">xmlns:android=</span><span class="s">&#34;http://schemas.android.com/apk/res/android&#34;</span>
+  <span class="na">xmlns:app=</span><span class="s">&#34;http://schemas.android.com/apk/res-auto&#34;</span><span class="nt">&gt;</span>
+
+  <span class="nt">&lt;data&gt;</span>
+    <span class="nt">&lt;variable</span>
+      <span class="na">name=</span><span class="s">&#34;viewModel&#34;</span>
+      <span class="na">type=</span><span class="s">&#34;com.zac4j.system.data.TouchViewModel&#34;</span> <span class="nt">/&gt;</span>
+  <span class="nt">&lt;/data&gt;</span>
+
+  <span class="nt">&lt;com.zac4j.system.ui.widget.CustomLayout</span>
+    <span class="na">android:id=</span><span class="s">&#34;@id/touch_sample_container&#34;</span>
+    <span class="na">android:layout_width=</span><span class="s">&#34;match_parent&#34;</span>
+    <span class="na">android:layout_height=</span><span class="s">&#34;match_parent&#34;</span><span class="nt">&gt;</span>
+
+    <span class="nt">&lt;Button</span>
+      <span class="na">android:id=</span><span class="s">&#34;@id/touch_sample_btn&#34;</span>
+      <span class="na">style=</span><span class="s">&#34;@style/Widget.AppCompat.Button.Colored&#34;</span>
+      <span class="na">android:layout_width=</span><span class="s">&#34;match_parent&#34;</span>
+      <span class="na">android:layout_height=</span><span class="s">&#34;wrap_content&#34;</span>
+      <span class="na">android:text=</span><span class="s">&#34;Touch Me&#34;</span>
+      <span class="na">app:layout_constraintEnd_toEndOf=</span><span class="s">&#34;parent&#34;</span>
+      <span class="na">app:layout_constraintStart_toStartOf=</span><span class="s">&#34;parent&#34;</span>
+      <span class="na">app:layout_constraintTop_toTopOf=</span><span class="s">&#34;parent&#34;</span> <span class="nt">/&gt;</span>
+
+  <span class="nt">&lt;/com.zac4j.system.ui.widget.CustomLayout&gt;</span>
+<span class="nt">&lt;/layout&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="touchevent-的传递">TouchEvent 的传递</h2>
+<p>我们通常对 Button 创建点击事件:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="n">touchSampleBtn</span><span class="p">.</span><span class="n">setOnClickListener</span> <span class="p">{</span>
+    <span class="n">Logger</span><span class="p">.</span><span class="n">i</span><span class="p">(</span><span class="n">TAG</span><span class="p">,</span> <span class="s">&#34;setOnClickListener&#34;</span><span class="p">,</span> <span class="s">&#34;sampleBtn clicked&#34;</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>可以先看下 View.dispatchTouchEvent() 的实现:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="k">public</span> <span class="n">boolean</span> <span class="n">dispatchTouchEvent</span><span class="p">(</span><span class="n">MotionEvent</span> <span class="n">event</span><span class="p">)</span> <span class="p">{</span>
+    <span class="p">...</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">onFilterTouchEventForSecurity</span><span class="p">(</span><span class="n">event</span><span class="p">))</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">((</span><span class="n">mViewFlags</span> <span class="p">&amp;</span> <span class="n">ENABLED_MASK</span><span class="p">)</span> <span class="p">==</span> <span class="n">ENABLED</span> <span class="p">&amp;&amp;</span> <span class="n">handleScrollBarDragging</span><span class="p">(</span><span class="n">event</span><span class="p">))</span> <span class="p">{</span>
+            <span class="n">result</span> <span class="p">=</span> <span class="k">true</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="c1">//noinspection SimplifiableIfStatement
+</span><span class="c1"></span>        <span class="n">ListenerInfo</span> <span class="n">li</span> <span class="p">=</span> <span class="n">mListenerInfo</span><span class="p">;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">li</span> <span class="p">!=</span> <span class="k">null</span> <span class="p">&amp;&amp;</span> <span class="n">li</span><span class="p">.</span><span class="n">mOnTouchListener</span> <span class="p">!=</span> <span class="k">null</span>
+                <span class="p">&amp;&amp;</span> <span class="p">(</span><span class="n">mViewFlags</span> <span class="p">&amp;</span> <span class="n">ENABLED_MASK</span><span class="p">)</span> <span class="p">==</span> <span class="n">ENABLED</span>
+                <span class="p">&amp;&amp;</span> <span class="n">li</span><span class="p">.</span><span class="n">mOnTouchListener</span><span class="p">.</span><span class="n">onTouch</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="n">event</span><span class="p">))</span> <span class="p">{</span>
+            <span class="n">result</span> <span class="p">=</span> <span class="k">true</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="k">if</span> <span class="p">(!</span><span class="n">result</span> <span class="p">&amp;&amp;</span> <span class="n">onTouchEvent</span><span class="p">(</span><span class="n">event</span><span class="p">))</span> <span class="p">{</span>
+            <span class="n">result</span> <span class="p">=</span> <span class="k">true</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="p">...</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>可以看到 <code>View.mOnTouchListener.onTouch()</code> 会在 <code>View.onTouchEvent()</code> 前判断是否执行，假如 <code>View.mOnTouchListener.onTouch()</code> 返回 true(消费该事件) 的话，<code>View.onTouchEvent()</code> 将不会执行。</p>
+<p><code>View.mTouchListener.onTouch()</code> 的执行条件是:</p>
+<ul>
+<li>mTouchListener 不为空(即设置 <code>View.setOnTouchListener()</code> 方法)</li>
+<li>View 是 enable 状态(未设置 <code>View.setEnable(false)</code> 方法)</li>
+</ul>
+<h2 id="viewgrouponintercepttouchevent">ViewGroup.onInterceptTouchEvent</h2>
+<p>设置 <code>CustomLayout.onInterceptTouchEvent()</code> 返回 false，点击 touchSamleBtn 按钮.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback"># MotionEvent.ACTION_DOWN 事件
+I/ZacLog: Page -&gt; TouchFragment, View -&gt; CustomLayout, Method -&gt; dispatchTouchEvent, Msg -&gt; MotionEvent::ACTION_DOWN
+I/ZacLog: Page -&gt; TouchFragment, View -&gt; CustomLayout, Method -&gt; onInterceptTouchEvent, Msg -&gt; MotionEvent::ACTION_DOWN
+I/ZacLog: Page -&gt; TouchFragment, View -&gt; touchSampleBtn::AppCompatButton, Method -&gt; setOnTouchListener, Msg -&gt; MotionEvent::ACTION_DOWN
+# MotionEvent.ACTION_UP 事件
+I/ZacLog: Page -&gt; TouchFragment, View -&gt; CustomLayout, Method -&gt; dispatchTouchEvent, Msg -&gt; MotionEvent::ACTION_UP
+I/ZacLog: Page -&gt; TouchFragment, View -&gt; CustomLayout, Method -&gt; onInterceptTouchEvent, Msg -&gt; MotionEvent::ACTION_UP
+I/ZacLog: Page -&gt; TouchFragment, View -&gt; touchSampleBtn::AppCompatButton, Method -&gt; setOnTouchListener, Msg -&gt; MotionEvent::ACTION_UP
+# View.onClick 事件
+I/ZacLog: Page -&gt; TouchFragment, View -&gt; touchSampleBtn::AppCompatButton, Method -&gt; setOnClickListener, Msg -&gt; clicked
+</code></pre></td></tr></table>
+</div>
+</div><p>事件的传递: CustomLayout.dispatchTouchEvent() -&gt; CustomLayout.onInterceptTouchEvent() -&gt; View.mOnTouchListener.onTouch()</p>
+<p>同时 MotionEvent.ACTION_DOWN + MotionEvent.ACTION_DOWN -&gt; View.mOnClickListener.onClick()</p>
+<p>设置 <code>CustomLayout.onInterceptTouchEvent()</code> 返回 true，点击 touchSampleBtn.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">I/ZacLog: Page -&gt; TouchFragment, View -&gt; CustomLayout, Method -&gt; onInterceptTouchEvent, Msg -&gt; MotionEvent::ACTION_DOWN
+I/ZacLog: Page -&gt; TouchFragment, View -&gt; touchSampleContainer::CustomLayout, Method -&gt; setOnTouchListener, Msg -&gt; MotionEvent::ACTION_DOWN
+</code></pre></td></tr></table>
+</div>
+</div><p>我们看下 ViewGroup.dispatchTouchEvent() 的实现：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span><span class="lnt">107
+</span><span class="lnt">108
+</span><span class="lnt">109
+</span><span class="lnt">110
+</span><span class="lnt">111
+</span><span class="lnt">112
+</span><span class="lnt">113
+</span><span class="lnt">114
+</span><span class="lnt">115
+</span><span class="lnt">116
+</span><span class="lnt">117
+</span><span class="lnt">118
+</span><span class="lnt">119
+</span><span class="lnt">120
+</span><span class="lnt">121
+</span><span class="lnt">122
+</span><span class="lnt">123
+</span><span class="lnt">124
+</span><span class="lnt">125
+</span><span class="lnt">126
+</span><span class="lnt">127
+</span><span class="lnt">128
+</span><span class="lnt">129
+</span><span class="lnt">130
+</span><span class="lnt">131
+</span><span class="lnt">132
+</span><span class="lnt">133
+</span><span class="lnt">134
+</span><span class="lnt">135
+</span><span class="lnt">136
+</span><span class="lnt">137
+</span><span class="lnt">138
+</span><span class="lnt">139
+</span><span class="lnt">140
+</span><span class="lnt">141
+</span><span class="lnt">142
+</span><span class="lnt">143
+</span><span class="lnt">144
+</span><span class="lnt">145
+</span><span class="lnt">146
+</span><span class="lnt">147
+</span><span class="lnt">148
+</span><span class="lnt">149
+</span><span class="lnt">150
+</span><span class="lnt">151
+</span><span class="lnt">152
+</span><span class="lnt">153
+</span><span class="lnt">154
+</span><span class="lnt">155
+</span><span class="lnt">156
+</span><span class="lnt">157
+</span><span class="lnt">158
+</span><span class="lnt">159
+</span><span class="lnt">160
+</span><span class="lnt">161
+</span><span class="lnt">162
+</span><span class="lnt">163
+</span><span class="lnt">164
+</span><span class="lnt">165
+</span><span class="lnt">166
+</span><span class="lnt">167
+</span><span class="lnt">168
+</span><span class="lnt">169
+</span><span class="lnt">170
+</span><span class="lnt">171
+</span><span class="lnt">172
+</span><span class="lnt">173
+</span><span class="lnt">174
+</span><span class="lnt">175
+</span><span class="lnt">176
+</span><span class="lnt">177
+</span><span class="lnt">178
+</span><span class="lnt">179
+</span><span class="lnt">180
+</span><span class="lnt">181
+</span><span class="lnt">182
+</span><span class="lnt">183
+</span><span class="lnt">184
+</span><span class="lnt">185
+</span><span class="lnt">186
+</span><span class="lnt">187
+</span><span class="lnt">188
+</span><span class="lnt">189
+</span><span class="lnt">190
+</span><span class="lnt">191
+</span><span class="lnt">192
+</span><span class="lnt">193
+</span><span class="lnt">194
+</span><span class="lnt">195
+</span><span class="lnt">196
+</span><span class="lnt">197
+</span><span class="lnt">198
+</span><span class="lnt">199
+</span><span class="lnt">200
+</span><span class="lnt">201
+</span><span class="lnt">202
+</span><span class="lnt">203
+</span><span class="lnt">204
+</span><span class="lnt">205
+</span><span class="lnt">206
+</span><span class="lnt">207
+</span><span class="lnt">208
+</span><span class="lnt">209
+</span><span class="lnt">210
+</span><span class="lnt">211
+</span><span class="lnt">212
+</span><span class="lnt">213
+</span><span class="lnt">214
+</span><span class="lnt">215
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="nd">@Override</span>
+<span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">dispatchTouchEvent</span><span class="o">(</span><span class="n">MotionEvent</span> <span class="n">ev</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">mInputEventConsistencyVerifier</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">mInputEventConsistencyVerifier</span><span class="o">.</span><span class="na">onTouchEvent</span><span class="o">(</span><span class="n">ev</span><span class="o">,</span> <span class="n">1</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="c1">// If the event targets the accessibility focused view and this is it, start
+</span><span class="c1"></span>    <span class="c1">// normal event dispatch. Maybe a descendant is what will handle the click.
+</span><span class="c1"></span>    <span class="k">if</span> <span class="o">(</span><span class="n">ev</span><span class="o">.</span><span class="na">isTargetAccessibilityFocus</span><span class="o">()</span> <span class="o">&amp;&amp;</span> <span class="n">isAccessibilityFocusedViewOrHost</span><span class="o">())</span> <span class="o">{</span>
+        <span class="n">ev</span><span class="o">.</span><span class="na">setTargetAccessibilityFocus</span><span class="o">(</span><span class="kc">false</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="kt">boolean</span> <span class="n">handled</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">onFilterTouchEventForSecurity</span><span class="o">(</span><span class="n">ev</span><span class="o">))</span> <span class="o">{</span>
+        <span class="kd">final</span> <span class="kt">int</span> <span class="n">action</span> <span class="o">=</span> <span class="n">ev</span><span class="o">.</span><span class="na">getAction</span><span class="o">();</span>
+        <span class="kd">final</span> <span class="kt">int</span> <span class="n">actionMasked</span> <span class="o">=</span> <span class="n">action</span> <span class="o">&amp;</span> <span class="n">MotionEvent</span><span class="o">.</span><span class="na">ACTION_MASK</span><span class="o">;</span>
+
+        <span class="c1">// Handle an initial down.
+</span><span class="c1"></span>        <span class="k">if</span> <span class="o">(</span><span class="n">actionMasked</span> <span class="o">==</span> <span class="n">MotionEvent</span><span class="o">.</span><span class="na">ACTION_DOWN</span><span class="o">)</span> <span class="o">{</span>
+            <span class="c1">// Throw away all previous state when starting a new touch gesture.
+</span><span class="c1"></span>            <span class="c1">// The framework may have dropped the up or cancel event for the previous gesture
+</span><span class="c1"></span>            <span class="c1">// due to an app switch, ANR, or some other state change.
+</span><span class="c1"></span>            <span class="n">cancelAndClearTouchTargets</span><span class="o">(</span><span class="n">ev</span><span class="o">);</span>
+            <span class="n">resetTouchState</span><span class="o">();</span>
+        <span class="o">}</span>
+
+        <span class="c1">// Check for interception.
+</span><span class="c1"></span>        <span class="kd">final</span> <span class="kt">boolean</span> <span class="n">intercepted</span><span class="o">;</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">actionMasked</span> <span class="o">==</span> <span class="n">MotionEvent</span><span class="o">.</span><span class="na">ACTION_DOWN</span>
+                <span class="o">||</span> <span class="n">mFirstTouchTarget</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+            <span class="kd">final</span> <span class="kt">boolean</span> <span class="n">disallowIntercept</span> <span class="o">=</span> <span class="o">(</span><span class="n">mGroupFlags</span> <span class="o">&amp;</span> <span class="n">FLAG_DISALLOW_INTERCEPT</span><span class="o">)</span> <span class="o">!=</span> <span class="n">0</span><span class="o">;</span>
+            <span class="k">if</span> <span class="o">(!</span><span class="n">disallowIntercept</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">intercepted</span> <span class="o">=</span> <span class="n">onInterceptTouchEvent</span><span class="o">(</span><span class="n">ev</span><span class="o">);</span>
+                <span class="n">ev</span><span class="o">.</span><span class="na">setAction</span><span class="o">(</span><span class="n">action</span><span class="o">);</span> <span class="c1">// restore action in case it was changed
+</span><span class="c1"></span>            <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+                <span class="n">intercepted</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+            <span class="o">}</span>
+        <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+            <span class="c1">// There are no touch targets and this action is not an initial down
+</span><span class="c1"></span>            <span class="c1">// so this view group continues to intercept touches.
+</span><span class="c1"></span>            <span class="n">intercepted</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+        <span class="o">}</span>
+
+        <span class="c1">// If intercepted, start normal event dispatch. Also if there is already
+</span><span class="c1"></span>        <span class="c1">// a view that is handling the gesture, do normal event dispatch.
+</span><span class="c1"></span>        <span class="k">if</span> <span class="o">(</span><span class="n">intercepted</span> <span class="o">||</span> <span class="n">mFirstTouchTarget</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">ev</span><span class="o">.</span><span class="na">setTargetAccessibilityFocus</span><span class="o">(</span><span class="kc">false</span><span class="o">);</span>
+        <span class="o">}</span>
+
+        <span class="c1">// Check for cancelation.
+</span><span class="c1"></span>        <span class="kd">final</span> <span class="kt">boolean</span> <span class="n">canceled</span> <span class="o">=</span> <span class="n">resetCancelNextUpFlag</span><span class="o">(</span><span class="k">this</span><span class="o">)</span>
+                <span class="o">||</span> <span class="n">actionMasked</span> <span class="o">==</span> <span class="n">MotionEvent</span><span class="o">.</span><span class="na">ACTION_CANCEL</span><span class="o">;</span>
+
+        <span class="c1">// Update list of touch targets for pointer down, if needed.
+</span><span class="c1"></span>        <span class="kd">final</span> <span class="kt">boolean</span> <span class="n">split</span> <span class="o">=</span> <span class="o">(</span><span class="n">mGroupFlags</span> <span class="o">&amp;</span> <span class="n">FLAG_SPLIT_MOTION_EVENTS</span><span class="o">)</span> <span class="o">!=</span> <span class="n">0</span><span class="o">;</span>
+        <span class="n">TouchTarget</span> <span class="n">newTouchTarget</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+        <span class="kt">boolean</span> <span class="n">alreadyDispatchedToNewTouchTarget</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+        <span class="k">if</span> <span class="o">(!</span><span class="n">canceled</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">intercepted</span><span class="o">)</span> <span class="o">{</span>
+
+            <span class="c1">// If the event is targeting accessibility focus we give it to the
+</span><span class="c1"></span>            <span class="c1">// view that has accessibility focus and if it does not handle it
+</span><span class="c1"></span>            <span class="c1">// we clear the flag and dispatch the event to all children as usual.
+</span><span class="c1"></span>            <span class="c1">// We are looking up the accessibility focused host to avoid keeping
+</span><span class="c1"></span>            <span class="c1">// state since these events are very rare.
+</span><span class="c1"></span>            <span class="n">View</span> <span class="n">childWithAccessibilityFocus</span> <span class="o">=</span> <span class="n">ev</span><span class="o">.</span><span class="na">isTargetAccessibilityFocus</span><span class="o">()</span>
+                    <span class="o">?</span> <span class="n">findChildWithAccessibilityFocus</span><span class="o">()</span> <span class="o">:</span> <span class="kc">null</span><span class="o">;</span>
+
+            <span class="k">if</span> <span class="o">(</span><span class="n">actionMasked</span> <span class="o">==</span> <span class="n">MotionEvent</span><span class="o">.</span><span class="na">ACTION_DOWN</span>
+                    <span class="o">||</span> <span class="o">(</span><span class="n">split</span> <span class="o">&amp;&amp;</span> <span class="n">actionMasked</span> <span class="o">==</span> <span class="n">MotionEvent</span><span class="o">.</span><span class="na">ACTION_POINTER_DOWN</span><span class="o">)</span>
+                    <span class="o">||</span> <span class="n">actionMasked</span> <span class="o">==</span> <span class="n">MotionEvent</span><span class="o">.</span><span class="na">ACTION_HOVER_MOVE</span><span class="o">)</span> <span class="o">{</span>
+                <span class="kd">final</span> <span class="kt">int</span> <span class="n">actionIndex</span> <span class="o">=</span> <span class="n">ev</span><span class="o">.</span><span class="na">getActionIndex</span><span class="o">();</span> <span class="c1">// always 0 for down
+</span><span class="c1"></span>                <span class="kd">final</span> <span class="kt">int</span> <span class="n">idBitsToAssign</span> <span class="o">=</span> <span class="n">split</span> <span class="o">?</span> <span class="n">1</span> <span class="o">&lt;&lt;</span> <span class="n">ev</span><span class="o">.</span><span class="na">getPointerId</span><span class="o">(</span><span class="n">actionIndex</span><span class="o">)</span>
+                        <span class="o">:</span> <span class="n">TouchTarget</span><span class="o">.</span><span class="na">ALL_POINTER_IDS</span><span class="o">;</span>
+
+                <span class="c1">// Clean up earlier touch targets for this pointer id in case they
+</span><span class="c1"></span>                <span class="c1">// have become out of sync.
+</span><span class="c1"></span>                <span class="n">removePointersFromTouchTargets</span><span class="o">(</span><span class="n">idBitsToAssign</span><span class="o">);</span>
+
+                <span class="kd">final</span> <span class="kt">int</span> <span class="n">childrenCount</span> <span class="o">=</span> <span class="n">mChildrenCount</span><span class="o">;</span>
+                <span class="k">if</span> <span class="o">(</span><span class="n">newTouchTarget</span> <span class="o">==</span> <span class="kc">null</span> <span class="o">&amp;&amp;</span> <span class="n">childrenCount</span> <span class="o">!=</span> <span class="n">0</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="kd">final</span> <span class="kt">float</span> <span class="n">x</span> <span class="o">=</span> <span class="n">ev</span><span class="o">.</span><span class="na">getX</span><span class="o">(</span><span class="n">actionIndex</span><span class="o">);</span>
+                    <span class="kd">final</span> <span class="kt">float</span> <span class="n">y</span> <span class="o">=</span> <span class="n">ev</span><span class="o">.</span><span class="na">getY</span><span class="o">(</span><span class="n">actionIndex</span><span class="o">);</span>
+                    <span class="c1">// Find a child that can receive the event.
+</span><span class="c1"></span>                    <span class="c1">// Scan children from front to back.
+</span><span class="c1"></span>                    <span class="kd">final</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">View</span><span class="o">&gt;</span> <span class="n">preorderedList</span> <span class="o">=</span> <span class="n">buildTouchDispatchChildList</span><span class="o">();</span>
+                    <span class="kd">final</span> <span class="kt">boolean</span> <span class="n">customOrder</span> <span class="o">=</span> <span class="n">preorderedList</span> <span class="o">==</span> <span class="kc">null</span>
+                            <span class="o">&amp;&amp;</span> <span class="n">isChildrenDrawingOrderEnabled</span><span class="o">();</span>
+                    <span class="kd">final</span> <span class="n">View</span><span class="o">[]</span> <span class="n">children</span> <span class="o">=</span> <span class="n">mChildren</span><span class="o">;</span>
+                    <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">childrenCount</span> <span class="o">-</span> <span class="n">1</span><span class="o">;</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="n">0</span><span class="o">;</span> <span class="n">i</span><span class="o">--)</span> <span class="o">{</span>
+                        <span class="kd">final</span> <span class="kt">int</span> <span class="n">childIndex</span> <span class="o">=</span> <span class="n">getAndVerifyPreorderedIndex</span><span class="o">(</span>
+                                <span class="n">childrenCount</span><span class="o">,</span> <span class="n">i</span><span class="o">,</span> <span class="n">customOrder</span><span class="o">);</span>
+                        <span class="kd">final</span> <span class="n">View</span> <span class="n">child</span> <span class="o">=</span> <span class="n">getAndVerifyPreorderedView</span><span class="o">(</span>
+                                <span class="n">preorderedList</span><span class="o">,</span> <span class="n">children</span><span class="o">,</span> <span class="n">childIndex</span><span class="o">);</span>
+
+                        <span class="c1">// If there is a view that has accessibility focus we want it
+</span><span class="c1"></span>                        <span class="c1">// to get the event first and if not handled we will perform a
+</span><span class="c1"></span>                        <span class="c1">// normal dispatch. We may do a double iteration but this is
+</span><span class="c1"></span>                        <span class="c1">// safer given the timeframe.
+</span><span class="c1"></span>                        <span class="k">if</span> <span class="o">(</span><span class="n">childWithAccessibilityFocus</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+                            <span class="k">if</span> <span class="o">(</span><span class="n">childWithAccessibilityFocus</span> <span class="o">!=</span> <span class="n">child</span><span class="o">)</span> <span class="o">{</span>
+                                <span class="k">continue</span><span class="o">;</span>
+                            <span class="o">}</span>
+                            <span class="n">childWithAccessibilityFocus</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+                            <span class="n">i</span> <span class="o">=</span> <span class="n">childrenCount</span> <span class="o">-</span> <span class="n">1</span><span class="o">;</span>
+                        <span class="o">}</span>
+
+                        <span class="k">if</span> <span class="o">(!</span><span class="n">child</span><span class="o">.</span><span class="na">canReceivePointerEvents</span><span class="o">()</span>
+                                <span class="o">||</span> <span class="o">!</span><span class="n">isTransformedTouchPointInView</span><span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">,</span> <span class="n">child</span><span class="o">,</span> <span class="kc">null</span><span class="o">))</span> <span class="o">{</span>
+                            <span class="n">ev</span><span class="o">.</span><span class="na">setTargetAccessibilityFocus</span><span class="o">(</span><span class="kc">false</span><span class="o">);</span>
+                            <span class="k">continue</span><span class="o">;</span>
+                        <span class="o">}</span>
+
+                        <span class="n">newTouchTarget</span> <span class="o">=</span> <span class="n">getTouchTarget</span><span class="o">(</span><span class="n">child</span><span class="o">);</span>
+                        <span class="k">if</span> <span class="o">(</span><span class="n">newTouchTarget</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+                            <span class="c1">// Child is already receiving touch within its bounds.
+</span><span class="c1"></span>                            <span class="c1">// Give it the new pointer in addition to the ones it is handling.
+</span><span class="c1"></span>                            <span class="n">newTouchTarget</span><span class="o">.</span><span class="na">pointerIdBits</span> <span class="o">|=</span> <span class="n">idBitsToAssign</span><span class="o">;</span>
+                            <span class="k">break</span><span class="o">;</span>
+                        <span class="o">}</span>
+
+                        <span class="n">resetCancelNextUpFlag</span><span class="o">(</span><span class="n">child</span><span class="o">);</span>
+                        <span class="k">if</span> <span class="o">(</span><span class="n">dispatchTransformedTouchEvent</span><span class="o">(</span><span class="n">ev</span><span class="o">,</span> <span class="kc">false</span><span class="o">,</span> <span class="n">child</span><span class="o">,</span> <span class="n">idBitsToAssign</span><span class="o">))</span> <span class="o">{</span>
+                            <span class="c1">// Child wants to receive touch within its bounds.
+</span><span class="c1"></span>                            <span class="n">mLastTouchDownTime</span> <span class="o">=</span> <span class="n">ev</span><span class="o">.</span><span class="na">getDownTime</span><span class="o">();</span>
+                            <span class="k">if</span> <span class="o">(</span><span class="n">preorderedList</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+                                <span class="c1">// childIndex points into presorted list, find original index
+</span><span class="c1"></span>                                <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">childrenCount</span><span class="o">;</span> <span class="n">j</span><span class="o">++)</span> <span class="o">{</span>
+                                    <span class="k">if</span> <span class="o">(</span><span class="n">children</span><span class="o">[</span><span class="n">childIndex</span><span class="o">]</span> <span class="o">==</span> <span class="n">mChildren</span><span class="o">[</span><span class="n">j</span><span class="o">])</span> <span class="o">{</span>
+                                        <span class="n">mLastTouchDownIndex</span> <span class="o">=</span> <span class="n">j</span><span class="o">;</span>
+                                        <span class="k">break</span><span class="o">;</span>
+                                    <span class="o">}</span>
+                                <span class="o">}</span>
+                            <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+                                <span class="n">mLastTouchDownIndex</span> <span class="o">=</span> <span class="n">childIndex</span><span class="o">;</span>
+                            <span class="o">}</span>
+                            <span class="n">mLastTouchDownX</span> <span class="o">=</span> <span class="n">ev</span><span class="o">.</span><span class="na">getX</span><span class="o">();</span>
+                            <span class="n">mLastTouchDownY</span> <span class="o">=</span> <span class="n">ev</span><span class="o">.</span><span class="na">getY</span><span class="o">();</span>
+                            <span class="n">newTouchTarget</span> <span class="o">=</span> <span class="n">addTouchTarget</span><span class="o">(</span><span class="n">child</span><span class="o">,</span> <span class="n">idBitsToAssign</span><span class="o">);</span>
+                            <span class="n">alreadyDispatchedToNewTouchTarget</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+                            <span class="k">break</span><span class="o">;</span>
+                        <span class="o">}</span>
+
+                        <span class="c1">// The accessibility focus didn&#39;t handle the event, so clear
+</span><span class="c1"></span>                        <span class="c1">// the flag and do a normal dispatch to all children.
+</span><span class="c1"></span>                        <span class="n">ev</span><span class="o">.</span><span class="na">setTargetAccessibilityFocus</span><span class="o">(</span><span class="kc">false</span><span class="o">);</span>
+                    <span class="o">}</span>
+                    <span class="k">if</span> <span class="o">(</span><span class="n">preorderedList</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="n">preorderedList</span><span class="o">.</span><span class="na">clear</span><span class="o">();</span>
+                <span class="o">}</span>
+
+                <span class="k">if</span> <span class="o">(</span><span class="n">newTouchTarget</span> <span class="o">==</span> <span class="kc">null</span> <span class="o">&amp;&amp;</span> <span class="n">mFirstTouchTarget</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="c1">// Did not find a child to receive the event.
+</span><span class="c1"></span>                    <span class="c1">// Assign the pointer to the least recently added target.
+</span><span class="c1"></span>                    <span class="n">newTouchTarget</span> <span class="o">=</span> <span class="n">mFirstTouchTarget</span><span class="o">;</span>
+                    <span class="k">while</span> <span class="o">(</span><span class="n">newTouchTarget</span><span class="o">.</span><span class="na">next</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+                        <span class="n">newTouchTarget</span> <span class="o">=</span> <span class="n">newTouchTarget</span><span class="o">.</span><span class="na">next</span><span class="o">;</span>
+                    <span class="o">}</span>
+                    <span class="n">newTouchTarget</span><span class="o">.</span><span class="na">pointerIdBits</span> <span class="o">|=</span> <span class="n">idBitsToAssign</span><span class="o">;</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+
+        <span class="c1">// Dispatch to touch targets.
+</span><span class="c1"></span>        <span class="k">if</span> <span class="o">(</span><span class="n">mFirstTouchTarget</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+            <span class="c1">// No touch targets so treat this as an ordinary view.
+</span><span class="c1"></span>            <span class="n">handled</span> <span class="o">=</span> <span class="n">dispatchTransformedTouchEvent</span><span class="o">(</span><span class="n">ev</span><span class="o">,</span> <span class="n">canceled</span><span class="o">,</span> <span class="kc">null</span><span class="o">,</span>
+                    <span class="n">TouchTarget</span><span class="o">.</span><span class="na">ALL_POINTER_IDS</span><span class="o">);</span>
+        <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+            <span class="c1">// Dispatch to touch targets, excluding the new touch target if we already
+</span><span class="c1"></span>            <span class="c1">// dispatched to it.  Cancel touch targets if necessary.
+</span><span class="c1"></span>            <span class="n">TouchTarget</span> <span class="n">predecessor</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+            <span class="n">TouchTarget</span> <span class="n">target</span> <span class="o">=</span> <span class="n">mFirstTouchTarget</span><span class="o">;</span>
+            <span class="k">while</span> <span class="o">(</span><span class="n">target</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+                <span class="kd">final</span> <span class="n">TouchTarget</span> <span class="n">next</span> <span class="o">=</span> <span class="n">target</span><span class="o">.</span><span class="na">next</span><span class="o">;</span>
+                <span class="k">if</span> <span class="o">(</span><span class="n">alreadyDispatchedToNewTouchTarget</span> <span class="o">&amp;&amp;</span> <span class="n">target</span> <span class="o">==</span> <span class="n">newTouchTarget</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="n">handled</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+                <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+                    <span class="kd">final</span> <span class="kt">boolean</span> <span class="n">cancelChild</span> <span class="o">=</span> <span class="n">resetCancelNextUpFlag</span><span class="o">(</span><span class="n">target</span><span class="o">.</span><span class="na">child</span><span class="o">)</span>
+                            <span class="o">||</span> <span class="n">intercepted</span><span class="o">;</span>
+                    <span class="k">if</span> <span class="o">(</span><span class="n">dispatchTransformedTouchEvent</span><span class="o">(</span><span class="n">ev</span><span class="o">,</span> <span class="n">cancelChild</span><span class="o">,</span>
+                            <span class="n">target</span><span class="o">.</span><span class="na">child</span><span class="o">,</span> <span class="n">target</span><span class="o">.</span><span class="na">pointerIdBits</span><span class="o">))</span> <span class="o">{</span>
+                        <span class="n">handled</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+                    <span class="o">}</span>
+                    <span class="k">if</span> <span class="o">(</span><span class="n">cancelChild</span><span class="o">)</span> <span class="o">{</span>
+                        <span class="k">if</span> <span class="o">(</span><span class="n">predecessor</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+                            <span class="n">mFirstTouchTarget</span> <span class="o">=</span> <span class="n">next</span><span class="o">;</span>
+                        <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+                            <span class="n">predecessor</span><span class="o">.</span><span class="na">next</span> <span class="o">=</span> <span class="n">next</span><span class="o">;</span>
+                        <span class="o">}</span>
+                        <span class="n">target</span><span class="o">.</span><span class="na">recycle</span><span class="o">();</span>
+                        <span class="n">target</span> <span class="o">=</span> <span class="n">next</span><span class="o">;</span>
+                        <span class="k">continue</span><span class="o">;</span>
+                    <span class="o">}</span>
+                <span class="o">}</span>
+                <span class="n">predecessor</span> <span class="o">=</span> <span class="n">target</span><span class="o">;</span>
+                <span class="n">target</span> <span class="o">=</span> <span class="n">next</span><span class="o">;</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+
+        <span class="c1">// Update list of touch targets for pointer up or cancel, if needed.
+</span><span class="c1"></span>        <span class="k">if</span> <span class="o">(</span><span class="n">canceled</span>
+                <span class="o">||</span> <span class="n">actionMasked</span> <span class="o">==</span> <span class="n">MotionEvent</span><span class="o">.</span><span class="na">ACTION_UP</span>
+                <span class="o">||</span> <span class="n">actionMasked</span> <span class="o">==</span> <span class="n">MotionEvent</span><span class="o">.</span><span class="na">ACTION_HOVER_MOVE</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">resetTouchState</span><span class="o">();</span>
+        <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">split</span> <span class="o">&amp;&amp;</span> <span class="n">actionMasked</span> <span class="o">==</span> <span class="n">MotionEvent</span><span class="o">.</span><span class="na">ACTION_POINTER_UP</span><span class="o">)</span> <span class="o">{</span>
+            <span class="kd">final</span> <span class="kt">int</span> <span class="n">actionIndex</span> <span class="o">=</span> <span class="n">ev</span><span class="o">.</span><span class="na">getActionIndex</span><span class="o">();</span>
+            <span class="kd">final</span> <span class="kt">int</span> <span class="n">idBitsToRemove</span> <span class="o">=</span> <span class="n">1</span> <span class="o">&lt;&lt;</span> <span class="n">ev</span><span class="o">.</span><span class="na">getPointerId</span><span class="o">(</span><span class="n">actionIndex</span><span class="o">);</span>
+            <span class="n">removePointersFromTouchTargets</span><span class="o">(</span><span class="n">idBitsToRemove</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="k">if</span> <span class="o">(!</span><span class="n">handled</span> <span class="o">&amp;&amp;</span> <span class="n">mInputEventConsistencyVerifier</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">mInputEventConsistencyVerifier</span><span class="o">.</span><span class="na">onUnhandledEvent</span><span class="o">(</span><span class="n">ev</span><span class="o">,</span> <span class="n">1</span><span class="o">);</span>
+    <span class="o">}</span>
+    <span class="k">return</span> <span class="n">handled</span><span class="o">;</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Zac</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        11110-07-11
+        
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      
+      <nav class="post-nav">
+        <a class="prev" href="/post/databinding-in-android/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">Data Binding in Android</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/intro-to-hybrid-app/">
+            <span class="next-text nav-default">Intro to Hybrid App</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="zac@zacash.com" class="iconfont icon-email" title="email"></a>
+  <a href="https://zacash.cn/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2020
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Zac</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.d7b7ada643c9c1a983026e177f141f7363b4640d619caf01d8831a6718cd44ea.js"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>
