@@ -146,5 +146,14 @@ git remote set-url origin newRepoUrl
       <description>背景 最近做的一个 DialogFragment 在少数设备上会偶发闪退，Fabric 上的 Stacktrace 信息如下： 1 2 3 4 5 6 Fatal Exception: java.lang.IllegalStateException: Can not perform this action after onSaveInstanceState at android.support.v4.app.FragmentManagerImpl.checkStateLoss(SourceFile) at android.support.v4.app.FragmentManagerImpl.enqueueAction(SourceFile) at android.support.v4.app.BackStackRecord.commitInternal(SourceFile) at android.support.v4.app.BackStackRecord.commit(SourceFile) at android.su</description>
     </item>
     
+    <item>
+      <title></title>
+      <link>https://zacash.cn/post/when-to-use-lazy-or-lateinit/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://zacash.cn/post/when-to-use-lazy-or-lateinit/</guid>
+      <description></description>
+    </item>
+    
   </channel>
 </rss>
