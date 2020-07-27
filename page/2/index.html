@@ -45,7 +45,7 @@
 <meta property="og:description" content="Android developer blog." />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://zacash.cn/" />
-<meta property="og:updated_time" content="2020-07-21T00:00:00+00:00" />
+<meta property="og:updated_time" content="2020-07-27T00:00:00+00:00" />
 <meta itemprop="name" content="Zac">
 <meta itemprop="description" content="Android developer blog."><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Zac"/>
@@ -112,6 +112,48 @@
           <section id="posts" class="posts">
     <article class="post">
   <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/databinding-in-android/">Data Binding in Android</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 11110-07-11 </span>
+      
+        <span class="more-meta"> 约 124 字 </span>
+        <span class="more-meta"> 预计阅读 1 分钟 </span>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      findViewById vs. DataBinding DataBinding 在编译时(compile time)会检查引用是否为空，相反 findViewById 并不会，从而可能引发运行时崩溃。 observable 通过 DataBinding，obser
+    </div>
+    <div class="read-more">
+      <a href="/post/databinding-in-android/" class="read-more-link">阅读更多</a>
+    </div>
+  </div>
+</article>
+
+    <article class="post">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/how-are-touch-events-delivered/">How Are Touch Events Delivered</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 11110-07-11 </span>
+      
+        <span class="more-meta"> 约 1647 字 </span>
+        <span class="more-meta"> 预计阅读 4 分钟 </span>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      根据例子来理解 Android 的事件传递 页面的布局结构 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 &lt;?xml version=&#34;1.0&#34; encoding=&#34;utf-8&#34;?&gt; &lt;layout xmlns:android=&#34;http://schemas.android.com/apk/res/android&#34; xmlns:app=&#34;http://schemas.android.com/apk/res-auto&#34;&gt; &lt;data&gt; &lt;variable name=&#34;viewModel&#34; type=&#34;com.zac4j.system.data.TouchViewModel&#34; /&gt; &lt;/data&gt; &lt;com.zac4j.system.ui.widget.CustomLayout android:id=&#34;@id/touch_sample_container&#34; android:layout_width=&#34;match_parent&#34; android:layout_height=&#34;match_parent&#34;&gt; &lt;Button android:id=&#34;@id/touch_sample_btn&#34; style=&#34;@style/Widget.AppCompat.Button.Colored&#34; android:layout_width=&#34;match_parent&#34; android:layout_height=&#34;wrap_content&#34; android:text=&#34;Touch Me&#34;
+    </div>
+    <div class="read-more">
+      <a href="/post/how-are-touch-events-delivered/" class="read-more-link">阅读更多</a>
+    </div>
+  </div>
+</article>
+
+    <article class="post">
+  <header class="post-header">
     <h1 class="post-title"><a class="post-link" href="/post/intro-to-hybrid-app/">Intro to Hybrid App</a></h1>
     <div class="post-meta">
       <span class="post-time"> 4040-07-04 </span>
@@ -158,8 +200,8 @@
     <div class="post-meta">
       <span class="post-time"> 3030-07-03 </span>
       
-        <span class="more-meta"> 约 1042 字 </span>
-        <span class="more-meta"> 预计阅读 3 分钟 </span>
+        <span class="more-meta"> 约 2717 字 </span>
+        <span class="more-meta"> 预计阅读 6 分钟 </span>
     </div>
   </header>
   
@@ -169,50 +211,6 @@
     </div>
     <div class="read-more">
       <a href="/post/java-basic/" class="read-more-link">阅读更多</a>
-    </div>
-  </div>
-</article>
-
-    <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/design-pattern-in-android/">Essential Design Pattern in Android</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 20200-06-20 </span>
-      
-        <span class="more-meta"> 约 1101 字 </span>
-        <span class="more-meta"> 预计阅读 3 分钟 </span>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      什么是设计模式 设计模式的经典解释：软件工程中，设计模式是针对软件设计中给定上下文的常见问题的通用、可复用的解决方案。设计模式并非可以直接转换
-    </div>
-    <div class="read-more">
-      <a href="/post/design-pattern-in-android/" class="read-more-link">阅读更多</a>
-    </div>
-  </div>
-</article>
-
-    <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/top-10-kotlin-questions/">Top 10 Kotlin Questions in StackOverflow</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 19190-06-19 </span>
-      <div class="post-category">
-          <a href="/categories/kotlin/"> kotlin </a>
-          </div>
-        <span class="more-meta"> 约 1091 字 </span>
-        <span class="more-meta"> 预计阅读 3 分钟 </span>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      IntArray vs. Array&lt;Int&gt; In java code IntArray: int[] Array&lt;Int&gt;: Integer[] Create method: IntArray: 1 val intArray : IntArray = intArrayOf(1, 2, 3, 4, 5) Array&lt;Int&gt;: 1 val arrayOfInts : Array&lt;Int&gt; = arrayOf(1, 2, 3, 4, 5) Iterable vs. Sequence Usage Iterable: 1 2 3 4 getPeople() .filter { it.age &gt;= 18 } .map { it.name } .take(5) Sequence: start with asSequence() and end with toList() or toSet()&hellip; 1 2 3
-    </div>
-    <div class="read-more">
-      <a href="/post/top-10-kotlin-questions/" class="read-more-link">阅读更多</a>
     </div>
   </div>
 </article>

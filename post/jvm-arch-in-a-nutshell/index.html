@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>JVM Architecture in A Nutshell - Zac</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Zac" /><meta name="description" content="跨平台的本质 跨平台的本质是因为汇编指令的不同. ClassLoader What is it 类加载器负责在运行时将 Java 类动态加载到 JVM，是 JRE 的一部分，由于有了类加载器，JVM 无需" /><meta name="keywords" content="Android, developer, programming" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.68.1 with theme even" />
+
+
+<link rel="canonical" href="https://zacash.cn/post/jvm-arch-in-a-nutshell/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.8c3cbcb0324c2bb4875ceccba4007cbad4b4ac8377f33af9953c3e7684534a50.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="JVM Architecture in A Nutshell" />
+<meta property="og:description" content="跨平台的本质 跨平台的本质是因为汇编指令的不同. ClassLoader What is it 类加载器负责在运行时将 Java 类动态加载到 JVM，是 JRE 的一部分，由于有了类加载器，JVM 无需" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://zacash.cn/post/jvm-arch-in-a-nutshell/" />
+<meta property="article:published_time" content="2020-07-17T00:00:00+00:00" />
+<meta property="article:modified_time" content="2020-07-17T00:00:00+00:00" />
+<meta itemprop="name" content="JVM Architecture in A Nutshell">
+<meta itemprop="description" content="跨平台的本质 跨平台的本质是因为汇编指令的不同. ClassLoader What is it 类加载器负责在运行时将 Java 类动态加载到 JVM，是 JRE 的一部分，由于有了类加载器，JVM 无需">
+<meta itemprop="datePublished" content="2020-07-17T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2020-07-17T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="3706">
+
+
+
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="JVM Architecture in A Nutshell"/>
+<meta name="twitter:description" content="跨平台的本质 跨平台的本质是因为汇编指令的不同. ClassLoader What is it 类加载器负责在运行时将 Java 类动态加载到 JVM，是 JRE 的一部分，由于有了类加载器，JVM 无需"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Zac</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Zac</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">JVM Architecture in A Nutshell</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 17170-07-17 </span>
+        
+          <span class="more-meta"> 约 3706 字 </span>
+          <span class="more-meta"> 预计阅读 8 分钟 </span>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#跨平台的本质">跨平台的本质</a></li>
+    <li><a href="#classloader">ClassLoader</a>
+      <ul>
+        <li><a href="#what-is-it">What is it</a></li>
+        <li><a href="#built-in-class-loaders-types">Built-in class loaders types</a></li>
+        <li><a href="#how-it-works">How it works</a></li>
+        <li><a href="#class-loader-features">Class loader features</a></li>
+        <li><a href="#custom-classloader">Custom ClassLoader</a></li>
+        <li><a href="#responsibility">Responsibility</a></li>
+      </ul>
+    </li>
+    <li><a href="#run-time-data-areas">Run-Time Data Areas</a>
+      <ul>
+        <li><a href="#the-pc-register">The pc Register</a></li>
+        <li><a href="#jvm-stacks">JVM Stacks</a></li>
+        <li><a href="#heap">Heap</a></li>
+        <li><a href="#method-area">Method Area</a></li>
+        <li><a href="#native-method-stacks">Native Method Stacks</a></li>
+        <li><a href="#run-time-constant-pool">Run-Time Constant Pool</a></li>
+      </ul>
+    </li>
+    <li><a href="#execution-engine">Execution Engine</a></li>
+    <li><a href="#java-native-interfacejni">Java Native Interface（JNI）</a></li>
+    <li><a href="#native-method-libraries">Native Method Libraries</a></li>
+    <li><a href="#reference">Reference</a></li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h2 id="跨平台的本质">跨平台的本质</h2>
+<p>跨平台的本质是因为汇编指令的不同.</p>
+<h2 id="classloader">ClassLoader</h2>
+<h3 id="what-is-it">What is it</h3>
+<p>类加载器负责在运行时将 Java 类动态加载到 JVM，是 JRE 的一部分，由于有了类加载器，JVM 无需了解底层文件或文件系统即可运行Java程序。</p>
+<p>类加载器不会一次将全部类加载到内存里，而是在程序需要时加载。</p>
+<h3 id="built-in-class-loaders-types">Built-in class loaders types</h3>
+<ul>
+<li>
+<p>Bootstrap class loader</p>
+<p>每个 JVM 实现必须有一个 bootstrap 类加载器。它加载 <em>JAVA_HOME/jre/lib</em> 目录下的核心 Java API 类，该路径通常被称为引导路径(bootstrap path)。该类加载器由 C/C++ 语言实现。</p>
+</li>
+<li>
+<p>Extension class loader</p>
+<p>Bootstrap 的子类加载器，它加载扩展目录 <em>JAVA_HOME/jre/lib/ext</em> 或 <strong>java.ext.dirs</strong> 指定路径下的类。它由 Java 在 <code>sun.misc.Launcher$ExtClassLoader</code> 类中实现。</p>
+</li>
+<li>
+<p>System/Application class loader</p>
+<p>Extension 的子类加载器。它负责从 app 路径加载类，它加载在 <em>classpath</em> 环境变量、<em>-classpath</em>、-cp 命令行选项中找到的文件。它同样由 Java 在 <code>sun.misc.Launcher$AppClassLoader</code> 类中实现。</p>
+</li>
+</ul>
+<h3 id="how-it-works">How it works</h3>
+<p>类加载器是 JRE 的一部分。当 JVM 请求一个类时，类加载器尝试定位该类，并使用<em>完全限定的类名(fully qualified class name)</em> 将<em>类定义(class definition)</em> 加载到运行时环境中。</p>
+<p><code>java.lang.ClassLoader.loadClass()</code> 方法负责将类定义加载到运行时环境中。如果请求的类尚未加载，则它将请求委派给父类加载器，此过程递归进行。如果父类加载器找不到该类，则子类加载器调用 <code>java.net.URLClassLoader.findClass()</code> 方法在文件系统中查找类。最终，如果子类加载器未找到该类，则它将抛出 <code>java.lang.NoClassDefFoundError</code> 或 <code>java.lang.ClassNotFoundException</code>。</p>
+<h3 id="class-loader-features">Class loader features</h3>
+<h4 id="代理模型delegation-model">代理模型（Delegation Model）</h4>
+<p>类加载器遵循代理模型，在该模型中，ClassLoader 会根据请求查找的类或资源，将搜索类或资源的工作委托给父加载器处理。仅当 bootstrap class loader 和 extension class loader 都未能加载该类时，system class loader 才会尝试自己加载该类。</p>
+<h4 id="唯一类unique-classes">唯一类（Unique classes）</h4>
+<p>作为代理模型的结果，很容易确保唯一的类，因为我们始终向上委托。</p>
+<h4 id="可见性visibility">可见性（Visibility）</h4>
+<p>子类加载器对其父类加载器加载的类完全可见，父类加载器则对子类加载器加载的类不可见。</p>
+<h3 id="custom-classloader">Custom ClassLoader</h3>
+<p>在需要从本地或网络加载类的场景，我们可能需要使用自定义类加载器。</p>
+<h4 id="使用场景">使用场景</h4>
+<p>自定义类加载器不仅对在运行时加载类有帮助，还包括：</p>
+<ul>
+<li>修改现有字节码，如织入代理</li>
+<li>动态创建适合用户需求的类。如 JDBC 中，通过动态类加载完成不同驱动实现(driver implementations)之间的切换。</li>
+<li>实现类版本控制机制，如为具有相同名称和包名的类加载不同的字节码（热修复）。这可以通过 URL 类加载器或自定义加载器完成。</li>
+</ul>
+<p>我们可以自定义类加载器实现指定类的加载：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="k">package</span> <span class="nn">com.zac4j.system.util</span>
+
+<span class="k">import</span> <span class="nn">java.io.ByteArrayOutputStream</span>
+<span class="k">import</span> <span class="nn">java.io.File</span>
+<span class="k">import</span> <span class="nn">java.io.IOException</span>
+
+<span class="cm">/**
+</span><span class="cm"> * Custom ClassLoader sample
+</span><span class="cm"> *
+</span><span class="cm"> * @author: zac
+</span><span class="cm"> * @date: 2020/7/19
+</span><span class="cm"> */</span>
+<span class="k">internal</span> <span class="k">object</span> <span class="nc">Test</span> <span class="p">{</span>
+  <span class="n">@JvmStatic</span> <span class="k">fun</span> <span class="nf">main</span><span class="p">(</span><span class="n">args</span><span class="p">:</span> <span class="n">Array</span><span class="p">&lt;</span><span class="n">String</span><span class="p">&gt;)</span> <span class="p">{</span>
+    <span class="k">val</span> <span class="py">classLoader</span> <span class="p">=</span> <span class="n">CustomClassLoader</span><span class="p">()</span>
+    <span class="k">val</span> <span class="py">clazz</span> <span class="p">=</span> <span class="n">classLoader</span><span class="p">.</span><span class="n">loadClass</span><span class="p">(</span><span class="s">&#34;com.zac4j.system.util.Utils&#34;</span><span class="p">)</span>
+    <span class="n">println</span><span class="p">(</span><span class="s">&#34;custom classloader:${clazz.canonicalName}&#34;</span><span class="p">)</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="cm">/**
+</span><span class="cm"> * 自定义 ClassLoader，加载指定类文件。
+</span><span class="cm"> */</span>
+<span class="k">class</span> <span class="nc">CustomClassLoader</span> <span class="p">:</span> <span class="n">ClassLoader</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">override</span> <span class="k">fun</span> <span class="nf">findClass</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="n">String</span><span class="p">):</span> <span class="n">Class</span><span class="p">&lt;*&gt;</span> <span class="p">{</span>
+    <span class="k">val</span> <span class="py">b</span> <span class="p">=</span> <span class="n">loadClassFromFile</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">defineClass</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="n">b</span><span class="p">.</span><span class="n">size</span><span class="p">)</span>
+  <span class="p">}</span>
+
+  <span class="cm">/**
+</span><span class="cm">   * 根据类名加载类文件
+</span><span class="cm">   */</span>
+  <span class="k">private</span> <span class="k">fun</span> <span class="nf">loadClassFromFile</span><span class="p">(</span><span class="n">filename</span><span class="p">:</span> <span class="n">String</span><span class="p">):</span> <span class="n">ByteArray</span> <span class="p">{</span>
+    <span class="k">val</span> <span class="py">inStream</span> <span class="p">=</span> <span class="n">javaClass</span><span class="p">.</span><span class="n">classLoader</span><span class="o">?.</span><span class="n">getResourceAsStream</span><span class="p">(</span>
+        <span class="n">filename</span><span class="p">.</span><span class="n">replace</span><span class="p">(</span><span class="sc">&#39;.&#39;</span><span class="p">,</span> <span class="n">File</span><span class="p">.</span><span class="n">separatorChar</span><span class="p">)</span> <span class="p">+</span> <span class="s">&#34;.class&#34;</span>
+    <span class="p">)</span> <span class="o">?:</span> <span class="k">return</span> <span class="n">byteArrayOf</span><span class="p">()</span>
+    <span class="k">val</span> <span class="py">outStream</span> <span class="p">=</span> <span class="n">ByteArrayOutputStream</span><span class="p">()</span>
+    <span class="k">try</span> <span class="p">{</span>
+      <span class="k">while</span> <span class="p">(</span><span class="n">inStream</span><span class="p">.</span><span class="n">read</span><span class="p">()</span> <span class="p">!=</span> <span class="p">-</span><span class="m">1</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">val</span> <span class="py">nextVal</span> <span class="p">=</span> <span class="n">inStream</span><span class="p">.</span><span class="n">read</span><span class="p">()</span>
+        <span class="n">outStream</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">nextVal</span><span class="p">)</span>
+      <span class="p">}</span>
+    <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="n">e</span><span class="p">:</span> <span class="n">IOException</span><span class="p">)</span> <span class="p">{</span>
+
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">outStream</span><span class="p">.</span><span class="n">toByteArray</span><span class="p">()</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="responsibility">Responsibility</h3>
+<p>Class Loader 系统主要有<a href="https://docs.oracle.com/javase/specs/jvms/se6/html/ConstantPool.doc.html#67960">3种功能</a>：</p>
+<ul>
+<li>Loading</li>
+<li>Linking</li>
+<li>Initialization</li>
+</ul>
+<h4 id="loading">Loading</h4>
+<p>类加载器读取 <em>.class</em> 文件，生成对应的二进制数据并保存到 JVM 方法区。对每个 <em>.class</em> 文件，方法区保存这些信息：</p>
+<ul>
+<li>完全限定名称的加载类和其直属父类</li>
+<li><em>.class</em> 文件是否与 Class 或 Interface 或 Enum 有关</li>
+<li>修饰符（Modifier）、变量和方法信息等。</li>
+</ul>
+<p>加载 <em>.class</em> 文件后，JVM 在堆中创建该文件对应的 Class 类型对象。开发者可以使用此 Class 对象来获取类级别（class level）的信息，如类名、父类名、方法（<code>Class.getdeclaredMethods()</code>）和变量信息（<code>Class.getDeclaredFields()</code>）等。</p>
+<h4 id="linking">Linking</h4>
+<p>执行 Verification、Preparation 和 Resolution。</p>
+<ul>
+<li>Verification：通过检查 <em>.class</em> 文件是否正确的格式化和是否由有效的编译器生成，确保该文件的正确性。如果验证失败，将抛出运行时异常：<em>java.lang.VerifyError</em>。</li>
+<li>Preparation：JVM 为类变量分配内存，并将内存初始化为默认值。</li>
+<li>Resolution：这是用直接引用(direct references)替换类型中的符号引用(symbolic references)的过程。通过搜索方法区域以找到引用的实体来完成此操作。</li>
+</ul>
+<h4 id="initialization">Initialization</h4>
+<p>这个阶段将为所有静态变量分配在代码或静态代码块中定义的值。在类中从顶至底（from top to bottom）执行，在类层级中从父类到子类（from parent to child）执行。类加载器的初始化：Bootstrap class loader -&gt; Extension class loader -&gt; App class loader.</p>
+<h2 id="run-time-data-areas">Run-Time Data Areas</h2>
+<p>基本结构.jpg</p>
+<h3 id="the-pc-register">The pc Register</h3>
+<p>JVM 可以支持多个线程同时运行，每个线程都有自己独立的 PC 寄存器(program counter register)。在任意时间点，任一线程在执行某个方法的代码，被称作该线程的<a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-2.html#jvms-2.6">当前方法(current method)</a>。</p>
+<ul>
+<li>如果该方法是 <em>native</em> 的，pc 寄存器的值是 <em>undefined</em>。</li>
+<li>如果该方法不是 <em>native</em> 的，pc 寄存器包含当前正在执行指令的地址。</li>
+</ul>
+<p>JVM 的 pc 寄存器容量足够在特定平台上保存 <em>returnAddress</em> 或 <em>native</em> 指针。</p>
+<h3 id="jvm-stacks">JVM Stacks</h3>
+<p>对每个线程，JVM 在创建线程时都会创建一个私有的堆栈。JVM 仅对堆栈进行两种操作：推入(push)和弹出(pop)栈帧(frames)。JVM 堆栈的内存<strong>不必是连续的</strong>。</p>
+<p>线程执行的每个方法调用(method calls)都存储在对应的堆栈中，包括入参、局部变量、中间计算和其他数据。方法完成后，JVM 将从堆栈中删除对应的条目，完成所有的方法调用后，堆栈将变为空，并且在终止线程前，销毁该堆栈。</p>
+<p>存储在堆栈中的数据仅适用于对应线程，对别的线程不适用。因此，可以说局部数据是线程安全的。堆栈中每个条目都称为 <em>堆栈帧(Stack Frame)</em> 或 <em>激活记录(Activation Record)</em>。</p>
+<blockquote>
+<p>第一版的 Java 虚拟机规范 <em>The Java® Virtual Machine Specification</em>, <em>JVM 堆栈(Java Virtual Machine stack)</em> 被称为 <em>Java 栈(Java stack)</em></p>
+</blockquote>
+<p>JVM 规范允许Java虚拟机堆栈具有固定大小，或者根据计算要求动态伸缩。 如果Java虚拟机堆栈的大小固定，则在创建每个Java虚拟机堆栈时可以独立选择它们的大小。</p>
+<p>关联的异常：</p>
+<ul>
+<li>
+<p>如果线程中的计算需要比允许的 JVM 更大的堆栈，则 JVM 将抛出 <strong>StackOverflowError</strong>。</p>
+</li>
+<li>
+<p>如果可以动态扩展 JVM 堆栈容量，并且尝试进行动态扩展，但外部环境无法提供足够的内存资源，或没有足够的内存资源为新线程创建 JVM 堆栈，则 JVM 会抛出 <strong>OutOfMemoryError</strong>。</p>
+</li>
+</ul>
+<h3 id="heap">Heap</h3>
+<p>堆是运行时数据区内为所有类实例和数组分配内存的部分，是共享资源。</p>
+<p>堆在虚拟机启动时创建，<em>垃圾回收器(garbage collector)</em> 可以回收对象堆堆存储，对象永远不会显式释放内存。堆的大小同样可以是固定的，或者根据计算要求动态伸缩。堆内存<strong>不必是连续的</strong>。</p>
+<p>用户可以控制堆固定初始大小，或动态伸缩场景控制堆的最大/最小值。</p>
+<p>关联的异常：</p>
+<ul>
+<li>计算需要的堆内存多于系统可以提供的内存资源， JVM 会抛出 <strong>OutOfMemoryError</strong>。</li>
+</ul>
+<h3 id="method-area">Method Area</h3>
+<p>方法区存储每个类的结构，如<em>运行时常量池(run-time constant pool)</em>，<em>字段(field)</em>，和<em>方法数据(method data)</em>，以及方法和构造函数的代码，是共享资源。</p>
+<p>方法区同样是在 JVM 启动时创建。尽管方法区在逻辑上是堆的一部分，但 JVM 实现可以选择不对其进行垃圾回收或压缩。</p>
+<p>方法区可以是固定大小，或根据计算需求进行动态伸缩。方法区内存同样<strong>不必是连续的</strong>。</p>
+<p>关联的异常：</p>
+<ul>
+<li>方法区需要分配的内存多于系统可提供的内存资源，JVM 会抛出 <strong>OutOfMemoryError</strong>。</li>
+</ul>
+<h3 id="native-method-stacks">Native Method Stacks</h3>
+<p>JVM 可以使用传统的堆栈，俗称 “C 栈”，来支持 <em>native</em> 方法。<em>native</em> 方法栈可以用于 JVM C语言指令集的解释器。JVM 不能加载 <em>native</em> 方法，并且它本身不依赖于传统堆栈，不需要提供 <em>native</em> 方法栈。如果提供，通常在创建线程时为每个线程提供 <em>native</em> 方法栈。</p>
+<p>JVM 规范允许 <em>native</em> 方法堆栈具有固定大小，或者根据计算要求动态扩展和收缩。如果本机方法堆栈的大小固定，则在创建每个 <em>native</em> 方法栈的大小时可以独立选择。</p>
+<p><em>native</em> 方法栈关联的异常：</p>
+<ul>
+<li>如果线程中的计算所需的 <em>native</em> 方法栈容量超出允许的范围，则 JVM 会抛出 <strong>StackOverflowError</strong>.</li>
+<li>如果 <em>native</em> 方法栈容量尝试动态扩展，但外部环境无法提供足够的内存资源，或没有足够的内存资源为新线程创建 <em>native</em> 方法栈，则 JVM 会抛出 <strong>OutOfMemoryError</strong>.</li>
+</ul>
+<h3 id="run-time-constant-pool">Run-Time Constant Pool</h3>
+<p>运行时常量池是每个类或接口的 <em>class</em> 文件中 <em>constant_pool</em> 表的运行时表示形式。它主要包含：</p>
+<ul>
+<li>编译时数字文字</li>
+<li>运行时方法和字段引用</li>
+</ul>
+<p>运行时常量池功能类似于常规编程语言的符号表。尽管它包含的数据范围比典型的符号表更大。</p>
+<p>每个运行时常量池都是从 JVM 方法去分配的，当 JVM 创建类或接口时，将为该类或结构构造运行时常量池。</p>
+<p>运行时常量池会关联如下异常：</p>
+<ul>
+<li>创建类或缄口时，如果运行时常量池构造所需的内存超过 JVM 方法区的可用内存，则 JVM 会抛出 <strong>OutOfMemoryError</strong>.</li>
+</ul>
+<h2 id="execution-engine">Execution Engine</h2>
+<p>执行引擎执行 <em>.class(bytecode)</em>.它逐行读取字节码，使用各个存储区的数据和信息并执行指令，它可以分成三部分：</p>
+<ul>
+<li>Interpreter：逐行解释字节码然后执行。缺点是当多处调用一个方法时，每次都需要解释步骤。</li>
+<li>Just-in-Time Compiler(HotSpot)：用于提高解释器的效率，它编译整个字节码并将其转换为 <em>native</em> 代码，每当解释器遇见重复的方法调用时，JIT 都会为该部分提供 <em>native</em> 代码，因此不用解释器重复解释，从而提高了效率。</li>
+<li>Garbage Collector：销毁未引用的对象，回收内存。</li>
+</ul>
+<h2 id="java-native-interfacejni">Java Native Interface（JNI）</h2>
+<p>JNI 是与 <em>native</em> 方法库交互的接口，它使 JVM 可以调用 C/C ++ 库。</p>
+<h2 id="native-method-libraries">Native Method Libraries</h2>
+<p>供执行引擎需要的 <em>native</em> 代码库。</p>
+<h2 id="reference">Reference</h2>
+<p>JVM Run-Time Data Areas: <a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-2.html#jvms-2.5.4">https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-2.html#jvms-2.5.4</a>
+JVM architecture: <a href="https://www.geeksforgeeks.org/jvm-works-jvm-architecture/">https://www.geeksforgeeks.org/jvm-works-jvm-architecture/</a>
+Class Loader: <a href="https://www.baeldung.com/java-classloaders">https://www.baeldung.com/java-classloaders</a></p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Zac</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        17170-07-17
+        
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      
+      <nav class="post-nav">
+        <a class="prev" href="/post/websocket-and-long-polling/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">WebSocket 和长轮询</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/jvm-mechanics/">
+            <span class="next-text nav-default">JVM Mechanics</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="zac@zacash.com" class="iconfont icon-email" title="email"></a>
+  <a href="https://zacash.cn/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2020
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Zac</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.d7b7ada643c9c1a983026e177f141f7363b4640d619caf01d8831a6718cd44ea.js"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>
