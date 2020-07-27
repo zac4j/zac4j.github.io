@@ -49,7 +49,7 @@
 <meta itemprop="description" content="🌟答案的组织策略：知道是什么，知道为什么，知道怎么用 0.JDK 和 JRE 有什么区别？ JDK 包含 JRE，同时还包含编译 Java 源码的编译器 javac，还包含了很多 Java 程">
 <meta itemprop="datePublished" content="2020-07-03T09:28:31&#43;08:00" />
 <meta itemprop="dateModified" content="2020-07-03T09:28:31&#43;08:00" />
-<meta itemprop="wordCount" content="1042">
+<meta itemprop="wordCount" content="2717">
 
 
 
@@ -123,8 +123,8 @@
       <div class="post-meta">
         <span class="post-time"> 3030-07-03 </span>
         
-          <span class="more-meta"> 约 1042 字 </span>
-          <span class="more-meta"> 预计阅读 3 分钟 </span>
+          <span class="more-meta"> 约 2717 字 </span>
+          <span class="more-meta"> 预计阅读 6 分钟 </span>
         
       </div>
     </header>
@@ -132,12 +132,35 @@
     <div class="post-toc" id="post-toc">
   <h2 class="post-toc-title">文章目录</h2>
   <div class="post-toc-content always-active">
-    <nav id="TableOfContents"></nav>
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#0jdk-和-jre-有什么区别">0.JDK 和 JRE 有什么区别？</a></li>
+    <li><a href="#1equals-和--的差别">1.equals 和 == 的差别？</a></li>
+    <li><a href="#2java-中操作字符串有那些类它们之间有什么区别">2.Java 中操作字符串有那些类？它们之间有什么区别？</a></li>
+    <li><a href="#3hashmaphashtabletreemap-有什么区别">3.HashMap、HashTable、TreeMap 有什么区别？</a></li>
+    <li><a href="#4内部类和静态嵌套类">4.内部类和静态嵌套类</a>
+      <ul>
+        <li><a href="#inner-class-vs-static-nested-class">Inner class vs. Static nested class</a></li>
+        <li><a href="#why-use-nested-classes">Why Use Nested Classes</a></li>
+        <li><a href="#静态嵌套类">静态嵌套类</a></li>
+        <li><a href="#内部类">内部类</a></li>
+        <li><a href="#序列化">序列化</a></li>
+      </ul>
+    </li>
+    <li><a href="#5referenceref">5.<a href="https://community.oracle.com/blogs/enicholas/2006/05/04/understanding-weak-references">Reference</a></a>
+      <ul>
+        <li><a href="#strongreference">StrongReference</a></li>
+        <li><a href="#softreference">SoftReference</a></li>
+        <li><a href="#weakreference">WeakReference</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
   </div>
 </div>
     <div class="post-content">
       <p>🌟答案的组织策略：知道是什么，知道为什么，知道怎么用</p>
-<p>0.JDK 和 JRE 有什么区别？</p>
+<h2 id="0jdk-和-jre-有什么区别">0.JDK 和 JRE 有什么区别？</h2>
 <ul>
 <li>JDK 包含 JRE，同时还包含编译 Java 源码的编译器 javac，还包含了很多 Java 程序调试和分析的工具。</li>
 <li>加分项：除了 javac 还了解哪些命令行工具，它们的用途是什么？
@@ -158,8 +181,8 @@
 </ul>
 </li>
 </ul>
-<p>1.equals 和 == 的差别？
-两者都是判断等价性，区别要从入参类型来看：</p>
+<h2 id="1equals-和--的差别">1.equals 和 == 的差别？</h2>
+<p>两者都是判断等价性，区别要从入参类型来看：</p>
 <ul>
 <li>
 <p>对于基本类型，他们是比较值是否相等</p>
@@ -181,7 +204,7 @@
 </ul>
 </li>
 </ul>
-<p>2.Java 中操作字符串有那些类？它们之间有什么区别？</p>
+<h2 id="2java-中操作字符串有那些类它们之间有什么区别">2.Java 中操作字符串有那些类？它们之间有什么区别？</h2>
 <ul>
 <li>主要有：String，StringBuilder，StringBuffer</li>
 <li>区别：StringBuffer 和 StringBuilder 都继承自 AbstractStringBuilder，StringBuffer 具备线程安全性
@@ -197,14 +220,188 @@
 </li>
 <li>使用场景：并发必选 StringBuffer，迭代必选 StringBuilder，普通场景选 String，避免中途不必要的类型转换开销</li>
 </ul>
-<p>3.HashMap、HashTable、TreeMap 有什么区别？
-是什么：</p>
+<h2 id="3hashmaphashtabletreemap-有什么区别">3.HashMap、HashTable、TreeMap 有什么区别？</h2>
+<p>是什么：</p>
 <ul>
 <li>上面3种数据结构都是最常见的 Map 接口的实现，是以 key-value 的形式存储和操作数据的容器类型。</li>
 <li>HashTable 是 Java 类库提供的一个 hash 实现，本身是同步的，不支持 null key 和 null value，由于同步性能开销，所以已经很少推荐使用了。</li>
 <li>HashMap 是应用广泛的哈希表实现，行为上大致与 HashTable 一致，主要区别在于 HashMap 不是同步的，支持 null key 和 null value 等。通常情况下，HashMap 进行 get 和 put 操作可以达到<strong>常数时间的性能</strong>。所以大部分利用键值对存取场景的首选。</li>
 <li>TreeMap 则是基于红黑树的一种提供顺序访问的 Map，它的 get、put、remove 之类的操作都是 O(logn) 时间复杂度，具体顺序由可以指定的 Comparator 来决定，后者根据键的自然顺序来判断。</li>
 </ul>
+<h2 id="4内部类和静态嵌套类">4.内部类和静态嵌套类</h2>
+<h3 id="inner-class-vs-static-nested-class">Inner class vs. Static nested class</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">class</span> <span class="nc">OuterClass</span> <span class="o">{</span>
+  <span class="o">...</span>
+  <span class="kd">static</span> <span class="kd">class</span> <span class="nc">StaticNestedClass</span> <span class="o">{</span>
+    <span class="o">...</span>
+  <span class="o">}</span>
+  <span class="kd">class</span> <span class="nc">InnerClass</span> <span class="o">{</span>
+    <span class="o">...</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>嵌套类（Nested class）可以分为两类：静态和非静态。声明为静态的嵌套类称为静态嵌套类（static nested classes）。非静态嵌套类称为内部类（inner classes）。</p>
+</blockquote>
+<p>嵌套类是其封闭类（enclosing class）的成员。内部类可以访问封闭类的其他成员，即使它们被声明为私有的可以访问。静态嵌套类无权访问封闭类的其他成员。作为 OuterClass 的成员，嵌套类可以声明为 <em>private</em>, <em>public</em>, <em>protected</em> 或 <em>package private</em>.</p>
+<h3 id="why-use-nested-classes">Why Use Nested Classes</h3>
+<ul>
+<li>
+<p>这是一种对仅在一个地方使用的类进行逻辑分组的方法</p>
+<p>如果一个类B仅对其他一个类A有用，那么将B嵌入类A将更合乎逻辑，嵌套将使 package 更精简。</p>
+</li>
+<li>
+<p>增加封装</p>
+<p>对于同一层级的类A和类B，如果类B需要访问类A的成员，通常情况需要实例化A再调用A的成员。通过将B封装到A内，A的成员可以声明为 <em>private</em>，同时B可以调用A的成员。此外B对外界完全隐藏。</p>
+</li>
+<li>
+<p>可以增加代码可读性，便于维护</p>
+<p>嵌套类可以使它更靠近使用的位置。</p>
+</li>
+</ul>
+<h3 id="静态嵌套类">静态嵌套类</h3>
+<p>与类的方法和变量一样，静态嵌套类与外部类相关联。与静态方法一样，静态嵌套类不能直接引用封闭类中定义的实例变量或方法：它只能通过对象的引用来使用它们。</p>
+<blockquote>
+<p>静态嵌套类和它外部类的实例成员进行交互，就像对其他 top-level 类一样。实际上，静态嵌套类在行为上是顶级类，为了包装方便（for packaging convenience），该顶级类已嵌套在另一个顶级类中。</p>
+</blockquote>
+<p>创建静态嵌套类通过：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="n">OuterClass</span><span class="o">.</span><span class="na">StaticNestedClass</span> <span class="n">sKlass</span> <span class="o">=</span> <span class="k">new</span> <span class="n">OuterClass</span><span class="o">.</span><span class="na">StaticNestedClass</span><span class="o">()</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="内部类">内部类</h3>
+<p>和实例方法及变量一样，内部类与其所在类的实例相关联，并且可以直接访问该对象的方法和字段。另外，由于内部类与实例相关联，因此它本身不能定义任何静态成员。</p>
+<p>内部类的实例只能存在于外部类实例中，且可以直接访问其外部类实例的方法和字段。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="n">OuterClass</span> <span class="n">outer</span> <span class="o">=</span> <span class="k">new</span> <span class="n">OuterClass</span><span class="o">();</span>
+<span class="c1">// Instantiate inner class
+</span><span class="c1"></span><span class="n">OuterClass</span><span class="o">.</span><span class="na">InnerClass</span> <span class="n">inner</span> <span class="o">=</span> <span class="n">outer</span><span class="o">.</span><span class="na">new</span> <span class="nf">InnerClass</span><span class="o">();</span>
+<span class="c1">// Instantiate static nested class
+</span><span class="c1"></span><span class="n">OuterClass</span><span class="o">.</span><span class="na">NestedClass</span> <span class="n">nested</span> <span class="o">=</span> <span class="k">new</span> <span class="n">OuterClass</span><span class="o">.</span><span class="na">NestedClass</span><span class="o">();</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="局部内部类和匿名内部类">局部内部类和匿名内部类</h4>
+<p>局部内部类声明在别的类的实例方法内，匿名内部类与局部内部类相似，但写法是返回一次性对象的表达式。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">AnonymousClasses</span> <span class="o">{</span>
+
+    <span class="kd">interface</span> <span class="nc">HelloWorld</span> <span class="o">{</span>
+        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">greet</span><span class="o">();</span>
+        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">greetSomeone</span><span class="o">(</span><span class="n">String</span> <span class="n">someone</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">sayHello</span><span class="o">()</span> <span class="o">{</span>
+      <span class="c1">// Local inner class
+</span><span class="c1"></span>        <span class="kd">class</span> <span class="nc">EnglishGreeting</span> <span class="kd">implements</span> <span class="n">HelloWorld</span> <span class="o">{</span>
+            <span class="n">String</span> <span class="n">name</span> <span class="o">=</span> <span class="s">&#34;world&#34;</span><span class="o">;</span>
+            <span class="kd">public</span> <span class="kt">void</span> <span class="nf">greet</span><span class="o">()</span> <span class="o">{</span>
+                <span class="n">greetSomeone</span><span class="o">(</span><span class="s">&#34;world&#34;</span><span class="o">);</span>
+            <span class="o">}</span>
+            <span class="kd">public</span> <span class="kt">void</span> <span class="nf">greetSomeone</span><span class="o">(</span><span class="n">String</span> <span class="n">someone</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">name</span> <span class="o">=</span> <span class="n">someone</span><span class="o">;</span>
+                <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;Hello &#34;</span> <span class="o">+</span> <span class="n">name</span><span class="o">);</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+
+        <span class="n">HelloWorld</span> <span class="n">englishGreeting</span> <span class="o">=</span> <span class="k">new</span> <span class="n">EnglishGreeting</span><span class="o">();</span>
+
+        <span class="c1">// Anonymous class
+</span><span class="c1"></span>        <span class="n">HelloWorld</span> <span class="n">frenchGreeting</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HelloWorld</span><span class="o">()</span> <span class="o">{</span>
+            <span class="n">String</span> <span class="n">name</span> <span class="o">=</span> <span class="s">&#34;tout le monde&#34;</span><span class="o">;</span>
+            <span class="kd">public</span> <span class="kt">void</span> <span class="nf">greet</span><span class="o">()</span> <span class="o">{</span>
+                <span class="n">greetSomeone</span><span class="o">(</span><span class="s">&#34;tout le monde&#34;</span><span class="o">);</span>
+            <span class="o">}</span>
+            <span class="kd">public</span> <span class="kt">void</span> <span class="nf">greetSomeone</span><span class="o">(</span><span class="n">String</span> <span class="n">someone</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">name</span> <span class="o">=</span> <span class="n">someone</span><span class="o">;</span>
+                <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;Salut &#34;</span> <span class="o">+</span> <span class="n">name</span><span class="o">);</span>
+            <span class="o">}</span>
+        <span class="o">};</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="序列化">序列化</h3>
+<p>强烈不建议对内部类，包括本地和匿名类进行序列化。当 Java 编译器编译某些构造时，它将创建<a href="https://docs.oracle.com/javase/tutorial/reflect/member/methodparameterreflection.html#implcit_and_synthetic">合成构造</a>（synthetic constructs）。这些是类、方法、字段和其他在源码中没有对应构造方法的构造。合成构造可以使 Java 编译器无需更改 JVM 即可实现新的 Java 语言功能。但是，合成构造在不同的 Java 编译器中的实现可能有所不同，这意味着 .class 文件在不同的实现中也可能有所不同。因此，如果序列化一个内部类，然后使用其他 JRE 实现对其进行反序列化，则可能出现兼容性问题。</p>
+<h2 id="5referenceref">5.<a href="https://community.oracle.com/blogs/enicholas/2006/05/04/understanding-weak-references">Reference</a></h2>
+<blockquote>
+<p>Package java.lang.ref 描述：
+提供引用-对象类，该类支持与<em>垃圾回收器进行有限程度的交互</em>。程序可以使用引用对象来维护对某个对象的引用，这样垃圾回收器可以收集后者的对象。垃圾回收器在确定给定对象的可达性更改后会通知程序。</p>
+</blockquote>
+<p>引用对象封装了对某个其他对象的引用，因此该引用本身可以像其他任何对象一样进行检查和操作。引用对象提供三种类型，引用依次减弱：soft, weak, 和 phantom，每种类型都对应不同级别的可达性。软引用用于实现内存敏感型缓存**（Android SDK 不建议这样做）**，弱引用用于实现规范化映射，这些映射不会阻止回收其键或值。虚引用用于安排比 Java 终止机制更灵活的事前清理行动。</p>
+<h3 id="strongreference">StrongReference</h3>
+<p>Strong 是描述它们如何与 garbage collector 进行交互的。如果一个对象通过一系列强引用访问（强可达性），那个该对象不符合垃圾回收的条件。</p>
+<h3 id="softreference">SoftReference</h3>
+<ul>
+<li>在虚拟机引发 OutOfMemoryError 之前，确保清除所有软引用的对象。</li>
+<li><strong>不建议使用软引用做缓存</strong>，运行时并没有足够的信息确定哪些引用需要保留，哪些需要清除，引用对象清除太早造成不必要的工作，引用清除太晚造成浪费内存。</li>
+<li>大多数 App 需要使用 LruCache 取代软引用。LruCache 具有有效的逐出策略，并允许用户调整分配的内存量。</li>
+</ul>
+<h3 id="weakreference">WeakReference</h3>
+<p>弱引用可以利用垃圾回收器的能力来确定可达性，因此我们不必自己做。</p>
 
     </div>
 
