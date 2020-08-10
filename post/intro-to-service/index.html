@@ -1,187 +1,81 @@
 <!DOCTYPE html>
-<html lang="zh-cn">
+<html lang="en-US">
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>Intro to Service - Zac</title>
-  <meta name="renderer" content="webkit" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
-
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
-
-<meta name="theme-color" content="#f8f5ec" />
-<meta name="msapplication-navbutton-color" content="#f8f5ec">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
-
-
-<meta name="author" content="Zac" /><meta name="description" content="查看进程基本信息 使用 adb shell ps|grep com.tencent.mobileqq 可以查看 QQ 应用进程相关的基本信息 1 2 3 4 5 Zac:tivi Zac$ adb shell ps | grep com.tencent.mobileqq # curr_user pid process name u0_a163 6779 669 1638852 27152 0 0 S com.tencent.mobileqq:MSF u0_a163 22001 669 1915536 224004 0 0 S com.tencent.mobileqq u0_a163 27829 669 1670960" /><meta name="keywords" content="Android, developer, programming" />
-
-
-
-
-
-
-<meta name="generator" content="Hugo 0.68.1 with theme even" />
-
-
-<link rel="canonical" href="https://zacash.cn/post/intro-to-service/" />
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-<link rel="manifest" href="/manifest.json">
-<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
-
-
-
-<link href="/sass/main.min.8c3cbcb0324c2bb4875ceccba4007cbad4b4ac8377f33af9953c3e7684534a50.css" rel="stylesheet">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
-
-
-<meta property="og:title" content="Intro to Service" />
-<meta property="og:description" content="查看进程基本信息 使用 adb shell ps|grep com.tencent.mobileqq 可以查看 QQ 应用进程相关的基本信息 1 2 3 4 5 Zac:tivi Zac$ adb shell ps | grep com.tencent.mobileqq # curr_user pid process name u0_a163 6779 669 1638852 27152 0 0 S com.tencent.mobileqq:MSF u0_a163 22001 669 1915536 224004 0 0 S com.tencent.mobileqq u0_a163 27829 669 1670960" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="https://zacash.cn/post/intro-to-service/" />
-<meta property="article:published_time" content="2020-07-04T11:08:11+08:00" />
-<meta property="article:modified_time" content="2020-07-04T11:08:11+08:00" />
-<meta itemprop="name" content="Intro to Service">
-<meta itemprop="description" content="查看进程基本信息 使用 adb shell ps|grep com.tencent.mobileqq 可以查看 QQ 应用进程相关的基本信息 1 2 3 4 5 Zac:tivi Zac$ adb shell ps | grep com.tencent.mobileqq # curr_user pid process name u0_a163 6779 669 1638852 27152 0 0 S com.tencent.mobileqq:MSF u0_a163 22001 669 1915536 224004 0 0 S com.tencent.mobileqq u0_a163 27829 669 1670960">
-<meta itemprop="datePublished" content="2020-07-04T11:08:11&#43;08:00" />
-<meta itemprop="dateModified" content="2020-07-04T11:08:11&#43;08:00" />
-<meta itemprop="wordCount" content="2840">
-
-
-
-<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Intro to Service"/>
-<meta name="twitter:description" content="查看进程基本信息 使用 adb shell ps|grep com.tencent.mobileqq 可以查看 QQ 应用进程相关的基本信息 1 2 3 4 5 Zac:tivi Zac$ adb shell ps | grep com.tencent.mobileqq # curr_user pid process name u0_a163 6779 669 1638852 27152 0 0 S com.tencent.mobileqq:MSF u0_a163 22001 669 1915536 224004 0 0 S com.tencent.mobileqq u0_a163 27829 669 1670960"/>
-
-<!--[if lte IE 9]>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
-<![endif]-->
-
-<!--[if lt IE 9]>
-  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
-<![endif]-->
-
-</head>
-<body>
-  <div id="mobile-navbar" class="mobile-navbar">
-  <div class="mobile-header-logo">
-    <a href="/" class="logo">Zac</a>
-  </div>
-  <div class="mobile-navbar-icon">
-    <span></span>
-    <span></span>
-    <span></span>
-  </div>
-</div>
-<nav id="mobile-menu" class="mobile-menu slideout-menu">
-  <ul class="mobile-menu-list">
-    <a href="/">
-        <li class="mobile-menu-item">Home</li>
-      </a><a href="/post/">
-        <li class="mobile-menu-item">Archives</li>
-      </a><a href="/tags/">
-        <li class="mobile-menu-item">Tags</li>
-      </a><a href="/categories/">
-        <li class="mobile-menu-item">Categories</li>
-      </a>
-  </ul>
-</nav>
-  <div class="container" id="mobile-panel">
-    <header id="header" class="header">
-        <div class="logo-wrapper">
-  <a href="/" class="logo">Zac</a>
-</div>
-
-<nav class="site-navbar">
-  <ul id="menu" class="menu">
-    <li class="menu-item">
-        <a class="menu-item-link" href="/">Home</a>
-      </li><li class="menu-item">
-        <a class="menu-item-link" href="/post/">Archives</a>
-      </li><li class="menu-item">
-        <a class="menu-item-link" href="/tags/">Tags</a>
-      </li><li class="menu-item">
-        <a class="menu-item-link" href="/categories/">Categories</a>
-      </li>
-  </ul>
-</nav>
-    </header>
-
-    <main id="main" class="main">
-      <div class="content-wrapper">
-        <div id="content" class="content">
-          <article class="post">
+    <meta charset="utf-8">
     
-    <header class="post-header">
-      <h1 class="post-title">Intro to Service</h1>
+    <title>Intro to Service | Zac&#39;s Blog</title>
+    <meta name="description" content="Android developer blog">
+    <meta name="author" content="">
+    
+    <link rel="apple-touch-icon" sizes="180x180" href=https://zacash.cn/apple-touch-icon.png>
+    <link rel="icon" type="image/png" sizes="32x32" href=https://zacash.cn/favicon-32x32.png>
+    <link rel="icon" type="image/png" sizes="16x16" href=https://zacash.cn/favicon-16x16.png>
+    <link rel="manifest" href=https://zacash.cn/site.webmanifest>
+    <link rel="mask-icon" href=https://zacash.cn/safari-pinned-tab.svg color="#00416a">
+    <meta name="msapplication-TileColor" content="#00aba9">
+    <meta name="theme-color" content="#ffffff">
+    
+    <link rel="me" href="mailto:zac_ju@163.com">
+    <link rel="me" href="https://github.com/zac4j">
+    
+    
+    
+    <link rel="authorization_endpoint" href=https://indieauth.com/auth />
+    <link rel="token_endpoint" href=https://tokens.indieauth.com/token />
+    
+    
+    
+    
+    
+    <link rel="stylesheet" href=https://zacash.cn/css/fonts.css />
+    <link rel="stylesheet" href=https://zacash.cn/css/style.css />
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
 
-      <div class="post-meta">
-        <span class="post-time"> 4040-07-04 </span>
+<body>
+    <div id="sitelogo">
+        <a class="glyph" alt="Home" href="https://zacash.cn"><img src=https://zacash.cn/images/site-logo.svg alt="Site Logo" height="64px" width="64px"></a>
+    </div>
+    <header>
+        <nav>
+    
+    <div id="page-nav">
+        <div class="page-nav-item">
+            <a href="https://zacash.cn">Home</a>
+        </div>
         
-          <span class="more-meta"> 约 2840 字 </span>
-          <span class="more-meta"> 预计阅读 6 分钟 </span>
+    </div>
+</nav>
         
-      </div>
     </header>
 
-    <div class="post-toc" id="post-toc">
-  <h2 class="post-toc-title">文章目录</h2>
-  <div class="post-toc-content always-active">
-    <nav id="TableOfContents">
-  <ul>
-    <li><a href="#查看进程基本信息">查看进程基本信息</a></li>
-    <li><a href="#进程的划分">进程的划分</a>
-      <ul>
-        <li><a href="#前台进程foreground-process">前台进程（foreground process）</a></li>
-        <li><a href="#可见进程visible-process">可见进程（visible process）</a></li>
-        <li><a href="#服务进程service-process">服务进程（service process）</a></li>
-        <li><a href="#缓存进程cached-process">缓存进程（cached process）</a></li>
-      </ul>
-    </li>
-    <li><a href="#终止进程low-memory-killer-daemon-lmkd">终止进程（Low Memory Killer Daemon, lmkd）</a>
-      <ul>
-        <li><a href="#查看手机的内存阀值">查看手机的内存阀值</a></li>
-        <li><a href="#adj">ADJ</a></li>
-        <li><a href="#进程终止策略">进程终止策略</a></li>
-      </ul>
-    </li>
-    <li><a href="#service-的生命周期">Service 的生命周期</a></li>
-    <li><a href="#实现-service-生命周期回调">实现 Service 生命周期回调</a></li>
-    <li><a href="#service-使用时需要注意的问题">Service 使用时需要注意的问题</a>
-      <ul>
-        <li><a href="#何时使用-bounded-service-和-unbounded-server">何时使用 Bounded service 和 Unbounded server</a></li>
-        <li><a href="#android-o-以上报-illegalstateexception">Android O 以上报 IllegalStateException</a></li>
-      </ul>
-    </li>
-  </ul>
-</nav>
-  </div>
-</div>
-    <div class="post-content">
-      <h2 id="查看进程基本信息">查看进程基本信息</h2>
+
+
+
+<div id="content">
+    <article class="h-entry">
+        <header>
+            <h1 class="post-title p-name">Intro to Service</h1>
+            
+            <p class="post-date">Posted on
+                <time class="dt-published" datetime="2020-07-04T11:08:11&#43;08:00">
+                    4 July, 2020 at 11:08 CST
+                </time>  by <a href="https://zacash.cn" class="p-author h-card"
+                    rel="author">Zac</a>
+            </p>
+            
+            
+        </header>
+        <section class="content e-content">
+            <h2 id="查看进程基本信息">查看进程基本信息</h2>
 <p>使用 <code>adb shell ps|grep com.tencent.mobileqq</code> 可以查看 QQ 应用进程相关的基本信息</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">Zac:tivi Zac$ adb shell ps <span class="p">|</span> grep com.tencent.mobileqq
-<span class="c1"># curr_user   pid                                                 process name</span>
-u0_a163       <span class="m">6779</span>   <span class="m">669</span> <span class="m">1638852</span>  <span class="m">27152</span> <span class="m">0</span>                   <span class="m">0</span> S com.tencent.mobileqq:MSF
-u0_a163      <span class="m">22001</span>   <span class="m">669</span> <span class="m">1915536</span> <span class="m">224004</span> <span class="m">0</span>                   <span class="m">0</span> S com.tencent.mobileqq
-u0_a163      <span class="m">27829</span>   <span class="m">669</span> <span class="m">1670960</span> <span class="m">236668</span> <span class="m">0</span>                   <span class="m">0</span> S com.tencent.mobileqq:qzone
-</code></pre></td></tr></table>
-</div>
-</div><h2 id="进程的划分">进程的划分</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">Zac:tivi Zac$ adb shell ps | grep com.tencent.mobileqq
+<span style="color:#75715e"># curr_user   pid                                                 process name</span>
+u0_a163       <span style="color:#ae81ff">6779</span>   <span style="color:#ae81ff">669</span> <span style="color:#ae81ff">1638852</span>  <span style="color:#ae81ff">27152</span> <span style="color:#ae81ff">0</span>                   <span style="color:#ae81ff">0</span> S com.tencent.mobileqq:MSF
+u0_a163      <span style="color:#ae81ff">22001</span>   <span style="color:#ae81ff">669</span> <span style="color:#ae81ff">1915536</span> <span style="color:#ae81ff">224004</span> <span style="color:#ae81ff">0</span>                   <span style="color:#ae81ff">0</span> S com.tencent.mobileqq
+u0_a163      <span style="color:#ae81ff">27829</span>   <span style="color:#ae81ff">669</span> <span style="color:#ae81ff">1670960</span> <span style="color:#ae81ff">236668</span> <span style="color:#ae81ff">0</span>                   <span style="color:#ae81ff">0</span> S com.tencent.mobileqq:qzone
+</code></pre></div><h2 id="进程的划分">进程的划分</h2>
 <p>为了确定在内存不足时 kill 哪些进程，Android 会依据进程中运行的组件（Activity/Service/BroadcastReceiver）和这些组件的状态，划分每个进程的重要层次结构（importance hierarchy）。这些进程按重要性排序:</p>
 <h3 id="前台进程foreground-process">前台进程（foreground process）</h3>
 <p>前台进程是用户当前正在执行的操作所必须的进程，应用进程内的组件可能以不同形式让其处于前台：</p>
@@ -208,60 +102,27 @@ u0_a163      <span class="m">27829</span>   <span class="m">669</span> <span cla
 <h2 id="终止进程low-memory-killer-daemon-lmkd">终止进程（Low Memory Killer Daemon, lmkd）</h2>
 <p>Android lmkd 进程监控正在运行的系统内存状态，并通过杀死最不重要进程（least essential processes）来应对高内存压力，以使系统运行在可接收的水平。</p>
 <h3 id="查看手机的内存阀值">查看手机的内存阀值</h3>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># root permission need</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e"># root permission need</span>
 adb shell cat /sys/module/lowmemorykiller/parameters/minfree
-</code></pre></td></tr></table>
-</div>
-</div><h3 id="adj">ADJ</h3>
+</code></pre></div><h3 id="adj">ADJ</h3>
 <p>Adj 定义在 <a href="https://android.googlesource.com/platform/frameworks/base/+/be4e6aa/services/java/com/android/server/am/ProcessList.java">frameworks/&hellip;/services/java/com/android/server/am/ProcessList.java</a> 中，<code>oom_adj</code> 表示进程的 adj 值，一般在 -17～16 间取值，adj 值越大，优先级越低，<code>adj &lt; 0</code>的进程都是系统进程。<code>adj = 0</code> 表示进程处于前台。</p>
 <p>通过命令查看 <code>pid = 4061</code> 进程的 adj 值：</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># App 处于前台时</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e"># App 处于前台时</span>
 adb shell cat /proc/4061/oom_adj
-<span class="m">0</span>
-<span class="c1"># App 处于后台时</span>
+<span style="color:#ae81ff">0</span>
+<span style="color:#75715e"># App 处于后台时</span>
 Zac:tivi Zac$ adb shell cat /proc/4061/oom_adj
-<span class="m">11</span>
-</code></pre></td></tr></table>
-</div>
-</div><h3 id="进程终止策略">进程终止策略</h3>
+<span style="color:#ae81ff">11</span>
+</code></pre></div><h3 id="进程终止策略">进程终止策略</h3>
 <p><code>ProcessList</code> 中定义的 <code>oomAdj</code>：</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span><span class="lnt">7
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-java" data-lang="java"><span class="c1">// These are the various interesting memory levels that we will give to
-</span><span class="c1">// the OOM killer.  Note that the OOM killer only supports 6 slots, so we
-</span><span class="c1">// can&#39;t give it a different value for every possible kind of process.
-</span><span class="c1"></span><span class="kd">private</span> <span class="kd">final</span> <span class="kt">int</span><span class="o">[]</span> <span class="n">mOomAdj</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[]</span> <span class="o">{</span>
-    <span class="n">FOREGROUND_APP_ADJ</span><span class="o">,</span> <span class="n">VISIBLE_APP_ADJ</span><span class="o">,</span> <span class="n">PERCEPTIBLE_APP_ADJ</span><span class="o">,</span>
-    <span class="n">BACKUP_APP_ADJ</span><span class="o">,</span> <span class="n">CACHED_APP_MIN_ADJ</span><span class="o">,</span> <span class="n">CACHED_APP_MAX_ADJ</span>
-<span class="o">};</span>
-</code></pre></td></tr></table>
-</div>
-</div><p>在系统内存不足时，依次从 <code>CACHED_APP_MAX_ADJ -&gt; .. -&gt;  FOREGROUND_APP_ADJ</code> 终止进程。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#75715e">// These are the various interesting memory levels that we will give to
+</span><span style="color:#75715e">// the OOM killer.  Note that the OOM killer only supports 6 slots, so we
+</span><span style="color:#75715e">// can&#39;t give it a different value for every possible kind of process.
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">final</span> <span style="color:#66d9ef">int</span><span style="color:#f92672">[]</span> mOomAdj <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#66d9ef">int</span><span style="color:#f92672">[]</span> <span style="color:#f92672">{</span>
+    FOREGROUND_APP_ADJ<span style="color:#f92672">,</span> VISIBLE_APP_ADJ<span style="color:#f92672">,</span> PERCEPTIBLE_APP_ADJ<span style="color:#f92672">,</span>
+    BACKUP_APP_ADJ<span style="color:#f92672">,</span> CACHED_APP_MIN_ADJ<span style="color:#f92672">,</span> CACHED_APP_MAX_ADJ
+<span style="color:#f92672">};</span>
+</code></pre></div><p>在系统内存不足时，依次从 <code>CACHED_APP_MAX_ADJ -&gt; .. -&gt;  FOREGROUND_APP_ADJ</code> 终止进程。</p>
 <p>看完进程我们再看看服务</p>
 <h2 id="service-的生命周期">Service 的生命周期</h2>
 <p>Service 的生命周期比 Activity 的要简单很多。但关注其如何创建销毁反而更加重要，因为服务可以在用户没有意识到的情况下在后台运行。</p>
@@ -275,153 +136,77 @@ Zac:tivi Zac$ adb shell cat /proc/4061/oom_adj
 <p>这两种状态并非完全独立，实际上是 <strong>可以共存</strong> 的。例如可以使用 Intent 调用 <a href="https://developer.android.com/reference/android/content/Context.html#startService(android.content.Intent)">startService()</a> 启动后台音乐服务。随后，可能用户需要加入控制播放器获取有关播放歌曲信息时，Activity 可以通过调用 <a href="https://developer.android.com/reference/android/content/Context.html#bindService(android.content.Intent,android.content.ServiceConnection,int)">bindService()</a> 绑定到该服务。这种情况下，除非所有客户端都取消绑定，否则 <a href="https://developer.android.com/reference/android/content/Context.html#stopService(android.content.Intent)">stopService()</a> 或 <a href="https://developer.android.com/reference/android/app/Service.html#stopSelf()">stopSelf()</a> 不会停止该服务。</p>
 <h2 id="实现-service-生命周期回调">实现 Service 生命周期回调</h2>
 <p>与 Activity 类似，Service 也拥有生命周期回调方法，可以通过实现这些方法来监控Service 状态的变化：</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span><span class="lnt">21
-</span><span class="lnt">22
-</span><span class="lnt">23
-</span><span class="lnt">24
-</span><span class="lnt">25
-</span><span class="lnt">26
-</span><span class="lnt">27
-</span><span class="lnt">28
-</span><span class="lnt">29
-</span><span class="lnt">30
-</span><span class="lnt">31
-</span><span class="lnt">32
-</span><span class="lnt">33
-</span><span class="lnt">34
-</span><span class="lnt">35
-</span><span class="lnt">36
-</span><span class="lnt">37
-</span><span class="lnt">38
-</span><span class="lnt">39
-</span><span class="lnt">40
-</span><span class="lnt">41
-</span><span class="lnt">42
-</span><span class="lnt">43
-</span><span class="lnt">44
-</span><span class="lnt">45
-</span><span class="lnt">46
-</span><span class="lnt">47
-</span><span class="lnt">48
-</span><span class="lnt">49
-</span><span class="lnt">50
-</span><span class="lnt">51
-</span><span class="lnt">52
-</span><span class="lnt">53
-</span><span class="lnt">54
-</span><span class="lnt">55
-</span><span class="lnt">56
-</span><span class="lnt">57
-</span><span class="lnt">58
-</span><span class="lnt">59
-</span><span class="lnt">60
-</span><span class="lnt">61
-</span><span class="lnt">62
-</span><span class="lnt">63
-</span><span class="lnt">64
-</span><span class="lnt">65
-</span><span class="lnt">66
-</span><span class="lnt">67
-</span><span class="lnt">68
-</span><span class="lnt">69
-</span><span class="lnt">70
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-java" data-lang="java"><span class="kn">import</span> <span class="nn">android.app.Service</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">android.content.Intent</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">android.os.IBinder</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">android.support.annotation.Nullable</span><span class="o">;</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#f92672">import</span> android.app.Service<span style="color:#f92672">;</span>
+<span style="color:#f92672">import</span> android.content.Intent<span style="color:#f92672">;</span>
+<span style="color:#f92672">import</span> android.os.IBinder<span style="color:#f92672">;</span>
+<span style="color:#f92672">import</span> android.support.annotation.Nullable<span style="color:#f92672">;</span>
 
-<span class="cm">/**
-</span><span class="cm"> * Created by Zac on 2017/5/23.
-</span><span class="cm"> */</span>
+<span style="color:#75715e">/**
+</span><span style="color:#75715e"> * Created by Zac on 2017/5/23.
+</span><span style="color:#75715e"> */</span>
 
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">SampleService</span> <span class="kd">extends</span> <span class="n">Service</span> <span class="o">{</span>
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">SampleService</span> <span style="color:#66d9ef">extends</span> Service <span style="color:#f92672">{</span>
 
-  <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">CHANNEL_NAME</span> <span class="o">=</span> <span class="s">&#34;default&#34;</span><span class="o">;</span>
+  <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">final</span> CHANNEL_NAME <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;default&#34;</span><span style="color:#f92672">;</span>
 
-  <span class="cm">/**
-</span><span class="cm">   * 表示服务被 kill 之后的行为
-</span><span class="cm">   */</span>
-  <span class="kd">private</span> <span class="kt">int</span> <span class="n">mStartMode</span><span class="o">;</span>
+  <span style="color:#75715e">/**
+</span><span style="color:#75715e">   * 表示服务被 kill 之后的行为
+</span><span style="color:#75715e">   */</span>
+  <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">int</span> mStartMode<span style="color:#f92672">;</span>
 
-  <span class="cm">/**
-</span><span class="cm">   * 表示绑定该服务的 client
-</span><span class="cm">   */</span>
-  <span class="kd">private</span> <span class="n">IBinder</span> <span class="n">mBinder</span><span class="o">;</span>
+  <span style="color:#75715e">/**
+</span><span style="color:#75715e">   * 表示绑定该服务的 client
+</span><span style="color:#75715e">   */</span>
+  <span style="color:#66d9ef">private</span> IBinder mBinder<span style="color:#f92672">;</span>
 
-  <span class="cm">/**
-</span><span class="cm">   * 表示是否允许重新绑定
-</span><span class="cm">   */</span>
-  <span class="kd">private</span> <span class="kt">boolean</span> <span class="n">mAllowReind</span><span class="o">;</span>
+  <span style="color:#75715e">/**
+</span><span style="color:#75715e">   * 表示是否允许重新绑定
+</span><span style="color:#75715e">   */</span>
+  <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">boolean</span> mAllowReind<span style="color:#f92672">;</span>
 
-  <span class="nd">@Override</span> <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onCreate</span><span class="o">()</span> <span class="o">{</span>
-    <span class="c1">// 服务被创建
-</span><span class="c1"></span>    <span class="kd">super</span><span class="o">.</span><span class="na">onCreate</span><span class="o">();</span>
-    <span class="n">startForeground</span><span class="o">();</span>
-  <span class="o">}</span>
+  <span style="color:#a6e22e">@Override</span> <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">onCreate</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+    <span style="color:#75715e">// 服务被创建
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">super</span><span style="color:#f92672">.</span><span style="color:#a6e22e">onCreate</span><span style="color:#f92672">();</span>
+    startForeground<span style="color:#f92672">();</span>
+  <span style="color:#f92672">}</span>
 
-  <span class="cm">/**
-</span><span class="cm">   * 创建定义的通知
-</span><span class="cm">   */</span>
-  <span class="kd">private</span> <span class="n">Notification</span><span class="o">.</span><span class="na">Builder</span> <span class="nf">getNotification</span><span class="o">(</span><span class="n">String</span> <span class="n">title</span><span class="o">,</span> <span class="n">String</span> <span class="n">body</span><span class="o">)</span> <span class="o">{</span>
-    <span class="k">return</span> <span class="k">new</span> <span class="n">Notification</span><span class="o">.</span><span class="na">Builder</span><span class="o">(</span><span class="n">appContext</span><span class="o">,</span> <span class="n">CHANNEL_NAME</span><span class="o">)</span>
-            <span class="o">.</span><span class="na">setContentTitle</span><span class="o">(</span><span class="n">title</span><span class="o">)</span>
-            <span class="o">.</span><span class="na">setContentText</span><span class="o">(</span><span class="n">body</span><span class="o">)</span>
-            <span class="o">.</span><span class="na">setSmallIcon</span><span class="o">(</span><span class="n">smallIcon</span><span class="o">)</span>
-            <span class="o">.</span><span class="na">setAutoCancel</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
-  <span class="o">}</span>
+  <span style="color:#75715e">/**
+</span><span style="color:#75715e">   * 创建定义的通知
+</span><span style="color:#75715e">   */</span>
+  <span style="color:#66d9ef">private</span> Notification<span style="color:#f92672">.</span><span style="color:#a6e22e">Builder</span> <span style="color:#a6e22e">getNotification</span><span style="color:#f92672">(</span>String title<span style="color:#f92672">,</span> String body<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> Notification<span style="color:#f92672">.</span><span style="color:#a6e22e">Builder</span><span style="color:#f92672">(</span>appContext<span style="color:#f92672">,</span> CHANNEL_NAME<span style="color:#f92672">)</span>
+            <span style="color:#f92672">.</span><span style="color:#a6e22e">setContentTitle</span><span style="color:#f92672">(</span>title<span style="color:#f92672">)</span>
+            <span style="color:#f92672">.</span><span style="color:#a6e22e">setContentText</span><span style="color:#f92672">(</span>body<span style="color:#f92672">)</span>
+            <span style="color:#f92672">.</span><span style="color:#a6e22e">setSmallIcon</span><span style="color:#f92672">(</span>smallIcon<span style="color:#f92672">)</span>
+            <span style="color:#f92672">.</span><span style="color:#a6e22e">setAutoCancel</span><span style="color:#f92672">(</span><span style="color:#66d9ef">true</span><span style="color:#f92672">);</span>
+  <span style="color:#f92672">}</span>
 
-  <span class="nd">@Nullable</span> <span class="nd">@Override</span> <span class="kd">public</span> <span class="n">IBinder</span> <span class="nf">onBind</span><span class="o">(</span><span class="n">Intent</span> <span class="n">intent</span><span class="o">)</span> <span class="o">{</span>
-    <span class="c1">// 客户端通过 bindService() 方法绑定服务
-</span><span class="c1"></span>    <span class="k">return</span> <span class="n">mBinder</span><span class="o">;</span>
-  <span class="o">}</span>
+  <span style="color:#a6e22e">@Nullable</span> <span style="color:#a6e22e">@Override</span> <span style="color:#66d9ef">public</span> IBinder <span style="color:#a6e22e">onBind</span><span style="color:#f92672">(</span>Intent intent<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+    <span style="color:#75715e">// 客户端通过 bindService() 方法绑定服务
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">return</span> mBinder<span style="color:#f92672">;</span>
+  <span style="color:#f92672">}</span>
 
-  <span class="nd">@Override</span> <span class="kd">public</span> <span class="kt">int</span> <span class="nf">onStartCommand</span><span class="o">(</span><span class="n">Intent</span> <span class="n">intent</span><span class="o">,</span> <span class="kt">int</span> <span class="n">flags</span><span class="o">,</span> <span class="kt">int</span> <span class="n">startId</span><span class="o">)</span> <span class="o">{</span>
-    <span class="c1">// 组件调用 startService() 方法启动服务
-</span><span class="c1"></span>    <span class="k">return</span> <span class="n">mStartMode</span><span class="o">;</span>
-  <span class="o">}</span>
+  <span style="color:#a6e22e">@Override</span> <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">onStartCommand</span><span style="color:#f92672">(</span>Intent intent<span style="color:#f92672">,</span> <span style="color:#66d9ef">int</span> flags<span style="color:#f92672">,</span> <span style="color:#66d9ef">int</span> startId<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+    <span style="color:#75715e">// 组件调用 startService() 方法启动服务
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">return</span> mStartMode<span style="color:#f92672">;</span>
+  <span style="color:#f92672">}</span>
 
-  <span class="nd">@Override</span> <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">onUnbind</span><span class="o">(</span><span class="n">Intent</span> <span class="n">intent</span><span class="o">)</span> <span class="o">{</span>
-    <span class="c1">// 所有绑定的客户端都已调用 unbindService() 方法解绑
-</span><span class="c1"></span>    <span class="k">return</span> <span class="n">mAllowReind</span><span class="o">;</span>
-  <span class="o">}</span>
+  <span style="color:#a6e22e">@Override</span> <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">boolean</span> <span style="color:#a6e22e">onUnbind</span><span style="color:#f92672">(</span>Intent intent<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+    <span style="color:#75715e">// 所有绑定的客户端都已调用 unbindService() 方法解绑
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">return</span> mAllowReind<span style="color:#f92672">;</span>
+  <span style="color:#f92672">}</span>
 
-  <span class="nd">@Override</span> <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onRebind</span><span class="o">(</span><span class="n">Intent</span> <span class="n">intent</span><span class="o">)</span> <span class="o">{</span>
-    <span class="c1">// 客户端在onUnbind() 方法回调之后，调用 bindService() 方法绑定服务
-</span><span class="c1"></span>    <span class="kd">super</span><span class="o">.</span><span class="na">onRebind</span><span class="o">(</span><span class="n">intent</span><span class="o">);</span>
-  <span class="o">}</span>
+  <span style="color:#a6e22e">@Override</span> <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">onRebind</span><span style="color:#f92672">(</span>Intent intent<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+    <span style="color:#75715e">// 客户端在onUnbind() 方法回调之后，调用 bindService() 方法绑定服务
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">super</span><span style="color:#f92672">.</span><span style="color:#a6e22e">onRebind</span><span style="color:#f92672">(</span>intent<span style="color:#f92672">);</span>
+  <span style="color:#f92672">}</span>
 
-  <span class="nd">@Override</span> <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onDestroy</span><span class="o">()</span> <span class="o">{</span>
-    <span class="c1">// 服务不再被使用并被销毁
-</span><span class="c1"></span>    <span class="kd">super</span><span class="o">.</span><span class="na">onDestroy</span><span class="o">();</span>
-  <span class="o">}</span>
-<span class="o">}</span>
-</code></pre></td></tr></table>
-</div>
-</div><p><img src="http://upload-images.jianshu.io/upload_images/1256396-2b2f6bb1c5e9f4c5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="service_lifecycle.png"></p>
+  <span style="color:#a6e22e">@Override</span> <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">onDestroy</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+    <span style="color:#75715e">// 服务不再被使用并被销毁
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">super</span><span style="color:#f92672">.</span><span style="color:#a6e22e">onDestroy</span><span style="color:#f92672">();</span>
+  <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><p><img src="http://upload-images.jianshu.io/upload_images/1256396-2b2f6bb1c5e9f4c5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="service_lifecycle.png"></p>
 <blockquote>
 <p>服务的生命周期，左边显示了使用 <a href="https://developer.android.com/reference/android/content/Context.html#startService(android.content.Intent)">startService()</a> 所创建的服务的生命周期，右边显示了 <a href="https://developer.android.com/reference/android/content/Context.html#bindService(android.content.Intent,android.content.ServiceConnection,int)">bindService()</a> 所创建的服务的生命周期。</p>
 </blockquote>
@@ -447,113 +232,82 @@ Zac:tivi Zac$ adb shell cat /proc/4061/oom_adj
 <p>大意是指 <code>startService()</code> 方法开销比较大，因此在高频次调用服务的场景，最好使用 Bounded service，Unbounded service 仅用于安排重要工作。</p>
 <h3 id="android-o-以上报-illegalstateexception">Android O 以上报 IllegalStateException</h3>
 <p>Android O 加强了后台执行的限制，App 处于后台时不允许通过 <code>startService()</code> 的形式启动服务，只能通过 <code>startForegroundService()</code> 方法启动服务，而且 App 必须在创建服务后5s内调用该服务的 <code>startForeground()</code> 方法。具体的实现如下：</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="k">if</span><span class="p">(</span><span class="n">Build</span><span class="p">.</span><span class="n">VERSION</span><span class="p">.</span><span class="n">SDK_INT</span> <span class="p">&gt;=</span> <span class="n">Build</span><span class="p">.</span><span class="n">VERSION_CODES</span><span class="p">.</span><span class="n">O</span><span class="p">)</span> <span class="p">{</span>
-  <span class="n">startForegroundService</span><span class="p">(</span><span class="n">new</span> <span class="n">Intent</span><span class="p">(</span><span class="n">MainActivity</span><span class="p">.</span><span class="k">this</span><span class="p">,</span> <span class="n">SampleService</span><span class="p">.</span><span class="k">class</span><span class="p">));</span>
-<span class="p">}</span><span class="k">else</span><span class="p">{</span>
-  <span class="n">startService</span><span class="p">(</span><span class="n">new</span> <span class="n">Intent</span><span class="p">(</span><span class="n">MainActivity</span><span class="p">.</span><span class="k">this</span><span class="p">,</span> <span class="n">SampleService</span><span class="p">.</span><span class="k">class</span><span class="p">));</span>
-<span class="p">}</span>
-</code></pre></td></tr></table>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-kotlin" data-lang="kotlin"><span style="color:#66d9ef">if</span>(Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.O) {
+  startForegroundService(new Intent(MainActivity.<span style="color:#66d9ef">this</span>, SampleService.<span style="color:#66d9ef">class</span>));
+}<span style="color:#66d9ef">else</span>{
+  startService(new Intent(MainActivity.<span style="color:#66d9ef">this</span>, SampleService.<span style="color:#66d9ef">class</span>));
+}
+</code></pre></div>
+        </section>
+        <footer>
+            <a class="permalink u-url" href="https://zacash.cn/post/intro-to-service/">🔗</a>
+            
+        </footer>
+    </article>
 </div>
-</div>
-    </div>
 
-    <div class="post-copyright">
-  <p class="copyright-item">
-    <span class="item-title">文章作者</span>
-    <span class="item-content">Zac</span>
-  </p>
-  <p class="copyright-item">
-    <span class="item-title">上次更新</span>
-    <span class="item-content">
-        4040-07-04
-        
-    </span>
-  </p>
-  
-  
-</div>
-<footer class="post-footer">
-      
-      <nav class="post-nav">
-        <a class="prev" href="/post/intro-to-hybrid-app/">
-            <i class="iconfont icon-left"></i>
-            <span class="prev-text nav-default">Intro to Hybrid App</span>
-            <span class="prev-text nav-mobile">上一篇</span>
-          </a>
-        <a class="next" href="/post/java-basic/">
-            <span class="next-text nav-default">Java Basic</span>
-            <span class="next-text nav-mobile">下一篇</span>
-            <i class="iconfont icon-right"></i>
-          </a>
-      </nav>
-    </footer>
-  </article>
-        </div>
-        
-
-  
-
-  
-
+    
+    <div class="h-card">
+      <img class="u-photo" src="https://zacash.cn/images/android-os.png" />
+      <div class="card-content">
+        <h2 class="card-name"><a class="p-name u-url" href="https://zacash.cn" rel="me">Zac</a></h2>
+        <p class="card-subhead">
+          <span class="p-locality">Shanghai</span>,
+          <span class="p-country-name">China</span><br />
+          <a class="u-email" href="mailto:zac_ju@163.com">Email me</a>
+        </p>
       </div>
-    </main>
-
-    <footer id="footer" class="footer">
-      <div class="social-links">
-      <a href="zac@zacash.com" class="iconfont icon-email" title="email"></a>
-  <a href="https://zacash.cn/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
-</div>
-
-<div class="copyright">
-  <span class="power-by">
-    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
-  </span>
-  <span class="division">|</span>
-  <span class="theme-info">
-    主题 - 
-    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
-  </span>
-
-  
-
-  <span class="copyright-year">
-    &copy; 
-    2020
-    <span class="heart">
-      <i class="iconfont icon-heart"></i>
-    </span>
-    <span class="author">Zac</span>
-  </span>
-</div>
-    </footer>
-
-    <div class="back-to-top" id="back-to-top">
-      <i class="iconfont icon-up"></i>
+      <p class="p-note">🐭</p>
     </div>
+    
+    <div id="footer">
+      
+      <nav id="article-skip">
+        <div class="next">
+          
+          <a alt="Newer article" href="https://zacash.cn/post/intro-to-hybrid-app/">&larr; Newer</a>
+          
+        </div>
+        <div class="top">
+          <a alt="Top of page" href="#">Top</a>
+        </div>
+        <div class="prev">
+          
+          <a alt="Older article" href="https://zacash.cn/post/java-basic/">Older &rarr;</a>
+          
+        </div>
+      </nav>
+      
+      <aside id="social">
+  <div id="social-icons">
+    
+    
+    
+    
+    <div class="icon-24x24">
+      <a class="glyph" alt="GitHub profile" href="https://github.com/zac4j"><img src=https://zacash.cn/icons/github.svg height="24px" width="24px"></a>
+    </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
   </div>
-  
-  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+</aside>
 
-
-
-<script type="text/javascript" src="/js/main.min.d7b7ada643c9c1a983026e177f141f7363b4640d619caf01d8831a6718cd44ea.js"></script>
-
-
-
-
-
-
+      
+      <p class="copyright">
+          Copyright © 2020, Copyright Zac
+      </p>
+      
+    </div>
 
 
 </body>

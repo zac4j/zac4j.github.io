@@ -1,183 +1,84 @@
 <!DOCTYPE html>
-<html lang="zh-cn">
+<html lang="en-US">
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>JVM Mechanics - Zac</title>
-  <meta name="renderer" content="webkit" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
-
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
-
-<meta name="theme-color" content="#f8f5ec" />
-<meta name="msapplication-navbutton-color" content="#f8f5ec">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
-
-
-<meta name="author" content="Zac" /><meta name="description" content="Class File ClassFile structure 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 ClassFile { u4 magic; u2 minor_version; u2 major_version; u2 constant_pool_count; cp_info constant_pool[constant_pool_count-1]; u2 access_flags; u2 this_class; u2 super_class; u2 interfaces_count; u2 interfaces[interfaces_count]; u2 fields_count; field_info fields[fields_count]; u2 methods_count; method_info methods[methods_count]; u2 attributes_count; attribute_info attributes[attributes_count]; } The constant_pool is a table of structures representing various string constants, class and" /><meta name="keywords" content="Android, developer, programming" />
-
-
-
-
-
-
-<meta name="generator" content="Hugo 0.68.1 with theme even" />
-
-
-<link rel="canonical" href="https://zacash.cn/post/jvm-mechanics/" />
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-<link rel="manifest" href="/manifest.json">
-<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
-
-
-
-<link href="/sass/main.min.8c3cbcb0324c2bb4875ceccba4007cbad4b4ac8377f33af9953c3e7684534a50.css" rel="stylesheet">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
-
-
-<meta property="og:title" content="JVM Mechanics" />
-<meta property="og:description" content="Class File ClassFile structure 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 ClassFile { u4 magic; u2 minor_version; u2 major_version; u2 constant_pool_count; cp_info constant_pool[constant_pool_count-1]; u2 access_flags; u2 this_class; u2 super_class; u2 interfaces_count; u2 interfaces[interfaces_count]; u2 fields_count; field_info fields[fields_count]; u2 methods_count; method_info methods[methods_count]; u2 attributes_count; attribute_info attributes[attributes_count]; } The constant_pool is a table of structures representing various string constants, class and" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="https://zacash.cn/post/jvm-mechanics/" />
-<meta property="article:published_time" content="2020-07-17T00:00:00+00:00" />
-<meta property="article:modified_time" content="2020-07-17T00:00:00+00:00" />
-<meta itemprop="name" content="JVM Mechanics">
-<meta itemprop="description" content="Class File ClassFile structure 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 ClassFile { u4 magic; u2 minor_version; u2 major_version; u2 constant_pool_count; cp_info constant_pool[constant_pool_count-1]; u2 access_flags; u2 this_class; u2 super_class; u2 interfaces_count; u2 interfaces[interfaces_count]; u2 fields_count; field_info fields[fields_count]; u2 methods_count; method_info methods[methods_count]; u2 attributes_count; attribute_info attributes[attributes_count]; } The constant_pool is a table of structures representing various string constants, class and">
-<meta itemprop="datePublished" content="2020-07-17T00:00:00&#43;00:00" />
-<meta itemprop="dateModified" content="2020-07-17T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="631">
-
-
-
-<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="JVM Mechanics"/>
-<meta name="twitter:description" content="Class File ClassFile structure 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 ClassFile { u4 magic; u2 minor_version; u2 major_version; u2 constant_pool_count; cp_info constant_pool[constant_pool_count-1]; u2 access_flags; u2 this_class; u2 super_class; u2 interfaces_count; u2 interfaces[interfaces_count]; u2 fields_count; field_info fields[fields_count]; u2 methods_count; method_info methods[methods_count]; u2 attributes_count; attribute_info attributes[attributes_count]; } The constant_pool is a table of structures representing various string constants, class and"/>
-
-<!--[if lte IE 9]>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
-<![endif]-->
-
-<!--[if lt IE 9]>
-  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
-<![endif]-->
-
-</head>
-<body>
-  <div id="mobile-navbar" class="mobile-navbar">
-  <div class="mobile-header-logo">
-    <a href="/" class="logo">Zac</a>
-  </div>
-  <div class="mobile-navbar-icon">
-    <span></span>
-    <span></span>
-    <span></span>
-  </div>
-</div>
-<nav id="mobile-menu" class="mobile-menu slideout-menu">
-  <ul class="mobile-menu-list">
-    <a href="/">
-        <li class="mobile-menu-item">Home</li>
-      </a><a href="/post/">
-        <li class="mobile-menu-item">Archives</li>
-      </a><a href="/tags/">
-        <li class="mobile-menu-item">Tags</li>
-      </a><a href="/categories/">
-        <li class="mobile-menu-item">Categories</li>
-      </a>
-  </ul>
-</nav>
-  <div class="container" id="mobile-panel">
-    <header id="header" class="header">
-        <div class="logo-wrapper">
-  <a href="/" class="logo">Zac</a>
-</div>
-
-<nav class="site-navbar">
-  <ul id="menu" class="menu">
-    <li class="menu-item">
-        <a class="menu-item-link" href="/">Home</a>
-      </li><li class="menu-item">
-        <a class="menu-item-link" href="/post/">Archives</a>
-      </li><li class="menu-item">
-        <a class="menu-item-link" href="/tags/">Tags</a>
-      </li><li class="menu-item">
-        <a class="menu-item-link" href="/categories/">Categories</a>
-      </li>
-  </ul>
-</nav>
-    </header>
-
-    <main id="main" class="main">
-      <div class="content-wrapper">
-        <div id="content" class="content">
-          <article class="post">
+    <meta charset="utf-8">
     
-    <header class="post-header">
-      <h1 class="post-title">JVM Mechanics</h1>
+    <title>JVM Mechanics | Zac&#39;s Blog</title>
+    <meta name="description" content="Java Virtual Machine In Depth">
+    <meta name="author" content="">
+    
+    <link rel="apple-touch-icon" sizes="180x180" href=https://zacash.cn/apple-touch-icon.png>
+    <link rel="icon" type="image/png" sizes="32x32" href=https://zacash.cn/favicon-32x32.png>
+    <link rel="icon" type="image/png" sizes="16x16" href=https://zacash.cn/favicon-16x16.png>
+    <link rel="manifest" href=https://zacash.cn/site.webmanifest>
+    <link rel="mask-icon" href=https://zacash.cn/safari-pinned-tab.svg color="#00416a">
+    <meta name="msapplication-TileColor" content="#00aba9">
+    <meta name="theme-color" content="#ffffff">
+    
+    <link rel="me" href="mailto:zac_ju@163.com">
+    <link rel="me" href="https://github.com/zac4j">
+    
+    
+    
+    <link rel="authorization_endpoint" href=https://indieauth.com/auth />
+    <link rel="token_endpoint" href=https://tokens.indieauth.com/token />
+    
+    
+    
+    
+    
+    <link rel="stylesheet" href=https://zacash.cn/css/fonts.css />
+    <link rel="stylesheet" href=https://zacash.cn/css/style.css />
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
 
-      <div class="post-meta">
-        <span class="post-time"> 17170-07-17 </span>
+<body>
+    <div id="sitelogo">
+        <a class="glyph" alt="Home" href="https://zacash.cn"><img src=https://zacash.cn/images/site-logo.svg alt="Site Logo" height="64px" width="64px"></a>
+    </div>
+    <header>
+        <nav>
+    
+    <div id="page-nav">
+        <div class="page-nav-item">
+            <a href="https://zacash.cn">Home</a>
+        </div>
         
-          <span class="more-meta"> 约 631 字 </span>
-          <span class="more-meta"> 预计阅读 2 分钟 </span>
+    </div>
+</nav>
         
-      </div>
     </header>
 
-    <div class="post-toc" id="post-toc">
-  <h2 class="post-toc-title">文章目录</h2>
-  <div class="post-toc-content always-active">
-    <nav id="TableOfContents">
-  <ul>
-    <li><a href="#class-file">Class File</a>
-      <ul>
-        <li><a href="#classfile-structure">ClassFile structure</a></li>
-        <li><a href="#fields">Fields</a></li>
-        <li><a href="#methods">Methods</a></li>
-      </ul>
-    </li>
-    <li><a href="#interpreter-vs-compilers">Interpreter vs Compilers</a>
-      <ul>
-        <li><a href="#interpreter">Interpreter</a></li>
-        <li><a href="#compilers">Compilers</a></li>
-        <li><a href="#compiling-for-jvm">Compiling for JVM</a></li>
-      </ul>
-    </li>
-  </ul>
-</nav>
-  </div>
-</div>
-    <div class="post-content">
-      <h2 id="class-file">Class File</h2>
+
+
+
+<div id="content">
+    <article class="h-entry">
+        <header>
+            <h1 class="post-title p-name">JVM Mechanics</h1>
+            
+            <p class="post-date">Posted on
+                <time class="dt-published" datetime="2020-07-17T00:00:00Z">
+                    17 July, 2020 at 00:00 UTC
+                </time>  by <a href="https://zacash.cn" class="p-author h-card"
+                    rel="author">Zac</a>
+            </p>
+            
+            
+            <p class="post-tag">Category:
+                
+                <a href="https://zacash.cn/categories/jvm" class="post-tag p-category">jvm</a>
+                
+            </p>
+            <hr class="post-underline">
+            
+        </header>
+        <section class="content e-content">
+            <p>Class 文件的结构</p>
+<h2 id="class-file">Class File</h2>
 <h3 id="classfile-structure">ClassFile structure</h3>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">ClassFile {
+<pre><code class="language-class" data-lang="class">ClassFile {
     u4 magic;
     u2 minor_version;
     u2 major_version;
@@ -195,29 +96,17 @@
     u2 attributes_count;
     attribute_info attributes[attributes_count];
 }
-</code></pre></td></tr></table>
-</div>
-</div><blockquote>
+</code></pre><blockquote>
 <p>The constant_pool is a table of structures representing various string constants, class and interface names, field names, and other constants that are referred to within the ClassFile structure and its substructures. The format of each constant_pool table entry is indicated by its first &ldquo;tag&rdquo; byte.</p>
 </blockquote>
 <p><em>constant_pool</em> 是一个结构表，表示字符串常量、class 和 interface 名称、field 名称以及 ClassFile 结构和其子结构中引用的常量。每个 <em>constant_pool</em> 表条目的格式由其 &ldquo;tag&rdquo; 字节标识。</p>
 <h4 id="constant-pool">constant pool</h4>
 <p>Jvm 指令不依赖于类，接口，类实例或数组，相反，指令引用了 constant_pool 表中的符号信息（symbolic info）。常量池中的条目有如下的结构：</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">cP_info {
+<pre><code class="language-class" data-lang="class">cP_info {
     u1 tag;
     u1 info[];
 }
-</code></pre></td></tr></table>
-</div>
-</div><p>tag 表示常量的类型，info 存储常量的值</p>
+</code></pre><p>tag 表示常量的类型，info 存储常量的值</p>
 <p>tag 类型和对应的值：</p>
 <table>
 <thead>
@@ -275,27 +164,14 @@
 </table>
 <h3 id="fields">Fields</h3>
 <p><em>field_info</em> 的结构：</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span><span class="lnt">7
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">field_info {
+<pre><code class="language-class" data-lang="class">field_info {
     u2 access_flags;
     u2 name_index;
     u2 descriptor_index;
     u2 attributes_count;
     attribute_info attributes[attributes_count];
 }
-</code></pre></td></tr></table>
-</div>
-</div><h4 id="field-access_flags">Field access_flags</h4>
+</code></pre><h4 id="field-access_flags">Field access_flags</h4>
 <table>
 <thead>
 <tr>
@@ -344,27 +220,14 @@
 </table>
 <h3 id="methods">Methods</h3>
 <p><em>method_info</em> 的结构：</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span><span class="lnt">7
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">method_info {
+<pre><code class="language-class" data-lang="class">method_info {
     u2 access_flags;
     u2 name_index;
     u2 descriptor_index;
     u2 attributes_count;
     attribute_info attributes[attributes_count];
 }
-</code></pre></td></tr></table>
-</div>
-</div><h4 id="method-access_flags">Method access_flags</h4>
+</code></pre><h4 id="method-access_flags">Method access_flags</h4>
 <table>
 <thead>
 <tr>
@@ -433,97 +296,83 @@
 </ul>
 <h3 id="compiling-for-jvm">Compiling for JVM</h3>
 <p>编译是将 Java 源码编译成 Jvm 指令集（instruction set）的过程，编译器（compiler）是实现这一过程的工具，有些场景编译器指代将 Jvm 指令集转到到特定 CPU 指令集的工具。</p>
-
-    </div>
-
-    <div class="post-copyright">
-  <p class="copyright-item">
-    <span class="item-title">文章作者</span>
-    <span class="item-content">Zac</span>
-  </p>
-  <p class="copyright-item">
-    <span class="item-title">上次更新</span>
-    <span class="item-content">
-        17170-07-17
-        
-    </span>
-  </p>
-  
-  
+        </section>
+        <footer>
+            <a class="permalink u-url" href="https://zacash.cn/post/jvm-mechanics/">🔗</a>
+            
+            <hr class="post-underline">
+            <p class="post-tag">Tags for this post:
+                
+                <a href="https://zacash.cn/tags/jvm" class="post-tag p-category">jvm</a>
+                
+            </p>
+            
+        </footer>
+    </article>
 </div>
-<footer class="post-footer">
-      
-      <nav class="post-nav">
-        <a class="prev" href="/post/jvm-arch-in-a-nutshell/">
-            <i class="iconfont icon-left"></i>
-            <span class="prev-text nav-default">JVM Architecture in A Nutshell</span>
-            <span class="prev-text nav-mobile">上一篇</span>
-          </a>
-        <a class="next" href="/post/intro-to-hashmap/">
-            <span class="next-text nav-default">Intro to HashMap</span>
-            <span class="next-text nav-mobile">下一篇</span>
-            <i class="iconfont icon-right"></i>
-          </a>
-      </nav>
-    </footer>
-  </article>
-        </div>
-        
 
-  
-
-  
-
+    
+    <div class="h-card">
+      <img class="u-photo" src="https://zacash.cn/images/android-os.png" />
+      <div class="card-content">
+        <h2 class="card-name"><a class="p-name u-url" href="https://zacash.cn" rel="me">Zac</a></h2>
+        <p class="card-subhead">
+          <span class="p-locality">Shanghai</span>,
+          <span class="p-country-name">China</span><br />
+          <a class="u-email" href="mailto:zac_ju@163.com">Email me</a>
+        </p>
       </div>
-    </main>
-
-    <footer id="footer" class="footer">
-      <div class="social-links">
-      <a href="zac@zacash.com" class="iconfont icon-email" title="email"></a>
-  <a href="https://zacash.cn/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
-</div>
-
-<div class="copyright">
-  <span class="power-by">
-    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
-  </span>
-  <span class="division">|</span>
-  <span class="theme-info">
-    主题 - 
-    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
-  </span>
-
-  
-
-  <span class="copyright-year">
-    &copy; 
-    2020
-    <span class="heart">
-      <i class="iconfont icon-heart"></i>
-    </span>
-    <span class="author">Zac</span>
-  </span>
-</div>
-    </footer>
-
-    <div class="back-to-top" id="back-to-top">
-      <i class="iconfont icon-up"></i>
+      <p class="p-note">🐭</p>
     </div>
+    
+    <div id="footer">
+      
+      <nav id="article-skip">
+        <div class="next">
+          
+          <a alt="Newer article" href="https://zacash.cn/post/jvm-arch-in-a-nutshell/">&larr; Newer</a>
+          
+        </div>
+        <div class="top">
+          <a alt="Top of page" href="#">Top</a>
+        </div>
+        <div class="prev">
+          
+          <a alt="Older article" href="https://zacash.cn/post/intro-to-hashmap/">Older &rarr;</a>
+          
+        </div>
+      </nav>
+      
+      <aside id="social">
+  <div id="social-icons">
+    
+    
+    
+    
+    <div class="icon-24x24">
+      <a class="glyph" alt="GitHub profile" href="https://github.com/zac4j"><img src=https://zacash.cn/icons/github.svg height="24px" width="24px"></a>
+    </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
   </div>
-  
-  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+</aside>
 
-
-
-<script type="text/javascript" src="/js/main.min.d7b7ada643c9c1a983026e177f141f7363b4640d619caf01d8831a6718cd44ea.js"></script>
-
-
-
-
-
-
+      
+      <p class="copyright">
+          Copyright © 2020, Copyright Zac
+      </p>
+      
+    </div>
 
 
 </body>

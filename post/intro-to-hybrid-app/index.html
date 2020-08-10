@@ -1,171 +1,74 @@
 <!DOCTYPE html>
-<html lang="zh-cn">
+<html lang="en-US">
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>Intro to Hybrid App - Zac</title>
-  <meta name="renderer" content="webkit" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
-
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
-
-<meta name="theme-color" content="#f8f5ec" />
-<meta name="msapplication-navbutton-color" content="#f8f5ec">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
-
-
-<meta name="author" content="Zac" /><meta name="description" content="Hybrid App 的几种方案 PhoneGap/Cordova WebView 作为用户界面，以 Javascript 作为基本逻辑，以及和中间件通信，再由中间件访问底层 API 的方式，进行 App 开发。 React Native/Weex 使用前端技术开发，通过 JSBridge 将 Javascript" /><meta name="keywords" content="Android, developer, programming" />
-
-
-
-
-
-
-<meta name="generator" content="Hugo 0.68.1 with theme even" />
-
-
-<link rel="canonical" href="https://zacash.cn/post/intro-to-hybrid-app/" />
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-<link rel="manifest" href="/manifest.json">
-<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
-
-
-
-<link href="/sass/main.min.8c3cbcb0324c2bb4875ceccba4007cbad4b4ac8377f33af9953c3e7684534a50.css" rel="stylesheet">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
-
-
-<meta property="og:title" content="Intro to Hybrid App" />
-<meta property="og:description" content="Hybrid App 的几种方案 PhoneGap/Cordova WebView 作为用户界面，以 Javascript 作为基本逻辑，以及和中间件通信，再由中间件访问底层 API 的方式，进行 App 开发。 React Native/Weex 使用前端技术开发，通过 JSBridge 将 Javascript" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="https://zacash.cn/post/intro-to-hybrid-app/" />
-<meta property="article:published_time" content="2020-07-04T15:45:14+08:00" />
-<meta property="article:modified_time" content="2020-07-04T15:45:14+08:00" />
-<meta itemprop="name" content="Intro to Hybrid App">
-<meta itemprop="description" content="Hybrid App 的几种方案 PhoneGap/Cordova WebView 作为用户界面，以 Javascript 作为基本逻辑，以及和中间件通信，再由中间件访问底层 API 的方式，进行 App 开发。 React Native/Weex 使用前端技术开发，通过 JSBridge 将 Javascript">
-<meta itemprop="datePublished" content="2020-07-04T15:45:14&#43;08:00" />
-<meta itemprop="dateModified" content="2020-07-04T15:45:14&#43;08:00" />
-<meta itemprop="wordCount" content="2107">
-
-
-
-<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Intro to Hybrid App"/>
-<meta name="twitter:description" content="Hybrid App 的几种方案 PhoneGap/Cordova WebView 作为用户界面，以 Javascript 作为基本逻辑，以及和中间件通信，再由中间件访问底层 API 的方式，进行 App 开发。 React Native/Weex 使用前端技术开发，通过 JSBridge 将 Javascript"/>
-
-<!--[if lte IE 9]>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
-<![endif]-->
-
-<!--[if lt IE 9]>
-  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
-<![endif]-->
-
-</head>
-<body>
-  <div id="mobile-navbar" class="mobile-navbar">
-  <div class="mobile-header-logo">
-    <a href="/" class="logo">Zac</a>
-  </div>
-  <div class="mobile-navbar-icon">
-    <span></span>
-    <span></span>
-    <span></span>
-  </div>
-</div>
-<nav id="mobile-menu" class="mobile-menu slideout-menu">
-  <ul class="mobile-menu-list">
-    <a href="/">
-        <li class="mobile-menu-item">Home</li>
-      </a><a href="/post/">
-        <li class="mobile-menu-item">Archives</li>
-      </a><a href="/tags/">
-        <li class="mobile-menu-item">Tags</li>
-      </a><a href="/categories/">
-        <li class="mobile-menu-item">Categories</li>
-      </a>
-  </ul>
-</nav>
-  <div class="container" id="mobile-panel">
-    <header id="header" class="header">
-        <div class="logo-wrapper">
-  <a href="/" class="logo">Zac</a>
-</div>
-
-<nav class="site-navbar">
-  <ul id="menu" class="menu">
-    <li class="menu-item">
-        <a class="menu-item-link" href="/">Home</a>
-      </li><li class="menu-item">
-        <a class="menu-item-link" href="/post/">Archives</a>
-      </li><li class="menu-item">
-        <a class="menu-item-link" href="/tags/">Tags</a>
-      </li><li class="menu-item">
-        <a class="menu-item-link" href="/categories/">Categories</a>
-      </li>
-  </ul>
-</nav>
-    </header>
-
-    <main id="main" class="main">
-      <div class="content-wrapper">
-        <div id="content" class="content">
-          <article class="post">
+    <meta charset="utf-8">
     
-    <header class="post-header">
-      <h1 class="post-title">Intro to Hybrid App</h1>
+    <title>Intro to Hybrid App | Zac&#39;s Blog</title>
+    <meta name="description" content="Android Hybrid Development Introduction">
+    <meta name="author" content="">
+    
+    <link rel="apple-touch-icon" sizes="180x180" href=https://zacash.cn/apple-touch-icon.png>
+    <link rel="icon" type="image/png" sizes="32x32" href=https://zacash.cn/favicon-32x32.png>
+    <link rel="icon" type="image/png" sizes="16x16" href=https://zacash.cn/favicon-16x16.png>
+    <link rel="manifest" href=https://zacash.cn/site.webmanifest>
+    <link rel="mask-icon" href=https://zacash.cn/safari-pinned-tab.svg color="#00416a">
+    <meta name="msapplication-TileColor" content="#00aba9">
+    <meta name="theme-color" content="#ffffff">
+    
+    <link rel="me" href="mailto:zac_ju@163.com">
+    <link rel="me" href="https://github.com/zac4j">
+    
+    
+    
+    <link rel="authorization_endpoint" href=https://indieauth.com/auth />
+    <link rel="token_endpoint" href=https://tokens.indieauth.com/token />
+    
+    
+    
+    
+    
+    <link rel="stylesheet" href=https://zacash.cn/css/fonts.css />
+    <link rel="stylesheet" href=https://zacash.cn/css/style.css />
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
 
-      <div class="post-meta">
-        <span class="post-time"> 4040-07-04 </span>
+<body>
+    <div id="sitelogo">
+        <a class="glyph" alt="Home" href="https://zacash.cn"><img src=https://zacash.cn/images/site-logo.svg alt="Site Logo" height="64px" width="64px"></a>
+    </div>
+    <header>
+        <nav>
+    
+    <div id="page-nav">
+        <div class="page-nav-item">
+            <a href="https://zacash.cn">Home</a>
+        </div>
         
-          <span class="more-meta"> 约 2107 字 </span>
-          <span class="more-meta"> 预计阅读 5 分钟 </span>
+    </div>
+</nav>
         
-      </div>
     </header>
 
-    <div class="post-toc" id="post-toc">
-  <h2 class="post-toc-title">文章目录</h2>
-  <div class="post-toc-content always-active">
-    <nav id="TableOfContents">
-  <ul>
-    <li><a href="#hybrid-app-的几种方案">Hybrid App 的几种方案</a></li>
-    <li><a href="#phonegapcordova">PhoneGap/Cordova</a>
-      <ul>
-        <li><a href="#cordova-架构图">Cordova 架构图</a></li>
-        <li><a href="#cordova-的优缺点">Cordova 的优缺点</a></li>
-      </ul>
-    </li>
-    <li><a href="#nativeh5-混合开发">Native/H5 混合开发</a>
-      <ul>
-        <li><a href="#原生基础架构-infra">原生基础架构 Infra</a></li>
-        <li><a href="#nativeh5-技术原理jsbridge">Native/H5 技术原理——JsBridge</a></li>
-      </ul>
-    </li>
-    <li><a href="#react-native-实现原理">React Native 实现原理</a></li>
-    <li><a href="#页面调用方案">页面调用方案</a>
-      <ul>
-        <li><a href="#openurl-方案">openURL 方案</a></li>
-      </ul>
-    </li>
-    <li><a href="#react-native">React Native</a></li>
-    <li><a href="#常见问题">常见问题</a>
-      <ul>
-        <li><a href="#内存管理">内存管理</a></li>
-        <li><a href="#页面抖动空白">页面抖动/空白</a></li>
-      </ul>
-    </li>
-  </ul>
-</nav>
-  </div>
-</div>
-    <div class="post-content">
-      <h2 id="hybrid-app-的几种方案">Hybrid App 的几种方案</h2>
+
+
+
+<div id="content">
+    <article class="h-entry">
+        <header>
+            <h1 class="post-title p-name">Intro to Hybrid App</h1>
+            
+            <p class="post-date">Posted on
+                <time class="dt-published" datetime="2020-07-04T15:45:14&#43;08:00">
+                    4 July, 2020 at 15:45 CST
+                </time>  by <a href="https://zacash.cn" class="p-author h-card"
+                    rel="author">Zac</a>
+            </p>
+            
+            
+        </header>
+        <section class="content e-content">
+            <h2 id="hybrid-app-的几种方案">Hybrid App 的几种方案</h2>
 <ul>
 <li>
 <p><strong>PhoneGap/Cordova</strong></p>
@@ -231,25 +134,13 @@
 </li>
 <li>
 <p>Android 4.4+</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-java" data-lang="java"><span class="n">mWebView</span><span class="o">.</span><span class="na">evaluateJavascript</span><span class="o">(</span><span class="s">&#34;JSBridge.trigger(&#39;NativeCall&#39;)&#34;</span><span class="o">,</span> <span class="k">new</span> <span class="n">ValueCallback</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;()</span> <span class="o">{</span>
-    <span class="nd">@Override</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onReceiveValue</span><span class="o">(</span><span class="n">String</span> <span class="n">value</span><span class="o">)</span> <span class="o">{</span>
-        <span class="c1">// js callback
-</span><span class="c1"></span>    <span class="o">}</span>
-<span class="o">});</span>
-</code></pre></td></tr></table>
-</div>
-</div></li>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">mWebView<span style="color:#f92672">.</span><span style="color:#a6e22e">evaluateJavascript</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;JSBridge.trigger(&#39;NativeCall&#39;)&#34;</span><span style="color:#f92672">,</span> <span style="color:#66d9ef">new</span> ValueCallback<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">&gt;()</span> <span style="color:#f92672">{</span>
+    <span style="color:#a6e22e">@Override</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">onReceiveValue</span><span style="color:#f92672">(</span>String value<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#75715e">// js callback
+</span><span style="color:#75715e"></span>    <span style="color:#f92672">}</span>
+<span style="color:#f92672">});</span>
+</code></pre></div></li>
 </ul>
 <h4 id="定义拦截规则">定义拦截规则</h4>
 <p>我们根据公司业务会制定一套 URL scheme 规则，比较类似常用的 <code>https://</code> 或 <code>file:///</code>，不过我们自定义的 scheme 可以是任意样式，比如：</p>
@@ -262,251 +153,153 @@
 </ul>
 <h4 id="scheme-的回调">Scheme 的回调</h4>
 <p>一般 Native 拦截 scheme ，处理完成后，调用 Bridge 的 callback 方法。</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-java" data-lang="java"><span class="n">mWebView</span><span class="o">.</span><span class="na">evaluateJavascript</span><span class="o">(</span><span class="s">&#34;JSBridge.trigger(&#39;NativeCall&#39;)&#34;</span><span class="o">,</span> <span class="k">new</span> <span class="n">ValueCallback</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;()</span> <span class="o">{</span>
-    <span class="nd">@Override</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onReceiveValue</span><span class="o">(</span><span class="n">String</span> <span class="n">value</span><span class="o">)</span> <span class="o">{</span>
-        <span class="c1">// js callback
-</span><span class="c1"></span>    <span class="o">}</span>
-<span class="o">});</span>
-</code></pre></td></tr></table>
-</div>
-</div><h2 id="react-native-实现原理">React Native 实现原理</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">mWebView<span style="color:#f92672">.</span><span style="color:#a6e22e">evaluateJavascript</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;JSBridge.trigger(&#39;NativeCall&#39;)&#34;</span><span style="color:#f92672">,</span> <span style="color:#66d9ef">new</span> ValueCallback<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">&gt;()</span> <span style="color:#f92672">{</span>
+    <span style="color:#a6e22e">@Override</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">onReceiveValue</span><span style="color:#f92672">(</span>String value<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#75715e">// js callback
+</span><span style="color:#75715e"></span>    <span style="color:#f92672">}</span>
+<span style="color:#f92672">});</span>
+</code></pre></div><h2 id="react-native-实现原理">React Native 实现原理</h2>
 <p>React Native 并没有运行在浏览器引擎（WebView/V8）中。不像大部分前端框架是简化 DOM 树的处理，React Native 和 DOM 没有关系。React Native 重写了大部分系统 UI 组件，并在框架内处理好了 Javascript 和原生组件之间的调用和通信。开发者可以通过 React 风格的 Javascript 代码使用这些 React Native UI 组件来构建应用的UI。可以认为 React Native 实现了一个渲染引擎，使用 React 作为渲染引擎的编程语言。</p>
 <h2 id="页面调用方案">页面调用方案</h2>
 <p>简单的页面跳转，从 MainScreen 跳转到 SecondaryScreen</p>
 <p>Android 中的实现：</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="n">startActivity</span><span class="p">(</span><span class="n">Intent</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="n">SecondaryScreen</span><span class="p">.</span><span class="k">class</span><span class="p">))</span>
-</code></pre></td></tr></table>
-</div>
-</div><p>iOS 中的实现：</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">SecondaryViewController *secondaryViewController = [[SecondaryViewController alloc] init];
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-kotlin" data-lang="kotlin">startActivity(Intent(<span style="color:#66d9ef">this</span>, SecondaryScreen.<span style="color:#66d9ef">class</span>))
+</code></pre></div><p>iOS 中的实现：</p>
+<pre><code class="language-oc" data-lang="oc">SecondaryViewController *secondaryViewController = [[SecondaryViewController alloc] init];
 [self.navigationController pushViewController:secondViewController animated:YES];
-</code></pre></td></tr></table>
-</div>
-</div><p>随着项目逐渐增大，我们需要做一些模块化的工作。模块化基本的要求是解除模块间的依赖，我们需要一个间接的调用目标页面的方案。</p>
+</code></pre><p>随着项目逐渐增大，我们需要做一些模块化的工作。模块化基本的要求是解除模块间的依赖，我们需要一个间接的调用目标页面的方案。</p>
 <h3 id="openurl-方案">openURL 方案</h3>
 <p>在这些间接方案中，有很多是基于 iOS 提供的 UIApplicationDelegate 中的用于响应 URL 调用的钩子方法。</p>
 <p>在 iOS 8 中，该方法为：</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">application:openURL:sourceApplication:annotation:
-</code></pre></td></tr></table>
-</div>
-</div><p>iOS 9 中该方法被标记为 Deprecated，并提供了一个替代方法：</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">application:openURL:options:
-</code></pre></td></tr></table>
-</div>
-</div><p>我们将这两个方法称为 <code>openURL</code> 钩子方法。</p>
+<pre><code class="language-oc" data-lang="oc">application:openURL:sourceApplication:annotation:
+</code></pre><p>iOS 9 中该方法被标记为 Deprecated，并提供了一个替代方法：</p>
+<pre><code class="language-oc" data-lang="oc">application:openURL:options:
+</code></pre><p>我们将这两个方法称为 <code>openURL</code> 钩子方法。</p>
 <p>如果应用注册了一个 URL scheme。任何第三方应用，以及应用自身对该 URL 的调用，都会调起以上 <code>openURL</code> 钩子方法。这就提供了一个在应用间通信的方法。同时这也是目前为止，iOS 系统中，应用间通信的唯一方式。</p>
 <h2 id="react-native">React Native</h2>
 <p>React Native 需要的技术栈比较特别，比较适合 Web 经验特别丰富，前端工程师特别优秀，但又缺乏优秀的客户端工程师的情况，React Native 是一个快速切入移动应用市场的技术选择。</p>
 <h2 id="常见问题">常见问题</h2>
 <h3 id="内存管理">内存管理</h3>
 <p>根据 adb shell 查看 app 占用内存信息</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span><span class="lnt">21
-</span><span class="lnt">22
-</span><span class="lnt">23
-</span><span class="lnt">24
-</span><span class="lnt">25
-</span><span class="lnt">26
-</span><span class="lnt">27
-</span><span class="lnt">28
-</span><span class="lnt">29
-</span><span class="lnt">30
-</span><span class="lnt">31
-</span><span class="lnt">32
-</span><span class="lnt">33
-</span><span class="lnt">34
-</span><span class="lnt">35
-</span><span class="lnt">36
-</span><span class="lnt">37
-</span><span class="lnt">38
-</span><span class="lnt">39
-</span><span class="lnt">40
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># 查看 app 基本信息</span>
-Zac:Sample Zac$ adb shell ps <span class="p">|</span> grep com.guotai.dazhihui
-u0_a674       <span class="m">9858</span>   <span class="m">669</span> <span class="m">2205104</span> <span class="m">268448</span> <span class="m">0</span>                   <span class="m">0</span> S com.guotai.dazhihui
-u0_a674      <span class="m">10039</span>   <span class="m">669</span> <span class="m">1973628</span> <span class="m">101852</span> <span class="m">0</span>                   <span class="m">0</span> S com.guotai.dazhihui:remote
-u0_a674      <span class="m">10129</span>   <span class="m">669</span> <span class="m">1988412</span> <span class="m">113528</span> <span class="m">0</span>                   <span class="m">0</span> S com.guotai.dazhihui:pushservice
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e"># 查看 app 基本信息</span>
+Zac:Sample Zac$ adb shell ps | grep com.guotai.dazhihui
+u0_a674       <span style="color:#ae81ff">9858</span>   <span style="color:#ae81ff">669</span> <span style="color:#ae81ff">2205104</span> <span style="color:#ae81ff">268448</span> <span style="color:#ae81ff">0</span>                   <span style="color:#ae81ff">0</span> S com.guotai.dazhihui
+u0_a674      <span style="color:#ae81ff">10039</span>   <span style="color:#ae81ff">669</span> <span style="color:#ae81ff">1973628</span> <span style="color:#ae81ff">101852</span> <span style="color:#ae81ff">0</span>                   <span style="color:#ae81ff">0</span> S com.guotai.dazhihui:remote
+u0_a674      <span style="color:#ae81ff">10129</span>   <span style="color:#ae81ff">669</span> <span style="color:#ae81ff">1988412</span> <span style="color:#ae81ff">113528</span> <span style="color:#ae81ff">0</span>                   <span style="color:#ae81ff">0</span> S com.guotai.dazhihui:pushservice
 
-<span class="c1"># 未开启 WebView 时的内存占用信息</span>
+<span style="color:#75715e"># 未开启 WebView 时的内存占用信息</span>
 Zac:Sample Zac$ adb shell dumpsys meminfo com.guotai.dazhihui
-Applications Memory Usage <span class="o">(</span>in Kilobytes<span class="o">)</span>:
+Applications Memory Usage <span style="color:#f92672">(</span>in Kilobytes<span style="color:#f92672">)</span>:
 ...
 App Summary
-                       Pss<span class="o">(</span>KB<span class="o">)</span>
+                       Pss<span style="color:#f92672">(</span>KB<span style="color:#f92672">)</span>
                         ------
-           Java Heap:    <span class="m">21264</span>
-         Native Heap:    <span class="m">35988</span>
-                Code:    <span class="m">15648</span>
-               Stack:       <span class="m">52</span>
-            Graphics:    <span class="m">72324</span>
-       Private Other:     <span class="m">4528</span>
-              System:    <span class="m">18578</span>
+           Java Heap:    <span style="color:#ae81ff">21264</span>
+         Native Heap:    <span style="color:#ae81ff">35988</span>
+                Code:    <span style="color:#ae81ff">15648</span>
+               Stack:       <span style="color:#ae81ff">52</span>
+            Graphics:    <span style="color:#ae81ff">72324</span>
+       Private Other:     <span style="color:#ae81ff">4528</span>
+              System:    <span style="color:#ae81ff">18578</span>
 
-               TOTAL:   <span class="m">168382</span>       TOTAL SWAP PSS:      <span class="m">420</span>
+               TOTAL:   <span style="color:#ae81ff">168382</span>       TOTAL SWAP PSS:      <span style="color:#ae81ff">420</span>
 ...
 
-<span class="c1"># 开启 WebView 之后的内存占用</span>
+<span style="color:#75715e"># 开启 WebView 之后的内存占用</span>
 ...
 App Summary
-                       Pss<span class="o">(</span>KB<span class="o">)</span>
+                       Pss<span style="color:#f92672">(</span>KB<span style="color:#f92672">)</span>
                         ------
-           Java Heap:    <span class="m">25136</span>
-         Native Heap:    <span class="m">55420</span>
-                Code:    <span class="m">51480</span>
-               Stack:       <span class="m">52</span>
-            Graphics:    <span class="m">74704</span>
-       Private Other:     <span class="m">6244</span>
-              System:    <span class="m">29544</span>
+           Java Heap:    <span style="color:#ae81ff">25136</span>
+         Native Heap:    <span style="color:#ae81ff">55420</span>
+                Code:    <span style="color:#ae81ff">51480</span>
+               Stack:       <span style="color:#ae81ff">52</span>
+            Graphics:    <span style="color:#ae81ff">74704</span>
+       Private Other:     <span style="color:#ae81ff">6244</span>
+              System:    <span style="color:#ae81ff">29544</span>
 
-               TOTAL:   <span class="m">242580</span>       TOTAL SWAP PSS:      <span class="m">376</span>
+               TOTAL:   <span style="color:#ae81ff">242580</span>       TOTAL SWAP PSS:      <span style="color:#ae81ff">376</span>
 
 内存
-</code></pre></td></tr></table>
+</code></pre></div>
+        </section>
+        <footer>
+            <a class="permalink u-url" href="https://zacash.cn/post/intro-to-hybrid-app/">🔗</a>
+            
+            <hr class="post-underline">
+            <p class="post-tag">Tags for this post:
+                
+                <a href="https://zacash.cn/tags/hybrid" class="post-tag p-category">hybrid</a>
+                
+            </p>
+            
+        </footer>
+    </article>
 </div>
-</div><h3 id="页面抖动空白">页面抖动/空白</h3>
-<p>实现动画效果在低端设备下运行缓慢，页面抖动，不连贯。</p>
 
-    </div>
-
-    <div class="post-copyright">
-  <p class="copyright-item">
-    <span class="item-title">文章作者</span>
-    <span class="item-content">Zac</span>
-  </p>
-  <p class="copyright-item">
-    <span class="item-title">上次更新</span>
-    <span class="item-content">
-        4040-07-04
-        
-    </span>
-  </p>
-  
-  
-</div>
-<footer class="post-footer">
-      
-      <nav class="post-nav">
-        
-        <a class="next" href="/post/intro-to-service/">
-            <span class="next-text nav-default">Intro to Service</span>
-            <span class="next-text nav-mobile">下一篇</span>
-            <i class="iconfont icon-right"></i>
-          </a>
-      </nav>
-    </footer>
-  </article>
-        </div>
-        
-
-  
-
-  
-
+    
+    <div class="h-card">
+      <img class="u-photo" src="https://zacash.cn/images/android-os.png" />
+      <div class="card-content">
+        <h2 class="card-name"><a class="p-name u-url" href="https://zacash.cn" rel="me">Zac</a></h2>
+        <p class="card-subhead">
+          <span class="p-locality">Shanghai</span>,
+          <span class="p-country-name">China</span><br />
+          <a class="u-email" href="mailto:zac_ju@163.com">Email me</a>
+        </p>
       </div>
-    </main>
-
-    <footer id="footer" class="footer">
-      <div class="social-links">
-      <a href="zac@zacash.com" class="iconfont icon-email" title="email"></a>
-  <a href="https://zacash.cn/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
-</div>
-
-<div class="copyright">
-  <span class="power-by">
-    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
-  </span>
-  <span class="division">|</span>
-  <span class="theme-info">
-    主题 - 
-    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
-  </span>
-
-  
-
-  <span class="copyright-year">
-    &copy; 
-    2020
-    <span class="heart">
-      <i class="iconfont icon-heart"></i>
-    </span>
-    <span class="author">Zac</span>
-  </span>
-</div>
-    </footer>
-
-    <div class="back-to-top" id="back-to-top">
-      <i class="iconfont icon-up"></i>
+      <p class="p-note">🐭</p>
     </div>
+    
+    <div id="footer">
+      
+      <nav id="article-skip">
+        <div class="next">
+          
+          <a alt="Newer article" href="https://zacash.cn/post/lambdas-and-high-order-functions/">&larr; Newer</a>
+          
+        </div>
+        <div class="top">
+          <a alt="Top of page" href="#">Top</a>
+        </div>
+        <div class="prev">
+          
+          <a alt="Older article" href="https://zacash.cn/post/intro-to-service/">Older &rarr;</a>
+          
+        </div>
+      </nav>
+      
+      <aside id="social">
+  <div id="social-icons">
+    
+    
+    
+    
+    <div class="icon-24x24">
+      <a class="glyph" alt="GitHub profile" href="https://github.com/zac4j"><img src=https://zacash.cn/icons/github.svg height="24px" width="24px"></a>
+    </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
   </div>
-  
-  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+</aside>
 
-
-
-<script type="text/javascript" src="/js/main.min.d7b7ada643c9c1a983026e177f141f7363b4640d619caf01d8831a6718cd44ea.js"></script>
-
-
-
-
-
-
+      
+      <p class="copyright">
+          Copyright © 2020, Copyright Zac
+      </p>
+      
+    </div>
 
 
 </body>

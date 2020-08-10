@@ -1,165 +1,74 @@
 <!DOCTYPE html>
-<html lang="zh-cn">
+<html lang="en-US">
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>Java Basic - Zac</title>
-  <meta name="renderer" content="webkit" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
-
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
-
-<meta name="theme-color" content="#f8f5ec" />
-<meta name="msapplication-navbutton-color" content="#f8f5ec">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
-
-
-<meta name="author" content="Zac" /><meta name="description" content="🌟答案的组织策略：知道是什么，知道为什么，知道怎么用 0.JDK 和 JRE 有什么区别？ JDK 包含 JRE，同时还包含编译 Java 源码的编译器 javac，还包含了很多 Java 程" /><meta name="keywords" content="Android, developer, programming" />
-
-
-
-
-
-
-<meta name="generator" content="Hugo 0.68.1 with theme even" />
-
-
-<link rel="canonical" href="https://zacash.cn/post/java-basic/" />
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-<link rel="manifest" href="/manifest.json">
-<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
-
-
-
-<link href="/sass/main.min.8c3cbcb0324c2bb4875ceccba4007cbad4b4ac8377f33af9953c3e7684534a50.css" rel="stylesheet">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
-
-
-<meta property="og:title" content="Java Basic" />
-<meta property="og:description" content="🌟答案的组织策略：知道是什么，知道为什么，知道怎么用 0.JDK 和 JRE 有什么区别？ JDK 包含 JRE，同时还包含编译 Java 源码的编译器 javac，还包含了很多 Java 程" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="https://zacash.cn/post/java-basic/" />
-<meta property="article:published_time" content="2020-07-03T09:28:31+08:00" />
-<meta property="article:modified_time" content="2020-07-03T09:28:31+08:00" />
-<meta itemprop="name" content="Java Basic">
-<meta itemprop="description" content="🌟答案的组织策略：知道是什么，知道为什么，知道怎么用 0.JDK 和 JRE 有什么区别？ JDK 包含 JRE，同时还包含编译 Java 源码的编译器 javac，还包含了很多 Java 程">
-<meta itemprop="datePublished" content="2020-07-03T09:28:31&#43;08:00" />
-<meta itemprop="dateModified" content="2020-07-03T09:28:31&#43;08:00" />
-<meta itemprop="wordCount" content="2717">
-
-
-
-<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Java Basic"/>
-<meta name="twitter:description" content="🌟答案的组织策略：知道是什么，知道为什么，知道怎么用 0.JDK 和 JRE 有什么区别？ JDK 包含 JRE，同时还包含编译 Java 源码的编译器 javac，还包含了很多 Java 程"/>
-
-<!--[if lte IE 9]>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
-<![endif]-->
-
-<!--[if lt IE 9]>
-  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
-<![endif]-->
-
-</head>
-<body>
-  <div id="mobile-navbar" class="mobile-navbar">
-  <div class="mobile-header-logo">
-    <a href="/" class="logo">Zac</a>
-  </div>
-  <div class="mobile-navbar-icon">
-    <span></span>
-    <span></span>
-    <span></span>
-  </div>
-</div>
-<nav id="mobile-menu" class="mobile-menu slideout-menu">
-  <ul class="mobile-menu-list">
-    <a href="/">
-        <li class="mobile-menu-item">Home</li>
-      </a><a href="/post/">
-        <li class="mobile-menu-item">Archives</li>
-      </a><a href="/tags/">
-        <li class="mobile-menu-item">Tags</li>
-      </a><a href="/categories/">
-        <li class="mobile-menu-item">Categories</li>
-      </a>
-  </ul>
-</nav>
-  <div class="container" id="mobile-panel">
-    <header id="header" class="header">
-        <div class="logo-wrapper">
-  <a href="/" class="logo">Zac</a>
-</div>
-
-<nav class="site-navbar">
-  <ul id="menu" class="menu">
-    <li class="menu-item">
-        <a class="menu-item-link" href="/">Home</a>
-      </li><li class="menu-item">
-        <a class="menu-item-link" href="/post/">Archives</a>
-      </li><li class="menu-item">
-        <a class="menu-item-link" href="/tags/">Tags</a>
-      </li><li class="menu-item">
-        <a class="menu-item-link" href="/categories/">Categories</a>
-      </li>
-  </ul>
-</nav>
-    </header>
-
-    <main id="main" class="main">
-      <div class="content-wrapper">
-        <div id="content" class="content">
-          <article class="post">
+    <meta charset="utf-8">
     
-    <header class="post-header">
-      <h1 class="post-title">Java Basic</h1>
+    <title>Java Basic | Zac&#39;s Blog</title>
+    <meta name="description" content="Android developer blog">
+    <meta name="author" content="">
+    
+    <link rel="apple-touch-icon" sizes="180x180" href=https://zacash.cn/apple-touch-icon.png>
+    <link rel="icon" type="image/png" sizes="32x32" href=https://zacash.cn/favicon-32x32.png>
+    <link rel="icon" type="image/png" sizes="16x16" href=https://zacash.cn/favicon-16x16.png>
+    <link rel="manifest" href=https://zacash.cn/site.webmanifest>
+    <link rel="mask-icon" href=https://zacash.cn/safari-pinned-tab.svg color="#00416a">
+    <meta name="msapplication-TileColor" content="#00aba9">
+    <meta name="theme-color" content="#ffffff">
+    
+    <link rel="me" href="mailto:zac_ju@163.com">
+    <link rel="me" href="https://github.com/zac4j">
+    
+    
+    
+    <link rel="authorization_endpoint" href=https://indieauth.com/auth />
+    <link rel="token_endpoint" href=https://tokens.indieauth.com/token />
+    
+    
+    
+    
+    
+    <link rel="stylesheet" href=https://zacash.cn/css/fonts.css />
+    <link rel="stylesheet" href=https://zacash.cn/css/style.css />
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
 
-      <div class="post-meta">
-        <span class="post-time"> 3030-07-03 </span>
+<body>
+    <div id="sitelogo">
+        <a class="glyph" alt="Home" href="https://zacash.cn"><img src=https://zacash.cn/images/site-logo.svg alt="Site Logo" height="64px" width="64px"></a>
+    </div>
+    <header>
+        <nav>
+    
+    <div id="page-nav">
+        <div class="page-nav-item">
+            <a href="https://zacash.cn">Home</a>
+        </div>
         
-          <span class="more-meta"> 约 2717 字 </span>
-          <span class="more-meta"> 预计阅读 6 分钟 </span>
+    </div>
+</nav>
         
-      </div>
     </header>
 
-    <div class="post-toc" id="post-toc">
-  <h2 class="post-toc-title">文章目录</h2>
-  <div class="post-toc-content always-active">
-    <nav id="TableOfContents">
-  <ul>
-    <li><a href="#0jdk-和-jre-有什么区别">0.JDK 和 JRE 有什么区别？</a></li>
-    <li><a href="#1equals-和--的差别">1.equals 和 == 的差别？</a></li>
-    <li><a href="#2java-中操作字符串有那些类它们之间有什么区别">2.Java 中操作字符串有那些类？它们之间有什么区别？</a></li>
-    <li><a href="#3hashmaphashtabletreemap-有什么区别">3.HashMap、HashTable、TreeMap 有什么区别？</a></li>
-    <li><a href="#4内部类和静态嵌套类">4.内部类和静态嵌套类</a>
-      <ul>
-        <li><a href="#inner-class-vs-static-nested-class">Inner class vs. Static nested class</a></li>
-        <li><a href="#why-use-nested-classes">Why Use Nested Classes</a></li>
-        <li><a href="#静态嵌套类">静态嵌套类</a></li>
-        <li><a href="#内部类">内部类</a></li>
-        <li><a href="#序列化">序列化</a></li>
-      </ul>
-    </li>
-    <li><a href="#5referenceref">5.<a href="https://community.oracle.com/blogs/enicholas/2006/05/04/understanding-weak-references">Reference</a></a>
-      <ul>
-        <li><a href="#strongreference">StrongReference</a></li>
-        <li><a href="#softreference">SoftReference</a></li>
-        <li><a href="#weakreference">WeakReference</a></li>
-      </ul>
-    </li>
-  </ul>
-</nav>
-  </div>
-</div>
-    <div class="post-content">
-      <p>🌟答案的组织策略：知道是什么，知道为什么，知道怎么用</p>
+
+
+
+<div id="content">
+    <article class="h-entry">
+        <header>
+            <h1 class="post-title p-name">Java Basic</h1>
+            
+            <p class="post-date">Posted on
+                <time class="dt-published" datetime="2020-07-03T09:28:31&#43;08:00">
+                    3 July, 2020 at 09:28 CST
+                </time>  by <a href="https://zacash.cn" class="p-author h-card"
+                    rel="author">Zac</a>
+            </p>
+            
+            
+        </header>
+        <section class="content e-content">
+            <p>🌟答案的组织策略：知道是什么，知道为什么，知道怎么用</p>
 <h2 id="0jdk-和-jre-有什么区别">0.JDK 和 JRE 有什么区别？</h2>
 <ul>
 <li>JDK 包含 JRE，同时还包含编译 Java 源码的编译器 javac，还包含了很多 Java 程序调试和分析的工具。</li>
@@ -230,31 +139,16 @@
 </ul>
 <h2 id="4内部类和静态嵌套类">4.内部类和静态嵌套类</h2>
 <h3 id="inner-class-vs-static-nested-class">Inner class vs. Static nested class</h3>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span><span class="lnt">7
-</span><span class="lnt">8
-</span><span class="lnt">9
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">class</span> <span class="nc">OuterClass</span> <span class="o">{</span>
-  <span class="o">...</span>
-  <span class="kd">static</span> <span class="kd">class</span> <span class="nc">StaticNestedClass</span> <span class="o">{</span>
-    <span class="o">...</span>
-  <span class="o">}</span>
-  <span class="kd">class</span> <span class="nc">InnerClass</span> <span class="o">{</span>
-    <span class="o">...</span>
-  <span class="o">}</span>
-<span class="o">}</span>
-</code></pre></td></tr></table>
-</div>
-</div><blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">OuterClass</span> <span style="color:#f92672">{</span>
+  <span style="color:#f92672">...</span>
+  <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">StaticNestedClass</span> <span style="color:#f92672">{</span>
+    <span style="color:#f92672">...</span>
+  <span style="color:#f92672">}</span>
+  <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">InnerClass</span> <span style="color:#f92672">{</span>
+    <span style="color:#f92672">...</span>
+  <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><blockquote>
 <p>嵌套类（Nested class）可以分为两类：静态和非静态。声明为静态的嵌套类称为静态嵌套类（static nested classes）。非静态嵌套类称为内部类（inner classes）。</p>
 </blockquote>
 <p>嵌套类是其封闭类（enclosing class）的成员。内部类可以访问封闭类的其他成员，即使它们被声明为私有的可以访问。静态嵌套类无权访问封闭类的其他成员。作为 OuterClass 的成员，嵌套类可以声明为 <em>private</em>, <em>public</em>, <em>protected</em> 或 <em>package private</em>.</p>
@@ -279,112 +173,53 @@
 <p>静态嵌套类和它外部类的实例成员进行交互，就像对其他 top-level 类一样。实际上，静态嵌套类在行为上是顶级类，为了包装方便（for packaging convenience），该顶级类已嵌套在另一个顶级类中。</p>
 </blockquote>
 <p>创建静态嵌套类通过：</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-java" data-lang="java"><span class="n">OuterClass</span><span class="o">.</span><span class="na">StaticNestedClass</span> <span class="n">sKlass</span> <span class="o">=</span> <span class="k">new</span> <span class="n">OuterClass</span><span class="o">.</span><span class="na">StaticNestedClass</span><span class="o">()</span>
-</code></pre></td></tr></table>
-</div>
-</div><h3 id="内部类">内部类</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">OuterClass<span style="color:#f92672">.</span><span style="color:#a6e22e">StaticNestedClass</span> sKlass <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> OuterClass<span style="color:#f92672">.</span><span style="color:#a6e22e">StaticNestedClass</span><span style="color:#f92672">()</span>
+</code></pre></div><h3 id="内部类">内部类</h3>
 <p>和实例方法及变量一样，内部类与其所在类的实例相关联，并且可以直接访问该对象的方法和字段。另外，由于内部类与实例相关联，因此它本身不能定义任何静态成员。</p>
 <p>内部类的实例只能存在于外部类实例中，且可以直接访问其外部类实例的方法和字段。</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-java" data-lang="java"><span class="n">OuterClass</span> <span class="n">outer</span> <span class="o">=</span> <span class="k">new</span> <span class="n">OuterClass</span><span class="o">();</span>
-<span class="c1">// Instantiate inner class
-</span><span class="c1"></span><span class="n">OuterClass</span><span class="o">.</span><span class="na">InnerClass</span> <span class="n">inner</span> <span class="o">=</span> <span class="n">outer</span><span class="o">.</span><span class="na">new</span> <span class="nf">InnerClass</span><span class="o">();</span>
-<span class="c1">// Instantiate static nested class
-</span><span class="c1"></span><span class="n">OuterClass</span><span class="o">.</span><span class="na">NestedClass</span> <span class="n">nested</span> <span class="o">=</span> <span class="k">new</span> <span class="n">OuterClass</span><span class="o">.</span><span class="na">NestedClass</span><span class="o">();</span>
-</code></pre></td></tr></table>
-</div>
-</div><h4 id="局部内部类和匿名内部类">局部内部类和匿名内部类</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">OuterClass outer <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> OuterClass<span style="color:#f92672">();</span>
+<span style="color:#75715e">// Instantiate inner class
+</span><span style="color:#75715e"></span>OuterClass<span style="color:#f92672">.</span><span style="color:#a6e22e">InnerClass</span> inner <span style="color:#f92672">=</span> outer<span style="color:#f92672">.</span><span style="color:#a6e22e">new</span> <span style="color:#a6e22e">InnerClass</span><span style="color:#f92672">();</span>
+<span style="color:#75715e">// Instantiate static nested class
+</span><span style="color:#75715e"></span>OuterClass<span style="color:#f92672">.</span><span style="color:#a6e22e">NestedClass</span> nested <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> OuterClass<span style="color:#f92672">.</span><span style="color:#a6e22e">NestedClass</span><span style="color:#f92672">();</span>
+</code></pre></div><h4 id="局部内部类和匿名内部类">局部内部类和匿名内部类</h4>
 <p>局部内部类声明在别的类的实例方法内，匿名内部类与局部内部类相似，但写法是返回一次性对象的表达式。</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span><span class="lnt">21
-</span><span class="lnt">22
-</span><span class="lnt">23
-</span><span class="lnt">24
-</span><span class="lnt">25
-</span><span class="lnt">26
-</span><span class="lnt">27
-</span><span class="lnt">28
-</span><span class="lnt">29
-</span><span class="lnt">30
-</span><span class="lnt">31
-</span><span class="lnt">32
-</span><span class="lnt">33
-</span><span class="lnt">34
-</span><span class="lnt">35
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">AnonymousClasses</span> <span class="o">{</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">AnonymousClasses</span> <span style="color:#f92672">{</span>
 
-    <span class="kd">interface</span> <span class="nc">HelloWorld</span> <span class="o">{</span>
-        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">greet</span><span class="o">();</span>
-        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">greetSomeone</span><span class="o">(</span><span class="n">String</span> <span class="n">someone</span><span class="o">);</span>
-    <span class="o">}</span>
+    <span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">HelloWorld</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">greet</span><span style="color:#f92672">();</span>
+        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">greetSomeone</span><span style="color:#f92672">(</span>String someone<span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
 
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">sayHello</span><span class="o">()</span> <span class="o">{</span>
-      <span class="c1">// Local inner class
-</span><span class="c1"></span>        <span class="kd">class</span> <span class="nc">EnglishGreeting</span> <span class="kd">implements</span> <span class="n">HelloWorld</span> <span class="o">{</span>
-            <span class="n">String</span> <span class="n">name</span> <span class="o">=</span> <span class="s">&#34;world&#34;</span><span class="o">;</span>
-            <span class="kd">public</span> <span class="kt">void</span> <span class="nf">greet</span><span class="o">()</span> <span class="o">{</span>
-                <span class="n">greetSomeone</span><span class="o">(</span><span class="s">&#34;world&#34;</span><span class="o">);</span>
-            <span class="o">}</span>
-            <span class="kd">public</span> <span class="kt">void</span> <span class="nf">greetSomeone</span><span class="o">(</span><span class="n">String</span> <span class="n">someone</span><span class="o">)</span> <span class="o">{</span>
-                <span class="n">name</span> <span class="o">=</span> <span class="n">someone</span><span class="o">;</span>
-                <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;Hello &#34;</span> <span class="o">+</span> <span class="n">name</span><span class="o">);</span>
-            <span class="o">}</span>
-        <span class="o">}</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">sayHello</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+      <span style="color:#75715e">// Local inner class
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">EnglishGreeting</span> <span style="color:#66d9ef">implements</span> HelloWorld <span style="color:#f92672">{</span>
+            String name <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;world&#34;</span><span style="color:#f92672">;</span>
+            <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">greet</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+                greetSomeone<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;world&#34;</span><span style="color:#f92672">);</span>
+            <span style="color:#f92672">}</span>
+            <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">greetSomeone</span><span style="color:#f92672">(</span>String someone<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+                name <span style="color:#f92672">=</span> someone<span style="color:#f92672">;</span>
+                System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;Hello &#34;</span> <span style="color:#f92672">+</span> name<span style="color:#f92672">);</span>
+            <span style="color:#f92672">}</span>
+        <span style="color:#f92672">}</span>
 
-        <span class="n">HelloWorld</span> <span class="n">englishGreeting</span> <span class="o">=</span> <span class="k">new</span> <span class="n">EnglishGreeting</span><span class="o">();</span>
+        HelloWorld englishGreeting <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> EnglishGreeting<span style="color:#f92672">();</span>
 
-        <span class="c1">// Anonymous class
-</span><span class="c1"></span>        <span class="n">HelloWorld</span> <span class="n">frenchGreeting</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HelloWorld</span><span class="o">()</span> <span class="o">{</span>
-            <span class="n">String</span> <span class="n">name</span> <span class="o">=</span> <span class="s">&#34;tout le monde&#34;</span><span class="o">;</span>
-            <span class="kd">public</span> <span class="kt">void</span> <span class="nf">greet</span><span class="o">()</span> <span class="o">{</span>
-                <span class="n">greetSomeone</span><span class="o">(</span><span class="s">&#34;tout le monde&#34;</span><span class="o">);</span>
-            <span class="o">}</span>
-            <span class="kd">public</span> <span class="kt">void</span> <span class="nf">greetSomeone</span><span class="o">(</span><span class="n">String</span> <span class="n">someone</span><span class="o">)</span> <span class="o">{</span>
-                <span class="n">name</span> <span class="o">=</span> <span class="n">someone</span><span class="o">;</span>
-                <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;Salut &#34;</span> <span class="o">+</span> <span class="n">name</span><span class="o">);</span>
-            <span class="o">}</span>
-        <span class="o">};</span>
-    <span class="o">}</span>
-<span class="o">}</span>
-</code></pre></td></tr></table>
-</div>
-</div><h3 id="序列化">序列化</h3>
+        <span style="color:#75715e">// Anonymous class
+</span><span style="color:#75715e"></span>        HelloWorld frenchGreeting <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> HelloWorld<span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+            String name <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;tout le monde&#34;</span><span style="color:#f92672">;</span>
+            <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">greet</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+                greetSomeone<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;tout le monde&#34;</span><span style="color:#f92672">);</span>
+            <span style="color:#f92672">}</span>
+            <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">greetSomeone</span><span style="color:#f92672">(</span>String someone<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+                name <span style="color:#f92672">=</span> someone<span style="color:#f92672">;</span>
+                System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;Salut &#34;</span> <span style="color:#f92672">+</span> name<span style="color:#f92672">);</span>
+            <span style="color:#f92672">}</span>
+        <span style="color:#f92672">};</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><h3 id="序列化">序列化</h3>
 <p>强烈不建议对内部类，包括本地和匿名类进行序列化。当 Java 编译器编译某些构造时，它将创建<a href="https://docs.oracle.com/javase/tutorial/reflect/member/methodparameterreflection.html#implcit_and_synthetic">合成构造</a>（synthetic constructs）。这些是类、方法、字段和其他在源码中没有对应构造方法的构造。合成构造可以使 Java 编译器无需更改 JVM 即可实现新的 Java 语言功能。但是，合成构造在不同的 Java 编译器中的实现可能有所不同，这意味着 .class 文件在不同的实现中也可能有所不同。因此，如果序列化一个内部类，然后使用其他 JRE 实现对其进行反序列化，则可能出现兼容性问题。</p>
 <h2 id="5referenceref">5.<a href="https://community.oracle.com/blogs/enicholas/2006/05/04/understanding-weak-references">Reference</a></h2>
 <blockquote>
@@ -403,96 +238,76 @@
 <h3 id="weakreference">WeakReference</h3>
 <p>弱引用可以利用垃圾回收器的能力来确定可达性，因此我们不必自己做。</p>
 
-    </div>
-
-    <div class="post-copyright">
-  <p class="copyright-item">
-    <span class="item-title">文章作者</span>
-    <span class="item-content">Zac</span>
-  </p>
-  <p class="copyright-item">
-    <span class="item-title">上次更新</span>
-    <span class="item-content">
-        3030-07-03
-        
-    </span>
-  </p>
-  
-  
+        </section>
+        <footer>
+            <a class="permalink u-url" href="https://zacash.cn/post/java-basic/">🔗</a>
+            
+        </footer>
+    </article>
 </div>
-<footer class="post-footer">
-      
-      <nav class="post-nav">
-        <a class="prev" href="/post/intro-to-service/">
-            <i class="iconfont icon-left"></i>
-            <span class="prev-text nav-default">Intro to Service</span>
-            <span class="prev-text nav-mobile">上一篇</span>
-          </a>
-        <a class="next" href="/post/top-10-kotlin-questions/">
-            <span class="next-text nav-default">Top 10 Kotlin Questions in StackOverflow</span>
-            <span class="next-text nav-mobile">下一篇</span>
-            <i class="iconfont icon-right"></i>
-          </a>
-      </nav>
-    </footer>
-  </article>
-        </div>
-        
 
-  
-
-  
-
+    
+    <div class="h-card">
+      <img class="u-photo" src="https://zacash.cn/images/android-os.png" />
+      <div class="card-content">
+        <h2 class="card-name"><a class="p-name u-url" href="https://zacash.cn" rel="me">Zac</a></h2>
+        <p class="card-subhead">
+          <span class="p-locality">Shanghai</span>,
+          <span class="p-country-name">China</span><br />
+          <a class="u-email" href="mailto:zac_ju@163.com">Email me</a>
+        </p>
       </div>
-    </main>
-
-    <footer id="footer" class="footer">
-      <div class="social-links">
-      <a href="zac@zacash.com" class="iconfont icon-email" title="email"></a>
-  <a href="https://zacash.cn/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
-</div>
-
-<div class="copyright">
-  <span class="power-by">
-    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
-  </span>
-  <span class="division">|</span>
-  <span class="theme-info">
-    主题 - 
-    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
-  </span>
-
-  
-
-  <span class="copyright-year">
-    &copy; 
-    2020
-    <span class="heart">
-      <i class="iconfont icon-heart"></i>
-    </span>
-    <span class="author">Zac</span>
-  </span>
-</div>
-    </footer>
-
-    <div class="back-to-top" id="back-to-top">
-      <i class="iconfont icon-up"></i>
+      <p class="p-note">🐭</p>
     </div>
+    
+    <div id="footer">
+      
+      <nav id="article-skip">
+        <div class="next">
+          
+          <a alt="Newer article" href="https://zacash.cn/post/intro-to-service/">&larr; Newer</a>
+          
+        </div>
+        <div class="top">
+          <a alt="Top of page" href="#">Top</a>
+        </div>
+        <div class="prev">
+          
+          <a alt="Older article" href="https://zacash.cn/post/top-10-kotlin-questions/">Older &rarr;</a>
+          
+        </div>
+      </nav>
+      
+      <aside id="social">
+  <div id="social-icons">
+    
+    
+    
+    
+    <div class="icon-24x24">
+      <a class="glyph" alt="GitHub profile" href="https://github.com/zac4j"><img src=https://zacash.cn/icons/github.svg height="24px" width="24px"></a>
+    </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
   </div>
-  
-  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+</aside>
 
-
-
-<script type="text/javascript" src="/js/main.min.d7b7ada643c9c1a983026e177f141f7363b4640d619caf01d8831a6718cd44ea.js"></script>
-
-
-
-
-
-
+      
+      <p class="copyright">
+          Copyright © 2020, Copyright Zac
+      </p>
+      
+    </div>
 
 
 </body>

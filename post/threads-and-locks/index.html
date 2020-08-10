@@ -1,152 +1,74 @@
 <!DOCTYPE html>
-<html lang="zh-cn">
+<html lang="en-US">
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>Threads and Locks - Zac</title>
-  <meta name="renderer" content="webkit" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
-
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
-
-<meta name="theme-color" content="#f8f5ec" />
-<meta name="msapplication-navbutton-color" content="#f8f5ec">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
-
-
-<meta name="author" content="Zac" /><meta name="description" content="8.12 Threads Threads are created and managed by the classes Thread and ThreadGroup. Creating a Thread object creates a thread, and that is the only way to create a thread. When the thread is created, it is not yet active; it begins to run when its start method is called. 线程由 Thread 和 ThreadGroup 创建和管理。创建一个线程对象" /><meta name="keywords" content="Android, developer, programming" />
-
-
-
-
-
-
-<meta name="generator" content="Hugo 0.68.1 with theme even" />
-
-
-<link rel="canonical" href="https://zacash.cn/post/threads-and-locks/" />
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-<link rel="manifest" href="/manifest.json">
-<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
-
-
-
-<link href="/sass/main.min.8c3cbcb0324c2bb4875ceccba4007cbad4b4ac8377f33af9953c3e7684534a50.css" rel="stylesheet">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
-
-
-<meta property="og:title" content="Threads and Locks" />
-<meta property="og:description" content="8.12 Threads Threads are created and managed by the classes Thread and ThreadGroup. Creating a Thread object creates a thread, and that is the only way to create a thread. When the thread is created, it is not yet active; it begins to run when its start method is called. 线程由 Thread 和 ThreadGroup 创建和管理。创建一个线程对象" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="https://zacash.cn/post/threads-and-locks/" />
-<meta property="article:published_time" content="2020-07-27T00:00:00+00:00" />
-<meta property="article:modified_time" content="2020-07-27T00:00:00+00:00" />
-<meta itemprop="name" content="Threads and Locks">
-<meta itemprop="description" content="8.12 Threads Threads are created and managed by the classes Thread and ThreadGroup. Creating a Thread object creates a thread, and that is the only way to create a thread. When the thread is created, it is not yet active; it begins to run when its start method is called. 线程由 Thread 和 ThreadGroup 创建和管理。创建一个线程对象">
-<meta itemprop="datePublished" content="2020-07-27T00:00:00&#43;00:00" />
-<meta itemprop="dateModified" content="2020-07-27T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="2652">
-
-
-
-<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Threads and Locks"/>
-<meta name="twitter:description" content="8.12 Threads Threads are created and managed by the classes Thread and ThreadGroup. Creating a Thread object creates a thread, and that is the only way to create a thread. When the thread is created, it is not yet active; it begins to run when its start method is called. 线程由 Thread 和 ThreadGroup 创建和管理。创建一个线程对象"/>
-
-<!--[if lte IE 9]>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
-<![endif]-->
-
-<!--[if lt IE 9]>
-  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
-<![endif]-->
-
-</head>
-<body>
-  <div id="mobile-navbar" class="mobile-navbar">
-  <div class="mobile-header-logo">
-    <a href="/" class="logo">Zac</a>
-  </div>
-  <div class="mobile-navbar-icon">
-    <span></span>
-    <span></span>
-    <span></span>
-  </div>
-</div>
-<nav id="mobile-menu" class="mobile-menu slideout-menu">
-  <ul class="mobile-menu-list">
-    <a href="/">
-        <li class="mobile-menu-item">Home</li>
-      </a><a href="/post/">
-        <li class="mobile-menu-item">Archives</li>
-      </a><a href="/tags/">
-        <li class="mobile-menu-item">Tags</li>
-      </a><a href="/categories/">
-        <li class="mobile-menu-item">Categories</li>
-      </a>
-  </ul>
-</nav>
-  <div class="container" id="mobile-panel">
-    <header id="header" class="header">
-        <div class="logo-wrapper">
-  <a href="/" class="logo">Zac</a>
-</div>
-
-<nav class="site-navbar">
-  <ul id="menu" class="menu">
-    <li class="menu-item">
-        <a class="menu-item-link" href="/">Home</a>
-      </li><li class="menu-item">
-        <a class="menu-item-link" href="/post/">Archives</a>
-      </li><li class="menu-item">
-        <a class="menu-item-link" href="/tags/">Tags</a>
-      </li><li class="menu-item">
-        <a class="menu-item-link" href="/categories/">Categories</a>
-      </li>
-  </ul>
-</nav>
-    </header>
-
-    <main id="main" class="main">
-      <div class="content-wrapper">
-        <div id="content" class="content">
-          <article class="post">
+    <meta charset="utf-8">
     
-    <header class="post-header">
-      <h1 class="post-title">Threads and Locks</h1>
+    <title>Threads and Locks | Zac&#39;s Blog</title>
+    <meta name="description" content="Android developer blog">
+    <meta name="author" content="">
+    
+    <link rel="apple-touch-icon" sizes="180x180" href=https://zacash.cn/apple-touch-icon.png>
+    <link rel="icon" type="image/png" sizes="32x32" href=https://zacash.cn/favicon-32x32.png>
+    <link rel="icon" type="image/png" sizes="16x16" href=https://zacash.cn/favicon-16x16.png>
+    <link rel="manifest" href=https://zacash.cn/site.webmanifest>
+    <link rel="mask-icon" href=https://zacash.cn/safari-pinned-tab.svg color="#00416a">
+    <meta name="msapplication-TileColor" content="#00aba9">
+    <meta name="theme-color" content="#ffffff">
+    
+    <link rel="me" href="mailto:zac_ju@163.com">
+    <link rel="me" href="https://github.com/zac4j">
+    
+    
+    
+    <link rel="authorization_endpoint" href=https://indieauth.com/auth />
+    <link rel="token_endpoint" href=https://tokens.indieauth.com/token />
+    
+    
+    
+    
+    
+    <link rel="stylesheet" href=https://zacash.cn/css/fonts.css />
+    <link rel="stylesheet" href=https://zacash.cn/css/style.css />
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
 
-      <div class="post-meta">
-        <span class="post-time"> 27270-07-27 </span>
+<body>
+    <div id="sitelogo">
+        <a class="glyph" alt="Home" href="https://zacash.cn"><img src=https://zacash.cn/images/site-logo.svg alt="Site Logo" height="64px" width="64px"></a>
+    </div>
+    <header>
+        <nav>
+    
+    <div id="page-nav">
+        <div class="page-nav-item">
+            <a href="https://zacash.cn">Home</a>
+        </div>
         
-          <span class="more-meta"> 约 2652 字 </span>
-          <span class="more-meta"> 预计阅读 6 分钟 </span>
+    </div>
+</nav>
         
-      </div>
     </header>
 
-    <div class="post-toc" id="post-toc">
-  <h2 class="post-toc-title">文章目录</h2>
-  <div class="post-toc-content always-active">
-    <nav id="TableOfContents">
-  <ul>
-    <li><a href="#812-threads">8.12 Threads</a></li>
-    <li><a href="#813-locks-and-synchronization">8.13 Locks and Synchronization</a></li>
-    <li><a href="#714-synchronizationsynchronized">7.14 <a href="https://docs.oracle.com/javase/specs/jvms/se6/html/Compiling.doc.html#6530">Synchronization</a></a></li>
-    <li><a href="#volatile">Volatile</a></li>
-    <li><a href="#thread-pool">Thread Pool</a></li>
-  </ul>
-</nav>
-  </div>
-</div>
-    <div class="post-content">
-      <h2 id="812-threads">8.12 Threads</h2>
-<p>Threads are created and managed by the classes Thread and ThreadGroup. Creating a Thread object creates a thread, and that is the only way to create a thread. When the thread is created, it is not yet active; it begins to run when its start method is called.</p>
-<p>线程由 Thread 和 ThreadGroup 创建和管理。创建一个线程对象会创建一个线程，这是创建线程的唯一方法。创建线程后，它尚未处于活动状态。当调用其 <em>start</em> 方法时，它开始运行。</p>
+
+
+
+<div id="content">
+    <article class="h-entry">
+        <header>
+            <h1 class="post-title p-name">Threads and Locks</h1>
+            
+            <p class="post-date">Posted on
+                <time class="dt-published" datetime="2020-07-27T00:00:00Z">
+                    27 July, 2020 at 00:00 UTC
+                </time>  by <a href="https://zacash.cn" class="p-author h-card"
+                    rel="author">Zac</a>
+            </p>
+            
+            
+        </header>
+        <section class="content e-content">
+            <p>Threads are created and managed by the classes Thread and ThreadGroup. Creating a Thread object creates a thread, and that is the only way to create a thread. When the thread is created, it is not yet active; it begins to run when its start method is called.</p>
 <h2 id="813-locks-and-synchronization">8.13 Locks and Synchronization</h2>
 <p>There is a lock associated with every object. The Java programming language does not provide a way to perform separate lock and unlock operations; instead, they are implicitly performed by high-level constructs that always arrange to pair such operations correctly. (The Java virtual machine, however, provides separate monitorenter and monitorexit instructions that implement the lock and unlock operations.)</p>
 <p>每个对象都有一个锁。Java 没有单独提供锁定和解锁的方法；相反它们由始终安排准确配对操作的高阶构造隐式执行。Jvm 提供了单独的 <em>monitorenter</em> 和 <em>monitorexit</em> 指令，用于实现锁定和解锁操作。</p>
@@ -169,44 +91,13 @@ Note that the locking and unlocking automatically performed by the Java virtual 
 <p>Jvm 通常不使用 <em>monitorenter</em> 和 <em>monitorexit</em> 实现同步方法，而是在运行时常量池通过 <em>ACC_SYNCHRONIZED</em> 标记加以区分，该标记由方法调用指令校验。当调用标记为 <em>ACC_SYNCHRONIZED</em> 的方法时，当前线程获取 monitor，调用这个方法自身，并释放 monitor，不管方法调用是正常完成或突然中断。</p>
 <p>正在执行的线程拥有 monitor 时，别的线程无法获取它。如果在调用同步方法时抛出异常，且同步方法无法处理该异常，则在异常从同步方法抛出执行，自动释放该方法的 monitor.</p>
 <p>The <em>monitorenter</em> and <em>monitorexit</em> instructions exist to support synchronized statements. For example:</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-java" data-lang="java"><span class="kt">void</span> <span class="nf">onlyMe</span><span class="o">(</span><span class="n">Foo</span> <span class="n">f</span><span class="o">)</span> <span class="o">{</span>
-    <span class="kd">synchronized</span><span class="o">(</span><span class="n">f</span><span class="o">)</span> <span class="o">{</span>
-        <span class="n">doSomething</span><span class="o">();</span>
-    <span class="o">}</span>
-<span class="o">}</span>
-</code></pre></td></tr></table>
-</div>
-</div><p>is compiled to</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">Method void onlyMe(Foo)
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">onlyMe</span><span style="color:#f92672">(</span>Foo f<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">synchronized</span><span style="color:#f92672">(</span>f<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        doSomething<span style="color:#f92672">();</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><p>is compiled to</p>
+<pre><code class="language-assembly" data-lang="assembly">Method void onlyMe(Foo)
    0 	aload_1				// Push f	
    1 	astore_2			// Store it in local variable 2
    2 	aload_2				// Push local variable 2 (f)
@@ -222,9 +113,7 @@ Note that the locking and unlocking automatically performed by the Java virtual 
 Exception table:
    	From	To 	Target 		Type
     4     	8   11   		any
-</code></pre></td></tr></table>
-</div>
-</div><h2 id="volatile">Volatile</h2>
+</code></pre><h2 id="volatile">Volatile</h2>
 <p>The rules for volatile variables effectively require that main memory be touched exactly once for each use or assign of a volatile variable by a thread, and that main memory be touched in exactly the order dictated by the thread execution semantics. However, such memory operations are not ordered with respect to read and write operations on nonvolatile variables.</p>
 <h2 id="thread-pool">Thread Pool</h2>
 <p>Most of the executor implementations in <em>java.util.concurrent</em> use thread pools, which consist of <em>worker threads</em>. This kind of thread exists separately from the <em>Runnable</em> and <em>Callable</em> tasks it executes and is often used to execute multiple tasks.</p>
@@ -255,93 +144,103 @@ Exception table:
 </ul>
 <p>If none of the executors provided by the above factory methods meet your needs, constructing instances of <em>java.util.concurrent.ThreadPoolExecutor</em> or <em>java.util.concurrent.ScheduledThreadPoolExecutor</em> will give you additional options.</p>
 <p>除了上面这些创建 executor 的方法，<em>java.util.concurrent.ThreadPoolExecutor</em> 和 <em>java.util.concurrent.ScheduledThreadPoolExecutor</em> 也会提供额外的方法。</p>
-
-    </div>
-
-    <div class="post-copyright">
-  <p class="copyright-item">
-    <span class="item-title">文章作者</span>
-    <span class="item-content">Zac</span>
-  </p>
-  <p class="copyright-item">
-    <span class="item-title">上次更新</span>
-    <span class="item-content">
-        27270-07-27
-        
-    </span>
-  </p>
-  
-  
+<h2 id="processes-and-threads">Processes and Threads</h2>
+<p>In concurrent programming, there are two basic units of execution: <em>processes</em> and <em>threads</em>. In the Java programming language, concurrent programming is mostly concerned with threads. However, processes are also important.</p>
+<p>在并发编程中，有两个基本的执行单元：进程和线程。Java 并发编程主要和线程有关，不过进程也很重要。</p>
+<p>A computer system normally has many active processes and threads. This is true even in systems that only have a single execution core, and thus only have one thread actually executing at any given moment. Processing time for a single core is shared among processes and threads through an OS feature called <em>time slicing</em>.</p>
+<p>计算机系统通常有很多活跃的进程和线程。这在只有一个执行核心以至于任何时刻都只有一个线程实际执行的系统也是如此。通过称为 <em>时间分片</em> 的 OS 功能，进程和线程可以共享单个内核的处理时间。</p>
+<p>It&rsquo;s becoming more and more common for computer systems to have multiple processors or processors with multiple execution cores. This greatly enhances a system&rsquo;s capacity for concurrent execution of processes and threads — but concurrency is possible even on simple systems, without multiple processors or execution cores.</p>
+<p>具有多个处理器或多个执行核心的处理器的计算机系统正在变得越来越普遍。这极大增强了并发执行多进程和多线程的能力——即使是在没有多核处理器的简单系统上，并发也是可能的。</p>
+<h3 id="processes">Processes</h3>
+<p>A process has a self-contained execution environment. A process generally has a complete, private set of basic run-time resources; in particular, each process has its own memory space.</p>
+<p>进程具有独立的执行环境。进程通常具有一组完整的、私有的基本运行时资源，每个进程有自己的内存空间。</p>
+<p>Processes are often seen as synonymous with programs or applications. However, what the user sees as a single application may in fact be a set of cooperating processes. To facilitate communication between processes, most operating systems support <em>Inter Process Communication</em> (IPC) resources, such as pipes and sockets. IPC is used not just for communication between processes on the same system, but processes on different systems.</p>
+<p>进程通常被视为程序或应用的代名词。但实际上用户看见的单个应用可能一组协作进程。为了促进进程间的通信，大多数操作系统都支持 <em>进程间通信</em>（IPC）资源，比如管道（pipes）和sockets. IPC 不仅可以用在同一系统的进程间通信，还可用于不同系统上的进程。</p>
+<p>Most implementations of the Java virtual machine run as a single process. A Java application can create additional processes using a <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/ProcessBuilder.html">ProcessBuilder</a> object. Multiprocess applications are beyond the scope of this lesson.</p>
+<p>大多数的 Jvm 实现都是以单个进程运行的。Java 应用可以使用 <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/ProcessBuilder.html">ProcessBuilder</a> 创建新的进程，不过多进程应用不在这里的讨论范围。</p>
+<h3 id="threads">Threads</h3>
+<p>Threads are sometimes called <em>lightweight processes</em>. Both processes and threads provide an execution environment, but creating a new thread requires fewer resources than creating a new process.</p>
+<p>线程通常被称为 <em>轻量级进程</em>。进程和线程都可以提供执行环境，但创建线程要比创建进程需要更少的资源。</p>
+<p>Threads exist within a process — every process has at least one. Threads share the process&rsquo;s resources, including memory and open files. This makes for efficient, but potentially problematic, communication.</p>
+<p>线程存在于进程中 —— 每个进程至少有一个。线程分享进程资源，包括内存和打开的文件。这样可以进行高效的、但同时又可能有问题的通信。</p>
+<p>Multithreaded execution is an essential feature of the Java platform. Every application has at least one thread — or several, if you count &ldquo;system&rdquo; threads that do things like memory management and signal handling. But from the application programmer&rsquo;s point of view, you start with just one thread, called the main thread. This thread has the ability to create additional threads, as we&rsquo;ll demonstrate in the next section.</p>
+<p>多线程执行是 Java 平台基础的功能。每个应用至少有一个 —— 如果算上执行内存管理和信号处理的系统线程，则有多个。但从应用程序员的角度来看，我们从一个线程开始，称为<em>主线程（main thread）</em>，这个线程有能力创建别的线程。</p>
+<h4 id="thread-objects">Thread Objects</h4>
+<p>每个线程都与一个 <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Thread.html">Thread</a> 相关。有两种策略使用 <em>Thread</em> 对象创建并发应用。</p>
+<ul>
+<li>直接控制线程的创建和管理，每次应用需要启动异步任务时，只需实例化 <em>Thread</em>。</li>
+<li>要从应用的其他部分抽象线程管理，将应用的任务传递给 <em>executor</em>。</li>
+</ul>
+        </section>
+        <footer>
+            <a class="permalink u-url" href="https://zacash.cn/post/threads-and-locks/">🔗</a>
+            
+        </footer>
+    </article>
 </div>
-<footer class="post-footer">
-      
-      <nav class="post-nav">
-        
-        <a class="next" href="/post/websocket-and-long-polling/">
-            <span class="next-text nav-default">WebSocket 和长轮询</span>
-            <span class="next-text nav-mobile">下一篇</span>
-            <i class="iconfont icon-right"></i>
-          </a>
-      </nav>
-    </footer>
-  </article>
-        </div>
-        
 
-  
-
-  
-
+    
+    <div class="h-card">
+      <img class="u-photo" src="https://zacash.cn/images/android-os.png" />
+      <div class="card-content">
+        <h2 class="card-name"><a class="p-name u-url" href="https://zacash.cn" rel="me">Zac</a></h2>
+        <p class="card-subhead">
+          <span class="p-locality">Shanghai</span>,
+          <span class="p-country-name">China</span><br />
+          <a class="u-email" href="mailto:zac_ju@163.com">Email me</a>
+        </p>
       </div>
-    </main>
-
-    <footer id="footer" class="footer">
-      <div class="social-links">
-      <a href="zac@zacash.com" class="iconfont icon-email" title="email"></a>
-  <a href="https://zacash.cn/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
-</div>
-
-<div class="copyright">
-  <span class="power-by">
-    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
-  </span>
-  <span class="division">|</span>
-  <span class="theme-info">
-    主题 - 
-    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
-  </span>
-
-  
-
-  <span class="copyright-year">
-    &copy; 
-    2020
-    <span class="heart">
-      <i class="iconfont icon-heart"></i>
-    </span>
-    <span class="author">Zac</span>
-  </span>
-</div>
-    </footer>
-
-    <div class="back-to-top" id="back-to-top">
-      <i class="iconfont icon-up"></i>
+      <p class="p-note">🐭</p>
     </div>
+    
+    <div id="footer">
+      
+      <nav id="article-skip">
+        <div class="next">
+          
+          <a alt="Newer article" href="https://zacash.cn/post/use-hilt-in-android/">&larr; Newer</a>
+          
+        </div>
+        <div class="top">
+          <a alt="Top of page" href="#">Top</a>
+        </div>
+        <div class="prev">
+          
+          <a alt="Older article" href="https://zacash.cn/post/websocket-and-long-polling/">Older &rarr;</a>
+          
+        </div>
+      </nav>
+      
+      <aside id="social">
+  <div id="social-icons">
+    
+    
+    
+    
+    <div class="icon-24x24">
+      <a class="glyph" alt="GitHub profile" href="https://github.com/zac4j"><img src=https://zacash.cn/icons/github.svg height="24px" width="24px"></a>
+    </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
   </div>
-  
-  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+</aside>
 
-
-
-<script type="text/javascript" src="/js/main.min.d7b7ada643c9c1a983026e177f141f7363b4640d619caf01d8831a6718cd44ea.js"></script>
-
-
-
-
-
-
+      
+      <p class="copyright">
+          Copyright © 2020, Copyright Zac
+      </p>
+      
+    </div>
 
 
 </body>

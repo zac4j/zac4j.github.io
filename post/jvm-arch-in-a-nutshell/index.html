@@ -1,171 +1,85 @@
 <!DOCTYPE html>
-<html lang="zh-cn">
+<html lang="en-US">
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>JVM Architecture in A Nutshell - Zac</title>
-  <meta name="renderer" content="webkit" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
-
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
-
-<meta name="theme-color" content="#f8f5ec" />
-<meta name="msapplication-navbutton-color" content="#f8f5ec">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
-
-
-<meta name="author" content="Zac" /><meta name="description" content="跨平台的本质 跨平台的本质是因为汇编指令的不同. ClassLoader What is it 类加载器负责在运行时将 Java 类动态加载到 JVM，是 JRE 的一部分，由于有了类加载器，JVM 无需" /><meta name="keywords" content="Android, developer, programming" />
-
-
-
-
-
-
-<meta name="generator" content="Hugo 0.68.1 with theme even" />
-
-
-<link rel="canonical" href="https://zacash.cn/post/jvm-arch-in-a-nutshell/" />
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-<link rel="manifest" href="/manifest.json">
-<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
-
-
-
-<link href="/sass/main.min.8c3cbcb0324c2bb4875ceccba4007cbad4b4ac8377f33af9953c3e7684534a50.css" rel="stylesheet">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
-
-
-<meta property="og:title" content="JVM Architecture in A Nutshell" />
-<meta property="og:description" content="跨平台的本质 跨平台的本质是因为汇编指令的不同. ClassLoader What is it 类加载器负责在运行时将 Java 类动态加载到 JVM，是 JRE 的一部分，由于有了类加载器，JVM 无需" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="https://zacash.cn/post/jvm-arch-in-a-nutshell/" />
-<meta property="article:published_time" content="2020-07-17T00:00:00+00:00" />
-<meta property="article:modified_time" content="2020-07-17T00:00:00+00:00" />
-<meta itemprop="name" content="JVM Architecture in A Nutshell">
-<meta itemprop="description" content="跨平台的本质 跨平台的本质是因为汇编指令的不同. ClassLoader What is it 类加载器负责在运行时将 Java 类动态加载到 JVM，是 JRE 的一部分，由于有了类加载器，JVM 无需">
-<meta itemprop="datePublished" content="2020-07-17T00:00:00&#43;00:00" />
-<meta itemprop="dateModified" content="2020-07-17T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="3706">
-
-
-
-<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="JVM Architecture in A Nutshell"/>
-<meta name="twitter:description" content="跨平台的本质 跨平台的本质是因为汇编指令的不同. ClassLoader What is it 类加载器负责在运行时将 Java 类动态加载到 JVM，是 JRE 的一部分，由于有了类加载器，JVM 无需"/>
-
-<!--[if lte IE 9]>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
-<![endif]-->
-
-<!--[if lt IE 9]>
-  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
-<![endif]-->
-
-</head>
-<body>
-  <div id="mobile-navbar" class="mobile-navbar">
-  <div class="mobile-header-logo">
-    <a href="/" class="logo">Zac</a>
-  </div>
-  <div class="mobile-navbar-icon">
-    <span></span>
-    <span></span>
-    <span></span>
-  </div>
-</div>
-<nav id="mobile-menu" class="mobile-menu slideout-menu">
-  <ul class="mobile-menu-list">
-    <a href="/">
-        <li class="mobile-menu-item">Home</li>
-      </a><a href="/post/">
-        <li class="mobile-menu-item">Archives</li>
-      </a><a href="/tags/">
-        <li class="mobile-menu-item">Tags</li>
-      </a><a href="/categories/">
-        <li class="mobile-menu-item">Categories</li>
-      </a>
-  </ul>
-</nav>
-  <div class="container" id="mobile-panel">
-    <header id="header" class="header">
-        <div class="logo-wrapper">
-  <a href="/" class="logo">Zac</a>
-</div>
-
-<nav class="site-navbar">
-  <ul id="menu" class="menu">
-    <li class="menu-item">
-        <a class="menu-item-link" href="/">Home</a>
-      </li><li class="menu-item">
-        <a class="menu-item-link" href="/post/">Archives</a>
-      </li><li class="menu-item">
-        <a class="menu-item-link" href="/tags/">Tags</a>
-      </li><li class="menu-item">
-        <a class="menu-item-link" href="/categories/">Categories</a>
-      </li>
-  </ul>
-</nav>
-    </header>
-
-    <main id="main" class="main">
-      <div class="content-wrapper">
-        <div id="content" class="content">
-          <article class="post">
+    <meta charset="utf-8">
     
-    <header class="post-header">
-      <h1 class="post-title">JVM Architecture in A Nutshell</h1>
+    <title>JVM Architecture in A Nutshell | Zac&#39;s Blog</title>
+    <meta name="description" content="Java Virtual Machine Architecture">
+    <meta name="author" content="">
+    
+    <link rel="apple-touch-icon" sizes="180x180" href=https://zacash.cn/apple-touch-icon.png>
+    <link rel="icon" type="image/png" sizes="32x32" href=https://zacash.cn/favicon-32x32.png>
+    <link rel="icon" type="image/png" sizes="16x16" href=https://zacash.cn/favicon-16x16.png>
+    <link rel="manifest" href=https://zacash.cn/site.webmanifest>
+    <link rel="mask-icon" href=https://zacash.cn/safari-pinned-tab.svg color="#00416a">
+    <meta name="msapplication-TileColor" content="#00aba9">
+    <meta name="theme-color" content="#ffffff">
+    
+    <link rel="me" href="mailto:zac_ju@163.com">
+    <link rel="me" href="https://github.com/zac4j">
+    
+    
+    
+    <link rel="authorization_endpoint" href=https://indieauth.com/auth />
+    <link rel="token_endpoint" href=https://tokens.indieauth.com/token />
+    
+    
+    
+    
+    
+    <link rel="stylesheet" href=https://zacash.cn/css/fonts.css />
+    <link rel="stylesheet" href=https://zacash.cn/css/style.css />
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
 
-      <div class="post-meta">
-        <span class="post-time"> 17170-07-17 </span>
+<body>
+    <div id="sitelogo">
+        <a class="glyph" alt="Home" href="https://zacash.cn"><img src=https://zacash.cn/images/site-logo.svg alt="Site Logo" height="64px" width="64px"></a>
+    </div>
+    <header>
+        <nav>
+    
+    <div id="page-nav">
+        <div class="page-nav-item">
+            <a href="https://zacash.cn">Home</a>
+        </div>
         
-          <span class="more-meta"> 约 3706 字 </span>
-          <span class="more-meta"> 预计阅读 8 分钟 </span>
+    </div>
+</nav>
         
-      </div>
     </header>
 
-    <div class="post-toc" id="post-toc">
-  <h2 class="post-toc-title">文章目录</h2>
-  <div class="post-toc-content always-active">
-    <nav id="TableOfContents">
-  <ul>
-    <li><a href="#跨平台的本质">跨平台的本质</a></li>
-    <li><a href="#classloader">ClassLoader</a>
-      <ul>
-        <li><a href="#what-is-it">What is it</a></li>
-        <li><a href="#built-in-class-loaders-types">Built-in class loaders types</a></li>
-        <li><a href="#how-it-works">How it works</a></li>
-        <li><a href="#class-loader-features">Class loader features</a></li>
-        <li><a href="#custom-classloader">Custom ClassLoader</a></li>
-        <li><a href="#responsibility">Responsibility</a></li>
-      </ul>
-    </li>
-    <li><a href="#run-time-data-areas">Run-Time Data Areas</a>
-      <ul>
-        <li><a href="#the-pc-register">The pc Register</a></li>
-        <li><a href="#jvm-stacks">JVM Stacks</a></li>
-        <li><a href="#heap">Heap</a></li>
-        <li><a href="#method-area">Method Area</a></li>
-        <li><a href="#native-method-stacks">Native Method Stacks</a></li>
-        <li><a href="#run-time-constant-pool">Run-Time Constant Pool</a></li>
-      </ul>
-    </li>
-    <li><a href="#execution-engine">Execution Engine</a></li>
-    <li><a href="#java-native-interfacejni">Java Native Interface（JNI）</a></li>
-    <li><a href="#native-method-libraries">Native Method Libraries</a></li>
-    <li><a href="#reference">Reference</a></li>
-  </ul>
-</nav>
-  </div>
-</div>
-    <div class="post-content">
-      <h2 id="跨平台的本质">跨平台的本质</h2>
-<p>跨平台的本质是因为汇编指令的不同.</p>
+
+
+
+<div id="content">
+    <article class="h-entry">
+        <header>
+            <h1 class="post-title p-name">JVM Architecture in A Nutshell</h1>
+            
+            <p class="post-date">Posted on
+                <time class="dt-published" datetime="2020-07-17T00:00:00Z">
+                    17 July, 2020 at 00:00 UTC
+                </time>  by <a href="https://zacash.cn" class="p-author h-card"
+                    rel="author">Zac</a>
+            </p>
+            
+            
+            <p class="post-tag">Category:
+                
+                <a href="https://zacash.cn/categories/jvm" class="post-tag p-category">jvm</a>
+                
+                <a href="https://zacash.cn/categories/classloader" class="post-tag p-category">classloader</a>
+                
+                <a href="https://zacash.cn/categories/jmm" class="post-tag p-category">jmm</a>
+                
+            </p>
+            <hr class="post-underline">
+            
+        </header>
+        <section class="content e-content">
+            <p>跨平台的本质是因为汇编指令的不同.</p>
 <h2 id="classloader">ClassLoader</h2>
 <h3 id="what-is-it">What is it</h3>
 <p>类加载器负责在运行时将 Java 类动态加载到 JVM，是 JRE 的一部分，由于有了类加载器，JVM 无需了解底层文件或文件系统即可运行Java程序。</p>
@@ -205,109 +119,55 @@
 <li>实现类版本控制机制，如为具有相同名称和包名的类加载不同的字节码（热修复）。这可以通过 URL 类加载器或自定义加载器完成。</li>
 </ul>
 <p>我们可以自定义类加载器实现指定类的加载：</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span><span class="lnt">21
-</span><span class="lnt">22
-</span><span class="lnt">23
-</span><span class="lnt">24
-</span><span class="lnt">25
-</span><span class="lnt">26
-</span><span class="lnt">27
-</span><span class="lnt">28
-</span><span class="lnt">29
-</span><span class="lnt">30
-</span><span class="lnt">31
-</span><span class="lnt">32
-</span><span class="lnt">33
-</span><span class="lnt">34
-</span><span class="lnt">35
-</span><span class="lnt">36
-</span><span class="lnt">37
-</span><span class="lnt">38
-</span><span class="lnt">39
-</span><span class="lnt">40
-</span><span class="lnt">41
-</span><span class="lnt">42
-</span><span class="lnt">43
-</span><span class="lnt">44
-</span><span class="lnt">45
-</span><span class="lnt">46
-</span><span class="lnt">47
-</span><span class="lnt">48
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="k">package</span> <span class="nn">com.zac4j.system.util</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-kotlin" data-lang="kotlin"><span style="color:#66d9ef">package</span> com.zac4j.system.util
 
-<span class="k">import</span> <span class="nn">java.io.ByteArrayOutputStream</span>
-<span class="k">import</span> <span class="nn">java.io.File</span>
-<span class="k">import</span> <span class="nn">java.io.IOException</span>
+<span style="color:#66d9ef">import</span> java.io.ByteArrayOutputStream
+<span style="color:#66d9ef">import</span> java.io.File
+<span style="color:#66d9ef">import</span> java.io.IOException
 
-<span class="cm">/**
-</span><span class="cm"> * Custom ClassLoader sample
-</span><span class="cm"> *
-</span><span class="cm"> * @author: zac
-</span><span class="cm"> * @date: 2020/7/19
-</span><span class="cm"> */</span>
-<span class="k">internal</span> <span class="k">object</span> <span class="nc">Test</span> <span class="p">{</span>
-  <span class="n">@JvmStatic</span> <span class="k">fun</span> <span class="nf">main</span><span class="p">(</span><span class="n">args</span><span class="p">:</span> <span class="n">Array</span><span class="p">&lt;</span><span class="n">String</span><span class="p">&gt;)</span> <span class="p">{</span>
-    <span class="k">val</span> <span class="py">classLoader</span> <span class="p">=</span> <span class="n">CustomClassLoader</span><span class="p">()</span>
-    <span class="k">val</span> <span class="py">clazz</span> <span class="p">=</span> <span class="n">classLoader</span><span class="p">.</span><span class="n">loadClass</span><span class="p">(</span><span class="s">&#34;com.zac4j.system.util.Utils&#34;</span><span class="p">)</span>
-    <span class="n">println</span><span class="p">(</span><span class="s">&#34;custom classloader:${clazz.canonicalName}&#34;</span><span class="p">)</span>
-  <span class="p">}</span>
-<span class="p">}</span>
+<span style="color:#75715e">/**
+</span><span style="color:#75715e"> * Custom ClassLoader sample
+</span><span style="color:#75715e"> *
+</span><span style="color:#75715e"> * @author: zac
+</span><span style="color:#75715e"> * @date: 2020/7/19
+</span><span style="color:#75715e"> */</span>
+<span style="color:#66d9ef">internal</span> <span style="color:#66d9ef">object</span> <span style="color:#a6e22e">Test</span> {
+  @JvmStatic <span style="color:#66d9ef">fun</span> <span style="color:#a6e22e">main</span>(args: Array&lt;String&gt;) {
+    <span style="color:#66d9ef">val</span> classLoader = CustomClassLoader()
+    <span style="color:#66d9ef">val</span> clazz = classLoader.loadClass(<span style="color:#e6db74">&#34;com.zac4j.system.util.Utils&#34;</span>)
+    println(<span style="color:#e6db74">&#34;custom classloader:${clazz.canonicalName}&#34;</span>)
+  }
+}
 
-<span class="cm">/**
-</span><span class="cm"> * 自定义 ClassLoader，加载指定类文件。
-</span><span class="cm"> */</span>
-<span class="k">class</span> <span class="nc">CustomClassLoader</span> <span class="p">:</span> <span class="n">ClassLoader</span><span class="p">()</span> <span class="p">{</span>
-  <span class="k">override</span> <span class="k">fun</span> <span class="nf">findClass</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="n">String</span><span class="p">):</span> <span class="n">Class</span><span class="p">&lt;*&gt;</span> <span class="p">{</span>
-    <span class="k">val</span> <span class="py">b</span> <span class="p">=</span> <span class="n">loadClassFromFile</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">defineClass</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="n">b</span><span class="p">.</span><span class="n">size</span><span class="p">)</span>
-  <span class="p">}</span>
+<span style="color:#75715e">/**
+</span><span style="color:#75715e"> * 自定义 ClassLoader，加载指定类文件。
+</span><span style="color:#75715e"> */</span>
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">CustomClassLoader</span> : ClassLoader() {
+  <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">fun</span> <span style="color:#a6e22e">findClass</span>(name: String): Class&lt;*&gt; {
+    <span style="color:#66d9ef">val</span> b = loadClassFromFile(name)
+    <span style="color:#66d9ef">return</span> defineClass(name, b, <span style="color:#ae81ff">0</span>, b.size)
+  }
 
-  <span class="cm">/**
-</span><span class="cm">   * 根据类名加载类文件
-</span><span class="cm">   */</span>
-  <span class="k">private</span> <span class="k">fun</span> <span class="nf">loadClassFromFile</span><span class="p">(</span><span class="n">filename</span><span class="p">:</span> <span class="n">String</span><span class="p">):</span> <span class="n">ByteArray</span> <span class="p">{</span>
-    <span class="k">val</span> <span class="py">inStream</span> <span class="p">=</span> <span class="n">javaClass</span><span class="p">.</span><span class="n">classLoader</span><span class="o">?.</span><span class="n">getResourceAsStream</span><span class="p">(</span>
-        <span class="n">filename</span><span class="p">.</span><span class="n">replace</span><span class="p">(</span><span class="sc">&#39;.&#39;</span><span class="p">,</span> <span class="n">File</span><span class="p">.</span><span class="n">separatorChar</span><span class="p">)</span> <span class="p">+</span> <span class="s">&#34;.class&#34;</span>
-    <span class="p">)</span> <span class="o">?:</span> <span class="k">return</span> <span class="n">byteArrayOf</span><span class="p">()</span>
-    <span class="k">val</span> <span class="py">outStream</span> <span class="p">=</span> <span class="n">ByteArrayOutputStream</span><span class="p">()</span>
-    <span class="k">try</span> <span class="p">{</span>
-      <span class="k">while</span> <span class="p">(</span><span class="n">inStream</span><span class="p">.</span><span class="n">read</span><span class="p">()</span> <span class="p">!=</span> <span class="p">-</span><span class="m">1</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">val</span> <span class="py">nextVal</span> <span class="p">=</span> <span class="n">inStream</span><span class="p">.</span><span class="n">read</span><span class="p">()</span>
-        <span class="n">outStream</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">nextVal</span><span class="p">)</span>
-      <span class="p">}</span>
-    <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="n">e</span><span class="p">:</span> <span class="n">IOException</span><span class="p">)</span> <span class="p">{</span>
+  <span style="color:#75715e">/**
+</span><span style="color:#75715e">   * 根据类名加载类文件
+</span><span style="color:#75715e">   */</span>
+  <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">fun</span> <span style="color:#a6e22e">loadClassFromFile</span>(filename: String): ByteArray {
+    <span style="color:#66d9ef">val</span> inStream = javaClass.classLoader<span style="color:#f92672">?.</span>getResourceAsStream(
+        filename.replace(<span style="color:#e6db74">&#39;.&#39;</span>, File.separatorChar) + <span style="color:#e6db74">&#34;.class&#34;</span>
+    ) <span style="color:#f92672">?:</span> <span style="color:#66d9ef">return</span> byteArrayOf()
+    <span style="color:#66d9ef">val</span> outStream = ByteArrayOutputStream()
+    <span style="color:#66d9ef">try</span> {
+      <span style="color:#66d9ef">while</span> (inStream.read() != -<span style="color:#ae81ff">1</span>) {
+        <span style="color:#66d9ef">val</span> nextVal = inStream.read()
+        outStream.write(nextVal)
+      }
+    } <span style="color:#66d9ef">catch</span> (e: IOException) {
 
-    <span class="p">}</span>
-    <span class="k">return</span> <span class="n">outStream</span><span class="p">.</span><span class="n">toByteArray</span><span class="p">()</span>
-  <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></td></tr></table>
-</div>
-</div><h3 id="responsibility">Responsibility</h3>
+    }
+    <span style="color:#66d9ef">return</span> outStream.toByteArray()
+  }
+}
+</code></pre></div><h3 id="responsibility">Responsibility</h3>
 <p>Class Loader 系统主要有<a href="https://docs.oracle.com/javase/specs/jvms/se6/html/ConstantPool.doc.html#67960">3种功能</a>：</p>
 <ul>
 <li>Loading</li>
@@ -408,97 +268,87 @@
 <p>JVM Run-Time Data Areas: <a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-2.html#jvms-2.5.4">https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-2.html#jvms-2.5.4</a>
 JVM architecture: <a href="https://www.geeksforgeeks.org/jvm-works-jvm-architecture/">https://www.geeksforgeeks.org/jvm-works-jvm-architecture/</a>
 Class Loader: <a href="https://www.baeldung.com/java-classloaders">https://www.baeldung.com/java-classloaders</a></p>
-
-    </div>
-
-    <div class="post-copyright">
-  <p class="copyright-item">
-    <span class="item-title">文章作者</span>
-    <span class="item-content">Zac</span>
-  </p>
-  <p class="copyright-item">
-    <span class="item-title">上次更新</span>
-    <span class="item-content">
-        17170-07-17
-        
-    </span>
-  </p>
-  
-  
+        </section>
+        <footer>
+            <a class="permalink u-url" href="https://zacash.cn/post/jvm-arch-in-a-nutshell/">🔗</a>
+            
+            <hr class="post-underline">
+            <p class="post-tag">Tags for this post:
+                
+                <a href="https://zacash.cn/tags/jvm" class="post-tag p-category">jvm</a>
+                
+                <a href="https://zacash.cn/tags/classloader" class="post-tag p-category">classloader</a>
+                
+                <a href="https://zacash.cn/tags/jmm" class="post-tag p-category">jmm</a>
+                
+            </p>
+            
+        </footer>
+    </article>
 </div>
-<footer class="post-footer">
-      
-      <nav class="post-nav">
-        <a class="prev" href="/post/websocket-and-long-polling/">
-            <i class="iconfont icon-left"></i>
-            <span class="prev-text nav-default">WebSocket 和长轮询</span>
-            <span class="prev-text nav-mobile">上一篇</span>
-          </a>
-        <a class="next" href="/post/jvm-mechanics/">
-            <span class="next-text nav-default">JVM Mechanics</span>
-            <span class="next-text nav-mobile">下一篇</span>
-            <i class="iconfont icon-right"></i>
-          </a>
-      </nav>
-    </footer>
-  </article>
-        </div>
-        
 
-  
-
-  
-
+    
+    <div class="h-card">
+      <img class="u-photo" src="https://zacash.cn/images/android-os.png" />
+      <div class="card-content">
+        <h2 class="card-name"><a class="p-name u-url" href="https://zacash.cn" rel="me">Zac</a></h2>
+        <p class="card-subhead">
+          <span class="p-locality">Shanghai</span>,
+          <span class="p-country-name">China</span><br />
+          <a class="u-email" href="mailto:zac_ju@163.com">Email me</a>
+        </p>
       </div>
-    </main>
-
-    <footer id="footer" class="footer">
-      <div class="social-links">
-      <a href="zac@zacash.com" class="iconfont icon-email" title="email"></a>
-  <a href="https://zacash.cn/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
-</div>
-
-<div class="copyright">
-  <span class="power-by">
-    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
-  </span>
-  <span class="division">|</span>
-  <span class="theme-info">
-    主题 - 
-    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
-  </span>
-
-  
-
-  <span class="copyright-year">
-    &copy; 
-    2020
-    <span class="heart">
-      <i class="iconfont icon-heart"></i>
-    </span>
-    <span class="author">Zac</span>
-  </span>
-</div>
-    </footer>
-
-    <div class="back-to-top" id="back-to-top">
-      <i class="iconfont icon-up"></i>
+      <p class="p-note">🐭</p>
     </div>
+    
+    <div id="footer">
+      
+      <nav id="article-skip">
+        <div class="next">
+          
+          <a alt="Newer article" href="https://zacash.cn/post/websocket-and-long-polling/">&larr; Newer</a>
+          
+        </div>
+        <div class="top">
+          <a alt="Top of page" href="#">Top</a>
+        </div>
+        <div class="prev">
+          
+          <a alt="Older article" href="https://zacash.cn/post/jvm-mechanics/">Older &rarr;</a>
+          
+        </div>
+      </nav>
+      
+      <aside id="social">
+  <div id="social-icons">
+    
+    
+    
+    
+    <div class="icon-24x24">
+      <a class="glyph" alt="GitHub profile" href="https://github.com/zac4j"><img src=https://zacash.cn/icons/github.svg height="24px" width="24px"></a>
+    </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
   </div>
-  
-  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+</aside>
 
-
-
-<script type="text/javascript" src="/js/main.min.d7b7ada643c9c1a983026e177f141f7363b4640d619caf01d8831a6718cd44ea.js"></script>
-
-
-
-
-
-
+      
+      <p class="copyright">
+          Copyright © 2020, Copyright Zac
+      </p>
+      
+    </div>
 
 
 </body>

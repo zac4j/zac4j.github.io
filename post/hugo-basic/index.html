@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="utf-8">
+    
+    <title>Hugo Basic | Zac&#39;s Blog</title>
+    <meta name="description" content="Hugo 的简单用法">
+    <meta name="author" content="">
+    
+    <link rel="apple-touch-icon" sizes="180x180" href=https://zacash.cn/apple-touch-icon.png>
+    <link rel="icon" type="image/png" sizes="32x32" href=https://zacash.cn/favicon-32x32.png>
+    <link rel="icon" type="image/png" sizes="16x16" href=https://zacash.cn/favicon-16x16.png>
+    <link rel="manifest" href=https://zacash.cn/site.webmanifest>
+    <link rel="mask-icon" href=https://zacash.cn/safari-pinned-tab.svg color="#00416a">
+    <meta name="msapplication-TileColor" content="#00aba9">
+    <meta name="theme-color" content="#ffffff">
+    
+    <link rel="me" href="mailto:zac_ju@163.com">
+    <link rel="me" href="https://github.com/zac4j">
+    
+    
+    
+    <link rel="authorization_endpoint" href=https://indieauth.com/auth />
+    <link rel="token_endpoint" href=https://tokens.indieauth.com/token />
+    
+    
+    
+    
+    
+    <link rel="stylesheet" href=https://zacash.cn/css/fonts.css />
+    <link rel="stylesheet" href=https://zacash.cn/css/style.css />
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+    <div id="sitelogo">
+        <a class="glyph" alt="Home" href="https://zacash.cn"><img src=https://zacash.cn/images/site-logo.svg alt="Site Logo" height="64px" width="64px"></a>
+    </div>
+    <header>
+        <nav>
+    
+    <div id="page-nav">
+        <div class="page-nav-item">
+            <a href="https://zacash.cn">Home</a>
+        </div>
+        
+    </div>
+</nav>
+        
+    </header>
+
+
+
+
+<div id="content">
+    <article class="h-entry">
+        <header>
+            <h1 class="post-title p-name">Hugo Basic</h1>
+            
+            <p class="post-date">Posted on
+                <time class="dt-published" datetime="2020-04-04T09:25:04&#43;08:00">
+                    4 April, 2020 at 09:25 CST
+                </time>  by <a href="https://zacash.cn" class="p-author h-card"
+                    rel="author">Zac</a>
+            </p>
+            
+            
+            <p class="post-tag">Category:
+                
+                <a href="https://zacash.cn/categories/hugo" class="post-tag p-category">hugo</a>
+                
+            </p>
+            <hr class="post-underline">
+            
+        </header>
+        <section class="content e-content">
+            <h2 id="add-new-content">Add new content</h2>
+<p><code>hugo new posts/article-name.md</code></p>
+<h2 id="article-meta-info">Article meta info</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-md" data-lang="md">---
+title: &#34;New Article&#34;
+date: 2020-04-04T09:25:04+08:00
+description: &#34;Hugo 的简单用法&#34;
+tags: [&#34;hugo&#34;, &#34;pages&#34;]
+categories: [&#34;hugo&#34;]
+draft: true
+---
+</code></pre></div><h2 id="start-server-with-drafts-enabled">Start server with drafts enabled</h2>
+<p><code>hugo server -D</code></p>
+<h2 id="customize-the-theme">Customize the theme</h2>
+<p>Open up <code>config.toml</code> in a text editor:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">baseURL = <span style="color:#e6db74">&#34;https://example.org/&#34;</span>
+languageCode = <span style="color:#e6db74">&#34;en-us&#34;</span>
+title = <span style="color:#e6db74">&#34;My New Hugo Site&#34;</span>
+theme = <span style="color:#e6db74">&#34;ananke&#34;</span>
+</code></pre></div><h2 id="build-static-pages">Build static pages</h2>
+<p><code>hugo -D</code> output will be in <code>./public/</code> directory by default (<code>-d/--destination</code> flag to change it, or set <code>publishdir</code> in the config file)</p>
+
+        </section>
+        <footer>
+            <a class="permalink u-url" href="https://zacash.cn/post/hugo-basic/">🔗</a>
+            
+            <hr class="post-underline">
+            <p class="post-tag">Tags for this post:
+                
+                <a href="https://zacash.cn/tags/hugo" class="post-tag p-category">hugo</a>
+                
+                <a href="https://zacash.cn/tags/pages" class="post-tag p-category">pages</a>
+                
+            </p>
+            
+        </footer>
+    </article>
+</div>
+
+    
+    <div class="h-card">
+      <img class="u-photo" src="https://zacash.cn/images/android-os.png" />
+      <div class="card-content">
+        <h2 class="card-name"><a class="p-name u-url" href="https://zacash.cn" rel="me">Zac</a></h2>
+        <p class="card-subhead">
+          <span class="p-locality">Shanghai</span>,
+          <span class="p-country-name">China</span><br />
+          <a class="u-email" href="mailto:zac_ju@163.com">Email me</a>
+        </p>
+      </div>
+      <p class="p-note">🐭</p>
+    </div>
+    
+    <div id="footer">
+      
+      <nav id="article-skip">
+        <div class="next">
+          
+          <a alt="Newer article" href="https://zacash.cn/post/handler-in-code/">&larr; Newer</a>
+          
+        </div>
+        <div class="top">
+          <a alt="Top of page" href="#">Top</a>
+        </div>
+        <div class="prev">
+          
+          <a alt="Older article" href="https://zacash.cn/post/check-state-loss/">Older &rarr;</a>
+          
+        </div>
+      </nav>
+      
+      <aside id="social">
+  <div id="social-icons">
+    
+    
+    
+    
+    <div class="icon-24x24">
+      <a class="glyph" alt="GitHub profile" href="https://github.com/zac4j"><img src=https://zacash.cn/icons/github.svg height="24px" width="24px"></a>
+    </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+  </div>
+</aside>
+
+      
+      <p class="copyright">
+          Copyright © 2020, Copyright Zac
+      </p>
+      
+    </div>
+
+
+</body>
+</html>

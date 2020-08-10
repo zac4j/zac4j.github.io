@@ -1,15 +1,61 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Tags on Zac</title>
+    <title>Tags on Zac&#39;s Blog</title>
     <link>https://zacash.cn/tags/</link>
-    <description>Recent content in Tags on Zac</description>
+    <description>Recent content in Tags on Zac&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>zh-cn</language>
-    <lastBuildDate>Fri, 19 Jun 2020 22:03:29 +0800</lastBuildDate>
+    <language>en-US</language>
+    <copyright>Copyright © 2020, Copyright Zac</copyright>
+    <lastBuildDate>Mon, 10 Aug 2020 09:00:00 -0400</lastBuildDate>
     
 	<atom:link href="https://zacash.cn/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>indieweb</title>
+      <link>https://zacash.cn/tags/indieweb/</link>
+      <pubDate>Mon, 10 Aug 2020 09:00:00 -0400</pubDate>
+      
+      <guid>https://zacash.cn/tags/indieweb/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>typography</title>
+      <link>https://zacash.cn/tags/typography/</link>
+      <pubDate>Mon, 10 Aug 2020 09:00:00 -0400</pubDate>
+      
+      <guid>https://zacash.cn/tags/typography/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>high-order function</title>
+      <link>https://zacash.cn/tags/high-order-function/</link>
+      <pubDate>Sun, 09 Aug 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://zacash.cn/tags/high-order-function/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>lambda</title>
+      <link>https://zacash.cn/tags/lambda/</link>
+      <pubDate>Sun, 09 Aug 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://zacash.cn/tags/lambda/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>hybrid</title>
+      <link>https://zacash.cn/tags/hybrid/</link>
+      <pubDate>Sat, 04 Jul 2020 15:45:14 +0800</pubDate>
+      
+      <guid>https://zacash.cn/tags/hybrid/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>kotlin</title>

@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="utf-8">
+    
+    <title>Use Hilt in Android | Zac&#39;s Blog</title>
+    <meta name="description" content="Activity Hilt">
+    <meta name="author" content="">
+    
+    <link rel="apple-touch-icon" sizes="180x180" href=https://zacash.cn/apple-touch-icon.png>
+    <link rel="icon" type="image/png" sizes="32x32" href=https://zacash.cn/favicon-32x32.png>
+    <link rel="icon" type="image/png" sizes="16x16" href=https://zacash.cn/favicon-16x16.png>
+    <link rel="manifest" href=https://zacash.cn/site.webmanifest>
+    <link rel="mask-icon" href=https://zacash.cn/safari-pinned-tab.svg color="#00416a">
+    <meta name="msapplication-TileColor" content="#00aba9">
+    <meta name="theme-color" content="#ffffff">
+    
+    <link rel="me" href="mailto:zac_ju@163.com">
+    <link rel="me" href="https://github.com/zac4j">
+    
+    
+    
+    <link rel="authorization_endpoint" href=https://indieauth.com/auth />
+    <link rel="token_endpoint" href=https://tokens.indieauth.com/token />
+    
+    
+    
+    
+    
+    <link rel="stylesheet" href=https://zacash.cn/css/fonts.css />
+    <link rel="stylesheet" href=https://zacash.cn/css/style.css />
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+    <div id="sitelogo">
+        <a class="glyph" alt="Home" href="https://zacash.cn"><img src=https://zacash.cn/images/site-logo.svg alt="Site Logo" height="64px" width="64px"></a>
+    </div>
+    <header>
+        <nav>
+    
+    <div id="page-nav">
+        <div class="page-nav-item">
+            <a href="https://zacash.cn">Home</a>
+        </div>
+        
+    </div>
+</nav>
+        
+    </header>
+
+
+
+
+<div id="content">
+    <article class="h-entry">
+        <header>
+            <h1 class="post-title p-name">Use Hilt in Android</h1>
+            
+            <p class="post-date">Posted on
+                <time class="dt-published" datetime="2020-08-06T00:00:00Z">
+                    6 August, 2020 at 00:00 UTC
+                </time>  by <a href="https://zacash.cn" class="p-author h-card"
+                    rel="author">Zac</a>
+            </p>
+            
+            
+            <p class="post-tag">Category:
+                
+                <a href="https://zacash.cn/categories/hilt" class="post-tag p-category">hilt</a>
+                
+                <a href="https://zacash.cn/categories/dagger" class="post-tag p-category">dagger</a>
+                
+                <a href="https://zacash.cn/categories/di" class="post-tag p-category">di</a>
+                
+            </p>
+            <hr class="post-underline">
+            
+        </header>
+        <section class="content e-content">
+            <blockquote>
+<p>If you want to use dagger in  your project, you may have 2 or 3 different sources, different samples, different blog posts. All of them use a different set-up, and all of them use Dagger in a different way, so it&rsquo;s very difficult to understand all the topics and relate them together. So that&rsquo;s why Google create a common guidance, a common ground.</p>
+</blockquote>
+<h2 id="hilt-中一些注解">Hilt 中一些注解</h2>
+<h3 id="container">container</h3>
+<p>A <em>container</em> is a class which is in charge of providing dependencies in your codebase and knows how to create instances of other types of your app. It manages the graph of dependencies required to provide those instances by creating them and managing their lifecycle.</p>
+<p><em>container</em> 是一个类，负责在代码中提供依赖关系，并且知道如何创建其他类型的 App 实例。它通过创建依赖所需的实例并管理其生命周期来控制依赖关系图。</p>
+<p>A container exposes methods to get instances of the types it provides. Those methods can always return a different instance or the same instance. If the method always provides the same instance, we say that the type is <em>scoped</em> to the container.</p>
+<p><em>container</em> 暴露提供这些实例的方法。这些方法始终可以返回不同或相同的实例。如果该方法始终提供相同的实例，则可以说这种类型属于 <em>container</em> 的<em>范围</em>。</p>
+<h3 id="hiltandroidapp">@HiltAndroidApp</h3>
+<p>为了添加一个依附 app 生命周期的 <em>container</em>，我们需要在 <strong>Application</strong> 类上添加 <code>@HiltAndroidApp</code> 注解：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-kotlin" data-lang="kotlin">@HiltAndroidApp
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">App</span>:Application() {
+    ...
+}
+</code></pre></div><p><code>@HiltAndroidApp</code> 会触发 Hilt 生成 App 所使用的依赖注入的基类，<em>application container</em> 是 app 的父容器，这意味着别的 <em>containers</em> 可以访问它提供的依赖。</p>
+        </section>
+        <footer>
+            <a class="permalink u-url" href="https://zacash.cn/post/use-hilt-in-android/">🔗</a>
+            
+            <hr class="post-underline">
+            <p class="post-tag">Tags for this post:
+                
+                <a href="https://zacash.cn/tags/hilt" class="post-tag p-category">hilt</a>
+                
+                <a href="https://zacash.cn/tags/dagger" class="post-tag p-category">dagger</a>
+                
+                <a href="https://zacash.cn/tags/di" class="post-tag p-category">di</a>
+                
+            </p>
+            
+        </footer>
+    </article>
+</div>
+
+    
+    <div class="h-card">
+      <img class="u-photo" src="https://zacash.cn/images/android-os.png" />
+      <div class="card-content">
+        <h2 class="card-name"><a class="p-name u-url" href="https://zacash.cn" rel="me">Zac</a></h2>
+        <p class="card-subhead">
+          <span class="p-locality">Shanghai</span>,
+          <span class="p-country-name">China</span><br />
+          <a class="u-email" href="mailto:zac_ju@163.com">Email me</a>
+        </p>
+      </div>
+      <p class="p-note">🐭</p>
+    </div>
+    
+    <div id="footer">
+      
+      <nav id="article-skip">
+        <div class="next">
+          
+          <a alt="Newer article" href="https://zacash.cn/post/intro-to-compose/">&larr; Newer</a>
+          
+        </div>
+        <div class="top">
+          <a alt="Top of page" href="#">Top</a>
+        </div>
+        <div class="prev">
+          
+          <a alt="Older article" href="https://zacash.cn/post/threads-and-locks/">Older &rarr;</a>
+          
+        </div>
+      </nav>
+      
+      <aside id="social">
+  <div id="social-icons">
+    
+    
+    
+    
+    <div class="icon-24x24">
+      <a class="glyph" alt="GitHub profile" href="https://github.com/zac4j"><img src=https://zacash.cn/icons/github.svg height="24px" width="24px"></a>
+    </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+  </div>
+</aside>
+
+      
+      <p class="copyright">
+          Copyright © 2020, Copyright Zac
+      </p>
+      
+    </div>
+
+
+</body>
+</html>

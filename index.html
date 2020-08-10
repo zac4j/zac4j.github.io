@@ -1,281 +1,382 @@
+
 <!DOCTYPE html>
-<html lang="zh-cn">
+<html lang="en-US">
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>Zac</title>
-  <meta name="renderer" content="webkit" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
-
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
-
-<meta name="theme-color" content="#f8f5ec" />
-<meta name="msapplication-navbutton-color" content="#f8f5ec">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
-
-
-<meta name="author" content="Zac" /><meta name="description" content="Android developer blog." /><meta name="keywords" content="Android, developer, programming" />
-
-
-
-
-
-
-<meta name="generator" content="Hugo 0.68.1 with theme even" />
-
-
-<link rel="canonical" href="https://zacash.cn/" />
-  <link href="https://zacash.cn/index.xml" rel="alternate" type="application/rss+xml" title="Zac" />
-  <link href="https://zacash.cn/index.xml" rel="feed" type="application/rss+xml" title="Zac" />
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-<link rel="manifest" href="/manifest.json">
-<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
-
-
-
-<link href="/sass/main.min.8c3cbcb0324c2bb4875ceccba4007cbad4b4ac8377f33af9953c3e7684534a50.css" rel="stylesheet">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
-
-
-<meta property="og:title" content="Zac" />
-<meta property="og:description" content="Android developer blog." />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://zacash.cn/" />
-<meta property="og:updated_time" content="2020-07-04T15:45:14+08:00" />
-<meta itemprop="name" content="Zac">
-<meta itemprop="description" content="Android developer blog."><meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Zac"/>
-<meta name="twitter:description" content="Android developer blog."/>
-
-<!--[if lte IE 9]>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
-<![endif]-->
-
-<!--[if lt IE 9]>
-  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
-<![endif]-->
-
+	<meta name="generator" content="Hugo 0.68.1" />
+    <meta charset="utf-8">
+    
+    <title>Zac&#39;s Blog | Zac&#39;s Blog</title>
+    <meta name="description" content="Android developer blog">
+    <meta name="author" content="">
+    
+    <link rel="apple-touch-icon" sizes="180x180" href=https://zacash.cn/apple-touch-icon.png>
+    <link rel="icon" type="image/png" sizes="32x32" href=https://zacash.cn/favicon-32x32.png>
+    <link rel="icon" type="image/png" sizes="16x16" href=https://zacash.cn/favicon-16x16.png>
+    <link rel="manifest" href=https://zacash.cn/site.webmanifest>
+    <link rel="mask-icon" href=https://zacash.cn/safari-pinned-tab.svg color="#00416a">
+    <meta name="msapplication-TileColor" content="#00aba9">
+    <meta name="theme-color" content="#ffffff">
+    
+    <link rel="me" href="mailto:zac_ju@163.com">
+    <link rel="me" href="https://github.com/zac4j">
+    
+    
+    
+    <link rel="authorization_endpoint" href=https://indieauth.com/auth />
+    <link rel="token_endpoint" href=https://tokens.indieauth.com/token />
+    
+    
+    
+    
+    
+    <link rel="stylesheet" href=https://zacash.cn/css/fonts.css />
+    <link rel="stylesheet" href=https://zacash.cn/css/style.css />
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
+
 <body>
-  <div id="mobile-navbar" class="mobile-navbar">
-  <div class="mobile-header-logo">
-    <a href="/" class="logo">Zac</a>
-  </div>
-  <div class="mobile-navbar-icon">
-    <span></span>
-    <span></span>
-    <span></span>
-  </div>
-</div>
-<nav id="mobile-menu" class="mobile-menu slideout-menu">
-  <ul class="mobile-menu-list">
-    <a href="/">
-        <li class="mobile-menu-item">Home</li>
-      </a><a href="/post/">
-        <li class="mobile-menu-item">Archives</li>
-      </a><a href="/tags/">
-        <li class="mobile-menu-item">Tags</li>
-      </a><a href="/categories/">
-        <li class="mobile-menu-item">Categories</li>
-      </a>
-  </ul>
-</nav>
-  <div class="container" id="mobile-panel">
-    <header id="header" class="header">
-        <div class="logo-wrapper">
-  <a href="/" class="logo">Zac</a>
-</div>
-
-<nav class="site-navbar">
-  <ul id="menu" class="menu">
-    <li class="menu-item">
-        <a class="menu-item-link" href="/">Home</a>
-      </li><li class="menu-item">
-        <a class="menu-item-link" href="/post/">Archives</a>
-      </li><li class="menu-item">
-        <a class="menu-item-link" href="/tags/">Tags</a>
-      </li><li class="menu-item">
-        <a class="menu-item-link" href="/categories/">Categories</a>
-      </li>
-  </ul>
-</nav>
-    </header>
-
-    <main id="main" class="main">
-      <div class="content-wrapper">
-        <div id="content" class="content">
-          <section id="posts" class="posts">
-    <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/intro-to-hybrid-app/">Intro to Hybrid App</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 4040-07-04 </span>
-      
-        <span class="more-meta"> 约 2107 字 </span>
-        <span class="more-meta"> 预计阅读 5 分钟 </span>
+    <div id="sitelogo">
+        <a class="glyph" alt="Home" href="https://zacash.cn"><img src=https://zacash.cn/images/site-logo.svg alt="Site Logo" height="64px" width="64px"></a>
     </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      Hybrid App 的几种方案 PhoneGap/Cordova WebView 作为用户界面，以 Javascript 作为基本逻辑，以及和中间件通信，再由中间件访问底层 API 的方式，进行 App 开发。 React Native/Weex 使用前端技术开发，通过 JSBridge 将 Javascript
-    </div>
-    <div class="read-more">
-      <a href="/post/intro-to-hybrid-app/" class="read-more-link">阅读更多</a>
-    </div>
-  </div>
-</article>
-
-    <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/intro-to-service/">Intro to Service</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 4040-07-04 </span>
-      
-        <span class="more-meta"> 约 2840 字 </span>
-        <span class="more-meta"> 预计阅读 6 分钟 </span>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      查看进程基本信息 使用 adb shell ps|grep com.tencent.mobileqq 可以查看 QQ 应用进程相关的基本信息 1 2 3 4 5 Zac:tivi Zac$ adb shell ps | grep com.tencent.mobileqq # curr_user pid process name u0_a163 6779 669 1638852 27152 0 0 S com.tencent.mobileqq:MSF u0_a163 22001 669 1915536 224004 0 0 S com.tencent.mobileqq u0_a163 27829 669 1670960
-    </div>
-    <div class="read-more">
-      <a href="/post/intro-to-service/" class="read-more-link">阅读更多</a>
-    </div>
-  </div>
-</article>
-
-    <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/java-basic/">Java Basic</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 3030-07-03 </span>
-      
-        <span class="more-meta"> 约 2717 字 </span>
-        <span class="more-meta"> 预计阅读 6 分钟 </span>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      🌟答案的组织策略：知道是什么，知道为什么，知道怎么用 0.JDK 和 JRE 有什么区别？ JDK 包含 JRE，同时还包含编译 Java 源码的编译器 javac，还包含了很多 Java 程
-    </div>
-    <div class="read-more">
-      <a href="/post/java-basic/" class="read-more-link">阅读更多</a>
-    </div>
-  </div>
-</article>
-
-    <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/top-10-kotlin-questions/">Top 10 Kotlin Questions in StackOverflow</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 19190-06-19 </span>
-      <div class="post-category">
-          <a href="/categories/kotlin/"> kotlin </a>
-          </div>
-        <span class="more-meta"> 约 1091 字 </span>
-        <span class="more-meta"> 预计阅读 3 分钟 </span>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      IntArray vs. Array&lt;Int&gt; In java code IntArray: int[] Array&lt;Int&gt;: Integer[] Create method: IntArray: 1 val intArray : IntArray = intArrayOf(1, 2, 3, 4, 5) Array&lt;Int&gt;: 1 val arrayOfInts : Array&lt;Int&gt; = arrayOf(1, 2, 3, 4, 5) Iterable vs. Sequence Usage Iterable: 1 2 3 4 getPeople() .filter { it.age &gt;= 18 } .map { it.name } .take(5) Sequence: start with asSequence() and end with toList() or toSet()&hellip; 1 2 3
-    </div>
-    <div class="read-more">
-      <a href="/post/top-10-kotlin-questions/" class="read-more-link">阅读更多</a>
-    </div>
-  </div>
-</article>
-
-    <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/when-to-use-lazy-or-lateinit/"></a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 1010-01-01 </span>
-      
-        <span class="more-meta"> 约 0 字 </span>
-        <span class="more-meta"> 预计阅读 0 分钟 </span>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      
-    </div>
-    <div class="read-more">
-      <a href="/post/when-to-use-lazy-or-lateinit/" class="read-more-link">阅读更多</a>
-    </div>
-  </div>
-</article>
-
-    </section>
-  
-  <nav class="pagination">
+    <header>
+        <nav>
     
-    
-  </nav>
+    <div id="page-nav">
+        <div class="page-nav-item">
+            <a href="https://zacash.cn">Home</a>
         </div>
         
+    </div>
+</nav>
+        
+        <div id="site-header">
+            <h1>Zac&#39;s Blog</h1>
+            
+            <p>
+              Learn to coding, learn to thinking
+            </p>
+            
+        </div>
+        
+    </header>
+
+
+
+<div id="content">
+
+
+    <article>
+      <header>
+        
+        <h2 class="list-title"><a href="https://zacash.cn/post/introducing-indigo/">Introducing Indigo</a></h2>
+        
+        <p class="list-post-date">
+          <time datetime="2020-08-10T09:00:00-04:00">
+            10 August, 2020 at 09:00 -0400
+          </time>
+        </p>
+      </header>
+      <div>
+        Indigo is a lightweight theme for Hugo with IndieWeb features baked in. It&rsquo;s great for longer-form blogging, placing its focus on distraction-free reading and beautiful typefaces.
 
       </div>
-    </main>
+      
+      <p><a class="read-more" href="https://zacash.cn/post/introducing-indigo/">Read more &rarr;</a></p>
+      
+    </article>
 
-    <footer id="footer" class="footer">
-      <div class="social-links">
-      <a href="zac@zacash.com" class="iconfont icon-email" title="email"></a>
-  <a href="https://zacash.cn/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
-</div>
 
-<div class="copyright">
-  <span class="power-by">
-    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
-  </span>
-  <span class="division">|</span>
-  <span class="theme-info">
-    主题 - 
-    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
-  </span>
 
+    <article>
+      <header>
+        
+        <h2 class="list-title"><a href="https://zacash.cn/post/lambdas-and-high-order-functions/">Lambdas and High-order Functions</a></h2>
+        
+        <p class="list-post-date">
+          <time datetime="2020-08-09T00:00:00Z">
+            9 August, 2020 at 00:00 UTC
+          </time>
+        </p>
+      </header>
+      <div>
+        除了传统命名的函数外，Kotlin 还支持 lambdas. lambda 是组成函数的表达式，一个没有名称的函数。lambda 表达式可以作为数据传递。在其他语言中，lambda 被称为 匿名函数（anonymous function），函数字面量（function literals） 或类似名称。
+
+      </div>
+      
+      <p><a class="read-more" href="https://zacash.cn/post/lambdas-and-high-order-functions/">Read more &rarr;</a></p>
+      
+    </article>
+
+
+
+    <article>
+      <header>
+        
+        <h2 class="list-title"><a href="https://zacash.cn/post/intro-to-hybrid-app/">Intro to Hybrid App</a></h2>
+        
+        <p class="list-post-date">
+          <time datetime="2020-07-04T15:45:14&#43;08:00">
+            4 July, 2020 at 15:45 CST
+          </time>
+        </p>
+      </header>
+      <div>
+        Hybrid App 的几种方案   PhoneGap/Cordova
+WebView 作为用户界面，以 Javascript 作为基本逻辑，以及和中间件通信，再由中间件访问底层 API 的方式，进行 App 开发。
+  React Native/Weex
+使用前端技术开发，通过 JSBridge 将 Javascript 代码解析的 Virtual DOM 传递到 Native 并使用原生进行渲染。
+  Native/H5 混合开发
+在原生的架构基础上，嵌入 WebView 业务逻辑，一般有 Native 和 Web 前端开发人员组成。Native 写好基本的架构以及 API 让 Web 开发人员开发页面以及大部分渲染。
+  PhoneGap/Cordova PhoneGap 由 Apache 接管后改名为 Cordova，实际上是一个项目。Cordova 其实不应该称为 Hybrid 方案。因为，它的目标是全面使用前端技术开发移动应用，而不是前端和原生混合使用。不过，这些框架和 React Native 的目标是一致的：使用前端技术开发移动应用，提高工程效率。
+Cordova 让前端技术尽可能多的完成开发工作，只有在前端无法直接调用的原生系统功能方面提供了前端可用的接口。主流的 Cordova 项目都将业务逻辑实现在一个 WebView 中，目标是让开发者使用前端技术就能完成一个应用开发。这种做法需要一个前提——前端技术可以解决移动开发的所有需求。
+Cordova 架构图  Web App 是开发人员编写代码的地方，应用以网页的形式呈现，在一个 index.
+      </div>
+      
+      <p><a class="read-more" href="https://zacash.cn/post/intro-to-hybrid-app/">Read more &rarr;</a></p>
+      
+    </article>
+
+
+
+    <article>
+      <header>
+        
+        <h2 class="list-title"><a href="https://zacash.cn/post/intro-to-service/">Intro to Service</a></h2>
+        
+        <p class="list-post-date">
+          <time datetime="2020-07-04T11:08:11&#43;08:00">
+            4 July, 2020 at 11:08 CST
+          </time>
+        </p>
+      </header>
+      <div>
+        查看进程基本信息 使用 adb shell ps|grep com.tencent.mobileqq 可以查看 QQ 应用进程相关的基本信息
+Zac:tivi Zac$ adb shell ps | grep com.tencent.mobileqq # curr_user pid process name u0_a163 6779 669 1638852 27152 0 0 S com.tencent.mobileqq:MSF u0_a163 22001 669 1915536 224004 0 0 S com.tencent.mobileqq u0_a163 27829 669 1670960 236668 0 0 S com.tencent.mobileqq:qzone 进程的划分 为了确定在内存不足时 kill 哪些进程，Android 会依据进程中运行的组件（Activity/Service/BroadcastReceiver）和这些组件的状态，划分每个进程的重要层次结构（importance hierarchy）。这些进程按重要性排序:
+前台进程（foreground process） 前台进程是用户当前正在执行的操作所必须的进程，应用进程内的组件可能以不同形式让其处于前台：
+ Activity 处于用户正在交互状态（onResume() 方法已调用） BroadcastReceiver 正在运行（BroadcastReceiver.onReceive() 方法正在执行） Service 的回调正在执行代码（Service.onCreate(), Service.onStart(), Service.onDestroy()）  Android 系统中只有少数这样的进程，而且只有在内存太低且无法运行这些进程时，才会 kill 这些进程。
+      </div>
+      
+      <p><a class="read-more" href="https://zacash.cn/post/intro-to-service/">Read more &rarr;</a></p>
+      
+    </article>
+
+
+
+    <article>
+      <header>
+        
+        <h2 class="list-title"><a href="https://zacash.cn/post/java-basic/">Java Basic</a></h2>
+        
+        <p class="list-post-date">
+          <time datetime="2020-07-03T09:28:31&#43;08:00">
+            3 July, 2020 at 09:28 CST
+          </time>
+        </p>
+      </header>
+      <div>
+        🌟答案的组织策略：知道是什么，知道为什么，知道怎么用
+0.JDK 和 JRE 有什么区别？  JDK 包含 JRE，同时还包含编译 Java 源码的编译器 javac，还包含了很多 Java 程序调试和分析的工具。 加分项：除了 javac 还了解哪些命令行工具，它们的用途是什么？  jcmd：综合工具 jps：虚拟机进程状况工具 jinfo：虚拟机配置信息工具 jstat：虚拟机统计信息监视工具 jmap：Java 内存映像工具 jhat：虚拟机堆转储快照分析工具 jstack：Java 堆栈追踪工具   加分项jstat 用过吗，有哪些参数？  -class：监视类装载、卸载数量、总空间和类装载所耗费的时间 -gc：监视 Java 堆的状况，包括 Eden 区，两个 survior 区，老年代、永久代等的容量，已用空间、GC 时间合计等统计    1.equals 和 == 的差别？ 两者都是判断等价性，区别要从入参类型来看：
+  对于基本类型，他们是比较值是否相等
+  对于引用类型，他们是判断引用的是否为同一对象
+  考察点：equals 的概念
+  🌟实际要求：平时对源码的深挖意识即技术钻研和批判性思维
+  考察目的：
+ 基础知识的扎实程度 候选人对技术的热情    2.
+      </div>
+      
+      <p><a class="read-more" href="https://zacash.cn/post/java-basic/">Read more &rarr;</a></p>
+      
+    </article>
+
+
+
+    <article>
+      <header>
+        
+        <h2 class="list-title"><a href="https://zacash.cn/post/top-10-kotlin-questions/">Top 10 Kotlin Questions in StackOverflow</a></h2>
+        
+        <p class="list-post-date">
+          <time datetime="2020-06-19T22:03:29&#43;08:00">
+            19 June, 2020 at 22:03 CST
+          </time>
+        </p>
+      </header>
+      <div>
+        IntArray vs. Array&lt;Int&gt;   In java code
+ IntArray: int[] Array&lt;Int&gt;: Integer[]    Create method:
+ IntArray:  val intArray : IntArray = intArrayOf(1, 2, 3, 4, 5)  Array&lt;Int&gt;:  val arrayOfInts : Array&lt;Int&gt; = arrayOf(1, 2, 3, 4, 5)   Iterable vs. Sequence   Usage
+ Iterable:  getPeople() .filter { it.age &gt;= 18 } .map { it.name } .take(5)  Sequence: start with asSequence() and end with toList() or toSet()&hellip;  getPeople().
+      </div>
+      
+      <p><a class="read-more" href="https://zacash.cn/post/top-10-kotlin-questions/">Read more &rarr;</a></p>
+      
+    </article>
+
+
+
+    <article>
+      <header>
+        
+        <h2 class="list-title"><a href="https://zacash.cn/post/intro-to-build-system/">Intro to Build System</a></h2>
+        
+        <p class="list-post-date">
+          <time datetime="2020-06-05T14:49:15&#43;08:00">
+            5 June, 2020 at 14:49 CST
+          </time>
+        </p>
+      </header>
+      <div>
+        构建流程（Build process） 简单来说构建流程就是涉及一系列工具和步骤将项目转换成 Android Application Package(APK)。典型的流程如下图所示：
+图中所示有4个步骤：
+ 编译器将源码转换为 DEX 文件(Dalvik 可执行文件，包括运行在 Android 设备的字节码)，并将其他所有内容转换成编译后的资源文件。 APK Packager 将 DEX 文件和编译后的资源文件合并到一个 APK 里。 APK Packager 使用 keystore 为 APK 签名。 在生成最终的 APK 文件之前，Packager 会使用 zipalign 工具  自定义构建配置 Gradle 和 Android 插件可以帮助我们修改 build.gradle 中的这些配置：
+构建类型 Build Types 构建类型定义 Gradle 在构建(building)和打包(packaging) App 时使用的某些属性，通常针对开发周期的不同阶段(different stages of development)进行配置。比如：
+ debug 构建类型支持 debug 选项，并使用 debug key 为 APK 签名。 release 构建类型则会压缩(shrink)和混淆(obfuscate) APK，并使用 release key 为 APK 签名。  构建 App 时必须指定一个构建类型。可以参考 BuildType DSL，了解配置构建类型属性。
+      </div>
+      
+      <p><a class="read-more" href="https://zacash.cn/post/intro-to-build-system/">Read more &rarr;</a></p>
+      
+    </article>
+
+
+
+    <article>
+      <header>
+        
+        <h2 class="list-title"><a href="https://zacash.cn/post/fragment-in-viewpager/">Fragment in ViewPager</a></h2>
+        
+        <p class="list-post-date">
+          <time datetime="2020-05-25T20:55:31&#43;08:00">
+            25 May, 2020 at 20:55 CST
+          </time>
+        </p>
+      </header>
+      <div>
+        使用 ViewPager 通常我们使用 ViewPager + TabLayout 主要有这些步骤：
+ 页面的布局结构:  &lt;?xml version=&#34;1.0&#34; encoding=&#34;utf-8&#34;?&gt; &lt;androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android=&#34;http://schemas.android.com/apk/res/android&#34; xmlns:app=&#34;http://schemas.android.com/apk/res-auto&#34; xmlns:tools=&#34;http://schemas.android.com/tools&#34; android:layout_width=&#34;match_parent&#34; android:layout_height=&#34;match_parent&#34; tools:context=&#34;.MainActivity&#34; &gt; &lt;com.google.android.material.appbar.AppBarLayout android:layout_width=&#34;match_parent&#34; android:layout_height=&#34;wrap_content&#34; android:theme=&#34;@style/AppTheme.AppBarOverlay&#34; &gt; ... &lt;com.google.android.material.tabs.TabLayout android:id=&#34;@+id/tabs&#34; android:layout_width=&#34;match_parent&#34; android:layout_height=&#34;wrap_content&#34; android:background=&#34;?attr/colorPrimary&#34; /&gt; &lt;androidx.viewpager.widget.ViewPager android:id=&#34;@+id/view_pager&#34; android:layout_width=&#34;match_parent&#34; android:layout_height=&#34;match_parent&#34; app:layout_behavior=&#34;@string/appbar_scrolling_view_behavior&#34; /&gt; &lt;/com.google.android.material.appbar.AppBarLayout&gt; &lt;/androidx.coordinatorlayout.widget.CoordinatorLayout&gt;  在 PagerAdapter 中会指定我们使用的 Fragment:  class SectionsPagerAdapter(private val context: Context, fm: FragmentManager ) : FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) { override fun getItem(position: Int): Fragment { return SampleFragment.newInstance(position) } override fun getCount(): Int { return TAB_TITLES.
+      </div>
+      
+      <p><a class="read-more" href="https://zacash.cn/post/fragment-in-viewpager/">Read more &rarr;</a></p>
+      
+    </article>
+
+
+
+    <article>
+      <header>
+        
+        <h2 class="list-title"><a href="https://zacash.cn/post/git-basic/">Git Basic</a></h2>
+        
+        <p class="list-post-date">
+          <time datetime="2020-05-15T15:55:52&#43;08:00">
+            15 May, 2020 at 15:55 CST
+          </time>
+        </p>
+      </header>
+      <div>
+        Problem Solving Authentication   Clear saved account &amp; password
+Error: fatal:Authentication failed for 'remote-url'
+git config --system --unset credential.helper
+  Save account &amp; password
+git config --global credential.helper store
+  Remote   Check remote url
+git remote -v
+  Update remote url
+git remote set-url origin newRepoUrl
   
+      </div>
+      
+    </article>
 
-  <span class="copyright-year">
-    &copy; 
-    2020
-    <span class="heart">
-      <i class="iconfont icon-heart"></i>
-    </span>
-    <span class="author">Zac</span>
-  </span>
-</div>
-    </footer>
 
-    <div class="back-to-top" id="back-to-top">
-      <i class="iconfont icon-up"></i>
+
+    <article>
+      <header>
+        
+        <h2 class="list-title"><a href="https://zacash.cn/post/fragments/">Intro to Fragments</a></h2>
+        
+        <p class="list-post-date">
+          <time datetime="2020-05-07T20:30:50&#43;08:00">
+            7 May, 2020 at 20:30 CST
+          </time>
+        </p>
+      </header>
+      <div>
+        Activity 和 Fragment 生命周期的关联    Activity 状态 Fragment 生命周期方法回调 Fragment 状态     Created onAttach(), onCreate(), onCreateView(), onActivityCreated() Fragment 添加到 Activity 且视图已初始化   Started onStart() Fragment 活跃并可见   Resumed onResume() Fragment 活跃并获取焦点   Paused onPause() Fragment 暂停   Stopped onStop() Fragment 停止并不再可见   Destroyed onDestroyView(), onDestroy(), onDetach() Fragment 销毁    Fragment 重要的生命周期方法的使用  onAttach(): Fragment 在被 attach 到宿主 Activity 时回调，可以在该方法里检查宿主 Activity 是否实现了某个接口。 onCreateView(): Fragment 的 XML 布局在这个回调方法里初始化，系统调用这个方法来绘制 Fragment 的 UI。 onPause(): 可以在 Fragment 销毁前在该回调方法保存必要数据或状态。 onActivityCreated(): 在宿主 Activity 的 onCreate() 方法调用后回调该方法。可以在该方法做最终的初始化，如检索 View getView().
+      </div>
+      
+      <p><a class="read-more" href="https://zacash.cn/post/fragments/">Read more &rarr;</a></p>
+      
+    </article>
+
+<nav>
+    <div id="pagination">
+        <div class="pagination-item-spacer">&nbsp;</div>
+        
+            <div class="pagination-item-spacer">&nbsp;</div>
+        
+        <div class="pagination-item-spacer">
+            Page 1 of 2
+        </div>
+        
+            <div class="pagination-item">
+                <a alt="Older articles" href="/page/2/">Older &rarr;</a>
+            </div>
+        
+        <div class="pagination-item-spacer">&nbsp;</div>
     </div>
+</nav>
+
+</div>
+
+
+
+    
+    <div class="h-card">
+      <img class="u-photo" src="https://zacash.cn/images/android-os.png" />
+      <div class="card-content">
+        <h2 class="card-name"><a class="p-name u-url" href="https://zacash.cn" rel="me">Zac</a></h2>
+        <p class="card-subhead">
+          <span class="p-locality">Shanghai</span>,
+          <span class="p-country-name">China</span><br />
+          <a class="u-email" href="mailto:zac_ju@163.com">Email me</a>
+        </p>
+      </div>
+      <p class="p-note">🐭</p>
+    </div>
+    
+    <div id="footer">
+      
+      <aside id="social">
+  <div id="social-icons">
+    
+    
+    
+    
+    <div class="icon-24x24">
+      <a class="glyph" alt="GitHub profile" href="https://github.com/zac4j"><img src=https://zacash.cn/icons/github.svg height="24px" width="24px"></a>
+    </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
   </div>
-  
-  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+</aside>
 
-
-
-<script type="text/javascript" src="/js/main.min.d7b7ada643c9c1a983026e177f141f7363b4640d619caf01d8831a6718cd44ea.js"></script>
-
-
-
-
-
-
+      
+      <p class="copyright">
+          Copyright © 2020, Copyright Zac
+      </p>
+      
+    </div>
 
 
 </body>
