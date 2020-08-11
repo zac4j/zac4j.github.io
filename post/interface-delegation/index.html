@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="utf-8">
+    
+    <title>Interface Delegation | Zac&#39;s Blog</title>
+    <meta name="description" content="Interface delegation introduction">
+    <meta name="author" content="">
+    
+    <link rel="apple-touch-icon" sizes="180x180" href=https://zacash.cn/apple-touch-icon.png>
+    <link rel="icon" type="image/png" sizes="32x32" href=https://zacash.cn/favicon-32x32.png>
+    <link rel="icon" type="image/png" sizes="16x16" href=https://zacash.cn/favicon-16x16.png>
+    <link rel="manifest" href=https://zacash.cn/site.webmanifest>
+    <link rel="mask-icon" href=https://zacash.cn/safari-pinned-tab.svg color="#00416a">
+    <meta name="msapplication-TileColor" content="#00aba9">
+    <meta name="theme-color" content="#ffffff">
+    
+    <link rel="me" href="mailto:zac_ju@163.com">
+    <link rel="me" href="https://github.com/zac4j">
+    
+    
+    
+    <link rel="authorization_endpoint" href=https://indieauth.com/auth />
+    <link rel="token_endpoint" href=https://tokens.indieauth.com/token />
+    
+    
+    
+    
+    
+    <link rel="stylesheet" href=https://zacash.cn/css/fonts.css />
+    <link rel="stylesheet" href=https://zacash.cn/css/style.css />
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+    <div id="sitelogo">
+        <a class="glyph" alt="Home" href="https://zacash.cn"><img src=https://zacash.cn/images/site-logo.svg alt="Site Logo" height="64px" width="64px"></a>
+    </div>
+    <header>
+        <nav>
+    
+    <div id="page-nav">
+        <div class="page-nav-item">
+            <a href="https://zacash.cn">Home</a>
+        </div>
+        
+    </div>
+</nav>
+        
+    </header>
+
+
+
+
+<div id="content">
+    <article class="h-entry">
+        <header>
+            <h1 class="post-title p-name">Interface Delegation</h1>
+            
+            <p class="post-date">Posted on
+                <time class="dt-published" datetime="2020-08-11T20:42:28&#43;08:00">
+                    11 August, 2020 at 20:42 CST
+                </time>  by <a href="https://zacash.cn" class="p-author h-card"
+                    rel="author">Zac</a>
+            </p>
+            
+            
+        </header>
+        <section class="content e-content">
+            <p><a href="https://codelabs.developers.google.com/codelabs/kotlin-bootcamp-classes/#7">接口委托（Interface delegation）</a> 是一种高级技术，接口的方法由 helper 或 delegate 对象实现，然后给别的类使用。当我们在一系列不相关的类中使用接口时，这项技术会很有用：我们将需要使用的接口的函数添加到单独的 helper 类中，别的类使用 helper 类的实例来实现这个函数。</p>
+<h2 id="define-interface">Define interface</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-kotlin" data-lang="kotlin"><span style="color:#75715e">/**
+</span><span style="color:#75715e"> * Define fish action interface.
+</span><span style="color:#75715e"> */</span>
+<span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">FishAction</span> {
+    <span style="color:#66d9ef">fun</span> <span style="color:#a6e22e">eat</span>()
+}
+
+<span style="color:#75715e">/**
+</span><span style="color:#75715e"> * Define fish color interface.
+</span><span style="color:#75715e"> */</span>
+<span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">FishColor</span> {
+    <span style="color:#66d9ef">val</span> color: String
+}
+
+<span style="color:#75715e">/**
+</span><span style="color:#75715e"> * Plecostomus class implement [FishAction] and [FishColor] interface.
+</span><span style="color:#75715e"> */</span>
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Plecostomus</span>: FishAction, FishColor {
+    <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">val</span> color = <span style="color:#e6db74">&#34;gold&#34;</span>
+    <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">fun</span> <span style="color:#a6e22e">eat</span>() {
+        println(<span style="color:#e6db74">&#34;eat algae&#34;</span>)
+    }
+}
+
+<span style="color:#75715e">/**
+</span><span style="color:#75715e"> * Shark class implement [FishAction] and [FishColor] interface.
+</span><span style="color:#75715e"> */</span>
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Shark</span>: FishAction, FishColor {
+    <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">val</span> color = <span style="color:#e6db74">&#34;gray&#34;</span>
+    <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">fun</span> <span style="color:#a6e22e">eat</span>() {
+        println(<span style="color:#e6db74">&#34;eat fish&#34;</span>)
+    }
+}
+</code></pre></div><h2 id="make-a-singleton-class">Make a singleton class</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-kotlin" data-lang="kotlin"><span style="color:#75715e">/**
+</span><span style="color:#75715e"> * Creat a singleton for gold fish color.
+</span><span style="color:#75715e"> */</span>
+<span style="color:#66d9ef">object</span> <span style="color:#a6e22e">GoldColor</span>: FishColor {
+    <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">val</span> color = <span style="color:#e6db74">&#34;gold&#34;</span>
+}
+
+<span style="color:#75715e">/**
+</span><span style="color:#75715e"> * Create printing fish action.
+</span><span style="color:#75715e"> */</span>
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">PrintingFishAction</span>(<span style="color:#66d9ef">val</span> food: String): FishAction {
+    <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">fun</span> <span style="color:#a6e22e">eat</span>() {
+        println(food)
+    }
+}
+
+<span style="color:#75715e">/**
+</span><span style="color:#75715e"> * Plecostomus use interface delegation mechanism, and all overrides
+</span><span style="color:#75715e"> * are handled by interface delegation.
+</span><span style="color:#75715e"> */</span>
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Plecostomus</span>(fishColor: FishColor = GoldColor): FishAction <span style="color:#66d9ef">by</span> PrintingFishAction(<span style="color:#e6db74">&#34;eat algae&#34;</span>), FishColor <span style="color:#66d9ef">by</span> fishColor
+</code></pre></div><h2 id="summary">Summary</h2>
+<p>Interface delegation is powerful, and you should generally consider how to use it whenever you might use an abstract class in another language. It lets you use composition to plug in behaviors, instead of requiring lots of subclasses, each specialized in a different way.</p>
+<p>接口委托很有用，通常每当我们在使用另一种语言的抽象类时都应该考虑使用它。它使我们可以使用组合来插入 behavior，而不是需要大量各有特色的子类。</p>
+        </section>
+        <footer>
+            <a class="permalink u-url" href="https://zacash.cn/post/interface-delegation/">🔗</a>
+            
+            <hr class="post-underline">
+            <p class="post-tag">Tags for this post:
+                
+                <a href="https://zacash.cn/tags/interface" class="post-tag p-category">interface</a>
+                
+                <a href="https://zacash.cn/tags/delegation" class="post-tag p-category">delegation</a>
+                
+            </p>
+            
+        </footer>
+    </article>
+</div>
+
+    
+    <div class="h-card">
+      <img class="u-photo" src="https://zacash.cn/images/android-os.png" />
+      <div class="card-content">
+        <h2 class="card-name"><a class="p-name u-url" href="https://zacash.cn" rel="me">Zac</a></h2>
+        <p class="card-subhead">
+          <span class="p-locality">Shanghai</span>,
+          <span class="p-country-name">China</span><br />
+          <a class="u-email" href="mailto:zac_ju@163.com">Email me</a>
+        </p>
+      </div>
+      <p class="p-note">🐭</p>
+    </div>
+    
+    <div id="footer">
+      
+      <nav id="article-skip">
+        <div class="next">
+          
+          <p>&nbsp;</p>
+          
+        </div>
+        <div class="top">
+          <a alt="Top of page" href="#">Top</a>
+        </div>
+        <div class="prev">
+          
+          <a alt="Older article" href="https://zacash.cn/post/introducing-indigo/">Older &rarr;</a>
+          
+        </div>
+      </nav>
+      
+      <aside id="social">
+  <div id="social-icons">
+    
+    
+    
+    
+    <div class="icon-24x24">
+      <a class="glyph" alt="GitHub profile" href="https://github.com/zac4j"><img src=https://zacash.cn/icons/github.svg height="24px" width="24px"></a>
+    </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+  </div>
+</aside>
+
+      
+      <p class="copyright">
+          Copyright © 2020, Copyright Zac
+      </p>
+      
+    </div>
+
+
+</body>
+</html>

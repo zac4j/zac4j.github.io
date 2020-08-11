@@ -6,10 +6,78 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
     <copyright>Copyright © 2020, Copyright Zac</copyright>
-    <lastBuildDate>Mon, 10 Aug 2020 09:00:00 -0400</lastBuildDate>
+    <lastBuildDate>Tue, 11 Aug 2020 20:42:28 +0800</lastBuildDate>
     
         <atom:link href="https://zacash.cn/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Interface Delegation</title>
+      <link>https://zacash.cn/post/interface-delegation/</link>
+      <pubDate>Tue, 11 Aug 2020 20:42:28 +0800</pubDate>
+      
+      <guid>https://zacash.cn/post/interface-delegation/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://codelabs.developers.google.com/codelabs/kotlin-bootcamp-classes/#7&#34;&gt;接口委托（Interface delegation）&lt;/a&gt; 是一种高级技术，接口的方法由 helper 或 delegate 对象实现，然后给别的类使用。当我们在一系列不相关的类中使用接口时，这项技术会很有用：我们将需要使用的接口的函数添加到单独的 helper 类中，别的类使用 helper 类的实例来实现这个函数。&lt;/p&gt;
+&lt;h2 id=&#34;define-interface&#34;&gt;Define interface&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-kotlin&#34; data-lang=&#34;kotlin&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;/**
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt; * Define fish action interface.
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt; */&lt;/span&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;interface&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;FishAction&lt;/span&gt; {
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;fun&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;eat&lt;/span&gt;()
+}
+
+&lt;span style=&#34;color:#75715e&#34;&gt;/**
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt; * Define fish color interface.
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt; */&lt;/span&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;interface&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;FishColor&lt;/span&gt; {
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;val&lt;/span&gt; color: String
+}
+
+&lt;span style=&#34;color:#75715e&#34;&gt;/**
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt; * Plecostomus class implement [FishAction] and [FishColor] interface.
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt; */&lt;/span&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Plecostomus&lt;/span&gt;: FishAction, FishColor {
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;override&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;val&lt;/span&gt; color = &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;gold&amp;#34;&lt;/span&gt;
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;override&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;fun&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;eat&lt;/span&gt;() {
+        println(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;eat algae&amp;#34;&lt;/span&gt;)
+    }
+}
+
+&lt;span style=&#34;color:#75715e&#34;&gt;/**
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt; * Shark class implement [FishAction] and [FishColor] interface.
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt; */&lt;/span&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Shark&lt;/span&gt;: FishAction, FishColor {
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;override&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;val&lt;/span&gt; color = &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;gray&amp;#34;&lt;/span&gt;
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;override&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;fun&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;eat&lt;/span&gt;() {
+        println(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;eat fish&amp;#34;&lt;/span&gt;)
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;make-a-singleton-class&#34;&gt;Make a singleton class&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-kotlin&#34; data-lang=&#34;kotlin&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;/**
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt; * Creat a singleton for gold fish color.
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt; */&lt;/span&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;object&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;GoldColor&lt;/span&gt;: FishColor {
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;override&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;val&lt;/span&gt; color = &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;gold&amp;#34;&lt;/span&gt;
+}
+
+&lt;span style=&#34;color:#75715e&#34;&gt;/**
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt; * Create printing fish action.
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt; */&lt;/span&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;PrintingFishAction&lt;/span&gt;(&lt;span style=&#34;color:#66d9ef&#34;&gt;val&lt;/span&gt; food: String): FishAction {
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;override&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;fun&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;eat&lt;/span&gt;() {
+        println(food)
+    }
+}
+
+&lt;span style=&#34;color:#75715e&#34;&gt;/**
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt; * Plecostomus use interface delegation mechanism, and all overrides
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt; * are handled by interface delegation.
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt; */&lt;/span&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Plecostomus&lt;/span&gt;(fishColor: FishColor = GoldColor): FishAction &lt;span style=&#34;color:#66d9ef&#34;&gt;by&lt;/span&gt; PrintingFishAction(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;eat algae&amp;#34;&lt;/span&gt;), FishColor &lt;span style=&#34;color:#66d9ef&#34;&gt;by&lt;/span&gt; fishColor
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;summary&#34;&gt;Summary&lt;/h2&gt;
+&lt;p&gt;Interface delegation is powerful, and you should generally consider how to use it whenever you might use an abstract class in another language. It lets you use composition to plug in behaviors, instead of requiring lots of subclasses, each specialized in a different way.&lt;/p&gt;
+&lt;p&gt;接口委托很有用，通常每当我们在使用另一种语言的抽象类时都应该考虑使用它。它使我们可以使用组合来插入 behavior，而不是需要大量各有特色的子类。&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>Introducing Indigo</title>
@@ -94,12 +162,828 @@ println(updateDirty(&lt;span style=&#34;color:#ae81ff&#34;&gt;20.&lt;/span&gt; w
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;除了创建 lambda 外，我们还可以 b).传入常规的命名函数，只是与直接 lambda 变量不同，我们需要使用 &lt;code&gt;::&lt;/code&gt; 操作符来传入命名函数的引用。&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-kotlin&#34; data-lang=&#34;kotlin&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;fun&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;waterFilter&lt;/span&gt;(dirty: Int): Int = dirty / &lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;
 println(updateDirty(&lt;span style=&#34;color:#ae81ff&#34;&gt;40&lt;/span&gt;, &lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;waterFilter))
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;last-parameter-call-syntax&#34;&gt;Last parameter call syntax&lt;/h3&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;这种单行的函数也称为 &lt;em&gt;compat functions&lt;/em&gt; 或 &lt;em&gt;single-expression functions&lt;/em&gt;，可以增加代码可读性。&lt;/p&gt;
+&lt;h3 id=&#34;last-parameter-call-syntax&#34;&gt;Last parameter call syntax&lt;/h3&gt;
 &lt;p&gt;Kotlin 倾向于将带有函数的任意参数作为最后一个入参。在使用高阶函数时，Kotlin 有一种特殊的语法，称为 &lt;a href=&#34;https://kotlinlang.org/docs/reference/lambdas.html#passing-a-lambda-to-the-last-parameter&#34;&gt;last parameter call syntax&lt;/a&gt; 可以使代码更加简洁。这种情况下，我们可以传入一个 lambda 而无需放入括号内：&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-kotlin&#34; data-lang=&#34;kotlin&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;var&lt;/span&gt; dirty = &lt;span style=&#34;color:#ae81ff&#34;&gt;60&lt;/span&gt;
 dirty = updateDirty(dirty) { dirty -&amp;gt; dirty / &lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt; }
 println(dirty)
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+    </item>
+    
+    <item>
+      <title>Use Hilt in Android</title>
+      <link>https://zacash.cn/post/use-hilt-in-android/</link>
+      <pubDate>Thu, 06 Aug 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://zacash.cn/post/use-hilt-in-android/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;If you want to use dagger in  your project, you may have 2 or 3 different sources, different samples, different blog posts. All of them use a different set-up, and all of them use Dagger in a different way, so it&amp;rsquo;s very difficult to understand all the topics and relate them together. So that&amp;rsquo;s why Google create a common guidance, a common ground.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&#34;hilt-中一些注解&#34;&gt;Hilt 中一些注解&lt;/h2&gt;
+&lt;h3 id=&#34;container&#34;&gt;container&lt;/h3&gt;
+&lt;p&gt;A &lt;em&gt;container&lt;/em&gt; is a class which is in charge of providing dependencies in your codebase and knows how to create instances of other types of your app. It manages the graph of dependencies required to provide those instances by creating them and managing their lifecycle.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;container&lt;/em&gt; 是一个类，负责在代码中提供依赖关系，并且知道如何创建其他类型的 App 实例。它通过创建依赖所需的实例并管理其生命周期来控制依赖关系图。&lt;/p&gt;
+&lt;p&gt;A container exposes methods to get instances of the types it provides. Those methods can always return a different instance or the same instance. If the method always provides the same instance, we say that the type is &lt;em&gt;scoped&lt;/em&gt; to the container.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;container&lt;/em&gt; 暴露提供这些实例的方法。这些方法始终可以返回不同或相同的实例。如果该方法始终提供相同的实例，则可以说这种类型属于 &lt;em&gt;container&lt;/em&gt; 的&lt;em&gt;范围&lt;/em&gt;。&lt;/p&gt;
+&lt;h3 id=&#34;hiltandroidapp&#34;&gt;@HiltAndroidApp&lt;/h3&gt;
+&lt;p&gt;为了添加一个依附 app 生命周期的 &lt;em&gt;container&lt;/em&gt;，我们需要在 &lt;strong&gt;Application&lt;/strong&gt; 类上添加 &lt;code&gt;@HiltAndroidApp&lt;/code&gt; 注解：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-kotlin&#34; data-lang=&#34;kotlin&#34;&gt;@HiltAndroidApp
+&lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;App&lt;/span&gt;:Application() {
+    ...
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;code&gt;@HiltAndroidApp&lt;/code&gt; 会触发 Hilt 生成 App 所使用的依赖注入的基类，&lt;em&gt;application container&lt;/em&gt; 是 app 的父容器，这意味着别的 &lt;em&gt;containers&lt;/em&gt; 可以访问它提供的依赖。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Threads and Locks</title>
+      <link>https://zacash.cn/post/threads-and-locks/</link>
+      <pubDate>Mon, 27 Jul 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://zacash.cn/post/threads-and-locks/</guid>
+      <description>&lt;p&gt;Threads are created and managed by the classes Thread and ThreadGroup. Creating a Thread object creates a thread, and that is the only way to create a thread. When the thread is created, it is not yet active; it begins to run when its start method is called.&lt;/p&gt;
+&lt;h2 id=&#34;813-locks-and-synchronization&#34;&gt;8.13 Locks and Synchronization&lt;/h2&gt;
+&lt;p&gt;There is a lock associated with every object. The Java programming language does not provide a way to perform separate lock and unlock operations; instead, they are implicitly performed by high-level constructs that always arrange to pair such operations correctly. (The Java virtual machine, however, provides separate monitorenter and monitorexit instructions that implement the lock and unlock operations.)&lt;/p&gt;
+&lt;p&gt;每个对象都有一个锁。Java 没有单独提供锁定和解锁的方法；相反它们由始终安排准确配对操作的高阶构造隐式执行。Jvm 提供了单独的 &lt;em&gt;monitorenter&lt;/em&gt; 和 &lt;em&gt;monitorexit&lt;/em&gt; 指令，用于实现锁定和解锁操作。&lt;/p&gt;
+&lt;p&gt;The synchronized statement computes a reference to an object; it then attempts to perform a lock operation on that object and does not proceed further until the lock operation has successfully completed. (A lock operation may be delayed because the rules about locks can prevent the main memory from participating until some other thread is ready to perform one or more unlock operations.) After the lock operation has been performed, the body of the synchronized statement is executed. Normally, a compiler for the Java programming language ensures that the lock operation implemented by a monitorenter instruction executed prior to the execution of the body of the synchronized statement is matched by an unlock operation implemented by a monitorexit instruction whenever the synchronized statement completes, whether completion is normal or abrupt.&lt;/p&gt;
+&lt;p&gt;同步语句计算对象的引用，它尝试对该对象执行锁定操作，并且在锁定操作完成前不会进一步的操作。（锁定操作可能延迟，因为有关锁定的规则可能阻止主内存参与，直到线程准备一个或多个解锁操作为止。）指定锁定操作后，将执行同步语句的主体。通常，Java 编译器可以确保，由 &lt;em&gt;monitorenter&lt;/em&gt; 指令（在执行同步语句的主体之前执行）实现的锁定操作和由 &lt;em&gt;monitorexit&lt;/em&gt; 指令实现的解锁操作相匹配，而不管同步语句是否执行完成或打断。&lt;/p&gt;
+&lt;p&gt;A synchronized method automatically performs a lock operation when it is invoked; its body is not executed until the lock operation has successfully completed. If the method is an instance method, it locks the lock associated with the instance for which it was invoked (that is, the object that will be known as this during execution of the method&amp;rsquo;s body). If the method is static, it locks the lock associated with the Class object that represents the class in which the method is defined. If execution of the method&amp;rsquo;s body is ever completed, either normally or abruptly, an unlock operation is automatically performed on that same lock.&lt;/p&gt;
+&lt;p&gt;同步方法在被调用时会自动执行锁定操作。在锁定操作完成前不会执行方法主体。如果该方法是实例方法，则它将与调用该方法的实例锁定。如果该方法是静态的，则它将与定义该方法的 Class 对象相关联的类锁定。如果方法主体正常执行或突然中断，则与该锁配对解锁操作将自动执行。&lt;/p&gt;
+&lt;p&gt;Best practice is that if a variable is ever to be assigned by one thread and used or assigned by another, then all accesses to that variable should be enclosed in synchronized methods or synchronized statements.&lt;/p&gt;
+&lt;p&gt;最佳实践是对于某个变量由一个线程 &lt;em&gt;assign&lt;/em&gt; 并由另一个线程 &lt;em&gt;use&lt;/em&gt; 或 &lt;em&gt;assign&lt;/em&gt;，则对该变量的所有访问都应该放在 &lt;em&gt;synchronized&lt;/em&gt; 方法或 &lt;em&gt;synchronized&lt;/em&gt; 语句中。&lt;/p&gt;
+&lt;p&gt;Although a compiler for the Java programming language normally guarantees structured use of locks (see Section 7.14, &amp;ldquo;Synchronization&amp;rdquo;), there is no assurance that all code submitted to the Java virtual machine will obey this property. Implementations of the Java virtual machine are permitted but not required to enforce both of the following two rules guaranteeing structured locking.&lt;/p&gt;
+&lt;p&gt;Let T be a thread and L be a lock. Then:&lt;/p&gt;
+&lt;p&gt;The number of lock operations performed by T on L during a method invocation must equal the number of unlock operations performed by T on L during the method invocation whether the method invocation completes normally or abruptly.&lt;/p&gt;
+&lt;p&gt;At no point during a method invocation may the number of unlock operations performed by T on L since the method invocation exceed the number of lock operations performed by T on L since the method invocation.
+In less formal terms, during a method invocation every unlock operation on L must match some preceding lock operation on L.
+Note that the locking and unlocking automatically performed by the Java virtual machine when invoking a synchronized method are considered to occur during the calling method&amp;rsquo;s invocation.&lt;/p&gt;
+&lt;h2 id=&#34;714-synchronizationsynchronized&#34;&gt;7.14 &lt;a href=&#34;https://docs.oracle.com/javase/specs/jvms/se6/html/Compiling.doc.html#6530&#34;&gt;Synchronization&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;The Java virtual machine provides explicit support for synchronization through its monitorenter and monitorexit instructions. For code written in the Java programming language, however, perhaps the most common form of synchronization is the synchronized method.&lt;/p&gt;
+&lt;p&gt;Jvm 通过 &lt;em&gt;monitorenter&lt;/em&gt; 和 &lt;em&gt;monitorexit&lt;/em&gt; 指令为同步操作提供支持。但对于 Java 编写的代码，最常见的同步形式可能是 &lt;em&gt;synchronized&lt;/em&gt; 方法。&lt;/p&gt;
+&lt;p&gt;A synchronized method is not normally implemented using monitorenter and monitorexit. Rather, it is simply distinguished in the runtime constant pool by the ACC_SYNCHRONIZED flag, which is checked by the method invocation instructions. When invoking a method for which ACC_SYNCHRONIZED is set, the current thread acquires a monitor, invokes the method itself, and releases the monitor whether the method invocation completes normally or abruptly. During the time the executing thread owns the monitor, no other thread may acquire it. If an exception is thrown during invocation of the synchronized method and the synchronized method does not handle the exception, the monitor for the method is automatically released before the exception is rethrown out of the synchronized method.&lt;/p&gt;
+&lt;p&gt;Jvm 通常不使用 &lt;em&gt;monitorenter&lt;/em&gt; 和 &lt;em&gt;monitorexit&lt;/em&gt; 实现同步方法，而是在运行时常量池通过 &lt;em&gt;ACC_SYNCHRONIZED&lt;/em&gt; 标记加以区分，该标记由方法调用指令校验。当调用标记为 &lt;em&gt;ACC_SYNCHRONIZED&lt;/em&gt; 的方法时，当前线程获取 monitor，调用这个方法自身，并释放 monitor，不管方法调用是正常完成或突然中断。&lt;/p&gt;
+&lt;p&gt;正在执行的线程拥有 monitor 时，别的线程无法获取它。如果在调用同步方法时抛出异常，且同步方法无法处理该异常，则在异常从同步方法抛出执行，自动释放该方法的 monitor.&lt;/p&gt;
+&lt;p&gt;The &lt;em&gt;monitorenter&lt;/em&gt; and &lt;em&gt;monitorexit&lt;/em&gt; instructions exist to support synchronized statements. For example:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;onlyMe&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;Foo f&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;synchronized&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;f&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
+        doSomething&lt;span style=&#34;color:#f92672&#34;&gt;();&lt;/span&gt;
+    &lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;is compiled to&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-assembly&#34; data-lang=&#34;assembly&#34;&gt;Method void onlyMe(Foo)
+   0 	aload_1				// Push f	
+   1 	astore_2			// Store it in local variable 2
+   2 	aload_2				// Push local variable 2 (f)
+   3 	monitorenter		// Enter the monitor associated with f
+   4 	aload_0				// Holding the monitor, pass this and...
+   5 	invokevirtual #5 	// ...call Example.doSomething()V
+   8	aload_2				// Push local variable 2 (f)
+   9	monitorexit			// Exit the monitor associated with f
+  10	return				// Return normally
+  11 	aload_2				// In case of any throw, end up here
+  12 	monitorexit			// Be sure to exit monitor...
+  13 	athrow				// ...then rethrow the value to the invoker
+Exception table:
+   	From	To 	Target 		Type
+    4     	8   11   		any
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;volatile&#34;&gt;Volatile&lt;/h2&gt;
+&lt;p&gt;The rules for volatile variables effectively require that main memory be touched exactly once for each use or assign of a volatile variable by a thread, and that main memory be touched in exactly the order dictated by the thread execution semantics. However, such memory operations are not ordered with respect to read and write operations on nonvolatile variables.&lt;/p&gt;
+&lt;h2 id=&#34;thread-pool&#34;&gt;Thread Pool&lt;/h2&gt;
+&lt;p&gt;Most of the executor implementations in &lt;em&gt;java.util.concurrent&lt;/em&gt; use thread pools, which consist of &lt;em&gt;worker threads&lt;/em&gt;. This kind of thread exists separately from the &lt;em&gt;Runnable&lt;/em&gt; and &lt;em&gt;Callable&lt;/em&gt; tasks it executes and is often used to execute multiple tasks.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;java.util.concurrent&lt;/em&gt; 包中大部分 executor 实现都使用线程池，这些线程池由 &lt;em&gt;work threads&lt;/em&gt; 组成。这些线程与它执行的 &lt;em&gt;Runnable&lt;/em&gt; 和 &lt;em&gt;Callable&lt;/em&gt; 任务分开，通常用于执行多个任务。&lt;/p&gt;
+&lt;p&gt;Using &lt;em&gt;worker threads&lt;/em&gt; minimizes the overhead due to thread creation. Thread objects use a significant amount of memory, and in a large-scale application, allocating and deallocating many thread objects creates a significant memory management overhead.&lt;/p&gt;
+&lt;p&gt;使用 &lt;em&gt;worker threads&lt;/em&gt; 可以最大限度减少线程创建所带来的开销。线程对象占用大量内存，并且在大规模 App 中，分配和取消分配许多线程会产生大量内存管理的开销。&lt;/p&gt;
+&lt;p&gt;One common type of thread pool is the &lt;em&gt;fixed thread pool&lt;/em&gt;. This type of pool always has a specified number of threads running; if a thread is somehow terminated while it is still in use, it is automatically replaced with a new thread. Tasks are submitted to the pool via an &lt;em&gt;internal queue&lt;/em&gt;, which holds extra tasks whenever there are more active tasks than threads.&lt;/p&gt;
+&lt;p&gt;线程池的一种常见类型是 &lt;em&gt;fixed thread pool&lt;/em&gt;。这种类型的线程池始终有指定数量的线程在运行；如果一个线程在使用时被某种方式突然终止，则线程池会自动创建新的线程替换终止的线程。任务通过内部队列提交到线程池中，&lt;em&gt;该内部队列在活动任务多于线程数时容纳额外的任务。&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;An important advantage of the fixed thread pool is that applications using it degrade gracefully. To understand this, consider a web server application where each HTTP request is handled by a separate thread. If the application simply creates a new thread for every new HTTP request, and the system receives more requests than it can handle immediately, the application will suddenly stop responding to all requests when the overhead of all those threads exceed the capacity of the system. With a limit on the number of the threads that can be created, the application will not be servicing HTTP requests as quickly as they come in, but it will be servicing them as quickly as the system can sustain.&lt;/p&gt;
+&lt;p&gt;固定线程池的一个重要优势是使用该线程池的 App 可以正常降级。考虑一个 Web 服务应用，每个 HTTP 请求均由单独的线程处理。如果该应用仅简单针对每个 HTTP 请求创建新的线程，
+并且系统收到的请求超出了其立即处理的数量，当这些线程的所有开销超出系统的容量时，应用会突然停止响应所有请求。由于可以创建的线程数量受到限制，因此应用可以不尽快的处理 HTTP 请求，但
+可以根据系统能力尽快服务这些请求。&lt;/p&gt;
+&lt;p&gt;A simple way to create an executor that uses a fixed thread pool is to invoke the &lt;a href=&#34;https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Executors.html#newFixedThreadPool-int-&#34;&gt;newFixedThreadPool&lt;/a&gt; factory method in &lt;em&gt;java.util.concurrent.Executors&lt;/em&gt; This class also provides the following factory methods:&lt;/p&gt;
+&lt;p&gt;调用 &lt;em&gt;java.util.concurrent.Executors&lt;/em&gt; 中的 newFixedThreadPool 工厂方法可以创建固定线程池的 executor。此类还提供如下工厂方法：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;The &lt;a href=&#34;https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Executors.html#newCachedThreadPool-int-&#34;&gt;newCachedThreadPool&lt;/a&gt; method creates an executor with an expandable thread pool. This executor is suitable for applications that launch many short-lived tasks.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;newCachedThreadPool&lt;/em&gt; 使用可扩展的线程池创建 executor。此类线程池适用于启动许多短期任务的应用程序。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;The &lt;a href=&#34;https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Executors.html#newSingleThreadExecutor-int-&#34;&gt;newSingleThreadExecutor&lt;/a&gt; method creates an executor that executes a single task at a time.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;newSingleThreadExecutor&lt;/em&gt; 创建的 executor 每次只执行一个任务。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Several factory methods are &lt;em&gt;ScheduledExecutorService&lt;/em&gt; versions of the above executors.&lt;/p&gt;
+&lt;p&gt;上述 executor 的 &lt;em&gt;ScheduledExecutorService&lt;/em&gt; 版本有几种工厂方法。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;If none of the executors provided by the above factory methods meet your needs, constructing instances of &lt;em&gt;java.util.concurrent.ThreadPoolExecutor&lt;/em&gt; or &lt;em&gt;java.util.concurrent.ScheduledThreadPoolExecutor&lt;/em&gt; will give you additional options.&lt;/p&gt;
+&lt;p&gt;除了上面这些创建 executor 的方法，&lt;em&gt;java.util.concurrent.ThreadPoolExecutor&lt;/em&gt; 和 &lt;em&gt;java.util.concurrent.ScheduledThreadPoolExecutor&lt;/em&gt; 也会提供额外的方法。&lt;/p&gt;
+&lt;h2 id=&#34;processes-and-threads&#34;&gt;Processes and Threads&lt;/h2&gt;
+&lt;p&gt;In concurrent programming, there are two basic units of execution: &lt;em&gt;processes&lt;/em&gt; and &lt;em&gt;threads&lt;/em&gt;. In the Java programming language, concurrent programming is mostly concerned with threads. However, processes are also important.&lt;/p&gt;
+&lt;p&gt;在并发编程中，有两个基本的执行单元：进程和线程。Java 并发编程主要和线程有关，不过进程也很重要。&lt;/p&gt;
+&lt;p&gt;A computer system normally has many active processes and threads. This is true even in systems that only have a single execution core, and thus only have one thread actually executing at any given moment. Processing time for a single core is shared among processes and threads through an OS feature called &lt;em&gt;time slicing&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;计算机系统通常有很多活跃的进程和线程。这在只有一个执行核心以至于任何时刻都只有一个线程实际执行的系统也是如此。通过称为 &lt;em&gt;时间分片&lt;/em&gt; 的 OS 功能，进程和线程可以共享单个内核的处理时间。&lt;/p&gt;
+&lt;p&gt;It&amp;rsquo;s becoming more and more common for computer systems to have multiple processors or processors with multiple execution cores. This greatly enhances a system&amp;rsquo;s capacity for concurrent execution of processes and threads — but concurrency is possible even on simple systems, without multiple processors or execution cores.&lt;/p&gt;
+&lt;p&gt;具有多个处理器或多个执行核心的处理器的计算机系统正在变得越来越普遍。这极大增强了并发执行多进程和多线程的能力——即使是在没有多核处理器的简单系统上，并发也是可能的。&lt;/p&gt;
+&lt;h3 id=&#34;processes&#34;&gt;Processes&lt;/h3&gt;
+&lt;p&gt;A process has a self-contained execution environment. A process generally has a complete, private set of basic run-time resources; in particular, each process has its own memory space.&lt;/p&gt;
+&lt;p&gt;进程具有独立的执行环境。进程通常具有一组完整的、私有的基本运行时资源，每个进程有自己的内存空间。&lt;/p&gt;
+&lt;p&gt;Processes are often seen as synonymous with programs or applications. However, what the user sees as a single application may in fact be a set of cooperating processes. To facilitate communication between processes, most operating systems support &lt;em&gt;Inter Process Communication&lt;/em&gt; (IPC) resources, such as pipes and sockets. IPC is used not just for communication between processes on the same system, but processes on different systems.&lt;/p&gt;
+&lt;p&gt;进程通常被视为程序或应用的代名词。但实际上用户看见的单个应用可能一组协作进程。为了促进进程间的通信，大多数操作系统都支持 &lt;em&gt;进程间通信&lt;/em&gt;（IPC）资源，比如管道（pipes）和sockets. IPC 不仅可以用在同一系统的进程间通信，还可用于不同系统上的进程。&lt;/p&gt;
+&lt;p&gt;Most implementations of the Java virtual machine run as a single process. A Java application can create additional processes using a &lt;a href=&#34;https://docs.oracle.com/javase/8/docs/api/java/lang/ProcessBuilder.html&#34;&gt;ProcessBuilder&lt;/a&gt; object. Multiprocess applications are beyond the scope of this lesson.&lt;/p&gt;
+&lt;p&gt;大多数的 Jvm 实现都是以单个进程运行的。Java 应用可以使用 &lt;a href=&#34;https://docs.oracle.com/javase/8/docs/api/java/lang/ProcessBuilder.html&#34;&gt;ProcessBuilder&lt;/a&gt; 创建新的进程，不过多进程应用不在这里的讨论范围。&lt;/p&gt;
+&lt;h3 id=&#34;threads&#34;&gt;Threads&lt;/h3&gt;
+&lt;p&gt;Threads are sometimes called &lt;em&gt;lightweight processes&lt;/em&gt;. Both processes and threads provide an execution environment, but creating a new thread requires fewer resources than creating a new process.&lt;/p&gt;
+&lt;p&gt;线程通常被称为 &lt;em&gt;轻量级进程&lt;/em&gt;。进程和线程都可以提供执行环境，但创建线程要比创建进程需要更少的资源。&lt;/p&gt;
+&lt;p&gt;Threads exist within a process — every process has at least one. Threads share the process&amp;rsquo;s resources, including memory and open files. This makes for efficient, but potentially problematic, communication.&lt;/p&gt;
+&lt;p&gt;线程存在于进程中 —— 每个进程至少有一个。线程分享进程资源，包括内存和打开的文件。这样可以进行高效的、但同时又可能有问题的通信。&lt;/p&gt;
+&lt;p&gt;Multithreaded execution is an essential feature of the Java platform. Every application has at least one thread — or several, if you count &amp;ldquo;system&amp;rdquo; threads that do things like memory management and signal handling. But from the application programmer&amp;rsquo;s point of view, you start with just one thread, called the main thread. This thread has the ability to create additional threads, as we&amp;rsquo;ll demonstrate in the next section.&lt;/p&gt;
+&lt;p&gt;多线程执行是 Java 平台基础的功能。每个应用至少有一个 —— 如果算上执行内存管理和信号处理的系统线程，则有多个。但从应用程序员的角度来看，我们从一个线程开始，称为&lt;em&gt;主线程（main thread）&lt;/em&gt;，这个线程有能力创建别的线程。&lt;/p&gt;
+&lt;h4 id=&#34;thread-objects&#34;&gt;Thread Objects&lt;/h4&gt;
+&lt;p&gt;每个线程都与一个 &lt;a href=&#34;https://docs.oracle.com/javase/8/docs/api/java/lang/Thread.html&#34;&gt;Thread&lt;/a&gt; 相关。有两种策略使用 &lt;em&gt;Thread&lt;/em&gt; 对象创建并发应用。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;直接控制线程的创建和管理，每次应用需要启动异步任务时，只需实例化 &lt;em&gt;Thread&lt;/em&gt;。&lt;/li&gt;
+&lt;li&gt;要从应用的其他部分抽象线程管理，将应用的任务传递给 &lt;em&gt;executor&lt;/em&gt;。&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
+    
+    <item>
+      <title>WebSocket 和长轮询</title>
+      <link>https://zacash.cn/post/websocket-and-long-polling/</link>
+      <pubDate>Tue, 21 Jul 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://zacash.cn/post/websocket-and-long-polling/</guid>
+      <description>&lt;p&gt;客户端的网络请求大部分都建立在请求/响应模式的 HTTP/HTTPS 协议之下，AJAX 技术使页面看起来更加动态。尽管如此，所有的 HTTP 连接仍由客户端控制，需要用户交互或定时轮询（periodic polling）才能从服务端加载新数据。&lt;/p&gt;
+&lt;p&gt;通过长轮询，客户端打开与服务端的 HTTP 连接，并保持连接直到服务端返回响应，只要服务端有新的数据，它就会发送响应。然而这些技术有共同的问题：它们带有 HTTP 的开销，并不适合低延时应用的需求。&lt;/p&gt;
+&lt;h2 id=&#34;websocket-简介&#34;&gt;WebSocket 简介&lt;/h2&gt;
+&lt;p&gt;WebSocket 规范定义了一个 API：在客户端和服务端之间建立 &lt;em&gt;socket&lt;/em&gt; 连接。简而言之，客户端和服务端之间建立持久连接，双方都可以随时发送数据。&lt;/p&gt;
+&lt;h2 id=&#34;使用-okhttp-实现-websocket&#34;&gt;使用 OkHttp 实现 WebSocket&lt;/h2&gt;
+&lt;h3 id=&#34;添加依赖&#34;&gt;添加依赖&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-groovy&#34; data-lang=&#34;groovy&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;// network
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;implementation&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;com.squareup.okhttp3:okhttp:4.8.0&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+implementation&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;com.squareup.okhttp3:mockwebserver:4.8.0&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;客户端创建-websocket-连接&#34;&gt;客户端创建 WebSocket 连接&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-kotlin&#34; data-lang=&#34;kotlin&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;/**
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt; * 连接 WebSocket 服务
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt; *
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt; * @param hostname 服务端域名地址
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt; * @param port WebSocket 服务端口号
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt; */&lt;/span&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;fun&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;connectWebSocket&lt;/span&gt;(hostname: String,port: Int) {
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;val&lt;/span&gt; httpClient = OkHttpClient.Builder()
+      .pingInterval(PING_INTERVAL, TimeUnit.SECONDS)
+      .build()
+
+  &lt;span style=&#34;color:#75715e&#34;&gt;// Android 9 已禁止明文传输网络数据，此处使用 ws，可以参考：https://stackoverflow.com/a/50834600
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;  &lt;span style=&#34;color:#66d9ef&#34;&gt;val&lt;/span&gt; url = &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;ws://${hostname}:${port}&amp;#34;&lt;/span&gt;
+  Logger.i(TAG, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;connectWebSocket&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;connect url -&amp;gt; $url&amp;#34;&lt;/span&gt;)
+
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;val&lt;/span&gt; request = Request.Builder()
+      .url(url)
+      .build()
+
+  httpClient.newWebSocket(request, &lt;span style=&#34;color:#66d9ef&#34;&gt;object&lt;/span&gt; &lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;: &lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;WebSocketListener&lt;/span&gt;() {
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;override&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;fun&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;onOpen&lt;/span&gt;(
+      webSocket: WebSocket,
+      response: Response
+    ) {
+      &lt;span style=&#34;color:#66d9ef&#34;&gt;super&lt;/span&gt;.onOpen(webSocket, response)
+      Logger.i(TAG, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;onOpen&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;response -&amp;gt; ${response.message}&amp;#34;&lt;/span&gt;)
+      &lt;span style=&#34;color:#75715e&#34;&gt;// While web socket is opened create our interval work
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;      createIntervalWork(webSocket)
+    }
+
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;override&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;fun&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;onMessage&lt;/span&gt;(
+      webSocket: WebSocket,
+      text: String
+    ) {
+      &lt;span style=&#34;color:#66d9ef&#34;&gt;super&lt;/span&gt;.onMessage(webSocket, text)
+      Logger.i(TAG, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;onMessage&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;text -&amp;gt; $text&amp;#34;&lt;/span&gt;)
+      &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; (text.isNotEmpty()) {
+        mHandler.post {
+          mAdapter.addMessage(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;pong -&amp;gt; $text&amp;#34;&lt;/span&gt;)
+        }
+      }
+    }
+
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;override&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;fun&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;onMessage&lt;/span&gt;(
+      webSocket: WebSocket,
+      bytes: ByteString
+    ) {
+      &lt;span style=&#34;color:#66d9ef&#34;&gt;super&lt;/span&gt;.onMessage(webSocket, bytes)
+      Logger.i(TAG, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;onMessage&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;bytes -&amp;gt; $bytes&amp;#34;&lt;/span&gt;)
+      mHandler.post {
+        mAdapter.addMessage(bytes.toString())
+      }
+    }
+
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;override&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;fun&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;onClosed&lt;/span&gt;(
+      webSocket: WebSocket,
+      code: Int,
+      reason: String
+    ) {
+      &lt;span style=&#34;color:#66d9ef&#34;&gt;super&lt;/span&gt;.onClosed(webSocket, code, reason)
+      Logger.i(TAG, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;onClosed&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;reason -&amp;gt; $reason&amp;#34;&lt;/span&gt;)
+    }
+
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;override&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;fun&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;onClosing&lt;/span&gt;(
+      webSocket: WebSocket,
+      code: Int,
+      reason: String
+    ) {
+      &lt;span style=&#34;color:#66d9ef&#34;&gt;super&lt;/span&gt;.onClosing(webSocket, code, reason)
+      Logger.i(TAG, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;onClosing&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;reason -&amp;gt; $reason&amp;#34;&lt;/span&gt;)
+    }
+
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;override&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;fun&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;onFailure&lt;/span&gt;(
+      webSocket: WebSocket,
+      t: Throwable,
+      response: Response?
+    ) {
+      &lt;span style=&#34;color:#66d9ef&#34;&gt;super&lt;/span&gt;.onFailure(webSocket, t, response)
+      Logger.i(TAG, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;onFailure&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;${t.message}&amp;#34;&lt;/span&gt;)
+    }
+  })
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;客户端-mock-websocket-服务&#34;&gt;客户端 Mock WebSocket 服务&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-kotlin&#34; data-lang=&#34;kotlin&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;/**
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt; * Mock websocket server
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt; */&lt;/span&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;fun&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;mockWebServer&lt;/span&gt;(): MockWebServer? {
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;val&lt;/span&gt; mockWebServer: MockWebServer? = MockWebServer()
+
+  mockWebServer&lt;span style=&#34;color:#f92672&#34;&gt;?.&lt;/span&gt;enqueue(MockResponse().withWebSocketUpgrade(&lt;span style=&#34;color:#66d9ef&#34;&gt;object&lt;/span&gt; &lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;: &lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;WebSocketListener&lt;/span&gt;() {
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;override&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;fun&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;onOpen&lt;/span&gt;(
+      webSocket: WebSocket,
+      response: Response
+    ) {
+      &lt;span style=&#34;color:#66d9ef&#34;&gt;super&lt;/span&gt;.onOpen(webSocket, response)
+      Logger.i(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;MockWebServer&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;onOpen&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;response -&amp;gt; ${response.message}&amp;#34;&lt;/span&gt;)
+    }
+
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;override&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;fun&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;onMessage&lt;/span&gt;(
+      webSocket: WebSocket,
+      text: String
+    ) {
+      &lt;span style=&#34;color:#66d9ef&#34;&gt;super&lt;/span&gt;.onMessage(webSocket, text)
+      Logger.i(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;MockWebServer&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;onMessage&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;text -&amp;gt; $text&amp;#34;&lt;/span&gt;)
+      &lt;span style=&#34;color:#75715e&#34;&gt;// send back message to client
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;      webSocket.send(text)
+    }
+
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;override&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;fun&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;onMessage&lt;/span&gt;(
+      webSocket: WebSocket,
+      bytes: ByteString
+    ) {
+      &lt;span style=&#34;color:#66d9ef&#34;&gt;super&lt;/span&gt;.onMessage(webSocket, bytes)
+      Logger.i(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;MockWebServer&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;onMessage&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;bytes -&amp;gt; $bytes&amp;#34;&lt;/span&gt;)
+      &lt;span style=&#34;color:#75715e&#34;&gt;// send back message to client
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;      webSocket.send(bytes)
+    }
+
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;override&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;fun&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;onClosed&lt;/span&gt;(
+      webSocket: WebSocket,
+      code: Int,
+      reason: String
+    ) {
+      &lt;span style=&#34;color:#66d9ef&#34;&gt;super&lt;/span&gt;.onClosed(webSocket, code, reason)
+      Logger.i(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;MockWebServer&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;onClosed&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;reason -&amp;gt; $reason&amp;#34;&lt;/span&gt;)
+    }
+
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;override&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;fun&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;onClosing&lt;/span&gt;(
+      webSocket: WebSocket,
+      code: Int,
+      reason: String
+    ) {
+      &lt;span style=&#34;color:#66d9ef&#34;&gt;super&lt;/span&gt;.onClosing(webSocket, code, reason)
+      Logger.i(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;MockWebServer&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;onClosing&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;reason -&amp;gt; $reason&amp;#34;&lt;/span&gt;)
+    }
+
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;override&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;fun&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;onFailure&lt;/span&gt;(
+      webSocket: WebSocket,
+      t: Throwable,
+      response: Response?
+    ) {
+      &lt;span style=&#34;color:#66d9ef&#34;&gt;super&lt;/span&gt;.onFailure(webSocket, t, response)
+      Logger.i(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;MockWebServer&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;onFailure&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;exception -&amp;gt; ${t.message}&amp;#34;&lt;/span&gt;)
+    }
+  }))
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; mockWebServer
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+    </item>
+    
+    <item>
+      <title>JVM Architecture in A Nutshell</title>
+      <link>https://zacash.cn/post/jvm-arch-in-a-nutshell/</link>
+      <pubDate>Fri, 17 Jul 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://zacash.cn/post/jvm-arch-in-a-nutshell/</guid>
+      <description>&lt;p&gt;跨平台的本质是因为汇编指令的不同.&lt;/p&gt;
+&lt;h2 id=&#34;classloader&#34;&gt;ClassLoader&lt;/h2&gt;
+&lt;h3 id=&#34;what-is-it&#34;&gt;What is it&lt;/h3&gt;
+&lt;p&gt;类加载器负责在运行时将 Java 类动态加载到 JVM，是 JRE 的一部分，由于有了类加载器，JVM 无需了解底层文件或文件系统即可运行Java程序。&lt;/p&gt;
+&lt;p&gt;类加载器不会一次将全部类加载到内存里，而是在程序需要时加载。&lt;/p&gt;
+&lt;h3 id=&#34;built-in-class-loaders-types&#34;&gt;Built-in class loaders types&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Bootstrap class loader&lt;/p&gt;
+&lt;p&gt;每个 JVM 实现必须有一个 bootstrap 类加载器。它加载 &lt;em&gt;JAVA_HOME/jre/lib&lt;/em&gt; 目录下的核心 Java API 类，该路径通常被称为引导路径(bootstrap path)。该类加载器由 C/C++ 语言实现。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Extension class loader&lt;/p&gt;
+&lt;p&gt;Bootstrap 的子类加载器，它加载扩展目录 &lt;em&gt;JAVA_HOME/jre/lib/ext&lt;/em&gt; 或 &lt;strong&gt;java.ext.dirs&lt;/strong&gt; 指定路径下的类。它由 Java 在 &lt;code&gt;sun.misc.Launcher$ExtClassLoader&lt;/code&gt; 类中实现。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;System/Application class loader&lt;/p&gt;
+&lt;p&gt;Extension 的子类加载器。它负责从 app 路径加载类，它加载在 &lt;em&gt;classpath&lt;/em&gt; 环境变量、&lt;em&gt;-classpath&lt;/em&gt;、-cp 命令行选项中找到的文件。它同样由 Java 在 &lt;code&gt;sun.misc.Launcher$AppClassLoader&lt;/code&gt; 类中实现。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;how-it-works&#34;&gt;How it works&lt;/h3&gt;
+&lt;p&gt;类加载器是 JRE 的一部分。当 JVM 请求一个类时，类加载器尝试定位该类，并使用&lt;em&gt;完全限定的类名(fully qualified class name)&lt;/em&gt; 将&lt;em&gt;类定义(class definition)&lt;/em&gt; 加载到运行时环境中。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;java.lang.ClassLoader.loadClass()&lt;/code&gt; 方法负责将类定义加载到运行时环境中。如果请求的类尚未加载，则它将请求委派给父类加载器，此过程递归进行。如果父类加载器找不到该类，则子类加载器调用 &lt;code&gt;java.net.URLClassLoader.findClass()&lt;/code&gt; 方法在文件系统中查找类。最终，如果子类加载器未找到该类，则它将抛出 &lt;code&gt;java.lang.NoClassDefFoundError&lt;/code&gt; 或 &lt;code&gt;java.lang.ClassNotFoundException&lt;/code&gt;。&lt;/p&gt;
+&lt;h3 id=&#34;class-loader-features&#34;&gt;Class loader features&lt;/h3&gt;
+&lt;h4 id=&#34;代理模型delegation-model&#34;&gt;代理模型（Delegation Model）&lt;/h4&gt;
+&lt;p&gt;类加载器遵循代理模型，在该模型中，ClassLoader 会根据请求查找的类或资源，将搜索类或资源的工作委托给父加载器处理。仅当 bootstrap class loader 和 extension class loader 都未能加载该类时，system class loader 才会尝试自己加载该类。&lt;/p&gt;
+&lt;h4 id=&#34;唯一类unique-classes&#34;&gt;唯一类（Unique classes）&lt;/h4&gt;
+&lt;p&gt;作为代理模型的结果，很容易确保唯一的类，因为我们始终向上委托。&lt;/p&gt;
+&lt;h4 id=&#34;可见性visibility&#34;&gt;可见性（Visibility）&lt;/h4&gt;
+&lt;p&gt;子类加载器对其父类加载器加载的类完全可见，父类加载器则对子类加载器加载的类不可见。&lt;/p&gt;
+&lt;h3 id=&#34;custom-classloader&#34;&gt;Custom ClassLoader&lt;/h3&gt;
+&lt;p&gt;在需要从本地或网络加载类的场景，我们可能需要使用自定义类加载器。&lt;/p&gt;
+&lt;h4 id=&#34;使用场景&#34;&gt;使用场景&lt;/h4&gt;
+&lt;p&gt;自定义类加载器不仅对在运行时加载类有帮助，还包括：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;修改现有字节码，如织入代理&lt;/li&gt;
+&lt;li&gt;动态创建适合用户需求的类。如 JDBC 中，通过动态类加载完成不同驱动实现(driver implementations)之间的切换。&lt;/li&gt;
+&lt;li&gt;实现类版本控制机制，如为具有相同名称和包名的类加载不同的字节码（热修复）。这可以通过 URL 类加载器或自定义加载器完成。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;我们可以自定义类加载器实现指定类的加载：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-kotlin&#34; data-lang=&#34;kotlin&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;package&lt;/span&gt; com.zac4j.system.util
+
+&lt;span style=&#34;color:#66d9ef&#34;&gt;import&lt;/span&gt; java.io.ByteArrayOutputStream
+&lt;span style=&#34;color:#66d9ef&#34;&gt;import&lt;/span&gt; java.io.File
+&lt;span style=&#34;color:#66d9ef&#34;&gt;import&lt;/span&gt; java.io.IOException
+
+&lt;span style=&#34;color:#75715e&#34;&gt;/**
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt; * Custom ClassLoader sample
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt; *
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt; * @author: zac
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt; * @date: 2020/7/19
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt; */&lt;/span&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;internal&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;object&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Test&lt;/span&gt; {
+  @JvmStatic &lt;span style=&#34;color:#66d9ef&#34;&gt;fun&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;main&lt;/span&gt;(args: Array&amp;lt;String&amp;gt;) {
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;val&lt;/span&gt; classLoader = CustomClassLoader()
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;val&lt;/span&gt; clazz = classLoader.loadClass(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;com.zac4j.system.util.Utils&amp;#34;&lt;/span&gt;)
+    println(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;custom classloader:${clazz.canonicalName}&amp;#34;&lt;/span&gt;)
+  }
+}
+
+&lt;span style=&#34;color:#75715e&#34;&gt;/**
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt; * 自定义 ClassLoader，加载指定类文件。
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt; */&lt;/span&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;CustomClassLoader&lt;/span&gt; : ClassLoader() {
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;override&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;fun&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;findClass&lt;/span&gt;(name: String): Class&amp;lt;*&amp;gt; {
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;val&lt;/span&gt; b = loadClassFromFile(name)
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; defineClass(name, b, &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;, b.size)
+  }
+
+  &lt;span style=&#34;color:#75715e&#34;&gt;/**
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;   * 根据类名加载类文件
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;   */&lt;/span&gt;
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;fun&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;loadClassFromFile&lt;/span&gt;(filename: String): ByteArray {
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;val&lt;/span&gt; inStream = javaClass.classLoader&lt;span style=&#34;color:#f92672&#34;&gt;?.&lt;/span&gt;getResourceAsStream(
+        filename.replace(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;.&amp;#39;&lt;/span&gt;, File.separatorChar) + &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;.class&amp;#34;&lt;/span&gt;
+    ) &lt;span style=&#34;color:#f92672&#34;&gt;?:&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; byteArrayOf()
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;val&lt;/span&gt; outStream = ByteArrayOutputStream()
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;try&lt;/span&gt; {
+      &lt;span style=&#34;color:#66d9ef&#34;&gt;while&lt;/span&gt; (inStream.read() != -&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;) {
+        &lt;span style=&#34;color:#66d9ef&#34;&gt;val&lt;/span&gt; nextVal = inStream.read()
+        outStream.write(nextVal)
+      }
+    } &lt;span style=&#34;color:#66d9ef&#34;&gt;catch&lt;/span&gt; (e: IOException) {
+
+    }
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; outStream.toByteArray()
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;responsibility&#34;&gt;Responsibility&lt;/h3&gt;
+&lt;p&gt;Class Loader 系统主要有&lt;a href=&#34;https://docs.oracle.com/javase/specs/jvms/se6/html/ConstantPool.doc.html#67960&#34;&gt;3种功能&lt;/a&gt;：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Loading&lt;/li&gt;
+&lt;li&gt;Linking&lt;/li&gt;
+&lt;li&gt;Initialization&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;loading&#34;&gt;Loading&lt;/h4&gt;
+&lt;p&gt;类加载器读取 &lt;em&gt;.class&lt;/em&gt; 文件，生成对应的二进制数据并保存到 JVM 方法区。对每个 &lt;em&gt;.class&lt;/em&gt; 文件，方法区保存这些信息：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;完全限定名称的加载类和其直属父类&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;.class&lt;/em&gt; 文件是否与 Class 或 Interface 或 Enum 有关&lt;/li&gt;
+&lt;li&gt;修饰符（Modifier）、变量和方法信息等。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;加载 &lt;em&gt;.class&lt;/em&gt; 文件后，JVM 在堆中创建该文件对应的 Class 类型对象。开发者可以使用此 Class 对象来获取类级别（class level）的信息，如类名、父类名、方法（&lt;code&gt;Class.getdeclaredMethods()&lt;/code&gt;）和变量信息（&lt;code&gt;Class.getDeclaredFields()&lt;/code&gt;）等。&lt;/p&gt;
+&lt;h4 id=&#34;linking&#34;&gt;Linking&lt;/h4&gt;
+&lt;p&gt;执行 Verification、Preparation 和 Resolution。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Verification：通过检查 &lt;em&gt;.class&lt;/em&gt; 文件是否正确的格式化和是否由有效的编译器生成，确保该文件的正确性。如果验证失败，将抛出运行时异常：&lt;em&gt;java.lang.VerifyError&lt;/em&gt;。&lt;/li&gt;
+&lt;li&gt;Preparation：JVM 为类变量分配内存，并将内存初始化为默认值。&lt;/li&gt;
+&lt;li&gt;Resolution：这是用直接引用(direct references)替换类型中的符号引用(symbolic references)的过程。通过搜索方法区域以找到引用的实体来完成此操作。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;initialization&#34;&gt;Initialization&lt;/h4&gt;
+&lt;p&gt;这个阶段将为所有静态变量分配在代码或静态代码块中定义的值。在类中从顶至底（from top to bottom）执行，在类层级中从父类到子类（from parent to child）执行。类加载器的初始化：Bootstrap class loader -&amp;gt; Extension class loader -&amp;gt; App class loader.&lt;/p&gt;
+&lt;h2 id=&#34;run-time-data-areas&#34;&gt;Run-Time Data Areas&lt;/h2&gt;
+&lt;p&gt;基本结构.jpg&lt;/p&gt;
+&lt;h3 id=&#34;the-pc-register&#34;&gt;The pc Register&lt;/h3&gt;
+&lt;p&gt;JVM 可以支持多个线程同时运行，每个线程都有自己独立的 PC 寄存器(program counter register)。在任意时间点，任一线程在执行某个方法的代码，被称作该线程的&lt;a href=&#34;https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-2.html#jvms-2.6&#34;&gt;当前方法(current method)&lt;/a&gt;。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;如果该方法是 &lt;em&gt;native&lt;/em&gt; 的，pc 寄存器的值是 &lt;em&gt;undefined&lt;/em&gt;。&lt;/li&gt;
+&lt;li&gt;如果该方法不是 &lt;em&gt;native&lt;/em&gt; 的，pc 寄存器包含当前正在执行指令的地址。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;JVM 的 pc 寄存器容量足够在特定平台上保存 &lt;em&gt;returnAddress&lt;/em&gt; 或 &lt;em&gt;native&lt;/em&gt; 指针。&lt;/p&gt;
+&lt;h3 id=&#34;jvm-stacks&#34;&gt;JVM Stacks&lt;/h3&gt;
+&lt;p&gt;对每个线程，JVM 在创建线程时都会创建一个私有的堆栈。JVM 仅对堆栈进行两种操作：推入(push)和弹出(pop)栈帧(frames)。JVM 堆栈的内存&lt;strong&gt;不必是连续的&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;线程执行的每个方法调用(method calls)都存储在对应的堆栈中，包括入参、局部变量、中间计算和其他数据。方法完成后，JVM 将从堆栈中删除对应的条目，完成所有的方法调用后，堆栈将变为空，并且在终止线程前，销毁该堆栈。&lt;/p&gt;
+&lt;p&gt;存储在堆栈中的数据仅适用于对应线程，对别的线程不适用。因此，可以说局部数据是线程安全的。堆栈中每个条目都称为 &lt;em&gt;堆栈帧(Stack Frame)&lt;/em&gt; 或 &lt;em&gt;激活记录(Activation Record)&lt;/em&gt;。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;第一版的 Java 虚拟机规范 &lt;em&gt;The Java® Virtual Machine Specification&lt;/em&gt;, &lt;em&gt;JVM 堆栈(Java Virtual Machine stack)&lt;/em&gt; 被称为 &lt;em&gt;Java 栈(Java stack)&lt;/em&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;JVM 规范允许Java虚拟机堆栈具有固定大小，或者根据计算要求动态伸缩。 如果Java虚拟机堆栈的大小固定，则在创建每个Java虚拟机堆栈时可以独立选择它们的大小。&lt;/p&gt;
+&lt;p&gt;关联的异常：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;如果线程中的计算需要比允许的 JVM 更大的堆栈，则 JVM 将抛出 &lt;strong&gt;StackOverflowError&lt;/strong&gt;。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;如果可以动态扩展 JVM 堆栈容量，并且尝试进行动态扩展，但外部环境无法提供足够的内存资源，或没有足够的内存资源为新线程创建 JVM 堆栈，则 JVM 会抛出 &lt;strong&gt;OutOfMemoryError&lt;/strong&gt;。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;heap&#34;&gt;Heap&lt;/h3&gt;
+&lt;p&gt;堆是运行时数据区内为所有类实例和数组分配内存的部分，是共享资源。&lt;/p&gt;
+&lt;p&gt;堆在虚拟机启动时创建，&lt;em&gt;垃圾回收器(garbage collector)&lt;/em&gt; 可以回收对象堆堆存储，对象永远不会显式释放内存。堆的大小同样可以是固定的，或者根据计算要求动态伸缩。堆内存&lt;strong&gt;不必是连续的&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;用户可以控制堆固定初始大小，或动态伸缩场景控制堆的最大/最小值。&lt;/p&gt;
+&lt;p&gt;关联的异常：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;计算需要的堆内存多于系统可以提供的内存资源， JVM 会抛出 &lt;strong&gt;OutOfMemoryError&lt;/strong&gt;。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;method-area&#34;&gt;Method Area&lt;/h3&gt;
+&lt;p&gt;方法区存储每个类的结构，如&lt;em&gt;运行时常量池(run-time constant pool)&lt;/em&gt;，&lt;em&gt;字段(field)&lt;/em&gt;，和&lt;em&gt;方法数据(method data)&lt;/em&gt;，以及方法和构造函数的代码，是共享资源。&lt;/p&gt;
+&lt;p&gt;方法区同样是在 JVM 启动时创建。尽管方法区在逻辑上是堆的一部分，但 JVM 实现可以选择不对其进行垃圾回收或压缩。&lt;/p&gt;
+&lt;p&gt;方法区可以是固定大小，或根据计算需求进行动态伸缩。方法区内存同样&lt;strong&gt;不必是连续的&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;关联的异常：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;方法区需要分配的内存多于系统可提供的内存资源，JVM 会抛出 &lt;strong&gt;OutOfMemoryError&lt;/strong&gt;。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;native-method-stacks&#34;&gt;Native Method Stacks&lt;/h3&gt;
+&lt;p&gt;JVM 可以使用传统的堆栈，俗称 “C 栈”，来支持 &lt;em&gt;native&lt;/em&gt; 方法。&lt;em&gt;native&lt;/em&gt; 方法栈可以用于 JVM C语言指令集的解释器。JVM 不能加载 &lt;em&gt;native&lt;/em&gt; 方法，并且它本身不依赖于传统堆栈，不需要提供 &lt;em&gt;native&lt;/em&gt; 方法栈。如果提供，通常在创建线程时为每个线程提供 &lt;em&gt;native&lt;/em&gt; 方法栈。&lt;/p&gt;
+&lt;p&gt;JVM 规范允许 &lt;em&gt;native&lt;/em&gt; 方法堆栈具有固定大小，或者根据计算要求动态扩展和收缩。如果本机方法堆栈的大小固定，则在创建每个 &lt;em&gt;native&lt;/em&gt; 方法栈的大小时可以独立选择。&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;native&lt;/em&gt; 方法栈关联的异常：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;如果线程中的计算所需的 &lt;em&gt;native&lt;/em&gt; 方法栈容量超出允许的范围，则 JVM 会抛出 &lt;strong&gt;StackOverflowError&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;如果 &lt;em&gt;native&lt;/em&gt; 方法栈容量尝试动态扩展，但外部环境无法提供足够的内存资源，或没有足够的内存资源为新线程创建 &lt;em&gt;native&lt;/em&gt; 方法栈，则 JVM 会抛出 &lt;strong&gt;OutOfMemoryError&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;run-time-constant-pool&#34;&gt;Run-Time Constant Pool&lt;/h3&gt;
+&lt;p&gt;运行时常量池是每个类或接口的 &lt;em&gt;class&lt;/em&gt; 文件中 &lt;em&gt;constant_pool&lt;/em&gt; 表的运行时表示形式。它主要包含：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;编译时数字文字&lt;/li&gt;
+&lt;li&gt;运行时方法和字段引用&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;运行时常量池功能类似于常规编程语言的符号表。尽管它包含的数据范围比典型的符号表更大。&lt;/p&gt;
+&lt;p&gt;每个运行时常量池都是从 JVM 方法去分配的，当 JVM 创建类或接口时，将为该类或结构构造运行时常量池。&lt;/p&gt;
+&lt;p&gt;运行时常量池会关联如下异常：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;创建类或缄口时，如果运行时常量池构造所需的内存超过 JVM 方法区的可用内存，则 JVM 会抛出 &lt;strong&gt;OutOfMemoryError&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;execution-engine&#34;&gt;Execution Engine&lt;/h2&gt;
+&lt;p&gt;执行引擎执行 &lt;em&gt;.class(bytecode)&lt;/em&gt;.它逐行读取字节码，使用各个存储区的数据和信息并执行指令，它可以分成三部分：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Interpreter：逐行解释字节码然后执行。缺点是当多处调用一个方法时，每次都需要解释步骤。&lt;/li&gt;
+&lt;li&gt;Just-in-Time Compiler(HotSpot)：用于提高解释器的效率，它编译整个字节码并将其转换为 &lt;em&gt;native&lt;/em&gt; 代码，每当解释器遇见重复的方法调用时，JIT 都会为该部分提供 &lt;em&gt;native&lt;/em&gt; 代码，因此不用解释器重复解释，从而提高了效率。&lt;/li&gt;
+&lt;li&gt;Garbage Collector：销毁未引用的对象，回收内存。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;java-native-interfacejni&#34;&gt;Java Native Interface（JNI）&lt;/h2&gt;
+&lt;p&gt;JNI 是与 &lt;em&gt;native&lt;/em&gt; 方法库交互的接口，它使 JVM 可以调用 C/C ++ 库。&lt;/p&gt;
+&lt;h2 id=&#34;native-method-libraries&#34;&gt;Native Method Libraries&lt;/h2&gt;
+&lt;p&gt;供执行引擎需要的 &lt;em&gt;native&lt;/em&gt; 代码库。&lt;/p&gt;
+&lt;h2 id=&#34;reference&#34;&gt;Reference&lt;/h2&gt;
+&lt;p&gt;JVM Run-Time Data Areas: &lt;a href=&#34;https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-2.html#jvms-2.5.4&#34;&gt;https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-2.html#jvms-2.5.4&lt;/a&gt;
+JVM architecture: &lt;a href=&#34;https://www.geeksforgeeks.org/jvm-works-jvm-architecture/&#34;&gt;https://www.geeksforgeeks.org/jvm-works-jvm-architecture/&lt;/a&gt;
+Class Loader: &lt;a href=&#34;https://www.baeldung.com/java-classloaders&#34;&gt;https://www.baeldung.com/java-classloaders&lt;/a&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>JVM Mechanics</title>
+      <link>https://zacash.cn/post/jvm-mechanics/</link>
+      <pubDate>Fri, 17 Jul 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://zacash.cn/post/jvm-mechanics/</guid>
+      <description>&lt;p&gt;Class 文件的结构&lt;/p&gt;
+&lt;h2 id=&#34;class-file&#34;&gt;Class File&lt;/h2&gt;
+&lt;h3 id=&#34;classfile-structure&#34;&gt;ClassFile structure&lt;/h3&gt;
+&lt;pre&gt;&lt;code class=&#34;language-class&#34; data-lang=&#34;class&#34;&gt;ClassFile {
+    u4 magic;
+    u2 minor_version;
+    u2 major_version;
+    u2 constant_pool_count;
+    cp_info constant_pool[constant_pool_count-1];
+    u2 access_flags;
+    u2 this_class;
+    u2 super_class;
+    u2 interfaces_count;
+    u2 interfaces[interfaces_count];
+    u2 fields_count;
+    field_info fields[fields_count];
+    u2 methods_count;
+    method_info methods[methods_count];
+    u2 attributes_count;
+    attribute_info attributes[attributes_count];
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;blockquote&gt;
+&lt;p&gt;The constant_pool is a table of structures representing various string constants, class and interface names, field names, and other constants that are referred to within the ClassFile structure and its substructures. The format of each constant_pool table entry is indicated by its first &amp;ldquo;tag&amp;rdquo; byte.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;em&gt;constant_pool&lt;/em&gt; 是一个结构表，表示字符串常量、class 和 interface 名称、field 名称以及 ClassFile 结构和其子结构中引用的常量。每个 &lt;em&gt;constant_pool&lt;/em&gt; 表条目的格式由其 &amp;ldquo;tag&amp;rdquo; 字节标识。&lt;/p&gt;
+&lt;h4 id=&#34;constant-pool&#34;&gt;constant pool&lt;/h4&gt;
+&lt;p&gt;Jvm 指令不依赖于类，接口，类实例或数组，相反，指令引用了 constant_pool 表中的符号信息（symbolic info）。常量池中的条目有如下的结构：&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-class&#34; data-lang=&#34;class&#34;&gt;cP_info {
+    u1 tag;
+    u1 info[];
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;tag 表示常量的类型，info 存储常量的值&lt;/p&gt;
+&lt;p&gt;tag 类型和对应的值：&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th align=&#34;center&#34;&gt;Constant Type&lt;/th&gt;
+&lt;th align=&#34;center&#34;&gt;Value&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td align=&#34;center&#34;&gt;CONSTANT_Class&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;7&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align=&#34;center&#34;&gt;CONSTANT_Fieldref&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;9&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align=&#34;center&#34;&gt;CONSTANT_Methodref&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;10&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align=&#34;center&#34;&gt;CONSTANT_InterfaceMethodref&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;11&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align=&#34;center&#34;&gt;CONSTANT_String&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;8&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align=&#34;center&#34;&gt;CONSTANT_Integer&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;3&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align=&#34;center&#34;&gt;CONSTANT_Float&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;4&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align=&#34;center&#34;&gt;CONSTANT_Long&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;5&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align=&#34;center&#34;&gt;CONSTANT_Double&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;6&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align=&#34;center&#34;&gt;CONSTANT_NameAndType&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;12&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align=&#34;center&#34;&gt;CONSTANT_Utf8&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;1&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h3 id=&#34;fields&#34;&gt;Fields&lt;/h3&gt;
+&lt;p&gt;&lt;em&gt;field_info&lt;/em&gt; 的结构：&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-class&#34; data-lang=&#34;class&#34;&gt;field_info {
+    u2 access_flags;
+    u2 name_index;
+    u2 descriptor_index;
+    u2 attributes_count;
+    attribute_info attributes[attributes_count];
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&#34;field-access_flags&#34;&gt;Field access_flags&lt;/h4&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Flag Name&lt;/th&gt;
+&lt;th&gt;Value&lt;/th&gt;
+&lt;th&gt;Interpretation&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;ACC_PUBLIC&lt;/td&gt;
+&lt;td&gt;0x0001&lt;/td&gt;
+&lt;td&gt;Declared public; may be accessed from outside its package.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;ACC_PRIVATE&lt;/td&gt;
+&lt;td&gt;0x0002&lt;/td&gt;
+&lt;td&gt;Declared private; usable only within the defining class.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;ACC_PROTECTED&lt;/td&gt;
+&lt;td&gt;0x0004&lt;/td&gt;
+&lt;td&gt;Declared protected; may be accessed within subclasses.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;ACC_STATIC&lt;/td&gt;
+&lt;td&gt;0x0008&lt;/td&gt;
+&lt;td&gt;Declared static.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;ACC_FINAL&lt;/td&gt;
+&lt;td&gt;0x0010&lt;/td&gt;
+&lt;td&gt;Declared final; no further assignment after initialization.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;ACC_VOLATILE&lt;/td&gt;
+&lt;td&gt;0x0040&lt;/td&gt;
+&lt;td&gt;Declared volatile; cannot be cached.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;ACC_TRANSIENT&lt;/td&gt;
+&lt;td&gt;0x0080&lt;/td&gt;
+&lt;td&gt;Declared transient; not written or read by a persistent object manager.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h3 id=&#34;methods&#34;&gt;Methods&lt;/h3&gt;
+&lt;p&gt;&lt;em&gt;method_info&lt;/em&gt; 的结构：&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-class&#34; data-lang=&#34;class&#34;&gt;method_info {
+    u2 access_flags;
+    u2 name_index;
+    u2 descriptor_index;
+    u2 attributes_count;
+    attribute_info attributes[attributes_count];
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&#34;method-access_flags&#34;&gt;Method access_flags&lt;/h4&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Flag Name&lt;/th&gt;
+&lt;th&gt;Value&lt;/th&gt;
+&lt;th&gt;Interpretation&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;ACC_PUBLIC&lt;/td&gt;
+&lt;td&gt;0x0001&lt;/td&gt;
+&lt;td&gt;Declared public; may be accessed from outside its package.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;ACC_PRIVATE&lt;/td&gt;
+&lt;td&gt;0x0002&lt;/td&gt;
+&lt;td&gt;Declared private; accessible only within the defining class.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;ACC_PROTECTED&lt;/td&gt;
+&lt;td&gt;0x0004&lt;/td&gt;
+&lt;td&gt;Declared protected; may be accessed within subclasses.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;ACC_STATIC&lt;/td&gt;
+&lt;td&gt;0x0008&lt;/td&gt;
+&lt;td&gt;Declared static.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;ACC_FINAL&lt;/td&gt;
+&lt;td&gt;0x0010&lt;/td&gt;
+&lt;td&gt;Declared final; may not be overridden.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;ACC_SYNCHRONIZED&lt;/td&gt;
+&lt;td&gt;0x0020&lt;/td&gt;
+&lt;td&gt;Declared synchronized; invocation is wrapped in a monitor lock.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;ACC_NATIVE&lt;/td&gt;
+&lt;td&gt;0x0100&lt;/td&gt;
+&lt;td&gt;Declared native; implemented in a language other than Java.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;ACC_ABSTRACT&lt;/td&gt;
+&lt;td&gt;0x0400&lt;/td&gt;
+&lt;td&gt;Declared abstract; no implementation is provided.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;ACC_STRICT&lt;/td&gt;
+&lt;td&gt;0x0800&lt;/td&gt;
+&lt;td&gt;Declared strictfp; floating-point mode is FP-strict&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id=&#34;interpreter-vs-compilers&#34;&gt;Interpreter vs Compilers&lt;/h2&gt;
+&lt;h3 id=&#34;interpreter&#34;&gt;Interpreter&lt;/h3&gt;
+&lt;p&gt;Fetch next bytecode, execute, repeat&lt;/p&gt;
+&lt;h3 id=&#34;compilers&#34;&gt;Compilers&lt;/h3&gt;
+&lt;p&gt;HotSpot has two compilers: JIT compiler and server compiler&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Convert entire methods into native code&lt;/li&gt;
+&lt;li&gt;Optimize(inlining, unboxing, loop optimization, etc)&lt;/li&gt;
+&lt;li&gt;Code calls back to &amp;ldquo;runtime&amp;rdquo; when necessary&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;compiling-for-jvm&#34;&gt;Compiling for JVM&lt;/h3&gt;
+&lt;p&gt;编译是将 Java 源码编译成 Jvm 指令集（instruction set）的过程，编译器（compiler）是实现这一过程的工具，有些场景编译器指代将 Jvm 指令集转到到特定 CPU 指令集的工具。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Intro to HashMap</title>
+      <link>https://zacash.cn/post/intro-to-hashmap/</link>
+      <pubDate>Wed, 15 Jul 2020 15:11:27 +0800</pubDate>
+      
+      <guid>https://zacash.cn/post/intro-to-hashmap/</guid>
+      <description>&lt;p&gt;Hash table based implementation of the Map interface.  This implementation provides all of the optional map operations, and permits null values and the null key.&lt;/p&gt;
+&lt;h2 id=&#34;hashmap-介绍&#34;&gt;HashMap 介绍&lt;/h2&gt;
+&lt;p&gt;The HashMap class is roughly equivalent to Hashtable, except that it is unsynchronized and permits nulls. This class makes no guarantees as to the order of the map; in particular, it does not guarantee that the order will remain constant over time.&lt;/p&gt;
+&lt;p&gt;HashMap 和 HashTable 大致等效，除了 HashMap 是非同步的，以及允许空值。无法保证顺序随着时间的推移保持不变。&lt;/p&gt;
+&lt;p&gt;This implementation provides &lt;strong&gt;constant-time&lt;/strong&gt; performance for the basic operations (get and put),assuming the hash function disperses the elements properly among the buckets.&lt;/p&gt;
+&lt;p&gt;假设 hash 函数将元素分散在正确的 bucket 中，HashMap 对于基本操作(get 或 put) 会提供恒定时间的性能。&lt;/p&gt;
+&lt;h3 id=&#34;何为-constant-time&#34;&gt;何为 constant time&lt;/h3&gt;
+&lt;p&gt;constant time 是表示时间复杂度的一个示例，常见时间复杂度的描述：&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Time complexity&lt;/th&gt;
+&lt;th&gt;Time description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;O(1)&lt;/td&gt;
+&lt;td&gt;Constant time&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;O(log n)&lt;/td&gt;
+&lt;td&gt;Logarithmic time&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;O(n)&lt;/td&gt;
+&lt;td&gt;Linear time&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;O(n log n)&lt;/td&gt;
+&lt;td&gt;Pseudo-linear time&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;O(n^c)&lt;/td&gt;
+&lt;td&gt;Polynomial time&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;O(c^n)&lt;/td&gt;
+&lt;td&gt;Exponential time&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;O(n!)&lt;/td&gt;
+&lt;td&gt;Factorial time&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Iteration over collection views requires time proportional to the &amp;ldquo;capacity&amp;rdquo; of the HashMap instance (the number of buckets) plus its size (the number of key-value mappings).&lt;/p&gt;
+&lt;p&gt;从集合视角看，迭代所需的时间与 HashMap 实例的“容量”（ bucket 数量 ）及其大小（键-值映射数）成正比。&lt;/p&gt;
+&lt;p&gt;Thus, it&amp;rsquo;s very important not to set the initial capacity too high (or the load factor too low) if iteration performance is important.&lt;/p&gt;
+&lt;p&gt;因此，如果迭代性能很重要，那么不要将初识容量设置过高（或负载因子设置过低），这很关键。&lt;/p&gt;
+&lt;p&gt;An instance of HashMap has two parameters that affect its performance：&lt;/p&gt;
+&lt;p&gt;有两个参数会影响 HashMap 实例的性能：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;initial capacity 初始容量&lt;/li&gt;
+&lt;li&gt;load factor 负载因子&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The capacity is the number of buckets in the hash table, and the initial capacity is simply the capacity at the time the hash table is created. The load factor is a measure of how full the hash table is allowed to get before its capacity is automatically increased.&lt;/p&gt;
+&lt;p&gt;容量是哈希表中 bucket 的数量，初始容量即是创建哈希表时的容量。负载因子用来评估哈希表填满的程度，以自动增长容量。&lt;/p&gt;
+&lt;p&gt;When the number of entries in the hash table exceeds the product of the load factor and the current capacity, the hash table is rehashed (that is, internal data structures are rebuilt) so that the hash table has approximately twice the number of buckets.&lt;/p&gt;
+&lt;p&gt;当哈希表中的条目数超过负载因子和当前容量的乘积时，哈希表将被重新映射（即内部数据结构将被重建），以使哈希表的 bucket 数大约为两倍。&lt;/p&gt;
+&lt;p&gt;As a general rule, the default load factor (0.75) offers a good tradeoff between time and space costs. Higher values decrease the space overhead but increase the lookup cost (reflected in most of the operations of the HashMap class, including get and put).&lt;/p&gt;
+&lt;p&gt;通常，默认负载因子（0.75）在时间和空间成本之间提供了一个很好的权衡。较高的值会减少空间开销，但会增加查找成本（反应在 HashMap 类的大多数操作中，包括 get 和 put）。&lt;/p&gt;
+&lt;p&gt;The expected number of entries in the map and its load factor should be taken into account when setting its initial capacity, so as to minimize the number of rehash operations.&lt;/p&gt;
+&lt;p&gt;设置其初始容量时，应考虑 map 中的预期条目数及其负载因子，以最大程度地减少重新映射操作的次数。&lt;/p&gt;
+&lt;p&gt;If the initial capacity is greater than the maximum number of entries divided by the load factor, no rehash operations will ever occur.&lt;/p&gt;
+&lt;p&gt;如果初始容量大于最大条目数除以负载因子，则将不会发生任何映射操作。&lt;/p&gt;
+&lt;p&gt;If many mappings are to be stored in a HashMap instance, creating it with a sufficiently large capacity will allow the mappings to be stored more efficiently than letting it perform automatic rehashing as needed to grow the table.&lt;/p&gt;
+&lt;p&gt;如果将许多映射关系存储在 HashMap 实例中，创建足够大容量的 map 将比让其按需自动增长哈希表重新映射，更有效的存储映射。&lt;/p&gt;
+&lt;p&gt;Note that using many keys with the same {@code hashCode()} is a sure way to slow down performance of any hash table. To ameliorate impact, when keys are {@link Comparable}, this class may use comparison order among keys to help break ties.&lt;/p&gt;
+&lt;p&gt;注意，使用许多具有相同 hashCode 的键是降低任何哈希表性能的方法。为了改善影响，当键是可比较时(Comparable)时，此类可以使用键之间的比较顺序来帮助打破平衡。&lt;/p&gt;
+&lt;p&gt;Note that this implementation is not synchronized. If multiple threads access a hash map concurrently, and at least one of the threads modifies the map structurally, it must be synchronized externally. (A structural modification is any operation that adds or deletes one or more mappings; merely changing the value associated with a key that an instance already contains is not a structural modification.) This is typically accomplished by synchronizing on some object that naturally encapsulates the map.&lt;/p&gt;
+&lt;p&gt;注意，这个实现并不是同步的。如果多线程同时访问 hash map，并且至少有一个线程在结构上修改了 map，则必须在外部进行同步。（结构型修改是指增删一个或多个映射关系，更新某个 key 对应的值并不是结构型修改）。通常是对封装 map 的某个对象加同步来实现。&lt;/p&gt;
+&lt;p&gt;If no such object exists, the map should be &amp;ldquo;wrapped&amp;rdquo; using the {@link Collections#synchronizedMap Collections.synchronizedMap} method.  This is best done at creation time, to prevent accidental unsynchronized access to the map: Map m = Collections.synchronizedMap(new HashMap(&amp;hellip;));&lt;/p&gt;
+&lt;p&gt;如果没有这样的对象存在，则应该使用 Collections.synchronizedMap 方法来包装 map，最好是在创建时完成，以避免意外不同步地访问 map：&lt;code&gt;Map m = Collections.synchronizedMap(new HashMap(...));&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;The iterators returned by all of this class&amp;rsquo;s &amp;ldquo;collection view methods&amp;rdquo; are fail-fast: if the map is structurally modified at any time after the iterator is created, in any way except through the iterator&amp;rsquo;s own remove method, the iterator will throw a {@link ConcurrentModificationException}.  Thus, in the face of concurrent modification, the iterator fails quickly and cleanly, rather than risking arbitrary, non-deterministic behavior at an undetermined time in the future.&lt;/p&gt;
+&lt;p&gt;此类的所有“集合视角方法”返回的迭代器都是 &lt;a href=&#34;https://whatis.techtarget.com/definition/fail-fast&#34;&gt;fast fail&lt;/a&gt; 的：在创建迭代器之后任何时刻对 map 结构进行了修改，除了通过迭代器自已的 remove 方法以外，该迭代器都会抛出 ConcurrentModificationException。因此，面对并发修改，迭代器会快速干净的 fail，而不是在未来的不确定时间冒着任意，不确定行为的风险。&lt;/p&gt;
+&lt;h3 id=&#34;何为-fast-fail&#34;&gt;何为 fast fail&lt;/h3&gt;
+&lt;p&gt;Note that the fail-fast behavior of an iterator cannot be guaranteed as it is, generally speaking, impossible to make any hard guarantees in the presence of unsynchronized concurrent modification.  Fail-fast iterators throw ConcurrentModificationException on a best-effort basis. Therefore, it would be wrong to write a program that depended on this exception for its correctness: the fail-fast behavior of iterators should be used only to detect bugs.&lt;/p&gt;
+&lt;p&gt;注意不能保证迭代器的 fast fail 行为，一般来说，在存在不同步的并发修改情况下，不可能作出任何严格的保证。因此，编写依赖于此异常的程序的正确性是错误的：迭代器的 fast fail 行为仅用于错误检测。&lt;/p&gt;
+&lt;p&gt;This class is a member of the Java Collections Framework&lt;a href=&#34;https://docs.oracle.com/javase/8/docs/technotes/guides/collections/index.html&#34;&gt;jcf&lt;/a&gt;&lt;/p&gt;</description>
     </item>
     
     <item>

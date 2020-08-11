@@ -7,10 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
     <copyright>Copyright © 2020, Copyright Zac</copyright>
-    <lastBuildDate>Mon, 10 Aug 2020 09:00:00 -0400</lastBuildDate>
+    <lastBuildDate>Tue, 11 Aug 2020 20:42:28 +0800</lastBuildDate>
     
 	<atom:link href="https://zacash.cn/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Interface Delegation</title>
+      <link>https://zacash.cn/post/interface-delegation/</link>
+      <pubDate>Tue, 11 Aug 2020 20:42:28 +0800</pubDate>
+      
+      <guid>https://zacash.cn/post/interface-delegation/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://codelabs.developers.google.com/codelabs/kotlin-bootcamp-classes/#7&#34;&gt;接口委托（Interface delegation）&lt;/a&gt; 是一种高级技术，接口的方法由 helper 或 delegate 对象实现，然后给别的类使用。当我们在一系列不相关的类中使用接口时，这项技术会很有用：我们将需要使用的接口的函数添加到单独的 helper 类中，别的类使用 helper 类的实例来实现这个函数。&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>Introducing Indigo</title>
@@ -28,6 +37,63 @@
       
       <guid>https://zacash.cn/post/lambdas-and-high-order-functions/</guid>
       <description>&lt;p&gt;除了传统命名的函数外，Kotlin 还支持 &lt;a href=&#34;https://kotlinlang.org/docs/reference/lambdas.html&#34;&gt;lambdas&lt;/a&gt;. &lt;em&gt;lambda&lt;/em&gt; 是组成函数的表达式，一个没有名称的函数。lambda 表达式可以作为数据传递。在其他语言中，lambda 被称为 &lt;em&gt;匿名函数（anonymous function）&lt;/em&gt;，&lt;em&gt;函数字面量（function literals）&lt;/em&gt; 或类似名称。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Use Hilt in Android</title>
+      <link>https://zacash.cn/post/use-hilt-in-android/</link>
+      <pubDate>Thu, 06 Aug 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://zacash.cn/post/use-hilt-in-android/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;If you want to use dagger in  your project, you may have 2 or 3 different sources, different samples, different blog posts. All of them use a different set-up, and all of them use Dagger in a different way, so it&amp;rsquo;s very difficult to understand all the topics and relate them together. So that&amp;rsquo;s why Google create a common guidance, a common ground.&lt;/p&gt;
+&lt;/blockquote&gt;</description>
+    </item>
+    
+    <item>
+      <title>Threads and Locks</title>
+      <link>https://zacash.cn/post/threads-and-locks/</link>
+      <pubDate>Mon, 27 Jul 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://zacash.cn/post/threads-and-locks/</guid>
+      <description>&lt;p&gt;Threads are created and managed by the classes Thread and ThreadGroup. Creating a Thread object creates a thread, and that is the only way to create a thread. When the thread is created, it is not yet active; it begins to run when its start method is called.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>WebSocket 和长轮询</title>
+      <link>https://zacash.cn/post/websocket-and-long-polling/</link>
+      <pubDate>Tue, 21 Jul 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://zacash.cn/post/websocket-and-long-polling/</guid>
+      <description>&lt;p&gt;客户端的网络请求大部分都建立在请求/响应模式的 HTTP/HTTPS 协议之下，AJAX 技术使页面看起来更加动态。尽管如此，所有的 HTTP 连接仍由客户端控制，需要用户交互或定时轮询（periodic polling）才能从服务端加载新数据。&lt;/p&gt;
+&lt;p&gt;通过长轮询，客户端打开与服务端的 HTTP 连接，并保持连接直到服务端返回响应，只要服务端有新的数据，它就会发送响应。然而这些技术有共同的问题：它们带有 HTTP 的开销，并不适合低延时应用的需求。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>JVM Architecture in A Nutshell</title>
+      <link>https://zacash.cn/post/jvm-arch-in-a-nutshell/</link>
+      <pubDate>Fri, 17 Jul 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://zacash.cn/post/jvm-arch-in-a-nutshell/</guid>
+      <description>&lt;p&gt;跨平台的本质是因为汇编指令的不同.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>JVM Mechanics</title>
+      <link>https://zacash.cn/post/jvm-mechanics/</link>
+      <pubDate>Fri, 17 Jul 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://zacash.cn/post/jvm-mechanics/</guid>
+      <description>&lt;p&gt;Class 文件的结构&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Intro to HashMap</title>
+      <link>https://zacash.cn/post/intro-to-hashmap/</link>
+      <pubDate>Wed, 15 Jul 2020 15:11:27 +0800</pubDate>
+      
+      <guid>https://zacash.cn/post/intro-to-hashmap/</guid>
+      <description>&lt;p&gt;Hash table based implementation of the Map interface.  This implementation provides all of the optional map operations, and permits null values and the null key.&lt;/p&gt;</description>
     </item>
     
     <item>

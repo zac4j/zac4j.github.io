@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     
     <title>Lambdas and High-order Functions | Zac&#39;s Blog</title>
-    <meta name="description" content="Lambdas and high-order function introduction">
+    <meta name="description" content="Lambdas and high-order functions introduction">
     <meta name="author" content="">
     
     <link rel="apple-touch-icon" sizes="180x180" href=https://zacash.cn/apple-touch-icon.png>
@@ -92,7 +92,8 @@ println(updateDirty(<span style="color:#ae81ff">20.</span> waterFilter))
 </code></pre></div><p>除了创建 lambda 外，我们还可以 b).传入常规的命名函数，只是与直接 lambda 变量不同，我们需要使用 <code>::</code> 操作符来传入命名函数的引用。</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-kotlin" data-lang="kotlin"><span style="color:#66d9ef">fun</span> <span style="color:#a6e22e">waterFilter</span>(dirty: Int): Int = dirty / <span style="color:#ae81ff">2</span>
 println(updateDirty(<span style="color:#ae81ff">40</span>, <span style="color:#f92672">::</span>waterFilter))
-</code></pre></div><h3 id="last-parameter-call-syntax">Last parameter call syntax</h3>
+</code></pre></div><p>这种单行的函数也称为 <em>compat functions</em> 或 <em>single-expression functions</em>，可以增加代码可读性。</p>
+<h3 id="last-parameter-call-syntax">Last parameter call syntax</h3>
 <p>Kotlin 倾向于将带有函数的任意参数作为最后一个入参。在使用高阶函数时，Kotlin 有一种特殊的语法，称为 <a href="https://kotlinlang.org/docs/reference/lambdas.html#passing-a-lambda-to-the-last-parameter">last parameter call syntax</a> 可以使代码更加简洁。这种情况下，我们可以传入一个 lambda 而无需放入括号内：</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-kotlin" data-lang="kotlin"><span style="color:#66d9ef">var</span> dirty = <span style="color:#ae81ff">60</span>
 dirty = updateDirty(dirty) { dirty -&gt; dirty / <span style="color:#ae81ff">2</span> }
@@ -142,7 +143,7 @@ println(dirty)
         </div>
         <div class="prev">
           
-          <a alt="Older article" href="https://zacash.cn/post/intro-to-hybrid-app/">Older &rarr;</a>
+          <a alt="Older article" href="https://zacash.cn/post/use-hilt-in-android/">Older &rarr;</a>
           
         </div>
       </nav>

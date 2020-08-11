@@ -7,10 +7,28 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
     <copyright>Copyright © 2020, Copyright Zac</copyright>
-    <lastBuildDate>Mon, 10 Aug 2020 09:00:00 -0400</lastBuildDate>
+    <lastBuildDate>Tue, 11 Aug 2020 20:42:28 +0800</lastBuildDate>
     
 	<atom:link href="https://zacash.cn/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>delegation</title>
+      <link>https://zacash.cn/tags/delegation/</link>
+      <pubDate>Tue, 11 Aug 2020 20:42:28 +0800</pubDate>
+      
+      <guid>https://zacash.cn/tags/delegation/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>interface</title>
+      <link>https://zacash.cn/tags/interface/</link>
+      <pubDate>Tue, 11 Aug 2020 20:42:28 +0800</pubDate>
+      
+      <guid>https://zacash.cn/tags/interface/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>indieweb</title>
@@ -45,6 +63,123 @@
       <pubDate>Sun, 09 Aug 2020 00:00:00 +0000</pubDate>
       
       <guid>https://zacash.cn/tags/lambda/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>dagger</title>
+      <link>https://zacash.cn/tags/dagger/</link>
+      <pubDate>Thu, 06 Aug 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://zacash.cn/tags/dagger/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>di</title>
+      <link>https://zacash.cn/tags/di/</link>
+      <pubDate>Thu, 06 Aug 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://zacash.cn/tags/di/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>hilt</title>
+      <link>https://zacash.cn/tags/hilt/</link>
+      <pubDate>Thu, 06 Aug 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://zacash.cn/tags/hilt/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>lock</title>
+      <link>https://zacash.cn/tags/lock/</link>
+      <pubDate>Mon, 27 Jul 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://zacash.cn/tags/lock/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>thread</title>
+      <link>https://zacash.cn/tags/thread/</link>
+      <pubDate>Mon, 27 Jul 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://zacash.cn/tags/thread/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>network</title>
+      <link>https://zacash.cn/tags/network/</link>
+      <pubDate>Tue, 21 Jul 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://zacash.cn/tags/network/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>polling</title>
+      <link>https://zacash.cn/tags/polling/</link>
+      <pubDate>Tue, 21 Jul 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://zacash.cn/tags/polling/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>websocket</title>
+      <link>https://zacash.cn/tags/websocket/</link>
+      <pubDate>Tue, 21 Jul 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://zacash.cn/tags/websocket/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>classloader</title>
+      <link>https://zacash.cn/tags/classloader/</link>
+      <pubDate>Fri, 17 Jul 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://zacash.cn/tags/classloader/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>jmm</title>
+      <link>https://zacash.cn/tags/jmm/</link>
+      <pubDate>Fri, 17 Jul 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://zacash.cn/tags/jmm/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>jvm</title>
+      <link>https://zacash.cn/tags/jvm/</link>
+      <pubDate>Fri, 17 Jul 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://zacash.cn/tags/jvm/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>data structure</title>
+      <link>https://zacash.cn/tags/data-structure/</link>
+      <pubDate>Wed, 15 Jul 2020 15:11:27 +0800</pubDate>
+      
+      <guid>https://zacash.cn/tags/data-structure/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>hashmap</title>
+      <link>https://zacash.cn/tags/hashmap/</link>
+      <pubDate>Wed, 15 Jul 2020 15:11:27 +0800</pubDate>
+      
+      <guid>https://zacash.cn/tags/hashmap/</guid>
       <description></description>
     </item>
     

@@ -66,149 +66,6 @@
       <article>
       <header>
         
-        <h2 class="list-title"><a href="https://zacash.cn/post/git-basic/">Git Basic</a></h2>
-        
-        <p class="list-post-date">
-          <time datetime="2020-05-15T15:55:52&#43;08:00">
-            15 May, 2020 at 15:55 CST
-          </time>
-        </p>
-      </header>
-      <div>
-        Problem Solving Authentication   Clear saved account &amp; password
-Error: fatal:Authentication failed for 'remote-url'
-git config --system --unset credential.helper
-  Save account &amp; password
-git config --global credential.helper store
-  Remote   Check remote url
-git remote -v
-  Update remote url
-git remote set-url origin newRepoUrl
-  
-      </div>
-      
-    </article>
-  
-  
-  
-      <article>
-      <header>
-        
-        <h2 class="list-title"><a href="https://zacash.cn/post/fragments/">Intro to Fragments</a></h2>
-        
-        <p class="list-post-date">
-          <time datetime="2020-05-07T20:30:50&#43;08:00">
-            7 May, 2020 at 20:30 CST
-          </time>
-        </p>
-      </header>
-      <div>
-        Activity 和 Fragment 生命周期的关联    Activity 状态 Fragment 生命周期方法回调 Fragment 状态     Created onAttach(), onCreate(), onCreateView(), onActivityCreated() Fragment 添加到 Activity 且视图已初始化   Started onStart() Fragment 活跃并可见   Resumed onResume() Fragment 活跃并获取焦点   Paused onPause() Fragment 暂停   Stopped onStop() Fragment 停止并不再可见   Destroyed onDestroyView(), onDestroy(), onDetach() Fragment 销毁    Fragment 重要的生命周期方法的使用  onAttach(): Fragment 在被 attach 到宿主 Activity 时回调，可以在该方法里检查宿主 Activity 是否实现了某个接口。 onCreateView(): Fragment 的 XML 布局在这个回调方法里初始化，系统调用这个方法来绘制 Fragment 的 UI。 onPause(): 可以在 Fragment 销毁前在该回调方法保存必要数据或状态。 onActivityCreated(): 在宿主 Activity 的 onCreate() 方法调用后回调该方法。可以在该方法做最终的初始化，如检索 View getView().
-      </div>
-      
-      <p><a class="read-more" href="https://zacash.cn/post/fragments/">Read more &rarr;</a></p>
-      
-    </article>
-  
-  
-  
-      <article>
-      <header>
-        
-        <h2 class="list-title"><a href="https://zacash.cn/post/intro-to-coroutines/">Intro to Coroutines</a></h2>
-        
-        <p class="list-post-date">
-          <time datetime="2020-04-25T11:40:03&#43;08:00">
-            25 April, 2020 at 11:40 CST
-          </time>
-        </p>
-      </header>
-      <div>
-        协程用来解决什么问题 Kotlin 的协程提供了一种全新的并发处理方式，我们可以使用它来简化安卓异步执行的代码。
-在 Android 平台上协程主要用来解决两个问题：
- 处理耗时任务(Long running tasks) 保证主线程安全(Main-safety)  处理耗时任务 我们常规处理耗时任务是通过异步回调的方式，比如：
-fun fetchDoc() { get(&#34;https://doc.qq.com&#34;) { result -&gt; show(result) } } 通过协程的方式是这样：
-// 主线程执行 suspend fun fetchDoc() { // 直接返回结果  val result = get(&#34;https://doc.qq.com&#34;) show(result) } // 主线程执行 suspend fun get(url: String) = withContext(Dispatchers.IO) { /*IO 线程池执行*/ } 可以看到通过协程可以直接返回请求结果，而不用管理请求延迟和线程阻塞，这是如何实现的呢？
-协程在常规的函数操作 —— invoke 和 return 之外，还新增了2项：
- suspend —— 称为挂起或暂停，用于暂停执行当前协程，并保存所有局部变量 resume —— 让暂停的协程继续执行  那么 suspend 是如何实现的呢？
-      </div>
-      
-      <p><a class="read-more" href="https://zacash.cn/post/intro-to-coroutines/">Read more &rarr;</a></p>
-      
-    </article>
-  
-  
-  
-      <article>
-      <header>
-        
-        <h2 class="list-title"><a href="https://zacash.cn/post/activity-launch/">Activity Start</a></h2>
-        
-        <p class="list-post-date">
-          <time datetime="2020-04-22T08:10:27&#43;08:00">
-            22 April, 2020 at 08:10 CST
-          </time>
-        </p>
-      </header>
-      <div>
-        Task and Back Stack Task 就是执行某项任务时开启的一系列 Activity 的集合，这些 Activity 会按照打开的顺序排列在回退栈 (Back Stack) 中。
-Activity 的四种启动模式 (launchMode) 如通过 startActivity(Intent) 启动 Activity A
- standard 模式：标准模式，创建 Activity A 实例并 push 到当前任务栈中 singleTop 模式：栈顶复用模式，如果当前栈顶是 Activity A ，直接复用并调用 onNewIntent(Intent)方法，不会创建新的实例 singleTask 模式：栈内复用模式，如果当前栈内含有 Activity A ，直接复用并调用 onNewIntent(Intent)方法，并清除栈内 Activity A 上方的所有 Activity 实例 singleInstance 模式：在新的任务栈开启 Activity A，如果新的任务栈和 Activity A 已创建，继续开启 Activity A 会调用其 onNewIntent(Intent)方法。  三种 Intent 标记 startActivity(Intent) 方法可以添加 3 种 Intent 标记：
-  FLAG_ACTIVITY_NEW_TASK
-      </div>
-      
-      <p><a class="read-more" href="https://zacash.cn/post/activity-launch/">Read more &rarr;</a></p>
-      
-    </article>
-  
-  
-  
-      <article>
-      <header>
-        
-        <h2 class="list-title"><a href="https://zacash.cn/post/handler-in-action/">Handler in Action</a></h2>
-        
-        <p class="list-post-date">
-          <time datetime="2020-04-14T21:53:54&#43;08:00">
-            14 April, 2020 at 21:53 CST
-          </time>
-        </p>
-      </header>
-      <div>
-        Memory Leaks 1.1 背景 1.Handler 在使用下面这种实现方式处理消息时:
-class MainActivity : Activity() { private val mLeakedHandler = object : Handler() { override fun handleMessage(msg: Message) { super.handleMessage(msg) } } Android Lint 会发出这样的警告: This Handler class should be static or leaks might occur(anonymous android.os.Handler)
-2.我们在 Handler 构造方法里同样可以看到：
-public Handler(@Nullable Callback callback, boolean async) { if (FIND_POTENTIAL_LEAKS) { final Class&lt;? extends Handler&gt; klass = getClass(); if ((klass.isAnonymousClass() || klass.isMemberClass() || klass.isLocalClass()) &amp;&amp; (klass.getModifiers() &amp; Modifier.
-      </div>
-      
-      <p><a class="read-more" href="https://zacash.cn/post/handler-in-action/">Read more &rarr;</a></p>
-      
-    </article>
-  
-  
-  
-      <article>
-      <header>
-        
-        <h2 class="list-title"><a href="https://zacash.cn/post/linked-list/">Linked List</a></h2>
-        
-        <p class="list-post-date">
-          <time datetime="2020-04-14T18:48:34&#43;08:00">
-            14 April, 2020 at 18:48 CST
-          </time>
-        </p>
-      </header>
-      <div>
-        
-      </div>
-      
-    </article>
-  
-  
-  
-      <article>
-      <header>
-        
         <h2 class="list-title"><a href="https://zacash.cn/post/handler-in-code/">Handler in Code</a></h2>
         
         <p class="list-post-date">
@@ -276,11 +133,9 @@ Fatal Exception: java.
       <article>
       <header>
         
-        <h2 class="list-title"><a href="https://zacash.cn/post/hello-world/">Hello World</a></h2>
-        
         <p class="list-post-date">
-          <time datetime="2020-02-04T12:12:08&#43;08:00">
-            4 February, 2020 at 12:12 CST
+          <time datetime="0001-01-01T00:00:00Z">
+            1 January, 0001 at 00:00 UTC
           </time>
         </p>
       </header>
