@@ -66,6 +66,30 @@
       <article>
       <header>
         
+        <h2 class="list-title"><a href="https://zacash.cn/post/check-state-loss/">Check State Loss</a></h2>
+        
+        <p class="list-post-date">
+          <time datetime="2020-02-11T16:30:26&#43;08:00">
+            11 February, 2020 at 16:30 CST
+          </time>
+        </p>
+      </header>
+      <div>
+        背景 最近做的一个 DialogFragment 在少数设备上会偶发闪退，Fabric 上的 Stacktrace 信息如下：
+Fatal Exception: java.lang.IllegalStateException: Can not perform this action after onSaveInstanceState at android.support.v4.app.FragmentManagerImpl.checkStateLoss(SourceFile) at android.support.v4.app.FragmentManagerImpl.enqueueAction(SourceFile) at android.support.v4.app.BackStackRecord.commitInternal(SourceFile) at android.support.v4.app.BackStackRecord.commit(SourceFile) at android.support.v4.app.DialogFragment.show(SourceFile） 看起来是弹窗在 show 的时候，发生了 state loss，粗略 copy 了下 StackOverflow 上的回答，做了如下修改：
+fun show(manager: FragmentManager?) { try { val ft = manager?.beginTransaction() ft?.add(this, &#34;tag of dialog&#34;) ft?.commitAllowingStateLoss() } catch (e: Exception) { } } 重写了 show 方法，允许 state loss，并加了异常捕捉，后续观察 Fabric， show 的时候的确没再出现异常情况，但 dismiss 的时候还是有闪退出现，异常信息如下：
+Fatal Exception: java.
+      </div>
+      
+      <p><a class="read-more" href="https://zacash.cn/post/check-state-loss/">Read more &rarr;</a></p>
+      
+    </article>
+  
+  
+  
+      <article>
+      <header>
+        
         <h2 class="list-title"><a href="https://zacash.cn/post/hello-world/">Hello World</a></h2>
         
         <p class="list-post-date">

@@ -18,7 +18,7 @@
       <pubDate>Tue, 11 Aug 2020 20:42:28 +0800</pubDate>
       
       <guid>https://zacash.cn/post/interface-delegation/</guid>
-      <description>&lt;p&gt;&lt;a href=&#34;https://codelabs.developers.google.com/codelabs/kotlin-bootcamp-classes/#7&#34;&gt;接口委托（Interface delegation）&lt;/a&gt; 是一种高级技术，接口的方法由 helper 或 delegate 对象实现，然后给别的类使用。当我们在一系列不相关的类中使用接口时，这项技术会很有用：我们将需要使用的接口的函数添加到单独的 helper 类中，别的类使用 helper 类的实例来实现这个函数。&lt;/p&gt;</description>
+      <description>&lt;p&gt;&lt;a href=&#34;https://codelabs.developers.google.com/codelabs/kotlin-bootcamp-classes/#7&#34;&gt;接口委托（Interface delegation）&lt;/a&gt; 是一种&amp;quot;高级&amp;quot;技术，接口的方法由 helper 或 delegate 对象实现，然后给别的类使用。当我们在一系列不相关的类中使用接口时，这项技术会很有用：我们将需要使用的接口的函数添加到单独的 helper 类中，别的类使用 helper 类的实例来实现这个函数。&lt;/p&gt;</description>
     </item>
     
   </channel>

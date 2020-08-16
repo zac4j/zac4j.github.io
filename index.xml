@@ -17,7 +17,7 @@
       <pubDate>Tue, 11 Aug 2020 20:42:28 +0800</pubDate>
       
       <guid>https://zacash.cn/post/interface-delegation/</guid>
-      <description>&lt;p&gt;&lt;a href=&#34;https://codelabs.developers.google.com/codelabs/kotlin-bootcamp-classes/#7&#34;&gt;接口委托（Interface delegation）&lt;/a&gt; 是一种高级技术，接口的方法由 helper 或 delegate 对象实现，然后给别的类使用。当我们在一系列不相关的类中使用接口时，这项技术会很有用：我们将需要使用的接口的函数添加到单独的 helper 类中，别的类使用 helper 类的实例来实现这个函数。&lt;/p&gt;
+      <description>&lt;p&gt;&lt;a href=&#34;https://codelabs.developers.google.com/codelabs/kotlin-bootcamp-classes/#7&#34;&gt;接口委托（Interface delegation）&lt;/a&gt; 是一种&amp;quot;高级&amp;quot;技术，接口的方法由 helper 或 delegate 对象实现，然后给别的类使用。当我们在一系列不相关的类中使用接口时，这项技术会很有用：我们将需要使用的接口的函数添加到单独的 helper 类中，别的类使用 helper 类的实例来实现这个函数。&lt;/p&gt;
 &lt;h2 id=&#34;define-interface&#34;&gt;Define interface&lt;/h2&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-kotlin&#34; data-lang=&#34;kotlin&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;/**
 &lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt; * Define fish action interface.

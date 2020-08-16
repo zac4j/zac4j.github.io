@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>generic on Zac&#39;s Blog</title>
+    <link>https://zacash.cn/tags/generic/</link>
+    <description>Recent content in generic on Zac&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-US</language>
+    <copyright>Copyright © 2020, Copyright Zac</copyright>
+    <lastBuildDate>Fri, 14 Aug 2020 07:27:09 +0800</lastBuildDate>
+    
+	<atom:link href="https://zacash.cn/tags/generic/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Generics in Kotlin</title>
+      <link>https://zacash.cn/post/generics-in-kotlin/</link>
+      <pubDate>Fri, 14 Aug 2020 07:27:09 +0800</pubDate>
+      
+      <guid>https://zacash.cn/post/generics-in-kotlin/</guid>
+      <description>&lt;p&gt;val 和 var 与 variables 的 VALUES 相关，val 保护变量的值不变。in 和 out 与 variables 的 TYPES 相关，in 和 out 保证在范型的使用中，只有安全的类型才能传入或传出函数。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>
