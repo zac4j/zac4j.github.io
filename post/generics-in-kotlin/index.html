@@ -165,6 +165,59 @@ Found: Aquarium&lt;TapWater&gt;
 <h3 id="make-extension-functions">Make extension functions</h3>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-kotlin" data-lang="kotlin"><span style="color:#66d9ef">inline</span> <span style="color:#66d9ef">fun</span> &lt;reified T: WaterSupply&gt; <span style="color:#a6e22e">Aquarium</span>&lt;*&gt;.isOfType() = waterSupply <span style="color:#66d9ef">is</span> T
 </code></pre></div><p><a href="https://kotlinlang.org/docs/reference/generics.html#star-projections">Star-projections</a> 很像 Java 编程中的 raw types，不过更加安全。</p>
+<h2 id="inline-functions">inline functions</h2>
+<p>Lambdas 和高阶函数都很有用，但我们应该了解一个事实：Lambda 是对象。Lambda 表达式是 <code>Function</code> 接口的实例，<code>Function</code> 接口是 <code>Object</code> 的子类。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-kotlin" data-lang="kotlin"><span style="color:#75715e">/**
+</span><span style="color:#75715e"> * 自定义 with 函数，接收 [name] 字符串，执行 name.block() 函数
+</span><span style="color:#75715e"> */</span>
+<span style="color:#66d9ef">fun</span> <span style="color:#a6e22e">customWith</span>(name: String, block: String.() -&gt; Unit) {
+  name.block()
+}
+
+<span style="color:#75715e">/**
+</span><span style="color:#75715e"> * 调用 customWith 函数，并将 fish.name 首字母大写
+</span><span style="color:#75715e"> */</span>
+customWith(fish.name) {
+  capitalize()
+}
+</code></pre></div><p>上面调用 <code>customWith</code> 函数实际的实现像这样：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-kotlin" data-lang="kotlin">customWith(fish.name, <span style="color:#66d9ef">object</span>: Function1&lt;String, Unit&gt;) {
+  <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">fun</span> <span style="color:#a6e22e">invoke</span>(name: String) {
+    name.capitalize()
+  }
+}
+</code></pre></div><p>通常这不是问题，因为创建对象和调用函数不会产生太多的开销。不过假如 <code>customWith</code> 函数在非常多的地方都有调用，那么开销就会多起来。</p>
+<p>Kotlin 提供 <code>inline</code> 作为处理这种情况的一种方式，通过增加编译器的工作来减少运行时的开销。将函数标记为 <code>inline</code> 意味着每次调用该函数时，编译器实际上会将源码转换为内联函数。</p>
+<p>比如我们在使用 <code>customWith</code> 时标记为 <code>inline</code>：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-kotlin" data-lang="kotlin"><span style="color:#66d9ef">inline</span> customWith(fish.name) {
+  capitalize()
+}
+</code></pre></div><p>它转换后像这样：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-kotlin" data-lang="kotlin">fish.name.capitalize()
+</code></pre></div><p>需要注意的是，内联大型函数会增加代码大小，因此 <code>inline</code> 适用于多次使用的简单的函数，如 <code>customWith</code>。</p>
+<h2 id="sam">SAM</h2>
+<p><em>Single Abstract Method(SAM)</em> 即表示只有一个方法的接口。在 Java 编写 API 时非常常见，比如 <code>Runnable</code> 接口，只定义了一个 <code>run()</code> 方法，<code>Callable</code> 接口，定义了一个 <code>call()</code> 方法。</p>
+<p>我们定义个 SAM：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">JavaRun</span> <span style="color:#f92672">{</span>
+  <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">runNow</span><span style="color:#f92672">(</span>Runnable runnable<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+    runnable<span style="color:#f92672">.</span><span style="color:#a6e22e">run</span><span style="color:#f92672">();</span>
+  <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><p>在 Kotlin 中调用该函数：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-kotlin" data-lang="kotlin"><span style="color:#66d9ef">val</span> runnable = <span style="color:#66d9ef">object</span>: Runnable {
+  <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">fun</span> <span style="color:#a6e22e">run</span>() {
+    println(<span style="color:#e6db74">&#34;I&#39;m a Runnable&#34;</span>)
+  }
+}
+
+JavaNow.runNow(runnable)
+</code></pre></div><p>Kotlin 提供的 SAM 机制会提示缩减代码：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-kotlin" data-lang="kotlin">JavaNow.runNow {
+  println(<span style="color:#e6db74">&#34;Lambda as a Runnable&#34;</span>)
+}
+</code></pre></div><p>SAM 的模版像这样：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-kotlin" data-lang="kotlin">Class.singleAbstractMethod {lambda_of_override}
+</code></pre></div>
         </section>
         <footer>
             <a class="permalink u-url" href="https://zacash.cn/post/generics-in-kotlin/">🔗</a>
