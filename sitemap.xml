@@ -3,6 +3,21 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://zacash.cn/post/databinding-in-android/</loc>
+    <lastmod>2020-08-23T08:37:45+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://zacash.cn/post/</loc>
+    <lastmod>2020-08-23T08:37:45+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://zacash.cn/</loc>
+    <lastmod>2020-08-23T08:37:45+08:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://zacash.cn/tags/delegation/</loc>
     <lastmod>2020-08-11T20:42:28+08:00</lastmod>
   </url>
@@ -18,17 +33,7 @@
   </url>
   
   <url>
-    <loc>https://zacash.cn/post/</loc>
-    <lastmod>2020-08-11T20:42:28+08:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://zacash.cn/tags/</loc>
-    <lastmod>2020-08-11T20:42:28+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://zacash.cn/</loc>
     <lastmod>2020-08-11T20:42:28+08:00</lastmod>
   </url>
   

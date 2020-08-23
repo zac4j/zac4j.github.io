@@ -69,6 +69,35 @@
     <article>
       <header>
         
+        <h2 class="list-title"><a href="https://zacash.cn/post/intro-to-hybrid-app/">Intro to Hybrid App</a></h2>
+        
+        <p class="list-post-date">
+          <time datetime="2020-07-04T15:45:14&#43;08:00">
+            4 July, 2020 at 15:45 CST
+          </time>
+        </p>
+      </header>
+      <div>
+        Hybrid App 的几种方案   PhoneGap/Cordova
+WebView 作为用户界面，以 Javascript 作为基本逻辑，以及和中间件通信，再由中间件访问底层 API 的方式，进行 App 开发。
+  React Native/Weex
+使用前端技术开发，通过 JSBridge 将 Javascript 代码解析的 Virtual DOM 传递到 Native 并使用原生进行渲染。
+  Native/H5 混合开发
+在原生的架构基础上，嵌入 WebView 业务逻辑，一般有 Native 和 Web 前端开发人员组成。Native 写好基本的架构以及 API 让 Web 开发人员开发页面以及大部分渲染。
+  PhoneGap/Cordova PhoneGap 由 Apache 接管后改名为 Cordova，实际上是一个项目。Cordova 其实不应该称为 Hybrid 方案。因为，它的目标是全面使用前端技术开发移动应用，而不是前端和原生混合使用。不过，这些框架和 React Native 的目标是一致的：使用前端技术开发移动应用，提高工程效率。
+Cordova 让前端技术尽可能多的完成开发工作，只有在前端无法直接调用的原生系统功能方面提供了前端可用的接口。主流的 Cordova 项目都将业务逻辑实现在一个 WebView 中，目标是让开发者使用前端技术就能完成一个应用开发。这种做法需要一个前提——前端技术可以解决移动开发的所有需求。
+Cordova 架构图  Web App 是开发人员编写代码的地方，应用以网页的形式呈现，在一个 index.
+      </div>
+      
+      <p><a class="read-more" href="https://zacash.cn/post/intro-to-hybrid-app/">Read more &rarr;</a></p>
+      
+    </article>
+
+
+
+    <article>
+      <header>
+        
         <h2 class="list-title"><a href="https://zacash.cn/post/intro-to-service/">Intro to Service</a></h2>
         
         <p class="list-post-date">
@@ -284,30 +313,6 @@ Activity 的四种启动模式 (launchMode) 如通过 startActivity(Intent) 启�
       </div>
       
       <p><a class="read-more" href="https://zacash.cn/post/activity-launch/">Read more &rarr;</a></p>
-      
-    </article>
-
-
-
-    <article>
-      <header>
-        
-        <h2 class="list-title"><a href="https://zacash.cn/post/handler-in-action/">Handler in Action</a></h2>
-        
-        <p class="list-post-date">
-          <time datetime="2020-04-14T21:53:54&#43;08:00">
-            14 April, 2020 at 21:53 CST
-          </time>
-        </p>
-      </header>
-      <div>
-        Memory Leaks 1.1 背景 1.Handler 在使用下面这种实现方式处理消息时:
-class MainActivity : Activity() { private val mLeakedHandler = object : Handler() { override fun handleMessage(msg: Message) { super.handleMessage(msg) } } Android Lint 会发出这样的警告: This Handler class should be static or leaks might occur(anonymous android.os.Handler)
-2.我们在 Handler 构造方法里同样可以看到：
-public Handler(@Nullable Callback callback, boolean async) { if (FIND_POTENTIAL_LEAKS) { final Class&lt;? extends Handler&gt; klass = getClass(); if ((klass.isAnonymousClass() || klass.isMemberClass() || klass.isLocalClass()) &amp;&amp; (klass.getModifiers() &amp; Modifier.
-      </div>
-      
-      <p><a class="read-more" href="https://zacash.cn/post/handler-in-action/">Read more &rarr;</a></p>
       
     </article>
 

@@ -69,6 +69,30 @@
     <article>
       <header>
         
+        <h2 class="list-title"><a href="https://zacash.cn/post/handler-in-action/">Handler in Action</a></h2>
+        
+        <p class="list-post-date">
+          <time datetime="2020-04-14T21:53:54&#43;08:00">
+            14 April, 2020 at 21:53 CST
+          </time>
+        </p>
+      </header>
+      <div>
+        Memory Leaks 1.1 背景 1.Handler 在使用下面这种实现方式处理消息时:
+class MainActivity : Activity() { private val mLeakedHandler = object : Handler() { override fun handleMessage(msg: Message) { super.handleMessage(msg) } } Android Lint 会发出这样的警告: This Handler class should be static or leaks might occur(anonymous android.os.Handler)
+2.我们在 Handler 构造方法里同样可以看到：
+public Handler(@Nullable Callback callback, boolean async) { if (FIND_POTENTIAL_LEAKS) { final Class&lt;? extends Handler&gt; klass = getClass(); if ((klass.isAnonymousClass() || klass.isMemberClass() || klass.isLocalClass()) &amp;&amp; (klass.getModifiers() &amp; Modifier.
+      </div>
+      
+      <p><a class="read-more" href="https://zacash.cn/post/handler-in-action/">Read more &rarr;</a></p>
+      
+    </article>
+
+
+
+    <article>
+      <header>
+        
         <h2 class="list-title"><a href="https://zacash.cn/post/handler-in-code/">Handler in Code</a></h2>
         
         <p class="list-post-date">

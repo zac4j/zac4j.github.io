@@ -59,8 +59,8 @@
             <h1 class="post-title p-name">Data Binding in Android</h1>
             
             <p class="post-date">Posted on
-                <time class="dt-published" datetime="2020-07-11T08:37:45&#43;08:00">
-                    11 July, 2020 at 08:37 CST
+                <time class="dt-published" datetime="2020-08-23T08:37:45&#43;08:00">
+                    23 August, 2020 at 08:37 CST
                 </time>  by <a href="https://zacash.cn" class="p-author h-card"
                     rel="author">Zac</a>
             </p>
@@ -68,16 +68,18 @@
             
         </header>
         <section class="content e-content">
-            <h2 id="findviewbyid-vs-databinding">findViewById vs. DataBinding</h2>
-<p>DataBinding 在编译时(compile time)会检查引用是否为空，相反 findViewById 并不会，从而可能引发运行时崩溃。</p>
-<h2 id="observable">observable</h2>
-<p>通过 DataBinding，observable 的值改变时，绑定该值的 UI 元素也会自动更新，有很多方式实现这种 observability：</p>
+            <p>每次在 view 发生创建或重建，我们使用 <code>findViewById()</code> 来获取 view 的引用时，Android 系统在运行时会遍历整个视图层级结构（view hierarchy）来查找它。在我们 app 的视图结构比较简单时没有问题，但是生产上的 app 一个 layout 可能有几十个 views，即使是最佳设计，也会存在嵌套的 views.</p>
+<h2 id="intro-to-databinding">Intro to DataBinding</h2>
+<p>对于庞大或较深的视图层级结构，查找 view 可能耗费很多时间，从而可能明显降低 app 的响应速度。我们可以在变量中缓存这些 view 的引用，但这需要我们在每个 Activity/Fragment 中对于每个 view 都创建变量来暂存引用。</p>
+<p>另一种方案是创建一个对象包含每个 view 的引用。整个对象，称为 <em>绑定对象（binding object）</em>，可以被整个 app 使用。这项技术被称为 <em>数据绑定（data binding）</em>。当 app 的绑定对象创建后，我们可以通过绑定对象访问 views，或别的数据，而不用遍历整个 view hierarchy 来查找它们。</p>
+<h2 id="findviewbyid-vs-databinding">findViewById vs. DataBinding</h2>
+<p>Data binding 有如下优势：</p>
 <ul>
-<li>observable classes</li>
-<li>observable fields</li>
-<li>LiveData</li>
+<li>与 <code>findView</code> 相比代码更简洁，更易于阅读和维护。</li>
+<li>数据和 views 明确分离，</li>
+<li>Android 系统在 app 启动时仅遍历 view hierarchy 一次即可获取每个 view 的引用，而不是像 <code>findView</code> 在运行时获取 view 引用。</li>
+<li>我们可以 <a href="https://en.wikipedia.org/wiki/Type_safety">type safety</a> 访问 views。（Type safety 意味着编译器在编译时会验证类型，如果我们将错误的类型分配给变量，则会引发编译错误。）</li>
 </ul>
-
         </section>
         <footer>
             <a class="permalink u-url" href="https://zacash.cn/post/databinding-in-android/">🔗</a>
@@ -105,7 +107,7 @@
       <nav id="article-skip">
         <div class="next">
           
-          <a alt="Newer article" href="https://zacash.cn/post/intro-to-hashmap/">&larr; Newer</a>
+          <p>&nbsp;</p>
           
         </div>
         <div class="top">
@@ -113,7 +115,7 @@
         </div>
         <div class="prev">
           
-          <a alt="Older article" href="https://zacash.cn/post/how-are-touch-events-delivered/">Older &rarr;</a>
+          <a alt="Older article" href="https://zacash.cn/post/interface-delegation/">Older &rarr;</a>
           
         </div>
       </nav>

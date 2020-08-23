@@ -6,10 +6,30 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
     <copyright>Copyright © 2020, Copyright Zac</copyright>
-    <lastBuildDate>Tue, 11 Aug 2020 20:42:28 +0800</lastBuildDate>
+    <lastBuildDate>Sun, 23 Aug 2020 08:37:45 +0800</lastBuildDate>
     
         <atom:link href="https://zacash.cn/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Data Binding in Android</title>
+      <link>https://zacash.cn/post/databinding-in-android/</link>
+      <pubDate>Sun, 23 Aug 2020 08:37:45 +0800</pubDate>
+      
+      <guid>https://zacash.cn/post/databinding-in-android/</guid>
+      <description>&lt;p&gt;每次在 view 发生创建或重建，我们使用 &lt;code&gt;findViewById()&lt;/code&gt; 来获取 view 的引用时，Android 系统在运行时会遍历整个视图层级结构（view hierarchy）来查找它。在我们 app 的视图结构比较简单时没有问题，但是生产上的 app 一个 layout 可能有几十个 views，即使是最佳设计，也会存在嵌套的 views.&lt;/p&gt;
+&lt;h2 id=&#34;intro-to-databinding&#34;&gt;Intro to DataBinding&lt;/h2&gt;
+&lt;p&gt;对于庞大或较深的视图层级结构，查找 view 可能耗费很多时间，从而可能明显降低 app 的响应速度。我们可以在变量中缓存这些 view 的引用，但这需要我们在每个 Activity/Fragment 中对于每个 view 都创建变量来暂存引用。&lt;/p&gt;
+&lt;p&gt;另一种方案是创建一个对象包含每个 view 的引用。整个对象，称为 &lt;em&gt;绑定对象（binding object）&lt;/em&gt;，可以被整个 app 使用。这项技术被称为 &lt;em&gt;数据绑定（data binding）&lt;/em&gt;。当 app 的绑定对象创建后，我们可以通过绑定对象访问 views，或别的数据，而不用遍历整个 view hierarchy 来查找它们。&lt;/p&gt;
+&lt;h2 id=&#34;findviewbyid-vs-databinding&#34;&gt;findViewById vs. DataBinding&lt;/h2&gt;
+&lt;p&gt;Data binding 有如下优势：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;与 &lt;code&gt;findView&lt;/code&gt; 相比代码更简洁，更易于阅读和维护。&lt;/li&gt;
+&lt;li&gt;数据和 views 明确分离，&lt;/li&gt;
+&lt;li&gt;Android 系统在 app 启动时仅遍历 view hierarchy 一次即可获取每个 view 的引用，而不是像 &lt;code&gt;findView&lt;/code&gt; 在运行时获取 view 引用。&lt;/li&gt;
+&lt;li&gt;我们可以 &lt;a href=&#34;https://en.wikipedia.org/wiki/Type_safety&#34;&gt;type safety&lt;/a&gt; 访问 views。（Type safety 意味着编译器在编译时会验证类型，如果我们将错误的类型分配给变量，则会引发编译错误。）&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
     
     <item>
       <title>Interface Delegation</title>
