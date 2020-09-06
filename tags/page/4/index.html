@@ -66,6 +66,49 @@
       <article>
       <header>
         
+        <h2 class="list-title"><a href="https://zacash.cn/post/handler-in-code/">Handler in Code</a></h2>
+        
+        <p class="list-post-date">
+          <time datetime="2020-04-12T20:36:33&#43;08:00">
+            12 April, 2020 at 20:36 CST
+          </time>
+        </p>
+      </header>
+      <div>
+        Handler 的创建  在主线程(UI Thread)中：  class MainActivity : Activity { private val mLeakedHandler = object : Handler() { override fun handleMessage(msg: Message) { super.handleMessage(msg) } } }  在子线程中：  val thread = object : Thread() { override fun run() { Looper.prepare() val handler = object : Handler() { override fun handleMessage(msg: Message) { super.handleMessage(msg) } } Looper.loop() } } 为什么在子线程创建 Handler 需要准备 Looper，而主线程却不用 因为 ActivityThread 中的 main() 方法已经为我们初始化了 Looper
+      </div>
+      
+      <p><a class="read-more" href="https://zacash.cn/post/handler-in-code/">Read more &rarr;</a></p>
+      
+    </article>
+  
+  
+  
+      <article>
+      <header>
+        
+        <h2 class="list-title"><a href="https://zacash.cn/post/hugo-basic/">Hugo Basic</a></h2>
+        
+        <p class="list-post-date">
+          <time datetime="2020-04-04T09:25:04&#43;08:00">
+            4 April, 2020 at 09:25 CST
+          </time>
+        </p>
+      </header>
+      <div>
+        Add new content hugo new posts/article-name.md
+Article meta info --- title: &#34;New Article&#34; date: 2020-04-04T09:25:04+08:00 description: &#34;Hugo 的简单用法&#34; tags: [&#34;hugo&#34;, &#34;pages&#34;] categories: [&#34;hugo&#34;] draft: true --- Start server with drafts enabled hugo server -D
+Customize the theme Open up config.toml in a text editor:
+baseURL = &#34;https://example.org/&#34; languageCode = &#34;en-us&#34; title = &#34;My New Hugo Site&#34; theme = &#34;ananke&#34; Build static pages hugo -D output will be in ./public/ directory by default (-d/--destination flag to change it, or set publishdir in the config file)
+      </div>
+      
+    </article>
+  
+  
+  
+      <article>
+      <header>
+        
         <h2 class="list-title"><a href="https://zacash.cn/post/check-state-loss/">Check State Loss</a></h2>
         
         <p class="list-post-date">

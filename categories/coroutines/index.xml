@@ -13,11 +13,11 @@
     
     
     <item>
-      <title>Intro to Coroutines</title>
-      <link>https://zacash.cn/post/intro-to-coroutines/</link>
+      <title>Coroutines Introduction</title>
+      <link>https://zacash.cn/post/coroutines-introduction/</link>
       <pubDate>Sat, 25 Apr 2020 11:40:03 +0800</pubDate>
       
-      <guid>https://zacash.cn/post/intro-to-coroutines/</guid>
+      <guid>https://zacash.cn/post/coroutines-introduction/</guid>
       <description>协程用来解决什么问题 Kotlin 的协程提供了一种全新的并发处理方式，我们可以使用它来简化安卓异步执行的代码。
 在 Android 平台上协程主要用来解决两个问题：
  处理耗时任务(Long running tasks) 保证主线程安全(Main-safety)  处理耗时任务 我们常规处理耗时任务是通过异步回调的方式，比如：

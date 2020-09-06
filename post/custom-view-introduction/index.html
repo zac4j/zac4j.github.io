@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="utf-8">
+    
+    <title>Introduction to Custom View | Zac&#39;s Blog</title>
+    <meta name="description" content="Custom view introduction">
+    <meta name="author" content="">
+    
+    <link rel="apple-touch-icon" sizes="180x180" href=https://zacash.cn/apple-touch-icon.png>
+    <link rel="icon" type="image/png" sizes="32x32" href=https://zacash.cn/favicon-32x32.png>
+    <link rel="icon" type="image/png" sizes="16x16" href=https://zacash.cn/favicon-16x16.png>
+    <link rel="manifest" href=https://zacash.cn/site.webmanifest>
+    <link rel="mask-icon" href=https://zacash.cn/safari-pinned-tab.svg color="#00416a">
+    <meta name="msapplication-TileColor" content="#00aba9">
+    <meta name="theme-color" content="#ffffff">
+    
+    <link rel="me" href="mailto:zac_ju@163.com">
+    <link rel="me" href="https://github.com/zac4j">
+    
+    
+    
+    <link rel="authorization_endpoint" href=https://indieauth.com/auth />
+    <link rel="token_endpoint" href=https://tokens.indieauth.com/token />
+    
+    
+    
+    
+    
+    <link rel="stylesheet" href=https://zacash.cn/css/fonts.css />
+    <link rel="stylesheet" href=https://zacash.cn/css/style.css />
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+    <div id="sitelogo">
+        <a class="glyph" alt="Home" href="https://zacash.cn"><img src=https://zacash.cn/images/site-logo.svg alt="Site Logo" height="64px" width="64px"></a>
+    </div>
+    <header>
+        <nav>
+    
+    <div id="page-nav">
+        <div class="page-nav-item">
+            <a href="https://zacash.cn">Home</a>
+        </div>
+        
+    </div>
+</nav>
+        
+    </header>
+
+
+
+
+<div id="content">
+    <article class="h-entry">
+        <header>
+            <h1 class="post-title p-name">Introduction to Custom View</h1>
+            
+            <p class="post-date">Posted on
+                <time class="dt-published" datetime="2020-09-06T11:11:13&#43;08:00">
+                    6 September, 2020 at 11:11 CST
+                </time>  by <a href="https://zacash.cn" class="p-author h-card"
+                    rel="author">Zac</a>
+            </p>
+            
+            
+            <p class="post-tag">Category:
+                
+                <a href="https://zacash.cn/categories/custom-view" class="post-tag p-category">Custom View</a>
+                
+            </p>
+            <hr class="post-underline">
+            
+        </header>
+        <section class="content e-content">
+            <p>To create a custom view we can either extend an existing <code>View</code> subclass(like EditText), or create our own subclass of View. By extending View directly, we can create an interactive UI element of any size and shape by overriding the <code>onDraw()</code> method for the View to draw it.</p>
+<p>This article resource from official Android <a href="https://codelabs.developers.google.com/codelabs/advanced-andoid-kotlin-training-custom-views">custom view</a> codelab. I think you&rsquo;ll get the most value if you work through this codelab in sequence.</p>
+<h2 id="understanding-custom-views">Understanding custom views</h2>
+<p>Views are the basic blocks of an app&rsquo;s UI. the View class provides many subclasses, referred to as <em>UI widgets</em>, that cover many of the needs of a typical Android app&rsquo;s user interface.</p>
+<p>UI building blocks such as EditText or TextView are subclasses that extend the View class. To save time and development effort, we can extend one of these View subclasses.</p>
+<p>To create our custom view from scratch, extend the View class itself. Our code overrides <code>View</code> methods to define the view&rsquo;s appearance and functionality. Key to create our custom view is that we are responsible for <strong>drawing the entire UI element of any size and shape to the screen</strong>. If we subclass an existing view such as <code>Button</code>, that class handles drawing for us.</p>
+<h3 id="general-steps-to-create-a-custom-view">General steps to create a custom view</h3>
+<ul>
+<li>Create a custom view class that extends <code>View</code>, or extends a <code>View</code> subclass(such as <code>TextView</code> or <code>Button</code>)</li>
+<li>If we extend a subclass of View(like Button), override only the behavior or aspect of the appearance methods that we want to change.</li>
+<li>If we extend View class, draw the custom view&rsquo;s shape and control its appearance by overriding View methods such as <code>onDraw()</code> and <code>onMeasure()</code> in the new class.</li>
+<li>Add code to respond to user interaction and, if necessary, redraw the custom view.</li>
+<li>Use the custom view class as UI widget in activity&rsquo;s XML layout. We can also define custom attributes(in <code>attrs.xml</code> file) for the view, to provide customization for the view in different layouts.</li>
+</ul>
+<h2 id="drawing-custom-views">Drawing custom views</h2>
+<p>When we creating custom view from scratch(by extending <code>View</code>), we are responsible for drawing the entire view each time the screen refreshes, and for overriding the View methods that handle drawing. In order to properly <strong>draw a custom view</strong> that extends View, we need to follw this step:</p>
+<ul>
+<li>Calculate the view&rsquo;s size when it first appears, and each time that view&rsquo;s size changes, by overriding the <code>onSizeChanged()</code> method.</li>
+<li>Override the <code>onDraw()</code> method to draw the custom view, using a <code>Canvas</code> object styled by a <code>Paint</code> object.</li>
+<li>Call the <code>invalidate()</code> method when responding to a user click that changes how the view is drawn to invalidate the entire view, thereby forcing a call to <code>onDraw()</code> to redraw the view.</li>
+</ul>
+<p>The <code>onDraw()</code> method is called every time that screen refreshes, which can be many time a second. For performance reasons and to avoid visual glitches, we should do as little work as possible in <code>onDraw()</code>. In particular, don&rsquo;t place allocations in <code>onDraw()</code>, because allocations may lead to garbage collection that may cause a visual stutter.</p>
+<p>The <code>Canvas</code> and <code>Paint</code> classes offer a number of useful <strong>drawing shortcuts</strong>:</p>
+<ul>
+<li>Draw text using <code>drawText()</code>. Specify the typeface by calling <code>setTypeface()</code>, and the text color by calling <code>setColor()</code>.</li>
+<li>Draw primitive shapes using <code>drawRect()</code>, <code>drawOval()</code> and <code>drawArc()</code>. Change whether that shapes are filled, outlined, or both by calling <code>setStyle()</code>.</li>
+<li>Draw bitmaps using <code>drawBitmap()</code>.</li>
+</ul>
+<blockquote>
+<p><strong>Note</strong>: in apps that have a deep view hierarchy, we can also override the <code>onMeasure()</code> method to accurately define how custom view fits into the layout. That way, the parent layout can properly align the custom view. The <code>onMeasure()</code> method provides a set of <code>measureSpecs</code> that we can use to determine out view&rsquo;s height and width. Learn more <a href="https://developer.android.com/guide/topics/ui/how-android-draws.html">how android draws</a>.</p>
+</blockquote>
+<h2 id="change-custom-view-behavior">Change custom view behavior</h2>
+<h3 id="add-view-interactivity">Add view interactivity</h3>
+<p>Normally, with a standard Android view, we implement <code>OnClickListener()</code> to perform an action when the user clicks that view. For a custom view, we should:</p>
+<ul>
+<li>Set the view&rsquo;s isClickable property to true. This enables custom view to respond to clicks.</li>
+<li>Implement the <code>View</code> class&rsquo;s <code>performClick()</code> to perform operations when the view is clicked.</li>
+<li>Call the <code>invalidate()</code> method. This tells the Android system to call the <code>onDraw()</code> method to redraw the view.</li>
+</ul>
+<h3 id="use-custom-attributes-with-custom-view">Use custom attributes with custom view</h3>
+<p>To use a custom attributes we should:</p>
+<ul>
+<li>Create and open <code>res/values/attrs.xml</code></li>
+<li>Inside <code>&lt;resource&gt;</code>, add a <code>&lt;declare-styleable&gt;</code> resource element.</li>
+<li>Inside the <code>&lt;declare-styleable&gt;</code> resource element, add three <code>attr</code> elements, one for each attribute, with a <code>name</code> and <code>format</code>. The <code>format</code> is the attribute&rsquo;s type, such as <code>color</code> or <code>string</code>.</li>
+</ul>
+<p>The sample code is:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#75715e">&lt;?xml version=&#34;1.0&#34; encoding=&#34;utf-8&#34;?&gt;</span>
+<span style="color:#f92672">&lt;resources&gt;</span>
+    <span style="color:#f92672">&lt;declare-styleable</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;CustomView&#34;</span><span style="color:#f92672">&gt;</span>
+        <span style="color:#f92672">&lt;attr</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;customColor&#34;</span> <span style="color:#a6e22e">format=</span><span style="color:#e6db74">&#34;color&#34;</span> <span style="color:#f92672">/&gt;</span>
+        <span style="color:#f92672">&lt;attr</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;customString&#34;</span> <span style="color:#a6e22e">format=</span><span style="color:#e6db74">&#34;string&#34;</span> <span style="color:#f92672">/&gt;</span>
+        <span style="color:#f92672">&lt;attr</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;customInteger&#34;</span> <span style="color:#a6e22e">format=</span><span style="color:#e6db74">&#34;integer&#34;</span> <span style="color:#f92672">/&gt;</span>
+    <span style="color:#f92672">&lt;/declare-styleable&gt;</span>
+<span style="color:#f92672">&lt;/resources&gt;</span>
+</code></pre></div><blockquote>
+<p>Note: the <code>attr</code> name is, by convention, the same name as the name ofthe class that defines the custom view. Although it&rsquo;s not strictly necessary to follow this convention, Android Studio depend on this naming convention to provide statement completion.</p>
+</blockquote>
+<ul>
+<li>Open <code>fragment_custom_ui.xml</code> layout file, in <code>CustomView</code>, add attribute for <code>customColor</code>, <code>customString</code>, <code>customInteger</code>, and set their value. Use <code>app:</code> as preface for the custom attribute rather than <code>android:</code> because we custom attribute belong to the <code>schemas.android.com/apk/res/app_package_name</code> namespace rather than the android namespace.</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#f92672">&lt;com.zac4j.ui.widget.CustomView</span>
+    <span style="color:#a6e22e">android:id=</span><span style="color:#e6db74">&#34;@+id/customView&#34;</span>
+    <span style="color:#a6e22e">android:layout_width=</span><span style="color:#e6db74">&#34;200dp&#34;</span>
+    <span style="color:#a6e22e">android:layout_height=</span><span style="color:#e6db74">&#34;200dp&#34;</span>
+    <span style="color:#a6e22e">android:layout_marginLeft=</span><span style="color:#e6db74">&#34;8dp&#34;</span>
+    <span style="color:#a6e22e">android:layout_marginTop=</span><span style="color:#e6db74">&#34;8dp&#34;</span>
+    <span style="color:#a6e22e">android:layout_marginRight=</span><span style="color:#e6db74">&#34;8dp&#34;</span>
+    <span style="color:#a6e22e">android:background=</span><span style="color:#e6db74">&#34;@android:color/darker_gray&#34;</span>
+    <span style="color:#a6e22e">app:customColor=</span><span style="color:#e6db74">&#34;#009688&#34;</span>
+    <span style="color:#a6e22e">app:customString=</span><span style="color:#e6db74">&#34;@string/hello&#34;</span>
+    <span style="color:#a6e22e">app:customInteger=</span><span style="color:#e6db74">&#34;0x101&#34;</span>
+    <span style="color:#a6e22e">app:layout_constraintLeft_toLeftOf=</span><span style="color:#e6db74">&#34;parent&#34;</span>
+    <span style="color:#a6e22e">app:layout_constraintRight_toRightOf=</span><span style="color:#e6db74">&#34;parent&#34;</span>
+    <span style="color:#a6e22e">app:layout_constraintTop_toBottomOf=</span><span style="color:#e6db74">&#34;@id/customViewLabel&#34;</span><span style="color:#f92672">/&gt;</span>
+</code></pre></div><p>In order to use the attributes in <code>CustomView</code> class, we need to retrieve them. They are stored in an <code>AttributeSet</code>, which is handed to out class upon creation, if it exists. We retrieve the attributes in <code>init</code>, and assign the attribute values to local vaributes for caching.</p>
+<ul>
+<li>Open the <code>CustomView.kt</code> class file.</li>
+<li>Inside the <code>CustomView</code> declare vaributes to cache the attribute values.</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-kotlin" data-lang="kotlin"><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">var</span> customColor = <span style="color:#ae81ff">0</span>
+<span style="color:#66d9ef">private</span> <span style="color:#66d9ef">var</span> customString = <span style="color:#e6db74">&#34;&#34;</span>
+<span style="color:#66d9ef">private</span> <span style="color:#66d9ef">var</span> customInt = <span style="color:#ae81ff">0</span>
+</code></pre></div><ul>
+<li>Inside the <code>init</code> block, add the following code using the <code>withStyledAttributes</code> extension function. We supply the attributes and view, and set the local vaributes. Importing <code>withStyledAttributes</code> will also import the right <code>getColor</code> function.</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-kotlin" data-lang="kotlin">context.withStyledAttributes(attrs, R.styleable.CustomView) {
+   customColor = getColor(R.styleable.CustomView_customColor, <span style="color:#ae81ff">0</span>)
+   customString = getString(R.styleable.CustomView_customString, <span style="color:#e6db74">&#34;&#34;</span>)
+   customInt = getInt(R.styleable.CustomView_customInteger, <span style="color:#ae81ff">0</span>)
+}
+</code></pre></div><blockquote>
+<p>Android and the Kotlin extension library (<a href="https://android.github.io/android-ktx/core-ktx/index.html">android-ktx</a>) do a lot of work for you here! The android-ktx library provides Kotlin extensions with a strong quality-of-life focus. For example, the <a href="https://android.github.io/android-ktx/core-ktx/androidx.content/android.content.-context/index.html">withStyledAttributes</a> extension replaces a significant number of lines of rather tedious boilerplate code. For more on this library, check out the documentation, and the <a href="https://android-developers.googleblog.com/2018/02/introducing-android-ktx-even-sweeter.html">original announcement</a> blog post!</p>
+</blockquote>
+<ul>
+<li>Use the local variables in <code>onDraw()</code> to set the color and label to the current view.</li>
+</ul>
+        </section>
+        <footer>
+            <a class="permalink u-url" href="https://zacash.cn/post/custom-view-introduction/">🔗</a>
+            
+            <hr class="post-underline">
+            <p class="post-tag">Tags for this post:
+                
+                <a href="https://zacash.cn/tags/custom-view" class="post-tag p-category">custom view</a>
+                
+            </p>
+            
+        </footer>
+    </article>
+</div>
+
+    
+    <div class="h-card">
+      <img class="u-photo" src="https://zacash.cn/images/android-os.png" />
+      <div class="card-content">
+        <h2 class="card-name"><a class="p-name u-url" href="https://zacash.cn" rel="me">Zac</a></h2>
+        <p class="card-subhead">
+          <span class="p-locality">Shanghai</span>,
+          <span class="p-country-name">China</span><br />
+          <a class="u-email" href="mailto:zac_ju@163.com">Email me</a>
+        </p>
+      </div>
+      <p class="p-note">🐭</p>
+    </div>
+    
+    <div id="footer">
+      
+      <nav id="article-skip">
+        <div class="next">
+          
+          <p>&nbsp;</p>
+          
+        </div>
+        <div class="top">
+          <a alt="Top of page" href="#">Top</a>
+        </div>
+        <div class="prev">
+          
+          <a alt="Older article" href="https://zacash.cn/post/intro-to-navigation/">Older &rarr;</a>
+          
+        </div>
+      </nav>
+      
+      <aside id="social">
+  <div id="social-icons">
+    
+    
+    
+    
+    <div class="icon-24x24">
+      <a class="glyph" alt="GitHub profile" href="https://github.com/zac4j"><img src=https://zacash.cn/icons/github.svg height="24px" width="24px"></a>
+    </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+  </div>
+</aside>
+
+      
+      <p class="copyright">
+          Copyright © 2020, Copyright Zac
+      </p>
+      
+    </div>
+
+
+</body>
+</html>

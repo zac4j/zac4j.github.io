@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     
-    <title>Coroutines | Zac&#39;s Blog</title>
+    <title>custom view | Zac&#39;s Blog</title>
     <meta name="description" content="Android developer blog">
     <meta name="author" content="">
     
@@ -60,8 +60,8 @@
     </header>
 
 <h2>
-  <span class="list-heading-type">categories:</span>
-  <span class="list-heading-tag">Coroutines</span>
+  <span class="list-heading-type">tags:</span>
+  <span class="list-heading-tag">custom view</span>
 </h2>
 
 <div id="content">
@@ -69,25 +69,20 @@
       <article>
       <header>
         
-        <h2 class="list-title"><a href="https://zacash.cn/post/coroutines-introduction/">Coroutines Introduction</a></h2>
+        <h2 class="list-title"><a href="https://zacash.cn/post/custom-view-introduction/">Introduction to Custom View</a></h2>
         
         <p class="list-post-date">
-          <time datetime="2020-04-25T11:40:03&#43;08:00">
-            25 April, 2020 at 11:40 CST
+          <time datetime="2020-09-06T11:11:13&#43;08:00">
+            6 September, 2020 at 11:11 CST
           </time>
         </p>
       </header>
       <div>
-        协程用来解决什么问题 Kotlin 的协程提供了一种全新的并发处理方式，我们可以使用它来简化安卓异步执行的代码。
-在 Android 平台上协程主要用来解决两个问题：
- 处理耗时任务(Long running tasks) 保证主线程安全(Main-safety)  处理耗时任务 我们常规处理耗时任务是通过异步回调的方式，比如：
-fun fetchDoc() { get(&#34;https://doc.qq.com&#34;) { result -&gt; show(result) } } 通过协程的方式是这样：
-// 主线程执行 suspend fun fetchDoc() { // 直接返回结果  val result = get(&#34;https://doc.qq.com&#34;) show(result) } // 主线程执行 suspend fun get(url: String) = withContext(Dispatchers.IO) { /*IO 线程池执行*/ } 可以看到通过协程可以直接返回请求结果，而不用管理请求延迟和线程阻塞，这是如何实现的呢？
-协程在常规的函数操作 —— invoke 和 return 之外，还新增了2项：
- suspend —— 称为挂起或暂停，用于暂停执行当前协程，并保存所有局部变量 resume —— 让暂停的协程继续执行  那么 suspend 是如何实现的呢？
+        To create a custom view we can either extend an existing View subclass(like EditText), or create our own subclass of View. By extending View directly, we can create an interactive UI element of any size and shape by overriding the onDraw() method for the View to draw it.
+
       </div>
       
-      <p><a class="read-more" href="https://zacash.cn/post/coroutines-introduction/">Read more &rarr;</a></p>
+      <p><a class="read-more" href="https://zacash.cn/post/custom-view-introduction/">Read more &rarr;</a></p>
       
     </article>
   

@@ -80,6 +80,31 @@
 <li>Android 系统在 app 启动时仅遍历 view hierarchy 一次即可获取每个 view 的引用，而不是像 <code>findView</code> 在运行时获取 view 引用。</li>
 <li>我们可以 <a href="https://en.wikipedia.org/wiki/Type_safety">type safety</a> 访问 views。（Type safety 意味着编译器在编译时会验证类型，如果我们将错误的类型分配给变量，则会引发编译错误。）</li>
 </ul>
+<h2 id="databing-expression">Databing expression</h2>
+<h3 id="formatted-string">Formatted string</h3>
+<ul>
+<li>String res:</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#f92672">&lt;string</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;quote_format&#34;</span><span style="color:#f92672">&gt;</span>\&#34;%s\&#34;<span style="color:#f92672">&lt;/string&gt;</span>
+<span style="color:#f92672">&lt;string</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;score_format&#34;</span><span style="color:#f92672">&gt;</span>Current Score: %d<span style="color:#f92672">&lt;/string&gt;</span>
+</code></pre></div><ul>
+<li>Layout res:</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#f92672">&lt;TextView</span>
+    <span style="color:#a6e22e">android:id=</span><span style="color:#e6db74">&#34;@+id/word_text&#34;</span>
+   <span style="color:#960050;background-color:#1e0010">...</span>
+   <span style="color:#a6e22e">android:text=</span><span style="color:#e6db74">&#34;@{@string/quote_format(gameViewModel.word)}&#34;</span>
+<span style="color:#f92672">/&gt;</span>
+</code></pre></div><h3 id="null-coalescing-operator">Null coalescing operator</h3>
+<p>The null coalescing operator (??) chooses the left operand if isn&rsquo;t null or the right if the former is null.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#f92672">&lt;TextView</span>
+    <span style="color:#a6e22e">android:text=</span><span style="color:#e6db74">&#34;@{user.displayName ?? user.lastName}&#34;</span>
+<span style="color:#f92672">/&gt;</span>
+</code></pre></div><p>This is functionally equivalent to:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#f92672">&lt;TextView</span>
+    <span style="color:#a6e22e">android:text=</span><span style="color:#e6db74">&#34;@{user.displayName != null ? user.displayName : user.lastName}&#34;</span>
+<span style="color:#f92672">/&gt;</span>
+</code></pre></div>
         </section>
         <footer>
             <a class="permalink u-url" href="https://zacash.cn/post/databinding-in-android/">🔗</a>

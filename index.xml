@@ -28,7 +28,32 @@
 &lt;li&gt;数据和 views 明确分离，&lt;/li&gt;
 &lt;li&gt;Android 系统在 app 启动时仅遍历 view hierarchy 一次即可获取每个 view 的引用，而不是像 &lt;code&gt;findView&lt;/code&gt; 在运行时获取 view 引用。&lt;/li&gt;
 &lt;li&gt;我们可以 &lt;a href=&#34;https://en.wikipedia.org/wiki/Type_safety&#34;&gt;type safety&lt;/a&gt; 访问 views。（Type safety 意味着编译器在编译时会验证类型，如果我们将错误的类型分配给变量，则会引发编译错误。）&lt;/li&gt;
-&lt;/ul&gt;</description>
+&lt;/ul&gt;
+&lt;h2 id=&#34;databing-expression&#34;&gt;Databing expression&lt;/h2&gt;
+&lt;h3 id=&#34;formatted-string&#34;&gt;Formatted string&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;String res:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-xml&#34; data-lang=&#34;xml&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;string&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;name=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;quote_format&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt;\&amp;#34;%s\&amp;#34;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
+&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;string&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;name=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;score_format&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt;Current Score: %d&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;Layout res:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-xml&#34; data-lang=&#34;xml&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;TextView&lt;/span&gt;
+    &lt;span style=&#34;color:#a6e22e&#34;&gt;android:id=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;@+id/word_text&amp;#34;&lt;/span&gt;
+   &lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;...&lt;/span&gt;
+   &lt;span style=&#34;color:#a6e22e&#34;&gt;android:text=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;@{@string/quote_format(gameViewModel.word)}&amp;#34;&lt;/span&gt;
+&lt;span style=&#34;color:#f92672&#34;&gt;/&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;null-coalescing-operator&#34;&gt;Null coalescing operator&lt;/h3&gt;
+&lt;p&gt;The null coalescing operator (??) chooses the left operand if isn&amp;rsquo;t null or the right if the former is null.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-xml&#34; data-lang=&#34;xml&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;TextView&lt;/span&gt;
+    &lt;span style=&#34;color:#a6e22e&#34;&gt;android:text=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;@{user.displayName ?? user.lastName}&amp;#34;&lt;/span&gt;
+&lt;span style=&#34;color:#f92672&#34;&gt;/&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;This is functionally equivalent to:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-xml&#34; data-lang=&#34;xml&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;TextView&lt;/span&gt;
+    &lt;span style=&#34;color:#a6e22e&#34;&gt;android:text=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;@{user.displayName != null ? user.displayName : user.lastName}&amp;#34;&lt;/span&gt;
+&lt;span style=&#34;color:#f92672&#34;&gt;/&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
     </item>
     
     <item>
@@ -2135,11 +2160,11 @@ ft.add(R.id.fragment_container, fragment).commit()
     </item>
     
     <item>
-      <title>Intro to Coroutines</title>
-      <link>https://zacash.cn/post/intro-to-coroutines/</link>
+      <title>Coroutines Introduction</title>
+      <link>https://zacash.cn/post/coroutines-introduction/</link>
       <pubDate>Sat, 25 Apr 2020 11:40:03 +0800</pubDate>
       
-      <guid>https://zacash.cn/post/intro-to-coroutines/</guid>
+      <guid>https://zacash.cn/post/coroutines-introduction/</guid>
       <description>&lt;h3 id=&#34;协程用来解决什么问题&#34;&gt;协程用来解决什么问题&lt;/h3&gt;
 &lt;p&gt;Kotlin 的协程提供了一种全新的并发处理方式，我们可以使用它来简化安卓异步执行的代码。&lt;/p&gt;
 &lt;p&gt;在 Android 平台上协程主要用来解决两个问题：&lt;/p&gt;
