@@ -3,8 +3,8 @@
 <head>
     <meta charset="utf-8">
     
-    <title>Hugo Basic | Zac&#39;s Blog</title>
-    <meta name="description" content="Hugo 的简单用法">
+    <title>Modify Canvas Objects | Zac&#39;s Blog</title>
+    <meta name="description" content="Modify canvas objects">
     <meta name="author" content="">
     
     <link rel="apple-touch-icon" sizes="180x180" href=https://zacash.cn/apple-touch-icon.png>
@@ -56,11 +56,11 @@
 <div id="content">
     <article class="h-entry">
         <header>
-            <h1 class="post-title p-name">Hugo Basic</h1>
+            <h1 class="post-title p-name">Modify Canvas Objects</h1>
             
             <p class="post-date">Posted on
-                <time class="dt-published" datetime="2020-04-04T09:25:04&#43;08:00">
-                    4 April, 2020 at 09:25 CST
+                <time class="dt-published" datetime="2020-09-07T08:08:13&#43;08:00">
+                    7 September, 2020 at 08:08 CST
                 </time>  by <a href="https://zacash.cn" class="p-author h-card"
                     rel="author">Zac</a>
             </p>
@@ -68,50 +68,28 @@
             
             <p class="post-tag">Category:
                 
-                <a href="https://zacash.cn/categories/hugo" class="post-tag p-category">hugo</a>
+                <a href="https://zacash.cn/categories/custom-view" class="post-tag p-category">Custom View</a>
+                
+                <a href="https://zacash.cn/categories/canvas" class="post-tag p-category">Canvas</a>
                 
             </p>
             <hr class="post-underline">
             
         </header>
         <section class="content e-content">
-            <h2 id="add-new-content">Add new content</h2>
-<p><code>hugo new posts/article-name.md</code></p>
-<h2 id="article-meta-info">Article meta info</h2>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-md" data-lang="md">---
-title: &#34;New Article&#34;
-date: 2020-04-04T09:25:04+08:00
-description: &#34;Hugo 的简单用法&#34;
-tags: [&#34;hugo&#34;, &#34;pages&#34;]
-categories: [&#34;hugo&#34;]
-draft: true
----
-</code></pre></div><h2 id="start-server-with-drafts-enabled">Start server with drafts enabled</h2>
-<p><code>hugo server -D</code></p>
-<h2 id="customize-the-theme">Customize the theme</h2>
-<p>Open up <code>config.toml</code> in a text editor:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">baseURL = <span style="color:#e6db74">&#34;https://example.org/&#34;</span>
-languageCode = <span style="color:#e6db74">&#34;en-us&#34;</span>
-title = <span style="color:#e6db74">&#34;My New Hugo Site&#34;</span>
-theme = <span style="color:#e6db74">&#34;ananke&#34;</span>
-</code></pre></div><h2 id="build-static-pages">Build static pages</h2>
-<p><code>hugo -D</code> output will be in <code>./public/</code> directory by default (<code>-d/--destination</code> flag to change it, or set <code>publishdir</code> in the config file)</p>
-<h2 id="publish-article">Publish article</h2>
-<ul>
-<li>build web site: <code>hugo -D</code></li>
-<li>deploy web site: <code>./deploy.sh 'comments'</code></li>
-</ul>
+            <h2 id="drawing-on-canvas-objects">Drawing on Canvas Objects</h2>
+<p>The types of operations we can perform on a canvas include</p>
 
         </section>
         <footer>
-            <a class="permalink u-url" href="https://zacash.cn/post/hugo-basic/">🔗</a>
+            <a class="permalink u-url" href="https://zacash.cn/post/custom-view-modify-canvas-objects/">🔗</a>
             
             <hr class="post-underline">
             <p class="post-tag">Tags for this post:
                 
-                <a href="https://zacash.cn/tags/hugo" class="post-tag p-category">hugo</a>
+                <a href="https://zacash.cn/tags/custom-view" class="post-tag p-category">custom view</a>
                 
-                <a href="https://zacash.cn/tags/pages" class="post-tag p-category">pages</a>
+                <a href="https://zacash.cn/tags/canvas" class="post-tag p-category">canvas</a>
                 
             </p>
             
@@ -138,7 +116,7 @@ theme = <span style="color:#e6db74">&#34;ananke&#34;</span>
       <nav id="article-skip">
         <div class="next">
           
-          <a alt="Newer article" href="https://zacash.cn/post/handler-in-code/">&larr; Newer</a>
+          <p>&nbsp;</p>
           
         </div>
         <div class="top">
@@ -146,7 +124,7 @@ theme = <span style="color:#e6db74">&#34;ananke&#34;</span>
         </div>
         <div class="prev">
           
-          <a alt="Older article" href="https://zacash.cn/post/check-state-loss/">Older &rarr;</a>
+          <a alt="Older article" href="https://zacash.cn/post/custom-view-introduction/">Older &rarr;</a>
           
         </div>
       </nav>

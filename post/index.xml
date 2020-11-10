@@ -7,10 +7,31 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
     <copyright>Copyright © 2020, Copyright Zac</copyright>
-    <lastBuildDate>Sun, 23 Aug 2020 08:37:45 +0800</lastBuildDate>
+    <lastBuildDate>Sun, 06 Sep 2020 11:11:13 +0800</lastBuildDate>
     
 	<atom:link href="https://zacash.cn/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Introduction to Custom View</title>
+      <link>https://zacash.cn/post/custom-view-introduction/</link>
+      <pubDate>Sun, 06 Sep 2020 11:11:13 +0800</pubDate>
+      
+      <guid>https://zacash.cn/post/custom-view-introduction/</guid>
+      <description>&lt;p&gt;To create a custom view we can either extend an existing &lt;code&gt;View&lt;/code&gt; subclass(like EditText), or create our own subclass of View. By extending View directly, we can create an interactive UI element of any size and shape by overriding the &lt;code&gt;onDraw()&lt;/code&gt; method for the View to draw it.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Intro to Navigation</title>
+      <link>https://zacash.cn/post/intro-to-navigation/</link>
+      <pubDate>Sun, 23 Aug 2020 11:11:13 +0800</pubDate>
+      
+      <guid>https://zacash.cn/post/intro-to-navigation/</guid>
+      <description>NavHostFragment NavHostFragment acts as a host for the fragments in the navigation graph.
+As the user moves between destination defined in the navigation graph, the NavHostFragment swaps the fragments in and out and manages the Fragment back stack.
+In the activity_main.xml layout file, the NavHostFragment is represented by a fragment element with the name android:name=&amp;quot;androidx.navigation.fragment.NavHostFragment&amp;quot;.
+BackStack in Navigation Each time user goes to a new destination on the device, Android adds that destination to the back stack.</description>
+    </item>
     
     <item>
       <title>Data Binding in Android</title>
@@ -19,6 +40,15 @@
       
       <guid>https://zacash.cn/post/databinding-in-android/</guid>
       <description>&lt;p&gt;每次在 view 发生创建或重建，我们使用 &lt;code&gt;findViewById()&lt;/code&gt; 来获取 view 的引用时，Android 系统在运行时会遍历整个视图层级结构（view hierarchy）来查找它。在我们 app 的视图结构比较简单时没有问题，但是生产上的 app 一个 layout 可能有几十个 views，即使是最佳设计，也会存在嵌套的 views.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Generics in Kotlin</title>
+      <link>https://zacash.cn/post/generics-in-kotlin/</link>
+      <pubDate>Fri, 14 Aug 2020 07:27:09 +0800</pubDate>
+      
+      <guid>https://zacash.cn/post/generics-in-kotlin/</guid>
+      <description>&lt;p&gt;val 和 var 与 variables 的 VALUES 相关，val 保护变量的值不变。in 和 out 与 variables 的 TYPES 相关，in 和 out 保证在范型的使用中，只有安全的类型才能传入或传出函数。&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -106,6 +136,19 @@
     </item>
     
     <item>
+      <title>How Are Touch Events Delivered</title>
+      <link>https://zacash.cn/post/how-are-touch-events-delivered/</link>
+      <pubDate>Sat, 11 Jul 2020 08:37:45 +0800</pubDate>
+      
+      <guid>https://zacash.cn/post/how-are-touch-events-delivered/</guid>
+      <description>根据例子来理解 Android 的事件传递
+页面的布局结构
+&amp;lt;?xml version=&amp;#34;1.0&amp;#34; encoding=&amp;#34;utf-8&amp;#34;?&amp;gt; &amp;lt;layout xmlns:android=&amp;#34;http://schemas.android.com/apk/res/android&amp;#34; xmlns:app=&amp;#34;http://schemas.android.com/apk/res-auto&amp;#34;&amp;gt; &amp;lt;data&amp;gt; &amp;lt;variable name=&amp;#34;viewModel&amp;#34; type=&amp;#34;com.zac4j.system.data.TouchViewModel&amp;#34; /&amp;gt; &amp;lt;/data&amp;gt; &amp;lt;com.zac4j.system.ui.widget.CustomLayout android:id=&amp;#34;@id/touch_sample_container&amp;#34; android:layout_width=&amp;#34;match_parent&amp;#34; android:layout_height=&amp;#34;match_parent&amp;#34;&amp;gt; &amp;lt;Button android:id=&amp;#34;@id/touch_sample_btn&amp;#34; style=&amp;#34;@style/Widget.AppCompat.Button.Colored&amp;#34; android:layout_width=&amp;#34;match_parent&amp;#34; android:layout_height=&amp;#34;wrap_content&amp;#34; android:text=&amp;#34;Touch Me&amp;#34; app:layout_constraintEnd_toEndOf=&amp;#34;parent&amp;#34; app:layout_constraintStart_toStartOf=&amp;#34;parent&amp;#34; app:layout_constraintTop_toTopOf=&amp;#34;parent&amp;#34; /&amp;gt; &amp;lt;/com.zac4j.system.ui.widget.CustomLayout&amp;gt; &amp;lt;/layout&amp;gt; TouchEvent 的传递 我们通常对 Button 创建点击事件:
+touchSampleBtn.setOnClickListener { Logger.i(TAG, &amp;#34;setOnClickListener&amp;#34;, &amp;#34;sampleBtn clicked&amp;#34;) } 可以先看下 View.dispatchTouchEvent() 的实现:
+public boolean dispatchTouchEvent(MotionEvent event) { ... if (onFilterTouchEventForSecurity(event)) { if ((mViewFlags &amp;amp; ENABLED_MASK) == ENABLED &amp;amp;&amp;amp; handleScrollBarDragging(event)) { result = true; } //noinspection SimplifiableIfStatement  ListenerInfo li = mListenerInfo; if (li !</description>
+    </item>
+    
+    <item>
       <title>Intro to Hybrid App</title>
       <link>https://zacash.cn/post/intro-to-hybrid-app/</link>
       <pubDate>Sat, 04 Jul 2020 15:45:14 +0800</pubDate>
@@ -148,6 +191,24 @@ Zac:tivi Zac$ adb shell ps | grep com.tencent.mobileqq # curr_user pid process n
   🌟实际要求：平时对源码的深挖意识即技术钻研和批判性思维
   考察目的：
  基础知识的扎实程度 候选人对技术的热情    2.</description>
+    </item>
+    
+    <item>
+      <title>Essential Design Pattern in Android</title>
+      <link>https://zacash.cn/post/design-pattern-in-android/</link>
+      <pubDate>Sat, 20 Jun 2020 20:22:10 +0800</pubDate>
+      
+      <guid>https://zacash.cn/post/design-pattern-in-android/</guid>
+      <description>什么是设计模式 设计模式的经典解释：软件工程中，设计模式是针对软件设计中给定上下文的常见问题的通用、可复用的解决方案。设计模式并非可以直接转换为源码或机器码的最终设计。相反，它是可以在不同场景下使用的解决问题的描述或模版。设计模式是程序员在设计 App 或系统时解决常见问题的最佳实践。
+面向对象的设计模式通常展示了类和对象之间的关系和交互，而不是指定 App 的类或对象。
+设计模式可以看作是一种编程的结构化方法，介于编程范式和具体算法之间。
+设计模式根据其解决的问题分为三个类别：
+ 创造型模式（Creational Patterns）：提供创建类，对象的方法（Singleton, Dependency Inject, Builder等）。 结构型模式（Structural Patterns）：提供对象和类之间组合的方法（Composite, Bridge, Adapter 等）。 行为型模式（Bahavioral Patterns）：提供对象和类之间相互交流的方法（Command, Observer, Strategy 等）。  创造型模式 当我们用最基本的形式创建创建对象可能导致设计问题，或增加设计的复杂性。创造型设计模式通过控制对象的创建方式来解决这种问题。
+Android 常用的创造型模式：
+Builder Builder 模式主要解决创建复杂对象过程中遇到的问题：
+ 类如何创建复杂对象不同的表现形式(different presentations) 如何简化包含创建复杂对象的类  Builder 模式在 Android 中常见的应用是 AlertDialog 的创建过程：
+AlertDialog.Builder(context) .setTitle(&amp;#34;Builder Sample&amp;#34;) .setMessage(&amp;#34;Builder Nessage&amp;#34;) .setNegativeButton(&amp;#34;Cancel&amp;#34;, {_,_ -&amp;gt; }) .setPositiveButton(&amp;#34;OK&amp;#34;, {_, _ -&amp;gt; }) .show() Builder 模式通过这种方式解决问题：
+ 将复杂对象的各个部分的创建(creating)和组装(assembling)封装在一个独立的 Builder 对象中。 类将对象的创建委托给 Builder 对象，而不是直接创建。  Dependency injection 依赖注入（Dependency injection, 简称 Di）通常表示某个对象接收(receives)它依赖的对象(objects)的技术，这些依赖的对象称为依赖项(dependencies)。在典型的使用关系中，接收者被称为客户端（client），传递的对象被称为服务（service）。将服务传递给客户端的代码可能有很多种，被称为注入器（injector）, 注入器提供给客户端需要使用哪些服务。注入(injection)是指将依赖项（服务）传递给使用依赖项的对象（客户端）。</description>
     </item>
     
     <item>

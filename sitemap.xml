@@ -3,18 +3,58 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://zacash.cn/categories/</loc>
+    <lastmod>2020-09-06T11:11:13+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://zacash.cn/categories/custom-view/</loc>
+    <lastmod>2020-09-06T11:11:13+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://zacash.cn/tags/custom-view/</loc>
+    <lastmod>2020-09-06T11:11:13+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://zacash.cn/post/custom-view-introduction/</loc>
+    <lastmod>2020-09-06T11:11:13+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://zacash.cn/post/</loc>
+    <lastmod>2020-09-06T11:11:13+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://zacash.cn/tags/</loc>
+    <lastmod>2020-09-06T11:11:13+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://zacash.cn/</loc>
+    <lastmod>2020-09-06T11:11:13+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://zacash.cn/post/intro-to-navigation/</loc>
+    <lastmod>2020-08-23T11:11:13+08:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://zacash.cn/post/databinding-in-android/</loc>
     <lastmod>2020-08-23T08:37:45+08:00</lastmod>
   </url>
   
   <url>
-    <loc>https://zacash.cn/post/</loc>
-    <lastmod>2020-08-23T08:37:45+08:00</lastmod>
+    <loc>https://zacash.cn/tags/generic/</loc>
+    <lastmod>2020-08-14T07:27:09+08:00</lastmod>
   </url>
   
   <url>
-    <loc>https://zacash.cn/</loc>
-    <lastmod>2020-08-23T08:37:45+08:00</lastmod>
+    <loc>https://zacash.cn/post/generics-in-kotlin/</loc>
+    <lastmod>2020-08-14T07:27:09+08:00</lastmod>
   </url>
   
   <url>
@@ -30,16 +70,6 @@
   <url>
     <loc>https://zacash.cn/post/interface-delegation/</loc>
     <lastmod>2020-08-11T20:42:28+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://zacash.cn/tags/</loc>
-    <lastmod>2020-08-11T20:42:28+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://zacash.cn/categories/</loc>
-    <lastmod>2020-08-10T09:00:00-04:00</lastmod>
   </url>
   
   <url>
@@ -238,6 +268,11 @@
   </url>
   
   <url>
+    <loc>https://zacash.cn/post/how-are-touch-events-delivered/</loc>
+    <lastmod>2020-07-11T08:37:45+08:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://zacash.cn/tags/hybrid/</loc>
     <lastmod>2020-07-04T15:45:14+08:00</lastmod>
   </url>
@@ -255,6 +290,11 @@
   <url>
     <loc>https://zacash.cn/post/java-basic/</loc>
     <lastmod>2020-07-03T09:28:31+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://zacash.cn/post/design-pattern-in-android/</loc>
+    <lastmod>2020-06-20T20:22:10+08:00</lastmod>
   </url>
   
   <url>
