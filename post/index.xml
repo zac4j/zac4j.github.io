@@ -7,10 +7,21 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
     <copyright>Copyright © 2020, Copyright Zac</copyright>
-    <lastBuildDate>Sun, 06 Sep 2020 11:11:13 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 06 Nov 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://zacash.cn/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Use Hilt in Android</title>
+      <link>https://zacash.cn/post/use-hilt-in-android/</link>
+      <pubDate>Fri, 06 Nov 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://zacash.cn/post/use-hilt-in-android/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;If you want to use dagger in  your project, you may have 2 or 3 different sources, different samples, different blog posts. All of them use a different set-up, and all of them use Dagger in a different way, so it&amp;rsquo;s very difficult to understand all the topics and relate them together. So that&amp;rsquo;s why Google create a common guidance, a common ground, which is called Hilt.&lt;/p&gt;
+&lt;/blockquote&gt;</description>
+    </item>
     
     <item>
       <title>Introduction to Custom View</title>
@@ -76,17 +87,6 @@ BackStack in Navigation Each time user goes to a new destination on the device, 
       
       <guid>https://zacash.cn/post/lambdas-and-high-order-functions/</guid>
       <description>&lt;p&gt;除了传统命名的函数外，Kotlin 还支持 &lt;a href=&#34;https://kotlinlang.org/docs/reference/lambdas.html&#34;&gt;lambdas&lt;/a&gt;. &lt;em&gt;lambda&lt;/em&gt; 是组成函数的表达式，一个没有名称的函数。lambda 表达式可以作为数据传递。在其他语言中，lambda 被称为 &lt;em&gt;匿名函数（anonymous function）&lt;/em&gt;，&lt;em&gt;函数字面量（function literals）&lt;/em&gt; 或类似名称。&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>Use Hilt in Android</title>
-      <link>https://zacash.cn/post/use-hilt-in-android/</link>
-      <pubDate>Thu, 06 Aug 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://zacash.cn/post/use-hilt-in-android/</guid>
-      <description>&lt;blockquote&gt;
-&lt;p&gt;If you want to use dagger in  your project, you may have 2 or 3 different sources, different samples, different blog posts. All of them use a different set-up, and all of them use Dagger in a different way, so it&amp;rsquo;s very difficult to understand all the topics and relate them together. So that&amp;rsquo;s why Google create a common guidance, a common ground.&lt;/p&gt;
-&lt;/blockquote&gt;</description>
     </item>
     
     <item>

@@ -7,7 +7,7 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
     <copyright>Copyright © 2020, Copyright Zac</copyright>
-    <lastBuildDate>Thu, 06 Aug 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 06 Nov 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://zacash.cn/tags/dagger/index.xml" rel="self" type="application/rss+xml" />
     
@@ -15,11 +15,11 @@
     <item>
       <title>Use Hilt in Android</title>
       <link>https://zacash.cn/post/use-hilt-in-android/</link>
-      <pubDate>Thu, 06 Aug 2020 00:00:00 +0000</pubDate>
+      <pubDate>Fri, 06 Nov 2020 00:00:00 +0000</pubDate>
       
       <guid>https://zacash.cn/post/use-hilt-in-android/</guid>
       <description>&lt;blockquote&gt;
-&lt;p&gt;If you want to use dagger in  your project, you may have 2 or 3 different sources, different samples, different blog posts. All of them use a different set-up, and all of them use Dagger in a different way, so it&amp;rsquo;s very difficult to understand all the topics and relate them together. So that&amp;rsquo;s why Google create a common guidance, a common ground.&lt;/p&gt;
+&lt;p&gt;If you want to use dagger in  your project, you may have 2 or 3 different sources, different samples, different blog posts. All of them use a different set-up, and all of them use Dagger in a different way, so it&amp;rsquo;s very difficult to understand all the topics and relate them together. So that&amp;rsquo;s why Google create a common guidance, a common ground, which is called Hilt.&lt;/p&gt;
 &lt;/blockquote&gt;</description>
     </item>
     

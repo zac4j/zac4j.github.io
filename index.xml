@@ -6,10 +6,200 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
     <copyright>Copyright © 2020, Copyright Zac</copyright>
-    <lastBuildDate>Sun, 06 Sep 2020 11:11:13 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 06 Nov 2020 00:00:00 +0000</lastBuildDate>
     
         <atom:link href="https://zacash.cn/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Use Hilt in Android</title>
+      <link>https://zacash.cn/post/use-hilt-in-android/</link>
+      <pubDate>Fri, 06 Nov 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://zacash.cn/post/use-hilt-in-android/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;If you want to use dagger in  your project, you may have 2 or 3 different sources, different samples, different blog posts. All of them use a different set-up, and all of them use Dagger in a different way, so it&amp;rsquo;s very difficult to understand all the topics and relate them together. So that&amp;rsquo;s why Google create a common guidance, a common ground, which is called Hilt.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Hilt is an opinionated dependency injection library for Android that reduces the boilerplate of using manual DI in your project. Doing &lt;a href=&#34;https://developer.android.com/training/dependency-injection/manual&#34;&gt;manual dependency injection&lt;/a&gt; requires constructing every class and its denpendencies by hand and using &lt;strong&gt;containers&lt;/strong&gt; to reuse and manage &lt;strong&gt;dependencies&lt;/strong&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;dependencies-container&#34;&gt;Dependencies Container&lt;/h2&gt;
+&lt;p&gt;Annotating Android classes with &lt;code&gt;@AndroidEntryPoint&lt;/code&gt; creates a &lt;strong&gt;dependencies container&lt;/strong&gt; that follows the Android lifecycle.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-kotlin&#34; data-lang=&#34;kotlin&#34;&gt;@AndroidEntryPoint
+&lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;MainFragment&lt;/span&gt;: Fragment() {
+    ...
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Hilt currently supports the following Android types: &lt;code&gt;Application&lt;/code&gt; by using(&lt;code&gt;@HiltAndroidApp&lt;/code&gt;), Activity, Fragment, Service and BroadcastReceiver.&lt;/p&gt;
+&lt;p&gt;Hilt only supports activities that extend &lt;a href=&#34;https://developer.android.com/reference/androidx/fragment/app/FragmentActivity&#34;&gt;FragmentActivity&lt;/a&gt; and fragments that extend Jetpack library [Fragment][fx](Note:Hilt does not support retained fragments).&lt;/p&gt;
+&lt;h3 id=&#34;container&#34;&gt;Container&lt;/h3&gt;
+&lt;p&gt;A &lt;em&gt;container&lt;/em&gt; is a class which is in charge of providing dependencies in your codebase and knows how to create instances of other types of your app. It manages the graph of dependencies required to provide those instances by creating them and managing their lifecycle.&lt;/p&gt;
+&lt;p&gt;A container exposes methods to get instances of the types it provides. Those methods can always return a different instance or the same instance. If the method always provides the same instance, we say that the type is &lt;em&gt;scoped&lt;/em&gt; to the container.&lt;/p&gt;
+&lt;h3 id=&#34;hiltandroidapp&#34;&gt;@HiltAndroidApp&lt;/h3&gt;
+&lt;p&gt;Annotating the Application class with &lt;code&gt;@HiltAndroidApp&lt;/code&gt;, we add a &lt;em&gt;container&lt;/em&gt; that is attached to the app&amp;rsquo;s lifecycle:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-kotlin&#34; data-lang=&#34;kotlin&#34;&gt;@HiltAndroidApp
+&lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;App&lt;/span&gt;:Application() {
+    ...
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;code&gt;@HiltAndroidApp&lt;/code&gt; triggers Hilt&amp;rsquo;s code generation including a base class for our application that can use dependency injection. The application container is the &lt;strong&gt;parent container&lt;/strong&gt; of the app, which means that other containers can access the dependencies that it provides.&lt;/p&gt;
+&lt;h2 id=&#34;provide-dependencies&#34;&gt;Provide dependencies&lt;/h2&gt;
+&lt;h3 id=&#34;constructor-inject&#34;&gt;Constructor Inject&lt;/h3&gt;
+&lt;p&gt;To tell Hilt how to provide instance of type, add the &lt;code&gt;@Inject&lt;/code&gt; annotation to the constructor of the class we want to be injected.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-kotlin&#34; data-lang=&#34;kotlin&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Logger&lt;/span&gt; @Inject &lt;span style=&#34;color:#66d9ef&#34;&gt;constructor&lt;/span&gt;() {
+    ...
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;scoping-instance&#34;&gt;Scoping instance&lt;/h4&gt;
+&lt;p&gt;Hilt can produce different containers that have different lifecycles, there are different annotations that scope to those containers:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;@Singleton&lt;/code&gt;: Application container&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;@ActivityScoped&lt;/code&gt;: Activity container&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;@FragmentScoped&lt;/code&gt;: Fragment container&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;@ViewScoped&lt;/code&gt;: View container&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;So we could annotating &lt;em&gt;Logger&lt;/em&gt;.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-kotlin&#34; data-lang=&#34;kotlin&#34;&gt;@Singleton
+&lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Logger&lt;/span&gt; @Inject &lt;span style=&#34;color:#66d9ef&#34;&gt;constructor&lt;/span&gt;() {
+    ...
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;modules&#34;&gt;Modules&lt;/h3&gt;
+&lt;p&gt;For types that &lt;strong&gt;cannot be constructor injected&lt;/strong&gt;, such as interface or classes are not contained in our project, we should use &lt;strong&gt;Hilt modules&lt;/strong&gt;. An exemple of this is &lt;code&gt;OkHttpClient&lt;/code&gt;, we need to use its builder to create an instance.&lt;/p&gt;
+&lt;p&gt;A Hilt module is a class annotated with &lt;code&gt;@Module&lt;/code&gt; and &lt;code&gt;@InstallIn&lt;/code&gt;. &lt;code&gt;@Module&lt;/code&gt; tells Hilt this is a module and &lt;code&gt;@InstallIn&lt;/code&gt; tells Hilt the bindings are specifying in which Hilt component.&lt;/p&gt;
+&lt;p&gt;For each Android class that can be injected by Hilt, there&amp;rsquo;s an associated &lt;a href=&#34;https://developer.android.com/training/dependency-injection/hilt-android#generated-components&#34;&gt;Hilt Component&lt;/a&gt;.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-kotlin&#34; data-lang=&#34;kotlin&#34;&gt;@InstallIn(ApplicationComponent&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt;)
+@Module
+&lt;span style=&#34;color:#66d9ef&#34;&gt;object&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;DatabaseModule&lt;/span&gt; {
+    ...
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;providing-instances-with-provides&#34;&gt;Providing instances with @Provides&lt;/h4&gt;
+&lt;p&gt;We can annotate a function with &lt;code&gt;@Provides&lt;/code&gt; in Hilt modules to tell Hilt how to provide types that cannot be constructor injected.&lt;/p&gt;
+&lt;p&gt;The function body of the &lt;code&gt;@Provides&lt;/code&gt; annotated function will be executed every time Hilt needs to provide an instance of that type. The return type of the &lt;code&gt;@Provides&lt;/code&gt; annotated function tells Hilt the bindings type or how to provide instances of that type.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-kotlin&#34; data-lang=&#34;kotlin&#34;&gt;@InstallIn(ApplicationComponent&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt;)
+@Module
+&lt;span style=&#34;color:#66d9ef&#34;&gt;object&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;DatabaseModule&lt;/span&gt; {
+
+    &lt;span style=&#34;color:#75715e&#34;&gt;/**
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;     * We always want Hilt provide the same database instance, so annotate this
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;     * method with @Singleton.
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;     *
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;     * @param appContext: Each Hilt container comes with a set of default bindings that can be
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;     * injected as dependencies into our custom bindings, to access this appContext, we annotate
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;     * the filed with @ApplicationContext.
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;     */&lt;/span&gt;
+    @Provides
+    @Singleton
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;fun&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;provideDatabase&lt;/span&gt;(@ApplicationContext appContext: Context): AppDatabase {
+        &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; Room.databaseBuilder(
+            appContext,
+            AppDatabase&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt;.java,
+            &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;logging.db&amp;#34;&lt;/span&gt;
+        ).build()
+    }
+
+    &lt;span style=&#34;color:#75715e&#34;&gt;/**
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;     * provide AppDatabase dependency.
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;     */&lt;/span&gt;
+    @Provides
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;fun&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;provideLogDao&lt;/span&gt;(database: AppDatabase): LogDao {
+        &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; database.logDao()
+    }
+
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;providing-interface-impl-with-binds&#34;&gt;Providing interface impl with @Binds&lt;/h4&gt;
+&lt;p&gt;To tell Hilt what implementation to use for an interface, we can use the &lt;code&gt;@Binds&lt;/code&gt; annotation on a function inside a Hilt module.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;@Binds&lt;/code&gt; must annotate an abstract function, since &lt;strong&gt;Hilt modules cannot contain both non-static and abstract binding methods&lt;/strong&gt;, so we cannot place &lt;code&gt;@Binds&lt;/code&gt; and &lt;code&gt;@Provides&lt;/code&gt; annotations in the same class.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-kotlin&#34; data-lang=&#34;kotlin&#34;&gt;@InstallIn(ActivityComponent&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt;)
+@Module
+&lt;span style=&#34;color:#66d9ef&#34;&gt;abstract&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;NavigationModule&lt;/span&gt; {
+
+    &lt;span style=&#34;color:#75715e&#34;&gt;/**
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;     * To tell Hilt how to provide instances of AppNavigatorImpl, we just annotate its constructor with `@Inject`
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;     */&lt;/span&gt;
+    @Binds
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;abstract&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;fun&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;bindNavigator&lt;/span&gt;(impl: AppNavigatorImpl): AppNavigator
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;providing-different-interface-impl-with-qualifier&#34;&gt;Providing different interface impl with @Qualifier&lt;/h4&gt;
+&lt;p&gt;Assume that LoggerDataSource interface has two different implementation.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-kotlin&#34; data-lang=&#34;kotlin&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;interface&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;LoggerDataSource&lt;/span&gt; {
+    ...
+}
+
+@Singleton
+&lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;LoggerLocalDataSource&lt;/span&gt; @Inject &lt;span style=&#34;color:#66d9ef&#34;&gt;constructor&lt;/span&gt;(
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;val&lt;/span&gt; logDao: LogDao
+): LoggerDataSource {
+    ...
+}
+
+&lt;span style=&#34;color:#75715e&#34;&gt;/**
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt; * Scoping to the Activity container
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt; */&lt;/span&gt;
+@ActivityScoped
+&lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;LoggerInMemoryDataSource&lt;/span&gt; @Inject &lt;span style=&#34;color:#66d9ef&#34;&gt;constructor&lt;/span&gt;(
+): LoggerDataSource {
+    ...
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;At this moment, Hilt knows how to provide instances of &lt;code&gt;LoggerInMemoryDataSource&lt;/code&gt; and &lt;code&gt;LoggerLocalDataSource&lt;/code&gt; but doesn&amp;rsquo;t know which implementation to use when &lt;code&gt;LoggerDataSource&lt;/code&gt; is requested.&lt;/p&gt;
+&lt;p&gt;We know that we can use the &lt;code&gt;@Binds&lt;/code&gt; annotation to provide &lt;strong&gt;one&lt;/strong&gt; &lt;code&gt;LoggerDataSource&lt;/code&gt; implementation, but if we need to provide both implementations in the same project?&lt;/p&gt;
+&lt;h5 id=&#34;two-implementations-for-the-same-interface&#34;&gt;Two implementations for the same interface&lt;/h5&gt;
+&lt;p&gt;Since the different implementations of &lt;code&gt;LoggerDataSource&lt;/code&gt; are scoped to different containers, we cannot use the same module:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;em&gt;LoggerInMemoryDataSource&lt;/em&gt; is scoped in Actiivty container&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;LoggerLocalDataSource&lt;/em&gt; is scoped in Application container&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;We should define two different module:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-kotlin&#34; data-lang=&#34;kotlin&#34;&gt;@InstallIn(ApplicationComponent&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt;)
+@Module
+&lt;span style=&#34;color:#66d9ef&#34;&gt;abstract&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;LoggingDatabaseModule&lt;/span&gt; {
+    @Singleton
+    @Binds
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;abstract&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;fun&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;bindDatabaseLogger&lt;/span&gt;(impl: LoggerLocalDataSource): LoggerDataSource
+}
+
+@InstallIn(ActivityComponent&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt;)
+@Module
+&lt;span style=&#34;color:#66d9ef&#34;&gt;abstract&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;LoggingInMemortModule&lt;/span&gt; {
+    @ActivityScoped
+    @Binds
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;abstract&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;fun&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;bindInMemoryLogger&lt;/span&gt;(impl: LoggerInMemoryDataSource): LoggerDataSource
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;strong&gt;@Binds method must have the scoping annotations if the type is scoped&lt;/strong&gt;, so that&amp;rsquo;s why the functions above are annotated with &lt;code&gt;@Singleton&lt;/code&gt; and &lt;code&gt;@ActivityScoped&lt;/code&gt;. If &lt;code&gt;@Binds&lt;/code&gt; or &lt;code&gt;@Provides&lt;/code&gt; are used as a binding for a type, the scoping annotations in the implementation classes are not used anymore, so we can remove them.&lt;/p&gt;
+&lt;p&gt;If we buid the project right now, we&amp;rsquo;ll see &lt;code&gt;DuplicateBindings&lt;/code&gt; error:&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;[Dagger/DuplicateBindings] com.example.android.hilt.data.LoggerDataSource is bound multiple times&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;This is because the &lt;code&gt;LoggerDataSource&lt;/code&gt; type is being injected in &lt;code&gt;Fragment&lt;/code&gt;, but &lt;strong&gt;Hilt doesn&amp;rsquo;t know which implementation to use because there are two bindings of the same tyoe!&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;To tell Hilt how to provide different implementations (multiple bindings) of the same type, we can use qualifier annotation.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-kotlin&#34; data-lang=&#34;kotlin&#34;&gt;@Qualifier
+&lt;span style=&#34;color:#66d9ef&#34;&gt;annotation&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;InMemoryLogger&lt;/span&gt;
+
+@Qualifier
+&lt;span style=&#34;color:#66d9ef&#34;&gt;annotation&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;DatabaseLogger&lt;/span&gt;
+
+@InstallIn(ApplicationComponent&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt;)
+@Module
+&lt;span style=&#34;color:#66d9ef&#34;&gt;abstract&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;LoggingDatabaseModule&lt;/span&gt; {
+
+    @DatabaseLogger
+    @Singleton
+    @Binds
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;abstract&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;fun&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;bindDatabaseLogger&lt;/span&gt;(impl: LoggerLocalDataSource): LoggerDataSource
+}
+
+@InstallIn(ActivityComponent&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt;)
+@Module
+&lt;span style=&#34;color:#66d9ef&#34;&gt;abstract&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;LoggingInMemoryModule&lt;/span&gt; {
+
+    @InMemoryLogger
+    @ActivityScoped
+    @Binds
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;abstract&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;fun&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;bindInMemoryLogger&lt;/span&gt;(impl: LoggerInMemoryDataSource): LoggerDataSource
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;inject-dependencies&#34;&gt;Inject dependencies&lt;/h2&gt;
+&lt;p&gt;We can make Hilt inject instances of different types with the &lt;code&gt;@Inject&lt;/code&gt; annotation on the fields we want to be injected:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-kotlin&#34; data-lang=&#34;kotlin&#34;&gt;@AndroidEntryPoint
+&lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;LoginFragment&lt;/span&gt;:Fragment() {
+    &lt;span style=&#34;color:#75715e&#34;&gt;// note that fields injected by Hilt cannot be private.
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;    @InmemoryLogger
+    @Inject &lt;span style=&#34;color:#66d9ef&#34;&gt;lateinit&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;var&lt;/span&gt; logger: LoggerDataSource
+    @Inject &lt;span style=&#34;color:#66d9ef&#34;&gt;lateinit&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;var&lt;/span&gt; formatter: Formatter
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+    </item>
     
     <item>
       <title>Introduction to Custom View</title>
@@ -541,30 +731,6 @@ println(updateDirty(&lt;span style=&#34;color:#ae81ff&#34;&gt;40&lt;/span&gt;, &
 dirty = updateDirty(dirty) { dirty -&amp;gt; dirty / &lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt; }
 println(dirty)
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
-    </item>
-    
-    <item>
-      <title>Use Hilt in Android</title>
-      <link>https://zacash.cn/post/use-hilt-in-android/</link>
-      <pubDate>Thu, 06 Aug 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://zacash.cn/post/use-hilt-in-android/</guid>
-      <description>&lt;blockquote&gt;
-&lt;p&gt;If you want to use dagger in  your project, you may have 2 or 3 different sources, different samples, different blog posts. All of them use a different set-up, and all of them use Dagger in a different way, so it&amp;rsquo;s very difficult to understand all the topics and relate them together. So that&amp;rsquo;s why Google create a common guidance, a common ground.&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h2 id=&#34;hilt-中一些注解&#34;&gt;Hilt 中一些注解&lt;/h2&gt;
-&lt;h3 id=&#34;container&#34;&gt;container&lt;/h3&gt;
-&lt;p&gt;A &lt;em&gt;container&lt;/em&gt; is a class which is in charge of providing dependencies in your codebase and knows how to create instances of other types of your app. It manages the graph of dependencies required to provide those instances by creating them and managing their lifecycle.&lt;/p&gt;
-&lt;p&gt;&lt;em&gt;container&lt;/em&gt; 是一个类，负责在代码中提供依赖关系，并且知道如何创建其他类型的 App 实例。它通过创建依赖所需的实例并管理其生命周期来控制依赖关系图。&lt;/p&gt;
-&lt;p&gt;A container exposes methods to get instances of the types it provides. Those methods can always return a different instance or the same instance. If the method always provides the same instance, we say that the type is &lt;em&gt;scoped&lt;/em&gt; to the container.&lt;/p&gt;
-&lt;p&gt;&lt;em&gt;container&lt;/em&gt; 暴露提供这些实例的方法。这些方法始终可以返回不同或相同的实例。如果该方法始终提供相同的实例，则可以说这种类型属于 &lt;em&gt;container&lt;/em&gt; 的&lt;em&gt;范围&lt;/em&gt;。&lt;/p&gt;
-&lt;h3 id=&#34;hiltandroidapp&#34;&gt;@HiltAndroidApp&lt;/h3&gt;
-&lt;p&gt;为了添加一个依附 app 生命周期的 &lt;em&gt;container&lt;/em&gt;，我们需要在 &lt;strong&gt;Application&lt;/strong&gt; 类上添加 &lt;code&gt;@HiltAndroidApp&lt;/code&gt; 注解：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-kotlin&#34; data-lang=&#34;kotlin&#34;&gt;@HiltAndroidApp
-&lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;App&lt;/span&gt;:Application() {
-    ...
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;code&gt;@HiltAndroidApp&lt;/code&gt; 会触发 Hilt 生成 App 所使用的依赖注入的基类，&lt;em&gt;application container&lt;/em&gt; 是 app 的父容器，这意味着别的 &lt;em&gt;containers&lt;/em&gt; 可以访问它提供的依赖。&lt;/p&gt;</description>
     </item>
     
     <item>

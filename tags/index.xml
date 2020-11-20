@@ -7,10 +7,37 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
     <copyright>Copyright © 2020, Copyright Zac</copyright>
-    <lastBuildDate>Sun, 06 Sep 2020 11:11:13 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 06 Nov 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://zacash.cn/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>dagger</title>
+      <link>https://zacash.cn/tags/dagger/</link>
+      <pubDate>Fri, 06 Nov 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://zacash.cn/tags/dagger/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>di</title>
+      <link>https://zacash.cn/tags/di/</link>
+      <pubDate>Fri, 06 Nov 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://zacash.cn/tags/di/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>hilt</title>
+      <link>https://zacash.cn/tags/hilt/</link>
+      <pubDate>Fri, 06 Nov 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://zacash.cn/tags/hilt/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>custom view</title>
@@ -81,33 +108,6 @@
       <pubDate>Sun, 09 Aug 2020 00:00:00 +0000</pubDate>
       
       <guid>https://zacash.cn/tags/lambda/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>dagger</title>
-      <link>https://zacash.cn/tags/dagger/</link>
-      <pubDate>Thu, 06 Aug 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://zacash.cn/tags/dagger/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>di</title>
-      <link>https://zacash.cn/tags/di/</link>
-      <pubDate>Thu, 06 Aug 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://zacash.cn/tags/di/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>hilt</title>
-      <link>https://zacash.cn/tags/hilt/</link>
-      <pubDate>Thu, 06 Aug 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://zacash.cn/tags/hilt/</guid>
       <description></description>
     </item>
     
