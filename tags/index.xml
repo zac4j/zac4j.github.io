@@ -7,10 +7,46 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
     <copyright>Copyright © 2020, Copyright Zac</copyright>
-    <lastBuildDate>Fri, 06 Nov 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 20 Dec 2020 11:18:43 +0800</lastBuildDate>
     
 	<atom:link href="https://zacash.cn/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>learn</title>
+      <link>https://zacash.cn/tags/learn/</link>
+      <pubDate>Sun, 20 Dec 2020 11:18:43 +0800</pubDate>
+      
+      <guid>https://zacash.cn/tags/learn/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>math</title>
+      <link>https://zacash.cn/tags/math/</link>
+      <pubDate>Sun, 20 Dec 2020 11:18:43 +0800</pubDate>
+      
+      <guid>https://zacash.cn/tags/math/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>skill</title>
+      <link>https://zacash.cn/tags/skill/</link>
+      <pubDate>Sun, 20 Dec 2020 11:18:43 +0800</pubDate>
+      
+      <guid>https://zacash.cn/tags/skill/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>strategy</title>
+      <link>https://zacash.cn/tags/strategy/</link>
+      <pubDate>Sun, 20 Dec 2020 11:18:43 +0800</pubDate>
+      
+      <guid>https://zacash.cn/tags/strategy/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>dagger</title>

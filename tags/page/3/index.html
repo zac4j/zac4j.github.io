@@ -45,15 +45,25 @@
             <a href="https://zacash.cn">Home</a>
         </div>
         
+            <div class="page-nav-item">
+                <a href="/tags">
+                    
+                    <span>Tag</span>
+                </a>
+            </div>
+        
+            <div class="page-nav-item">
+                <a href="/categories">
+                    
+                    <span>Category</span>
+                </a>
+            </div>
+        
     </div>
 </nav>
         
         <div id="site-header">
             <h1>Zac&#39;s Blog</h1>
-            
-            <p>
-              Learn to coding, learn to thinking
-            </p>
             
         </div>
         
@@ -66,20 +76,20 @@
       <article>
       <header>
         
-        <h2 class="list-title"><a href="https://zacash.cn/post/fragment-in-viewpager/">Fragment in ViewPager</a></h2>
+        <h2 class="list-title"><a href="https://zacash.cn/post/jvm-mechanics/">JVM Mechanics</a></h2>
         
         <p class="list-post-date">
-          <time datetime="2020-05-25T20:55:31&#43;08:00">
-            25 May, 2020 at 20:55 CST
+          <time datetime="2020-07-17T00:00:00Z">
+            17 July, 2020 at 00:00 UTC
           </time>
         </p>
       </header>
       <div>
-        使用 ViewPager 通常我们使用 ViewPager + TabLayout 主要有这些步骤：
- 页面的布局结构:  &lt;?xml version=&#34;1.0&#34; encoding=&#34;utf-8&#34;?&gt; &lt;androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android=&#34;http://schemas.android.com/apk/res/android&#34; xmlns:app=&#34;http://schemas.android.com/apk/res-auto&#34; xmlns:tools=&#34;http://schemas.android.com/tools&#34; android:layout_width=&#34;match_parent&#34; android:layout_height=&#34;match_parent&#34; tools:context=&#34;.MainActivity&#34; &gt; &lt;com.google.android.material.appbar.AppBarLayout android:layout_width=&#34;match_parent&#34; android:layout_height=&#34;wrap_content&#34; android:theme=&#34;@style/AppTheme.AppBarOverlay&#34; &gt; ... &lt;com.google.android.material.tabs.TabLayout android:id=&#34;@+id/tabs&#34; android:layout_width=&#34;match_parent&#34; android:layout_height=&#34;wrap_content&#34; android:background=&#34;?attr/colorPrimary&#34; /&gt; &lt;androidx.viewpager.widget.ViewPager android:id=&#34;@+id/view_pager&#34; android:layout_width=&#34;match_parent&#34; android:layout_height=&#34;match_parent&#34; app:layout_behavior=&#34;@string/appbar_scrolling_view_behavior&#34; /&gt; &lt;/com.google.android.material.appbar.AppBarLayout&gt; &lt;/androidx.coordinatorlayout.widget.CoordinatorLayout&gt;  在 PagerAdapter 中会指定我们使用的 Fragment:  class SectionsPagerAdapter(private val context: Context, fm: FragmentManager ) : FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) { override fun getItem(position: Int): Fragment { return SampleFragment.newInstance(position) } override fun getCount(): Int { return TAB_TITLES.
+        Class 文件的结构
+
       </div>
       
-      <p><a class="read-more" href="https://zacash.cn/post/fragment-in-viewpager/">Read more &rarr;</a></p>
+      <p><a class="read-more" href="https://zacash.cn/post/jvm-mechanics/">Read more &rarr;</a></p>
       
     </article>
   
@@ -88,26 +98,20 @@
       <article>
       <header>
         
-        <h2 class="list-title"><a href="https://zacash.cn/post/git-basic/">Git Basic</a></h2>
+        <h2 class="list-title"><a href="https://zacash.cn/post/intro-to-hashmap/">Intro to HashMap</a></h2>
         
         <p class="list-post-date">
-          <time datetime="2020-05-15T15:55:52&#43;08:00">
-            15 May, 2020 at 15:55 CST
+          <time datetime="2020-07-15T15:11:27&#43;08:00">
+            15 July, 2020 at 15:11 CST
           </time>
         </p>
       </header>
       <div>
-        Problem Solving Authentication   Clear saved account &amp; password
-Error: fatal:Authentication failed for 'remote-url'
-git config --system --unset credential.helper
-  Save account &amp; password
-git config --global credential.helper store
-  Remote   Check remote url
-git remote -v
-  Update remote url
-git remote set-url origin newRepoUrl
-  
+        Hash table based implementation of the Map interface. This implementation provides all of the optional map operations, and permits null values and the null key.
+
       </div>
+      
+      <p><a class="read-more" href="https://zacash.cn/post/intro-to-hashmap/">Read more &rarr;</a></p>
       
     </article>
   
@@ -116,19 +120,23 @@ git remote set-url origin newRepoUrl
       <article>
       <header>
         
-        <h2 class="list-title"><a href="https://zacash.cn/post/fragments/">Intro to Fragments</a></h2>
+        <h2 class="list-title"><a href="https://zacash.cn/post/how-are-touch-events-delivered/">How Are Touch Events Delivered</a></h2>
         
         <p class="list-post-date">
-          <time datetime="2020-05-07T20:30:50&#43;08:00">
-            7 May, 2020 at 20:30 CST
+          <time datetime="2020-07-11T08:37:45&#43;08:00">
+            11 July, 2020 at 08:37 CST
           </time>
         </p>
       </header>
       <div>
-        Activity 和 Fragment 生命周期的关联    Activity 状态 Fragment 生命周期方法回调 Fragment 状态     Created onAttach(), onCreate(), onCreateView(), onActivityCreated() Fragment 添加到 Activity 且视图已初始化   Started onStart() Fragment 活跃并可见   Resumed onResume() Fragment 活跃并获取焦点   Paused onPause() Fragment 暂停   Stopped onStop() Fragment 停止并不再可见   Destroyed onDestroyView(), onDestroy(), onDetach() Fragment 销毁    Fragment 重要的生命周期方法的使用  onAttach(): Fragment 在被 attach 到宿主 Activity 时回调，可以在该方法里检查宿主 Activity 是否实现了某个接口。 onCreateView(): Fragment 的 XML 布局在这个回调方法里初始化，系统调用这个方法来绘制 Fragment 的 UI。 onPause(): 可以在 Fragment 销毁前在该回调方法保存必要数据或状态。 onActivityCreated(): 在宿主 Activity 的 onCreate() 方法调用后回调该方法。可以在该方法做最终的初始化，如检索 View getView().
+        根据例子来理解 Android 的事件传递
+页面的布局结构
+&lt;?xml version=&#34;1.0&#34; encoding=&#34;utf-8&#34;?&gt; &lt;layout xmlns:android=&#34;http://schemas.android.com/apk/res/android&#34; xmlns:app=&#34;http://schemas.android.com/apk/res-auto&#34;&gt; &lt;data&gt; &lt;variable name=&#34;viewModel&#34; type=&#34;com.zac4j.system.data.TouchViewModel&#34; /&gt; &lt;/data&gt; &lt;com.zac4j.system.ui.widget.CustomLayout android:id=&#34;@id/touch_sample_container&#34; android:layout_width=&#34;match_parent&#34; android:layout_height=&#34;match_parent&#34;&gt; &lt;Button android:id=&#34;@id/touch_sample_btn&#34; style=&#34;@style/Widget.AppCompat.Button.Colored&#34; android:layout_width=&#34;match_parent&#34; android:layout_height=&#34;wrap_content&#34; android:text=&#34;Touch Me&#34; app:layout_constraintEnd_toEndOf=&#34;parent&#34; app:layout_constraintStart_toStartOf=&#34;parent&#34; app:layout_constraintTop_toTopOf=&#34;parent&#34; /&gt; &lt;/com.zac4j.system.ui.widget.CustomLayout&gt; &lt;/layout&gt; TouchEvent 的传递 我们通常对 Button 创建点击事件:
+touchSampleBtn.setOnClickListener { Logger.i(TAG, &#34;setOnClickListener&#34;, &#34;sampleBtn clicked&#34;) } 可以先看下 View.dispatchTouchEvent() 的实现:
+public boolean dispatchTouchEvent(MotionEvent event) { ... if (onFilterTouchEventForSecurity(event)) { if ((mViewFlags &amp; ENABLED_MASK) == ENABLED &amp;&amp; handleScrollBarDragging(event)) { result = true; } //noinspection SimplifiableIfStatement  ListenerInfo li = mListenerInfo; if (li !
       </div>
       
-      <p><a class="read-more" href="https://zacash.cn/post/fragments/">Read more &rarr;</a></p>
+      <p><a class="read-more" href="https://zacash.cn/post/how-are-touch-events-delivered/">Read more &rarr;</a></p>
       
     </article>
   
@@ -137,25 +145,27 @@ git remote set-url origin newRepoUrl
       <article>
       <header>
         
-        <h2 class="list-title"><a href="https://zacash.cn/post/coroutines-introduction/">Coroutines Introduction</a></h2>
+        <h2 class="list-title"><a href="https://zacash.cn/post/intro-to-hybrid-app/">Intro to Hybrid App</a></h2>
         
         <p class="list-post-date">
-          <time datetime="2020-04-25T11:40:03&#43;08:00">
-            25 April, 2020 at 11:40 CST
+          <time datetime="2020-07-04T15:45:14&#43;08:00">
+            4 July, 2020 at 15:45 CST
           </time>
         </p>
       </header>
       <div>
-        协程用来解决什么问题 Kotlin 的协程提供了一种全新的并发处理方式，我们可以使用它来简化安卓异步执行的代码。
-在 Android 平台上协程主要用来解决两个问题：
- 处理耗时任务(Long running tasks) 保证主线程安全(Main-safety)  处理耗时任务 我们常规处理耗时任务是通过异步回调的方式，比如：
-fun fetchDoc() { get(&#34;https://doc.qq.com&#34;) { result -&gt; show(result) } } 通过协程的方式是这样：
-// 主线程执行 suspend fun fetchDoc() { // 直接返回结果  val result = get(&#34;https://doc.qq.com&#34;) show(result) } // 主线程执行 suspend fun get(url: String) = withContext(Dispatchers.IO) { /*IO 线程池执行*/ } 可以看到通过协程可以直接返回请求结果，而不用管理请求延迟和线程阻塞，这是如何实现的呢？
-协程在常规的函数操作 —— invoke 和 return 之外，还新增了2项：
- suspend —— 称为挂起或暂停，用于暂停执行当前协程，并保存所有局部变量 resume —— 让暂停的协程继续执行  那么 suspend 是如何实现的呢？
+        Hybrid App 的几种方案   PhoneGap/Cordova
+WebView 作为用户界面，以 Javascript 作为基本逻辑，以及和中间件通信，再由中间件访问底层 API 的方式，进行 App 开发。
+  React Native/Weex
+使用前端技术开发，通过 JSBridge 将 Javascript 代码解析的 Virtual DOM 传递到 Native 并使用原生进行渲染。
+  Native/H5 混合开发
+在原生的架构基础上，嵌入 WebView 业务逻辑，一般有 Native 和 Web 前端开发人员组成。Native 写好基本的架构以及 API 让 Web 开发人员开发页面以及大部分渲染。
+  PhoneGap/Cordova PhoneGap 由 Apache 接管后改名为 Cordova，实际上是一个项目。Cordova 其实不应该称为 Hybrid 方案。因为，它的目标是全面使用前端技术开发移动应用，而不是前端和原生混合使用。不过，这些框架和 React Native 的目标是一致的：使用前端技术开发移动应用，提高工程效率。
+Cordova 让前端技术尽可能多的完成开发工作，只有在前端无法直接调用的原生系统功能方面提供了前端可用的接口。主流的 Cordova 项目都将业务逻辑实现在一个 WebView 中，目标是让开发者使用前端技术就能完成一个应用开发。这种做法需要一个前提——前端技术可以解决移动开发的所有需求。
+Cordova 架构图  Web App 是开发人员编写代码的地方，应用以网页的形式呈现，在一个 index.
       </div>
       
-      <p><a class="read-more" href="https://zacash.cn/post/coroutines-introduction/">Read more &rarr;</a></p>
+      <p><a class="read-more" href="https://zacash.cn/post/intro-to-hybrid-app/">Read more &rarr;</a></p>
       
     </article>
   
@@ -164,22 +174,22 @@ fun fetchDoc() { get(&#34;https://doc.qq.com&#34;) { result -&gt; show(result) }
       <article>
       <header>
         
-        <h2 class="list-title"><a href="https://zacash.cn/post/activity-launch/">Activity Start</a></h2>
+        <h2 class="list-title"><a href="https://zacash.cn/post/intro-to-service/">Intro to Service</a></h2>
         
         <p class="list-post-date">
-          <time datetime="2020-04-22T08:10:27&#43;08:00">
-            22 April, 2020 at 08:10 CST
+          <time datetime="2020-07-04T11:08:11&#43;08:00">
+            4 July, 2020 at 11:08 CST
           </time>
         </p>
       </header>
       <div>
-        Task and Back Stack Task 就是执行某项任务时开启的一系列 Activity 的集合，这些 Activity 会按照打开的顺序排列在回退栈 (Back Stack) 中。
-Activity 的四种启动模式 (launchMode) 如通过 startActivity(Intent) 启动 Activity A
- standard 模式：标准模式，创建 Activity A 实例并 push 到当前任务栈中 singleTop 模式：栈顶复用模式，如果当前栈顶是 Activity A ，直接复用并调用 onNewIntent(Intent)方法，不会创建新的实例 singleTask 模式：栈内复用模式，如果当前栈内含有 Activity A ，直接复用并调用 onNewIntent(Intent)方法，并清除栈内 Activity A 上方的所有 Activity 实例 singleInstance 模式：在新的任务栈开启 Activity A，如果新的任务栈和 Activity A 已创建，继续开启 Activity A 会调用其 onNewIntent(Intent)方法。  三种 Intent 标记 startActivity(Intent) 方法可以添加 3 种 Intent 标记：
-  FLAG_ACTIVITY_NEW_TASK
+        查看进程基本信息 使用 adb shell ps|grep com.tencent.mobileqq 可以查看 QQ 应用进程相关的基本信息
+Zac:tivi Zac$ adb shell ps | grep com.tencent.mobileqq # curr_user pid process name u0_a163 6779 669 1638852 27152 0 0 S com.tencent.mobileqq:MSF u0_a163 22001 669 1915536 224004 0 0 S com.tencent.mobileqq u0_a163 27829 669 1670960 236668 0 0 S com.tencent.mobileqq:qzone 进程的划分 为了确定在内存不足时 kill 哪些进程，Android 会依据进程中运行的组件（Activity/Service/BroadcastReceiver）和这些组件的状态，划分每个进程的重要层次结构（importance hierarchy）。这些进程按重要性排序:
+前台进程（foreground process） 前台进程是用户当前正在执行的操作所必须的进程，应用进程内的组件可能以不同形式让其处于前台：
+ Activity 处于用户正在交互状态（onResume() 方法已调用） BroadcastReceiver 正在运行（BroadcastReceiver.onReceive() 方法正在执行） Service 的回调正在执行代码（Service.onCreate(), Service.onStart(), Service.onDestroy()）  Android 系统中只有少数这样的进程，而且只有在内存太低且无法运行这些进程时，才会 kill 这些进程。
       </div>
       
-      <p><a class="read-more" href="https://zacash.cn/post/activity-launch/">Read more &rarr;</a></p>
+      <p><a class="read-more" href="https://zacash.cn/post/intro-to-service/">Read more &rarr;</a></p>
       
     </article>
   
@@ -188,108 +198,26 @@ Activity 的四种启动模式 (launchMode) 如通过 startActivity(Intent) 启�
       <article>
       <header>
         
-        <h2 class="list-title"><a href="https://zacash.cn/post/handler-in-action/">Handler in Action</a></h2>
+        <h2 class="list-title"><a href="https://zacash.cn/post/java-basic/">Java Basic</a></h2>
         
         <p class="list-post-date">
-          <time datetime="2020-04-14T21:53:54&#43;08:00">
-            14 April, 2020 at 21:53 CST
+          <time datetime="2020-07-03T09:28:31&#43;08:00">
+            3 July, 2020 at 09:28 CST
           </time>
         </p>
       </header>
       <div>
-        Memory Leaks 1.1 背景 1.Handler 在使用下面这种实现方式处理消息时:
-class MainActivity : Activity() { private val mLeakedHandler = object : Handler() { override fun handleMessage(msg: Message) { super.handleMessage(msg) } } Android Lint 会发出这样的警告: This Handler class should be static or leaks might occur(anonymous android.os.Handler)
-2.我们在 Handler 构造方法里同样可以看到：
-public Handler(@Nullable Callback callback, boolean async) { if (FIND_POTENTIAL_LEAKS) { final Class&lt;? extends Handler&gt; klass = getClass(); if ((klass.isAnonymousClass() || klass.isMemberClass() || klass.isLocalClass()) &amp;&amp; (klass.getModifiers() &amp; Modifier.
+        🌟答案的组织策略：知道是什么，知道为什么，知道怎么用
+0.JDK 和 JRE 有什么区别？  JDK 包含 JRE，同时还包含编译 Java 源码的编译器 javac，还包含了很多 Java 程序调试和分析的工具。 加分项：除了 javac 还了解哪些命令行工具，它们的用途是什么？  jcmd：综合工具 jps：虚拟机进程状况工具 jinfo：虚拟机配置信息工具 jstat：虚拟机统计信息监视工具 jmap：Java 内存映像工具 jhat：虚拟机堆转储快照分析工具 jstack：Java 堆栈追踪工具   加分项jstat 用过吗，有哪些参数？  -class：监视类装载、卸载数量、总空间和类装载所耗费的时间 -gc：监视 Java 堆的状况，包括 Eden 区，两个 survior 区，老年代、永久代等的容量，已用空间、GC 时间合计等统计    1.equals 和 == 的差别？ 两者都是判断等价性，区别要从入参类型来看：
+  对于基本类型，他们是比较值是否相等
+  对于引用类型，他们是判断引用的是否为同一对象
+  考察点：equals 的概念
+  🌟实际要求：平时对源码的深挖意识即技术钻研和批判性思维
+  考察目的：
+ 基础知识的扎实程度 候选人对技术的热情    2.
       </div>
       
-      <p><a class="read-more" href="https://zacash.cn/post/handler-in-action/">Read more &rarr;</a></p>
-      
-    </article>
-  
-  
-  
-      <article>
-      <header>
-        
-        <h2 class="list-title"><a href="https://zacash.cn/post/handler-in-code/">Handler in Code</a></h2>
-        
-        <p class="list-post-date">
-          <time datetime="2020-04-12T20:36:33&#43;08:00">
-            12 April, 2020 at 20:36 CST
-          </time>
-        </p>
-      </header>
-      <div>
-        Handler 的创建  在主线程(UI Thread)中：  class MainActivity : Activity { private val mLeakedHandler = object : Handler() { override fun handleMessage(msg: Message) { super.handleMessage(msg) } } }  在子线程中：  val thread = object : Thread() { override fun run() { Looper.prepare() val handler = object : Handler() { override fun handleMessage(msg: Message) { super.handleMessage(msg) } } Looper.loop() } } 为什么在子线程创建 Handler 需要准备 Looper，而主线程却不用 因为 ActivityThread 中的 main() 方法已经为我们初始化了 Looper
-      </div>
-      
-      <p><a class="read-more" href="https://zacash.cn/post/handler-in-code/">Read more &rarr;</a></p>
-      
-    </article>
-  
-  
-  
-      <article>
-      <header>
-        
-        <h2 class="list-title"><a href="https://zacash.cn/post/hugo-basic/">Hugo Basic</a></h2>
-        
-        <p class="list-post-date">
-          <time datetime="2020-04-04T09:25:04&#43;08:00">
-            4 April, 2020 at 09:25 CST
-          </time>
-        </p>
-      </header>
-      <div>
-        Add new content hugo new posts/article-name.md
-Article meta info --- title: &#34;New Article&#34; date: 2020-04-04T09:25:04+08:00 description: &#34;Hugo 的简单用法&#34; tags: [&#34;hugo&#34;, &#34;pages&#34;] categories: [&#34;hugo&#34;] draft: true --- Start server with drafts enabled hugo server -D
-Customize the theme Open up config.toml in a text editor:
-baseURL = &#34;https://example.org/&#34; languageCode = &#34;en-us&#34; title = &#34;My New Hugo Site&#34; theme = &#34;ananke&#34; Build static pages hugo -D output will be in ./public/ directory by default (-d/--destination flag to change it, or set publishdir in the config file)
-      </div>
-      
-      <p><a class="read-more" href="https://zacash.cn/post/hugo-basic/">Read more &rarr;</a></p>
-      
-    </article>
-  
-  
-  
-      <article>
-      <header>
-        
-        <h2 class="list-title"><a href="https://zacash.cn/post/check-state-loss/">Check State Loss</a></h2>
-        
-        <p class="list-post-date">
-          <time datetime="2020-02-11T16:30:26&#43;08:00">
-            11 February, 2020 at 16:30 CST
-          </time>
-        </p>
-      </header>
-      <div>
-        背景 最近做的一个 DialogFragment 在少数设备上会偶发闪退，Fabric 上的 Stacktrace 信息如下：
-Fatal Exception: java.lang.IllegalStateException: Can not perform this action after onSaveInstanceState at android.support.v4.app.FragmentManagerImpl.checkStateLoss(SourceFile) at android.support.v4.app.FragmentManagerImpl.enqueueAction(SourceFile) at android.support.v4.app.BackStackRecord.commitInternal(SourceFile) at android.support.v4.app.BackStackRecord.commit(SourceFile) at android.support.v4.app.DialogFragment.show(SourceFile） 看起来是弹窗在 show 的时候，发生了 state loss，粗略 copy 了下 StackOverflow 上的回答，做了如下修改：
-fun show(manager: FragmentManager?) { try { val ft = manager?.beginTransaction() ft?.add(this, &#34;tag of dialog&#34;) ft?.commitAllowingStateLoss() } catch (e: Exception) { } } 重写了 show 方法，允许 state loss，并加了异常捕捉，后续观察 Fabric， show 的时候的确没再出现异常情况，但 dismiss 的时候还是有闪退出现，异常信息如下：
-Fatal Exception: java.
-      </div>
-      
-      <p><a class="read-more" href="https://zacash.cn/post/check-state-loss/">Read more &rarr;</a></p>
-      
-    </article>
-  
-  
-  
-      <article>
-      <header>
-        
-        <p class="list-post-date">
-          <time datetime="0001-01-01T00:00:00Z">
-            1 January, 0001 at 00:00 UTC
-          </time>
-        </p>
-      </header>
-      <div>
-        
-      </div>
+      <p><a class="read-more" href="https://zacash.cn/post/java-basic/">Read more &rarr;</a></p>
       
     </article>
   

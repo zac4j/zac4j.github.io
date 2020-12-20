@@ -47,15 +47,25 @@
             <a href="https://zacash.cn">Home</a>
         </div>
         
+            <div class="page-nav-item">
+                <a href="/tags">
+                    
+                    <span>Tag</span>
+                </a>
+            </div>
+        
+            <div class="page-nav-item">
+                <a href="/categories">
+                    
+                    <span>Category</span>
+                </a>
+            </div>
+        
     </div>
 </nav>
         
         <div id="site-header">
             <h1>Zac&#39;s Blog</h1>
-            
-            <p>
-              Learn to coding, learn to thinking
-            </p>
             
         </div>
         
@@ -69,22 +79,28 @@
     <article>
       <header>
         
-        <h2 class="list-title"><a href="https://zacash.cn/post/handler-in-action/">Handler in Action</a></h2>
+        <h2 class="list-title"><a href="https://zacash.cn/post/design-pattern-in-android/">Essential Design Pattern in Android</a></h2>
         
         <p class="list-post-date">
-          <time datetime="2020-04-14T21:53:54&#43;08:00">
-            14 April, 2020 at 21:53 CST
+          <time datetime="2020-06-20T20:22:10&#43;08:00">
+            20 June, 2020 at 20:22 CST
           </time>
         </p>
       </header>
       <div>
-        Memory Leaks 1.1 背景 1.Handler 在使用下面这种实现方式处理消息时:
-class MainActivity : Activity() { private val mLeakedHandler = object : Handler() { override fun handleMessage(msg: Message) { super.handleMessage(msg) } } Android Lint 会发出这样的警告: This Handler class should be static or leaks might occur(anonymous android.os.Handler)
-2.我们在 Handler 构造方法里同样可以看到：
-public Handler(@Nullable Callback callback, boolean async) { if (FIND_POTENTIAL_LEAKS) { final Class&lt;? extends Handler&gt; klass = getClass(); if ((klass.isAnonymousClass() || klass.isMemberClass() || klass.isLocalClass()) &amp;&amp; (klass.getModifiers() &amp; Modifier.
+        什么是设计模式 设计模式的经典解释：软件工程中，设计模式是针对软件设计中给定上下文的常见问题的通用、可复用的解决方案。设计模式并非可以直接转换为源码或机器码的最终设计。相反，它是可以在不同场景下使用的解决问题的描述或模版。设计模式是程序员在设计 App 或系统时解决常见问题的最佳实践。
+面向对象的设计模式通常展示了类和对象之间的关系和交互，而不是指定 App 的类或对象。
+设计模式可以看作是一种编程的结构化方法，介于编程范式和具体算法之间。
+设计模式根据其解决的问题分为三个类别：
+ 创造型模式（Creational Patterns）：提供创建类，对象的方法（Singleton, Dependency Inject, Builder等）。 结构型模式（Structural Patterns）：提供对象和类之间组合的方法（Composite, Bridge, Adapter 等）。 行为型模式（Bahavioral Patterns）：提供对象和类之间相互交流的方法（Command, Observer, Strategy 等）。  创造型模式 当我们用最基本的形式创建创建对象可能导致设计问题，或增加设计的复杂性。创造型设计模式通过控制对象的创建方式来解决这种问题。
+Android 常用的创造型模式：
+Builder Builder 模式主要解决创建复杂对象过程中遇到的问题：
+ 类如何创建复杂对象不同的表现形式(different presentations) 如何简化包含创建复杂对象的类  Builder 模式在 Android 中常见的应用是 AlertDialog 的创建过程：
+AlertDialog.Builder(context) .setTitle(&#34;Builder Sample&#34;) .setMessage(&#34;Builder Nessage&#34;) .setNegativeButton(&#34;Cancel&#34;, {_,_ -&gt; }) .setPositiveButton(&#34;OK&#34;, {_, _ -&gt; }) .show() Builder 模式通过这种方式解决问题：
+ 将复杂对象的各个部分的创建(creating)和组装(assembling)封装在一个独立的 Builder 对象中。 类将对象的创建委托给 Builder 对象，而不是直接创建。  Dependency injection 依赖注入（Dependency injection, 简称 Di）通常表示某个对象接收(receives)它依赖的对象(objects)的技术，这些依赖的对象称为依赖项(dependencies)。在典型的使用关系中，接收者被称为客户端（client），传递的对象被称为服务（service）。将服务传递给客户端的代码可能有很多种，被称为注入器（injector）, 注入器提供给客户端需要使用哪些服务。注入(injection)是指将依赖项（服务）传递给使用依赖项的对象（客户端）。
       </div>
       
-      <p><a class="read-more" href="https://zacash.cn/post/handler-in-action/">Read more &rarr;</a></p>
+      <p><a class="read-more" href="https://zacash.cn/post/design-pattern-in-android/">Read more &rarr;</a></p>
       
     </article>
 
@@ -93,16 +109,96 @@ public Handler(@Nullable Callback callback, boolean async) { if (FIND_POTENTIAL_
     <article>
       <header>
         
-        <h2 class="list-title"><a href="https://zacash.cn/post/linked-list/">Linked List</a></h2>
+        <h2 class="list-title"><a href="https://zacash.cn/post/top-10-kotlin-questions/">Top 10 Kotlin Questions in StackOverflow</a></h2>
         
         <p class="list-post-date">
-          <time datetime="2020-04-14T18:48:34&#43;08:00">
-            14 April, 2020 at 18:48 CST
+          <time datetime="2020-06-19T22:03:29&#43;08:00">
+            19 June, 2020 at 22:03 CST
           </time>
         </p>
       </header>
       <div>
+        IntArray vs. Array&lt;Int&gt;   In java code
+ IntArray: int[] Array&lt;Int&gt;: Integer[]    Create method:
+ IntArray:  val intArray : IntArray = intArrayOf(1, 2, 3, 4, 5)  Array&lt;Int&gt;:  val arrayOfInts : Array&lt;Int&gt; = arrayOf(1, 2, 3, 4, 5)   Iterable vs. Sequence   Usage
+ Iterable:  getPeople() .filter { it.age &gt;= 18 } .map { it.name } .take(5)  Sequence: start with asSequence() and end with toList() or toSet()&hellip;  getPeople().
+      </div>
+      
+      <p><a class="read-more" href="https://zacash.cn/post/top-10-kotlin-questions/">Read more &rarr;</a></p>
+      
+    </article>
+
+
+
+    <article>
+      <header>
         
+        <h2 class="list-title"><a href="https://zacash.cn/post/intro-to-build-system/">Intro to Build System</a></h2>
+        
+        <p class="list-post-date">
+          <time datetime="2020-06-05T14:49:15&#43;08:00">
+            5 June, 2020 at 14:49 CST
+          </time>
+        </p>
+      </header>
+      <div>
+        构建流程（Build process） 简单来说构建流程就是涉及一系列工具和步骤将项目转换成 Android Application Package(APK)。典型的流程如下图所示：
+图中所示有4个步骤：
+ 编译器将源码转换为 DEX 文件(Dalvik 可执行文件，包括运行在 Android 设备的字节码)，并将其他所有内容转换成编译后的资源文件。 APK Packager 将 DEX 文件和编译后的资源文件合并到一个 APK 里。 APK Packager 使用 keystore 为 APK 签名。 在生成最终的 APK 文件之前，Packager 会使用 zipalign 工具  自定义构建配置 Gradle 和 Android 插件可以帮助我们修改 build.gradle 中的这些配置：
+构建类型 Build Types 构建类型定义 Gradle 在构建(building)和打包(packaging) App 时使用的某些属性，通常针对开发周期的不同阶段(different stages of development)进行配置。比如：
+ debug 构建类型支持 debug 选项，并使用 debug key 为 APK 签名。 release 构建类型则会压缩(shrink)和混淆(obfuscate) APK，并使用 release key 为 APK 签名。  构建 App 时必须指定一个构建类型。可以参考 BuildType DSL，了解配置构建类型属性。
+      </div>
+      
+      <p><a class="read-more" href="https://zacash.cn/post/intro-to-build-system/">Read more &rarr;</a></p>
+      
+    </article>
+
+
+
+    <article>
+      <header>
+        
+        <h2 class="list-title"><a href="https://zacash.cn/post/fragment-in-viewpager/">Fragment in ViewPager</a></h2>
+        
+        <p class="list-post-date">
+          <time datetime="2020-05-25T20:55:31&#43;08:00">
+            25 May, 2020 at 20:55 CST
+          </time>
+        </p>
+      </header>
+      <div>
+        使用 ViewPager 通常我们使用 ViewPager + TabLayout 主要有这些步骤：
+ 页面的布局结构:  &lt;?xml version=&#34;1.0&#34; encoding=&#34;utf-8&#34;?&gt; &lt;androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android=&#34;http://schemas.android.com/apk/res/android&#34; xmlns:app=&#34;http://schemas.android.com/apk/res-auto&#34; xmlns:tools=&#34;http://schemas.android.com/tools&#34; android:layout_width=&#34;match_parent&#34; android:layout_height=&#34;match_parent&#34; tools:context=&#34;.MainActivity&#34; &gt; &lt;com.google.android.material.appbar.AppBarLayout android:layout_width=&#34;match_parent&#34; android:layout_height=&#34;wrap_content&#34; android:theme=&#34;@style/AppTheme.AppBarOverlay&#34; &gt; ... &lt;com.google.android.material.tabs.TabLayout android:id=&#34;@+id/tabs&#34; android:layout_width=&#34;match_parent&#34; android:layout_height=&#34;wrap_content&#34; android:background=&#34;?attr/colorPrimary&#34; /&gt; &lt;androidx.viewpager.widget.ViewPager android:id=&#34;@+id/view_pager&#34; android:layout_width=&#34;match_parent&#34; android:layout_height=&#34;match_parent&#34; app:layout_behavior=&#34;@string/appbar_scrolling_view_behavior&#34; /&gt; &lt;/com.google.android.material.appbar.AppBarLayout&gt; &lt;/androidx.coordinatorlayout.widget.CoordinatorLayout&gt;  在 PagerAdapter 中会指定我们使用的 Fragment:  class SectionsPagerAdapter(private val context: Context, fm: FragmentManager ) : FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) { override fun getItem(position: Int): Fragment { return SampleFragment.newInstance(position) } override fun getCount(): Int { return TAB_TITLES.
+      </div>
+      
+      <p><a class="read-more" href="https://zacash.cn/post/fragment-in-viewpager/">Read more &rarr;</a></p>
+      
+    </article>
+
+
+
+    <article>
+      <header>
+        
+        <h2 class="list-title"><a href="https://zacash.cn/post/git-basic/">Git Basic</a></h2>
+        
+        <p class="list-post-date">
+          <time datetime="2020-05-15T15:55:52&#43;08:00">
+            15 May, 2020 at 15:55 CST
+          </time>
+        </p>
+      </header>
+      <div>
+        Problem Solving Authentication   Clear saved account &amp; password
+Error: fatal:Authentication failed for 'remote-url'
+git config --system --unset credential.helper
+  Save account &amp; password
+git config --global credential.helper store
+  Remote   Check remote url
+git remote -v
+  Update remote url
+git remote set-url origin newRepoUrl
+  
       </div>
       
     </article>
@@ -112,103 +208,19 @@ public Handler(@Nullable Callback callback, boolean async) { if (FIND_POTENTIAL_
     <article>
       <header>
         
-        <h2 class="list-title"><a href="https://zacash.cn/post/handler-in-code/">Handler in Code</a></h2>
+        <h2 class="list-title"><a href="https://zacash.cn/post/fragments/">Intro to Fragments</a></h2>
         
         <p class="list-post-date">
-          <time datetime="2020-04-12T20:36:33&#43;08:00">
-            12 April, 2020 at 20:36 CST
+          <time datetime="2020-05-07T20:30:50&#43;08:00">
+            7 May, 2020 at 20:30 CST
           </time>
         </p>
       </header>
       <div>
-        Handler 的创建  在主线程(UI Thread)中：  class MainActivity : Activity { private val mLeakedHandler = object : Handler() { override fun handleMessage(msg: Message) { super.handleMessage(msg) } } }  在子线程中：  val thread = object : Thread() { override fun run() { Looper.prepare() val handler = object : Handler() { override fun handleMessage(msg: Message) { super.handleMessage(msg) } } Looper.loop() } } 为什么在子线程创建 Handler 需要准备 Looper，而主线程却不用 因为 ActivityThread 中的 main() 方法已经为我们初始化了 Looper
+        Activity 和 Fragment 生命周期的关联    Activity 状态 Fragment 生命周期方法回调 Fragment 状态     Created onAttach(), onCreate(), onCreateView(), onActivityCreated() Fragment 添加到 Activity 且视图已初始化   Started onStart() Fragment 活跃并可见   Resumed onResume() Fragment 活跃并获取焦点   Paused onPause() Fragment 暂停   Stopped onStop() Fragment 停止并不再可见   Destroyed onDestroyView(), onDestroy(), onDetach() Fragment 销毁    Fragment 重要的生命周期方法的使用  onAttach(): Fragment 在被 attach 到宿主 Activity 时回调，可以在该方法里检查宿主 Activity 是否实现了某个接口。 onCreateView(): Fragment 的 XML 布局在这个回调方法里初始化，系统调用这个方法来绘制 Fragment 的 UI。 onPause(): 可以在 Fragment 销毁前在该回调方法保存必要数据或状态。 onActivityCreated(): 在宿主 Activity 的 onCreate() 方法调用后回调该方法。可以在该方法做最终的初始化，如检索 View getView().
       </div>
       
-      <p><a class="read-more" href="https://zacash.cn/post/handler-in-code/">Read more &rarr;</a></p>
-      
-    </article>
-
-
-
-    <article>
-      <header>
-        
-        <h2 class="list-title"><a href="https://zacash.cn/post/hugo-basic/">Hugo Basic</a></h2>
-        
-        <p class="list-post-date">
-          <time datetime="2020-04-04T09:25:04&#43;08:00">
-            4 April, 2020 at 09:25 CST
-          </time>
-        </p>
-      </header>
-      <div>
-        Add new content hugo new posts/article-name.md
-Article meta info --- title: &#34;New Article&#34; date: 2020-04-04T09:25:04+08:00 description: &#34;Hugo 的简单用法&#34; tags: [&#34;hugo&#34;, &#34;pages&#34;] categories: [&#34;hugo&#34;] draft: true --- Start server with drafts enabled hugo server -D
-Customize the theme Open up config.toml in a text editor:
-baseURL = &#34;https://example.org/&#34; languageCode = &#34;en-us&#34; title = &#34;My New Hugo Site&#34; theme = &#34;ananke&#34; Build static pages hugo -D output will be in ./public/ directory by default (-d/--destination flag to change it, or set publishdir in the config file)
-      </div>
-      
-      <p><a class="read-more" href="https://zacash.cn/post/hugo-basic/">Read more &rarr;</a></p>
-      
-    </article>
-
-
-
-    <article>
-      <header>
-        
-        <h2 class="list-title"><a href="https://zacash.cn/post/check-state-loss/">Check State Loss</a></h2>
-        
-        <p class="list-post-date">
-          <time datetime="2020-02-11T16:30:26&#43;08:00">
-            11 February, 2020 at 16:30 CST
-          </time>
-        </p>
-      </header>
-      <div>
-        背景 最近做的一个 DialogFragment 在少数设备上会偶发闪退，Fabric 上的 Stacktrace 信息如下：
-Fatal Exception: java.lang.IllegalStateException: Can not perform this action after onSaveInstanceState at android.support.v4.app.FragmentManagerImpl.checkStateLoss(SourceFile) at android.support.v4.app.FragmentManagerImpl.enqueueAction(SourceFile) at android.support.v4.app.BackStackRecord.commitInternal(SourceFile) at android.support.v4.app.BackStackRecord.commit(SourceFile) at android.support.v4.app.DialogFragment.show(SourceFile） 看起来是弹窗在 show 的时候，发生了 state loss，粗略 copy 了下 StackOverflow 上的回答，做了如下修改：
-fun show(manager: FragmentManager?) { try { val ft = manager?.beginTransaction() ft?.add(this, &#34;tag of dialog&#34;) ft?.commitAllowingStateLoss() } catch (e: Exception) { } } 重写了 show 方法，允许 state loss，并加了异常捕捉，后续观察 Fabric， show 的时候的确没再出现异常情况，但 dismiss 的时候还是有闪退出现，异常信息如下：
-Fatal Exception: java.
-      </div>
-      
-      <p><a class="read-more" href="https://zacash.cn/post/check-state-loss/">Read more &rarr;</a></p>
-      
-    </article>
-
-
-
-    <article>
-      <header>
-        
-        <h2 class="list-title"><a href="https://zacash.cn/post/hello-world/">Hello World</a></h2>
-        
-        <p class="list-post-date">
-          <time datetime="2020-02-04T12:12:08&#43;08:00">
-            4 February, 2020 at 12:12 CST
-          </time>
-        </p>
-      </header>
-      <div>
-        
-      </div>
-      
-    </article>
-
-
-
-    <article>
-      <header>
-        
-        <p class="list-post-date">
-          <time datetime="0001-01-01T00:00:00Z">
-            1 January, 0001 at 00:00 UTC
-          </time>
-        </p>
-      </header>
-      <div>
-        
-      </div>
+      <p><a class="read-more" href="https://zacash.cn/post/fragments/">Read more &rarr;</a></p>
       
     </article>
 
@@ -221,10 +233,12 @@ Fatal Exception: java.
             </div>
         
         <div class="pagination-item-spacer">
-            Page 4 of 4
+            Page 4 of 6
         </div>
         
-            <div class="pagination-item-spacer">&nbsp;</div>
+            <div class="pagination-item">
+                <a alt="Older articles" href="/page/5/">Older &rarr;</a>
+            </div>
         
         <div class="pagination-item-spacer">&nbsp;</div>
     </div>
