@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  dir="ltr"
+  
+><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<title>Top 10 Kotlin Questions in StackOverflow | Zac&#39;s blog</title>
+
+<meta name="generator" content="Hugo Eureka 0.9.1" />
+<link rel="stylesheet" href="https://zacash.cn/css/eureka.min.6a378a23360d238dc3ef4df2f5cd718093f02c10c9c7eb2437c29701cd8d389ab6da5d9f21bdd3afa305fd56c1235017.css" integrity="sha384-ajeKIzYNI43D703y9c1xgJPwLBDJx&#43;skN8KXAc2NOJq22l2fIb3Tr6MF/VbBI1AX">
+<script defer src="https://zacash.cn/js/eureka.min.f1639ee98d6cbd85b2b5f034d27320da962002ff83159ed4e01dbc5948c42a1ab26c2d6e74c66e93f5cec4d24dbd166d.js" integrity="sha384-8WOe6Y1svYWytfA00nMg2pYgAv&#43;DFZ7U4B28WUjEKhqybC1udMZuk/XOxNJNvRZt"></script>
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload"
+  href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Noto+Serif+SC:wght@400;600;700&display=swap"
+  as="style" onload="this.onload=null;this.rel='stylesheet'">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/styles/solarized-light.min.css"
+   media="print"
+  onload="this.media='all';this.onload=null" crossorigin>
+<script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/highlight.min.js"
+   crossorigin></script>
+  <script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/languages/dart.min.js"
+     crossorigin></script>
+  <script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/languages/java.min.js"
+     crossorigin></script>
+  <script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/languages/kotlin.min.js"
+     crossorigin></script>
+
+
+<script defer type="text/javascript" src="https://zacash.cn/js/fontawesome.min.1c5a4674b042785ed214cf0818a81724c6b37442fd61b0ed039237b93de25ed5103fc8079a05770648ccc9c66c4f540a.js" integrity="sha384-HFpGdLBCeF7SFM8IGKgXJMazdEL9YbDtA5I3uT3iXtUQP8gHmgV3BkjMycZsT1QK"></script>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/katex.min.css"
+   integrity="sha384-MlJdn/WNKDGXveldHDdyRP1R4CTHr3FeuDNfhsLPYrq2t0UBkUdK2jyTnXPEK1NQ"  media="print"
+  onload="this.media='all';this.onload=null" crossorigin>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/katex.min.js" 
+  integrity="sha384-VQ8d8WVFw0yHhCk5E8I86oOhv48xLpnDZx5T9GogA/Y84DcCKWXDmSDfn13bzFZY"  crossorigin></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/contrib/auto-render.min.js"
+   integrity="sha384-&#43;XBljXPPiv&#43;OzfbB3cVmLHf4hdUFHlWNZN5spNQ7rmHTXpd7WvJum6fIACpNNfIR"  crossorigin></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    renderMathInElement(document.body, {
+      delimiters: [
+        { left: "$$", right: "$$", display: true },
+        { left: "$", right: "$", display: false },
+        { left: "\\(", right: "\\)", display: false },
+        { left: "\\[", right: "\\]", display: true }
+      ],
+    });
+  });
+</script>
+
+
+<script defer src="https://cdn.jsdelivr.net/npm/mermaid@8.14.0/dist/mermaid.min.js" 
+  integrity="sha384-atOyb0FxAgN9LyAc6PEf9BjgwLISyansgdH8/VXQH8p2o5vfrRgmGIJ2Sg22L0A0"  crossorigin></script>
+
+
+<link rel="icon" type="image/png" sizes="32x32" href="https://zacash.cn/images/icon_huef3b68b5a9c9f864bc324bf255658730_3276_32x32_fill_box_center_3.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://zacash.cn/images/icon_huef3b68b5a9c9f864bc324bf255658730_3276_180x180_fill_box_center_3.png">
+
+<meta name="description"
+  content="IntArray vs. Array&lt;Int&gt;   In java code
+ IntArray: int[] Array&lt;Int&gt;: Integer[]    Create method:
+ IntArray:  val intArray : IntArray = intArrayOf(1, 2, 3, 4, 5)   Array&lt;Int&gt;:  val arrayOfInts : Array&lt;Int&gt; = arrayOf(1, 2, 3, 4, 5)    Iterable vs. Sequence   Usage
+ Iterable:  getPeople() .filter { it.age &gt;= 18 } .map { it.name } .take(5)   Sequence: start with asSequence() and end with toList() or toSet()&hellip;  getPeople().">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+      "@type": "ListItem",
+      "position": 1 ,
+      "name":"Posts",
+      "item":"https://zacash.cn/posts/"},{
+      "@type": "ListItem",
+      "position": 2 ,
+      "name":"Top 10 Kotlin Questions in StackOverflow",
+      "item":"https://zacash.cn/posts/top-10-kotlin-questions/"}]
+}
+</script>
+
+
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://zacash.cn/posts/top-10-kotlin-questions/"
+    },
+    "headline": "Top 10 Kotlin Questions in StackOverflow | Zac\u0027s blog","datePublished": "2020-06-19T22:03:29+08:00",
+    "dateModified": "2020-06-19T22:03:29+08:00",
+    "wordCount":  739 ,
+    "publisher": {
+        "@type": "Person",
+        "name": "Zac Zhu",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://zacash.cn/images/icon.png"
+        }
+        },
+    "description": "IntArray vs. Array\u0026lt;Int\u0026gt;   In java code\n IntArray: int[] Array\u0026lt;Int\u0026gt;: Integer[]    Create method:\n IntArray:  val intArray : IntArray = intArrayOf(1, 2, 3, 4, 5)   Array\u0026lt;Int\u0026gt;:  val arrayOfInts : Array\u0026lt;Int\u0026gt; = arrayOf(1, 2, 3, 4, 5)    Iterable vs. Sequence   Usage\n Iterable:  getPeople() .filter { it.age \u0026gt;= 18 } .map { it.name } .take(5)   Sequence: start with asSequence() and end with toList() or toSet()\u0026hellip;  getPeople()."
+}
+</script><meta property="og:title" content="Top 10 Kotlin Questions in StackOverflow | Zac&#39;s blog" />
+<meta property="og:type" content="article" />
+
+
+<meta property="og:image" content="https://zacash.cn/images/icon.png">
+
+
+<meta property="og:url" content="https://zacash.cn/posts/top-10-kotlin-questions/" />
+
+
+
+
+<meta property="og:description" content="IntArray vs. Array&lt;Int&gt;   In java code
+ IntArray: int[] Array&lt;Int&gt;: Integer[]    Create method:
+ IntArray:  val intArray : IntArray = intArrayOf(1, 2, 3, 4, 5)   Array&lt;Int&gt;:  val arrayOfInts : Array&lt;Int&gt; = arrayOf(1, 2, 3, 4, 5)    Iterable vs. Sequence   Usage
+ Iterable:  getPeople() .filter { it.age &gt;= 18 } .map { it.name } .take(5)   Sequence: start with asSequence() and end with toList() or toSet()&hellip;  getPeople()." />
+
+
+
+
+<meta property="og:locale" content="en" />
+
+
+
+
+<meta property="og:site_name" content="Zac&#39;s blog" />
+
+
+
+
+
+
+<meta property="article:published_time" content="2020-06-19T22:03:29&#43;08:00" />
+
+
+<meta property="article:modified_time" content="2020-06-19T22:03:29&#43;08:00" />
+
+
+
+<meta property="article:section" content="posts" />
+
+
+<meta property="article:tag" content="kotlin" />
+
+
+
+
+
+
+  <body class="flex min-h-screen flex-col">
+    <header
+      class="min-h-16 pl-scrollbar bg-secondary-bg fixed z-50 flex w-full items-center shadow-sm"
+    >
+      <div class="mx-auto w-full max-w-screen-xl"><script>
+    let storageColorScheme = localStorage.getItem("lightDarkMode")
+    if (((storageColorScheme == 'Auto' || storageColorScheme == null) && window.matchMedia("(prefers-color-scheme: dark)").matches) || storageColorScheme == "Dark") {
+        document.getElementsByTagName('html')[0].classList.add('dark')
+    }
+</script>
+<nav class="flex items-center justify-between flex-wrap px-4 py-4 md:py-0">
+    <a href="/" class="me-6 text-primary-text text-xl font-bold">Zac&#39;s blog</a>
+    <button id="navbar-btn" class="md:hidden flex items-center px-3 py-2" aria-label="Open Navbar">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <div id="target"
+        class="hidden block md:flex md:grow md:justify-between md:items-center w-full md:w-auto text-primary-text z-20">
+        <div class="md:flex md:h-16 text-sm md:grow pb-4 md:pb-0 border-b md:border-b-0">
+            <a href="/posts/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  selected-menu-item  me-4">Posts</a>
+            <a href="/tags/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  me-4">Tags</a>
+            <a href="/#about" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  me-4">About</a>
+        </div>
+
+        <div class="flex">
+            <div class="relative pt-4 md:pt-0">
+                <div class="cursor-pointer hover:text-eureka" id="lightDarkMode">
+                    <i class="fas fa-adjust"></i>
+                </div>
+                <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-30" id="is-open">
+                </div>
+                <div class="absolute flex flex-col start-0 md:start-auto end-auto md:end-0 hidden bg-secondary-bg w-48 rounded py-2 border border-tertiary-bg cursor-pointer z-40"
+                    id='lightDarkOptions'>
+                    <span class="px-4 py-1 hover:text-eureka" name="Light">Light</span>
+                    <span class="px-4 py-1 hover:text-eureka" name="Dark">Dark</span>
+                    <span class="px-4 py-1 hover:text-eureka" name="Auto">Auto</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-0" id="is-open-mobile">
+    </div>
+
+</nav>
+<script>
+    
+    let element = document.getElementById('lightDarkMode')
+    if (storageColorScheme == null || storageColorScheme == 'Auto') {
+        document.addEventListener('DOMContentLoaded', () => {
+            window.matchMedia("(prefers-color-scheme: dark)").addEventListener('change', switchDarkMode)
+        })
+    } else if (storageColorScheme == "Light") {
+        element.firstElementChild.classList.remove('fa-adjust')
+        element.firstElementChild.setAttribute("data-icon", 'sun')
+        element.firstElementChild.classList.add('fa-sun')
+    } else if (storageColorScheme == "Dark") {
+        element.firstElementChild.classList.remove('fa-adjust')
+        element.firstElementChild.setAttribute("data-icon", 'moon')
+        element.firstElementChild.classList.add('fa-moon')
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        getcolorscheme();
+        switchBurger();
+    });
+</script>
+</div>
+    </header>
+    <main class="grow pt-16">
+        <div class="pl-scrollbar">
+          <div class="mx-auto w-full max-w-screen-xl lg:px-4 xl:px-8">
+  
+  
+  <div class="grid grid-cols-2 gap-4 lg:grid-cols-8 lg:pt-12">
+    <div
+      class="lg:col-start-2 bg-secondary-bg col-span-2 rounded px-6 py-8 lg:col-span-6"
+    >
+      <article class="prose">
+  <h1 class="mb-4">Top 10 Kotlin Questions in StackOverflow</h1>
+
+  <div
+  class="text-tertiary-text not-prose mt-2 flex flex-row flex-wrap items-center"
+>
+  <div class="me-6 my-2">
+    <i class="fas fa-calendar me-1"></i>
+    <span
+      >2020-06-19</span
+    >
+  </div>
+  <div class="me-6 my-2">
+    <i class="fas fa-clock me-1"></i>
+    <span>4 min read</span>
+  </div>
+
+  
+    <div class="me-6 my-2">
+      <i class="fas fa-folder me-1"></i>
+      
+        <a href="https://zacash.cn/categories/kotlin/" class="hover:text-eureka"
+          >kotlin</a
+        >
+      
+    </div>
+  
+
+  
+</div>
+
+
+  
+  
+
+  <h4 id="intarray-vs-arrayint">IntArray vs. <code>Array&lt;Int&gt;</code></h4>
+<ul>
+<li>
+<p>In java code</p>
+<ul>
+<li>IntArray: int[]</li>
+<li><code>Array&lt;Int&gt;</code>: Integer[]</li>
+</ul>
+</li>
+<li>
+<p>Create method:</p>
+<ul>
+<li>IntArray:</li>
+</ul>
+<pre><code class="language-kt">val intArray : IntArray = intArrayOf(1, 2, 3, 4, 5)
+</code></pre>
+<ul>
+<li><code>Array&lt;Int&gt;</code>:</li>
+</ul>
+<pre><code class="language-kt">val arrayOfInts : Array&lt;Int&gt; = arrayOf(1, 2, 3, 4, 5)
+</code></pre>
+</li>
+</ul>
+<h4 id="iterable-vs-sequence">Iterable vs. Sequence</h4>
+<ul>
+<li>
+<p>Usage</p>
+<ul>
+<li>Iterable:</li>
+</ul>
+<pre><code class="language-kt">getPeople()
+.filter { it.age &gt;= 18 }
+.map { it.name }
+.take(5)
+</code></pre>
+<ul>
+<li>Sequence: start with <code>asSequence()</code> and end with <code>toList()</code> or <code>toSet()</code>&hellip;</li>
+</ul>
+<pre><code class="language-kt">getPeople().asSequence()
+.filter { it.age &gt;= 18 }
+.map { it.name }
+.take(5)
+.toList()
+</code></pre>
+</li>
+<li>
+<p>Use for</p>
+<ul>
+<li>Iterable: use for small collections by default, might faster than the overhead using a <code>Sequence</code></li>
+<li>Sequence: use for <code>very large</code> collections.</li>
+</ul>
+</li>
+</ul>
+<h4 id="iterate-a-collection">Iterate a collection</h4>
+<ul>
+<li>
+<p>eg.1</p>
+<pre><code class="language-kt">for(i in 0..args.size - 1) {
+    println(args[i])
+}
+</code></pre>
+</li>
+<li>
+<p>eg.2, use Array&rsquo;s <code>lastIndex</code> extension property.</p>
+<pre><code class="language-kt">for(i in 0..args.lastIndex) {
+    println(args[i])
+}
+</code></pre>
+</li>
+<li>
+<p>eg., use <code>until</code> to create open ended range.</p>
+<pre><code class="language-kt">for(i in 0 until args.size) {
+    println(args[i])
+}
+</code></pre>
+</li>
+<li>
+<p>eg.4, use <code>indices</code> extension property.</p>
+<pre><code class="language-kt">for(i in args.indices) {
+    println(args[i])
+}
+</code></pre>
+</li>
+<li>
+<p>eg.5</p>
+<pre><code class="language-kt">for (arg in args) {
+    println(arg)
+}
+</code></pre>
+</li>
+<li>
+<p>eg.6, use <code>forEach</code> extension function.</p>
+<pre><code class="language-kt">args.forEach { arg -&gt;
+    println(arg)
+}
+</code></pre>
+</li>
+<li>
+<p>eg.7, use <code>withIndex</code> function.</p>
+<pre><code class="language-kt">for((index, arg) in args.withIndex()) {
+    println(&quot;index: $index, arg: $arg&quot;)
+}
+</code></pre>
+</li>
+<li>
+<p>eg.8, use <code>forEachIndexed</code> functions.</p>
+<pre><code class="language-kt">args.forEachIndexed { index, arg -&gt;
+    println(&quot;index: $index, arg: $arg&quot;)
+}
+</code></pre>
+</li>
+</ul>
+<h4 id="sam-conversion">SAM conversion</h4>
+<blockquote>
+<p>SAM conversions only work for interfaces, not for abstract classes</p>
+</blockquote>
+<ul>
+<li>
+<p>This code will work fine:</p>
+<pre><code class="language-kt">button.setListener {
+    println(&quot;Clicked!&quot;)
+}
+</code></pre>
+</li>
+<li>
+<p>The following will not work:</p>
+<pre><code class="language-kt">/**
+* This gives the button a lambda that will create an anonymous instance of an OnClickListener
+* every time the button is clicked, which is then just thrown away (never assigned anywhere,
+* never invoked).
+*/
+button.setListener {
+    object: OnClickListener {
+        override fun onClick(button: Button) {
+            println(&quot;Clicked!&quot;)
+        }
+    }
+}
+
+/**
+* This one declares a useless local function in a very simliar fashion
+*/
+button.setListener {
+    fun onClick(button: Button) {
+        println(&quot;Clicked!&quot;)
+    }
+}
+</code></pre>
+</li>
+<li>
+<p><a href="https://stackoverflow.com/questions/48284994/lambda-implementation-of-interface-in-kotlin">SAM constructor</a></p>
+</li>
+</ul>
+<pre><code class="language-kt">/**
+ * If the interface is defined in Java, but the function that takes an instance of its defined in Kotlin,
+ * try to use a SAM constructor.
+ */
+ button.setListener(OnClickListener {
+    println(&quot;Clicked&quot;)
+ })
+</code></pre>
+<ul>
+<li>Explanation
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Java interface</th>
+<th>Kotlin interface</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Java method</td>
+<td>SAM conversion</td>
+<td>Object expression</td>
+</tr>
+<tr>
+<td>Kotlin method</td>
+<td>SAM constructor</td>
+<td>Object expression</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+<h4 id="static-things">Static things</h4>
+<ul>
+<li>
+<p>If your class has &ldquo;non-static&rdquo; parts as well, put the &ldquo;static&rdquo; parts in a companion object:</p>
+<pre><code class="language-kt">class Foo {
+    companion object {
+        fun x() {...}
+    }
+    fun y() {...}
+}
+</code></pre>
+</li>
+<li>
+<p>If your class is completely static, replace <code>class</code> with a singleton <code>object</code> :</p>
+</li>
+</ul>
+<pre><code class="language-kt">object Foo {
+    fun x() {...}
+}
+</code></pre>
+<ul>
+<li>And if you don&rsquo;t want to always scope your calls as <code>Foo.x()</code> but want to just use <code>x()</code> instead, use a top level function:</li>
+</ul>
+<pre><code class="language-kt">// file Foo.kt
+fun x() {...}
+</code></pre>
+<ul>
+<li>For function, there has this table:
+<table>
+<thead>
+<tr>
+<th>Function declaration</th>
+<th>Kotlin usage</th>
+<th>Java usage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Companion object</td>
+<td>Foo.f()</td>
+<td>Foo.Companion.f();</td>
+</tr>
+<tr>
+<td>Companion object with @JvmStatic</td>
+<td>Foo.f()</td>
+<td>Foo.f();</td>
+</tr>
+<tr>
+<td>Object</td>
+<td>Foo.f()</td>
+<td>Foo.INSTANCE.f();</td>
+</tr>
+<tr>
+<td>Object with @JvmStatic</td>
+<td>Foo.f()</td>
+<td>Foo.f();</td>
+</tr>
+<tr>
+<td>Top level function</td>
+<td>f()</td>
+<td>UtilKt.f();</td>
+</tr>
+<tr>
+<td>Top level function with @JvmName</td>
+<td>f()</td>
+<td>Util.f();</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>For variable, here&rsquo;s the reference:
+<table>
+<thead>
+<tr>
+<th>Variable declaration</th>
+<th>Kotlin usage</th>
+<th>Java usage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Companion object</td>
+<td>X.x</td>
+<td>X.Companion.getX();</td>
+</tr>
+<tr>
+<td>Companion object with @JvmStatic</td>
+<td>X.x</td>
+<td>X.getX();</td>
+</tr>
+<tr>
+<td>Companion object with @JvmField</td>
+<td>X.x</td>
+<td>X.x;</td>
+</tr>
+<tr>
+<td>Companion object with const</td>
+<td>X.x</td>
+<td>X.x();</td>
+</tr>
+<tr>
+<td>Object</td>
+<td>X.x</td>
+<td>X.INSTANCE.getX();</td>
+</tr>
+<tr>
+<td>Object with @JvmStatic</td>
+<td>X.x</td>
+<td>X.getX();</td>
+</tr>
+<tr>
+<td>Object with @JvmField</td>
+<td>X.x</td>
+<td>X.x;</td>
+</tr>
+<tr>
+<td>Object with const</td>
+<td>X.x</td>
+<td>X.x;</td>
+</tr>
+<tr>
+<td>Top level variable</td>
+<td>x</td>
+<td>ConstKt.getX();</td>
+</tr>
+<tr>
+<td>Top level variable with @JvmField</td>
+<td>x</td>
+<td>ConstKt.x;</td>
+</tr>
+<tr>
+<td>Top level variable with const</td>
+<td>x</td>
+<td>ConstKt.x;</td>
+</tr>
+<tr>
+<td>Top level variable with @JvmName</td>
+<td>x</td>
+<td>Const.getX();</td>
+</tr>
+<tr>
+<td>Top level variable with @JvmName and @JvmField</td>
+<td>x</td>
+<td>Const.x;</td>
+</tr>
+<tr>
+<td>Top level variable with @JvmName and const</td>
+<td>x</td>
+<td>Const.x;</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+<h4 id="6smart-cast-on-mutable-properties">6.Smart cast on mutable properties</h4>
+<p>以下代码会报这种错：</p>
+<blockquote>
+<p>Kotlin: Smart cast to &lsquo;Toy&rsquo; is impossible, because &rsquo;toy&rsquo; is a mutable property that could have been changed by this time</p>
+</blockquote>
+<pre><code class="language-kt">class Dog(var toy: Toy? = null) {
+    fun play() {
+        if (toy != null) {
+            toy.chew()
+        }
+    }
+}
+</code></pre>
+<p>原因：
+因为 mutable 的变量<code>Dog</code> 实例可能在<code>toy!=null</code>检查后在另一条线程上被修改，而在 <code>toy.chew()</code>执行时可能产生 NPE.</p>
+<p>可以做以下修改：</p>
+<ul>
+<li>使用局部变量</li>
+</ul>
+<pre><code class="language-kt">class Dog(var toy: Toy? = null) {
+    fun play() {
+        val _toy = toy
+        if (_toy != null) {
+            _toy.chew()
+        }
+    }
+}
+</code></pre>
+<ul>
+<li>临时 let 操作符，使用范围更广泛：</li>
+</ul>
+<pre><code class="language-kt">class Dog(var toy: Toy? = null) {
+    fun play() {
+        toy?.let {
+            it.chew()
+        }
+    }
+}
+</code></pre>
+<ul>
+<li>?. 操作符</li>
+</ul>
+<pre><code class="language-kt">class Dog(var toy: Toy? = null) {
+    fun play() {
+        toy?.chew()
+    }
+}
+</code></pre>
+<h4 id="override-java-方法">override Java 方法</h4>
+<p>假设 Java 中定义了接口 <code>OnClickListener</code>:</p>
+<pre><code class="language-java">public interface OnClickListener {
+    void onClick(Button button)
+}
+</code></pre>
+<p>在 Kotlin 中实现该接口，如果使用IDEA生成：</p>
+<pre><code class="language-kt">class KtListener: OnClickListener {
+    override fun onClick(button: Button?): Unit {
+        val name = button?.name ?: &quot;Unknown button&quot;
+        println(&quot;Clicked $name&quot;)
+    }
+}
+</code></pre>
+<p>对于我们知道不可能为 <code>null</code> 的场景，可以这样写：</p>
+<pre><code class="language-kt">class KtListener: OnClickListener {
+    override fun onClick(button: Button): Unit {
+        val name = button.name
+        println(&quot;Clicked $name&quot;)
+    }
+}
+</code></pre>
+
+</article>
+
+
+      
+        <div class="my-4">
+    
+    <a href="https://zacash.cn/tags/kotlin/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 me-2 hover:text-eureka">#kotlin</a>
+    
+</div>
+      
+
+      
+
+
+
+      
+
+      
+  <div
+    class="-mx-2 mt-4 flex flex-col border-t px-2 pt-4 md:flex-row md:justify-between"
+  >
+    <div>
+      
+        <span class="text-primary-text block font-bold"
+          >Previous</span
+        >
+        <a href="https://zacash.cn/posts/design-pattern-in-android/" class="block">Essential Design Pattern in Android</a>
+      
+    </div>
+    <div class="mt-4 md:mt-0 md:text-right">
+      
+        <span class="text-primary-text block font-bold">Next</span>
+        <a href="https://zacash.cn/posts/intro-to-build-system/" class="block">Intro to Build System</a>
+      
+    </div>
+  </div>
+
+
+      
+
+
+
+    </div>
+    
+
+    
+    
+  </div>
+
+  
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        hljs.initHighlightingOnLoad();
+      });
+    </script>
+
+          </div>
+        </div>
+      
+    </main>
+    <footer class="pl-scrollbar">
+      <div class="mx-auto w-full max-w-screen-xl"><div class="text-center p-6 pin-b">
+    <p class="text-sm text-tertiary-text">&copy; Copyright © 2022, Copyright Zac
+ &middot;  Powered by the <a href="https://github.com/wangchucheng/hugo-eureka" class="hover:text-eureka">Eureka</a> theme for <a href="https://gohugo.io" class="hover:text-eureka">Hugo</a></p>
+</div></div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  dir="ltr"
+  
+><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<title>Use Hilt in Android | Zac&#39;s blog</title>
+
+<meta name="generator" content="Hugo Eureka 0.9.1" />
+<link rel="stylesheet" href="https://zacash.cn/css/eureka.min.6a378a23360d238dc3ef4df2f5cd718093f02c10c9c7eb2437c29701cd8d389ab6da5d9f21bdd3afa305fd56c1235017.css" integrity="sha384-ajeKIzYNI43D703y9c1xgJPwLBDJx&#43;skN8KXAc2NOJq22l2fIb3Tr6MF/VbBI1AX">
+<script defer src="https://zacash.cn/js/eureka.min.f1639ee98d6cbd85b2b5f034d27320da962002ff83159ed4e01dbc5948c42a1ab26c2d6e74c66e93f5cec4d24dbd166d.js" integrity="sha384-8WOe6Y1svYWytfA00nMg2pYgAv&#43;DFZ7U4B28WUjEKhqybC1udMZuk/XOxNJNvRZt"></script>
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload"
+  href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Noto+Serif+SC:wght@400;600;700&display=swap"
+  as="style" onload="this.onload=null;this.rel='stylesheet'">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/styles/solarized-light.min.css"
+   media="print"
+  onload="this.media='all';this.onload=null" crossorigin>
+<script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/highlight.min.js"
+   crossorigin></script>
+  <script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/languages/dart.min.js"
+     crossorigin></script>
+  <script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/languages/java.min.js"
+     crossorigin></script>
+  <script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/languages/kotlin.min.js"
+     crossorigin></script>
+
+
+<script defer type="text/javascript" src="https://zacash.cn/js/fontawesome.min.1c5a4674b042785ed214cf0818a81724c6b37442fd61b0ed039237b93de25ed5103fc8079a05770648ccc9c66c4f540a.js" integrity="sha384-HFpGdLBCeF7SFM8IGKgXJMazdEL9YbDtA5I3uT3iXtUQP8gHmgV3BkjMycZsT1QK"></script>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/katex.min.css"
+   integrity="sha384-MlJdn/WNKDGXveldHDdyRP1R4CTHr3FeuDNfhsLPYrq2t0UBkUdK2jyTnXPEK1NQ"  media="print"
+  onload="this.media='all';this.onload=null" crossorigin>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/katex.min.js" 
+  integrity="sha384-VQ8d8WVFw0yHhCk5E8I86oOhv48xLpnDZx5T9GogA/Y84DcCKWXDmSDfn13bzFZY"  crossorigin></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/contrib/auto-render.min.js"
+   integrity="sha384-&#43;XBljXPPiv&#43;OzfbB3cVmLHf4hdUFHlWNZN5spNQ7rmHTXpd7WvJum6fIACpNNfIR"  crossorigin></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    renderMathInElement(document.body, {
+      delimiters: [
+        { left: "$$", right: "$$", display: true },
+        { left: "$", right: "$", display: false },
+        { left: "\\(", right: "\\)", display: false },
+        { left: "\\[", right: "\\]", display: true }
+      ],
+    });
+  });
+</script>
+
+
+<script defer src="https://cdn.jsdelivr.net/npm/mermaid@8.14.0/dist/mermaid.min.js" 
+  integrity="sha384-atOyb0FxAgN9LyAc6PEf9BjgwLISyansgdH8/VXQH8p2o5vfrRgmGIJ2Sg22L0A0"  crossorigin></script>
+
+
+<link rel="icon" type="image/png" sizes="32x32" href="https://zacash.cn/images/icon_huef3b68b5a9c9f864bc324bf255658730_3276_32x32_fill_box_center_3.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://zacash.cn/images/icon_huef3b68b5a9c9f864bc324bf255658730_3276_180x180_fill_box_center_3.png">
+
+<meta name="description"
+  content="Activity Hilt">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+      "@type": "ListItem",
+      "position": 1 ,
+      "name":"Posts",
+      "item":"https://zacash.cn/posts/"},{
+      "@type": "ListItem",
+      "position": 2 ,
+      "name":"Use Hilt in Android",
+      "item":"https://zacash.cn/posts/use-hilt-in-android/"}]
+}
+</script>
+
+
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://zacash.cn/posts/use-hilt-in-android/"
+    },
+    "headline": "Use Hilt in Android | Zac\u0027s blog","datePublished": "2020-11-06T00:00:00+00:00",
+    "dateModified": "2020-11-06T00:00:00+00:00",
+    "wordCount":  1110 ,
+    "publisher": {
+        "@type": "Person",
+        "name": "Zac Zhu",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://zacash.cn/images/icon.png"
+        }
+        },
+    "description": "Activity Hilt"
+}
+</script><meta property="og:title" content="Use Hilt in Android | Zac&#39;s blog" />
+<meta property="og:type" content="article" />
+
+
+<meta property="og:image" content="https://zacash.cn/images/icon.png">
+
+
+<meta property="og:url" content="https://zacash.cn/posts/use-hilt-in-android/" />
+
+
+
+<meta property="og:description" content="Activity Hilt" />
+
+
+
+<meta property="og:locale" content="en" />
+
+
+
+
+<meta property="og:site_name" content="Zac&#39;s blog" />
+
+
+
+
+
+
+<meta property="article:published_time" content="2020-11-06T00:00:00&#43;00:00" />
+
+
+<meta property="article:modified_time" content="2020-11-06T00:00:00&#43;00:00" />
+
+
+
+<meta property="article:section" content="posts" />
+
+
+<meta property="article:tag" content="hilt" />
+
+<meta property="article:tag" content="dagger" />
+
+<meta property="article:tag" content="di" />
+
+
+
+
+
+
+  <body class="flex min-h-screen flex-col">
+    <header
+      class="min-h-16 pl-scrollbar bg-secondary-bg fixed z-50 flex w-full items-center shadow-sm"
+    >
+      <div class="mx-auto w-full max-w-screen-xl"><script>
+    let storageColorScheme = localStorage.getItem("lightDarkMode")
+    if (((storageColorScheme == 'Auto' || storageColorScheme == null) && window.matchMedia("(prefers-color-scheme: dark)").matches) || storageColorScheme == "Dark") {
+        document.getElementsByTagName('html')[0].classList.add('dark')
+    }
+</script>
+<nav class="flex items-center justify-between flex-wrap px-4 py-4 md:py-0">
+    <a href="/" class="me-6 text-primary-text text-xl font-bold">Zac&#39;s blog</a>
+    <button id="navbar-btn" class="md:hidden flex items-center px-3 py-2" aria-label="Open Navbar">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <div id="target"
+        class="hidden block md:flex md:grow md:justify-between md:items-center w-full md:w-auto text-primary-text z-20">
+        <div class="md:flex md:h-16 text-sm md:grow pb-4 md:pb-0 border-b md:border-b-0">
+            <a href="/posts/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  selected-menu-item  me-4">Posts</a>
+            <a href="/tags/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  me-4">Tags</a>
+            <a href="/#about" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  me-4">About</a>
+        </div>
+
+        <div class="flex">
+            <div class="relative pt-4 md:pt-0">
+                <div class="cursor-pointer hover:text-eureka" id="lightDarkMode">
+                    <i class="fas fa-adjust"></i>
+                </div>
+                <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-30" id="is-open">
+                </div>
+                <div class="absolute flex flex-col start-0 md:start-auto end-auto md:end-0 hidden bg-secondary-bg w-48 rounded py-2 border border-tertiary-bg cursor-pointer z-40"
+                    id='lightDarkOptions'>
+                    <span class="px-4 py-1 hover:text-eureka" name="Light">Light</span>
+                    <span class="px-4 py-1 hover:text-eureka" name="Dark">Dark</span>
+                    <span class="px-4 py-1 hover:text-eureka" name="Auto">Auto</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-0" id="is-open-mobile">
+    </div>
+
+</nav>
+<script>
+    
+    let element = document.getElementById('lightDarkMode')
+    if (storageColorScheme == null || storageColorScheme == 'Auto') {
+        document.addEventListener('DOMContentLoaded', () => {
+            window.matchMedia("(prefers-color-scheme: dark)").addEventListener('change', switchDarkMode)
+        })
+    } else if (storageColorScheme == "Light") {
+        element.firstElementChild.classList.remove('fa-adjust')
+        element.firstElementChild.setAttribute("data-icon", 'sun')
+        element.firstElementChild.classList.add('fa-sun')
+    } else if (storageColorScheme == "Dark") {
+        element.firstElementChild.classList.remove('fa-adjust')
+        element.firstElementChild.setAttribute("data-icon", 'moon')
+        element.firstElementChild.classList.add('fa-moon')
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        getcolorscheme();
+        switchBurger();
+    });
+</script>
+</div>
+    </header>
+    <main class="grow pt-16">
+        <div class="pl-scrollbar">
+          <div class="mx-auto w-full max-w-screen-xl lg:px-4 xl:px-8">
+  
+  
+  <div class="grid grid-cols-2 gap-4 lg:grid-cols-8 lg:pt-12">
+    <div
+      class="lg:col-start-2 bg-secondary-bg col-span-2 rounded px-6 py-8 lg:col-span-6"
+    >
+      <article class="prose">
+  <h1 class="mb-4">Use Hilt in Android</h1>
+
+  <div
+  class="text-tertiary-text not-prose mt-2 flex flex-row flex-wrap items-center"
+>
+  <div class="me-6 my-2">
+    <i class="fas fa-calendar me-1"></i>
+    <span
+      >2020-11-06</span
+    >
+  </div>
+  <div class="me-6 my-2">
+    <i class="fas fa-clock me-1"></i>
+    <span>6 min read</span>
+  </div>
+
+  
+    <div class="me-6 my-2">
+      <i class="fas fa-folder me-1"></i>
+      
+        <a href="https://zacash.cn/categories/hilt/" class="hover:text-eureka"
+          >hilt</a
+        >
+      
+        
+          <span>, </span>
+        <a href="https://zacash.cn/categories/dagger/" class="hover:text-eureka"
+          >dagger</a
+        >
+      
+        
+          <span>, </span>
+        <a href="https://zacash.cn/categories/di/" class="hover:text-eureka"
+          >di</a
+        >
+      
+    </div>
+  
+
+  
+</div>
+
+
+  
+  
+
+  <blockquote>
+<p>If you want to use dagger in  your project, you may have 2 or 3 different sources, different samples, different blog posts. All of them use a different set-up, and all of them use Dagger in a different way, so it&rsquo;s very difficult to understand all the topics and relate them together. So that&rsquo;s why Google create a common guidance, a common ground, which is called Hilt.</p>
+</blockquote>
+<p>Hilt is an opinionated dependency injection library for Android that reduces the boilerplate of using manual DI in your project. Doing <a href="https://developer.android.com/training/dependency-injection/manual">manual dependency injection</a> requires constructing every class and its denpendencies by hand and using <strong>containers</strong> to reuse and manage <strong>dependencies</strong>.</p>
+<h2 id="dependencies-container">Dependencies Container</h2>
+<p>Annotating Android classes with <code>@AndroidEntryPoint</code> creates a <strong>dependencies container</strong> that follows the Android lifecycle.</p>
+<pre><code class="language-kotlin">@AndroidEntryPoint
+class MainFragment: Fragment() {
+    ...
+}
+</code></pre>
+<p>Hilt currently supports the following Android types: <code>Application</code> by using(<code>@HiltAndroidApp</code>), Activity, Fragment, Service and BroadcastReceiver.</p>
+<p>Hilt only supports activities that extend <a href="https://developer.android.com/reference/androidx/fragment/app/FragmentActivity">FragmentActivity</a> and fragments that extend Jetpack library [Fragment][fx](Note:Hilt does not support retained fragments).</p>
+<h3 id="container">Container</h3>
+<p>A <em>container</em> is a class which is in charge of providing dependencies in your codebase and knows how to create instances of other types of your app. It manages the graph of dependencies required to provide those instances by creating them and managing their lifecycle.</p>
+<p>A container exposes methods to get instances of the types it provides. Those methods can always return a different instance or the same instance. If the method always provides the same instance, we say that the type is <em>scoped</em> to the container.</p>
+<h3 id="hiltandroidapp">@HiltAndroidApp</h3>
+<p>Annotating the Application class with <code>@HiltAndroidApp</code>, we add a <em>container</em> that is attached to the app&rsquo;s lifecycle:</p>
+<pre><code class="language-kotlin">@HiltAndroidApp
+class App:Application() {
+    ...
+}
+</code></pre>
+<p><code>@HiltAndroidApp</code> triggers Hilt&rsquo;s code generation including a base class for our application that can use dependency injection. The application container is the <strong>parent container</strong> of the app, which means that other containers can access the dependencies that it provides.</p>
+<h2 id="provide-dependencies">Provide dependencies</h2>
+<h3 id="constructor-inject">Constructor Inject</h3>
+<p>To tell Hilt how to provide instance of type, add the <code>@Inject</code> annotation to the constructor of the class we want to be injected.</p>
+<pre><code class="language-kotlin">class Logger @Inject constructor() {
+    ...
+}
+</code></pre>
+<h4 id="scoping-instance">Scoping instance</h4>
+<p>Hilt can produce different containers that have different lifecycles, there are different annotations that scope to those containers:</p>
+<ul>
+<li><code>@Singleton</code>: Application container</li>
+<li><code>@ActivityScoped</code>: Activity container</li>
+<li><code>@FragmentScoped</code>: Fragment container</li>
+<li><code>@ViewScoped</code>: View container</li>
+</ul>
+<p>So we could annotating <em>Logger</em>.</p>
+<pre><code class="language-kotlin">@Singleton
+class Logger @Inject constructor() {
+    ...
+}
+</code></pre>
+<h3 id="modules">Modules</h3>
+<p>For types that <strong>cannot be constructor injected</strong>, such as interface or classes are not contained in our project, we should use <strong>Hilt modules</strong>. An exemple of this is <code>OkHttpClient</code>, we need to use its builder to create an instance.</p>
+<p>A Hilt module is a class annotated with <code>@Module</code> and <code>@InstallIn</code>. <code>@Module</code> tells Hilt this is a module and <code>@InstallIn</code> tells Hilt the bindings are specifying in which Hilt component.</p>
+<p>For each Android class that can be injected by Hilt, there&rsquo;s an associated <a href="https://developer.android.com/training/dependency-injection/hilt-android#generated-components">Hilt Component</a>.</p>
+<pre><code class="language-kotlin">@InstallIn(ApplicationComponent::class)
+@Module
+object DatabaseModule {
+    ...
+}
+</code></pre>
+<h4 id="providing-instances-with-provides">Providing instances with @Provides</h4>
+<p>We can annotate a function with <code>@Provides</code> in Hilt modules to tell Hilt how to provide types that cannot be constructor injected.</p>
+<p>The function body of the <code>@Provides</code> annotated function will be executed every time Hilt needs to provide an instance of that type. The return type of the <code>@Provides</code> annotated function tells Hilt the bindings type or how to provide instances of that type.</p>
+<pre><code class="language-kotlin">@InstallIn(ApplicationComponent::class)
+@Module
+object DatabaseModule {
+
+    /**
+     * We always want Hilt provide the same database instance, so annotate this
+     * method with @Singleton.
+     *
+     * @param appContext: Each Hilt container comes with a set of default bindings that can be
+     * injected as dependencies into our custom bindings, to access this appContext, we annotate
+     * the filed with @ApplicationContext.
+     */
+    @Provides
+    @Singleton
+    fun provideDatabase(@ApplicationContext appContext: Context): AppDatabase {
+        return Room.databaseBuilder(
+            appContext,
+            AppDatabase::class.java,
+            &quot;logging.db&quot;
+        ).build()
+    }
+
+    /**
+     * provide AppDatabase dependency.
+     */
+    @Provides
+    fun provideLogDao(database: AppDatabase): LogDao {
+        return database.logDao()
+    }
+
+}
+</code></pre>
+<h4 id="providing-interface-impl-with-binds">Providing interface impl with @Binds</h4>
+<p>To tell Hilt what implementation to use for an interface, we can use the <code>@Binds</code> annotation on a function inside a Hilt module.</p>
+<p><code>@Binds</code> must annotate an abstract function, since <strong>Hilt modules cannot contain both non-static and abstract binding methods</strong>, so we cannot place <code>@Binds</code> and <code>@Provides</code> annotations in the same class.</p>
+<pre><code class="language-kotlin">@InstallIn(ActivityComponent::class)
+@Module
+abstract class NavigationModule {
+
+    /**
+     * To tell Hilt how to provide instances of AppNavigatorImpl, we just annotate its constructor with `@Inject`
+     */
+    @Binds
+    abstract fun bindNavigator(impl: AppNavigatorImpl): AppNavigator
+}
+</code></pre>
+<h4 id="providing-different-interface-impl-with-qualifier">Providing different interface impl with @Qualifier</h4>
+<p>Assume that LoggerDataSource interface has two different implementation.</p>
+<pre><code class="language-kotlin">interface LoggerDataSource {
+    ...
+}
+
+@Singleton
+class LoggerLocalDataSource @Inject constructor(
+    private val logDao: LogDao
+): LoggerDataSource {
+    ...
+}
+
+/**
+ * Scoping to the Activity container
+ */
+@ActivityScoped
+class LoggerInMemoryDataSource @Inject constructor(
+): LoggerDataSource {
+    ...
+}
+</code></pre>
+<p>At this moment, Hilt knows how to provide instances of <code>LoggerInMemoryDataSource</code> and <code>LoggerLocalDataSource</code> but doesn&rsquo;t know which implementation to use when <code>LoggerDataSource</code> is requested.</p>
+<p>We know that we can use the <code>@Binds</code> annotation to provide <strong>one</strong> <code>LoggerDataSource</code> implementation, but if we need to provide both implementations in the same project?</p>
+<h5 id="two-implementations-for-the-same-interface">Two implementations for the same interface</h5>
+<p>Since the different implementations of <code>LoggerDataSource</code> are scoped to different containers, we cannot use the same module:</p>
+<ul>
+<li><em>LoggerInMemoryDataSource</em> is scoped in Actiivty container</li>
+<li><em>LoggerLocalDataSource</em> is scoped in Application container</li>
+</ul>
+<p>We should define two different module:</p>
+<pre><code class="language-kotlin">@InstallIn(ApplicationComponent::class)
+@Module
+abstract class LoggingDatabaseModule {
+    @Singleton
+    @Binds
+    abstract fun bindDatabaseLogger(impl: LoggerLocalDataSource): LoggerDataSource
+}
+
+@InstallIn(ActivityComponent::class)
+@Module
+abstract class LoggingInMemortModule {
+    @ActivityScoped
+    @Binds
+    abstract fun bindInMemoryLogger(impl: LoggerInMemoryDataSource): LoggerDataSource
+}
+</code></pre>
+<p><strong>@Binds method must have the scoping annotations if the type is scoped</strong>, so that&rsquo;s why the functions above are annotated with <code>@Singleton</code> and <code>@ActivityScoped</code>. If <code>@Binds</code> or <code>@Provides</code> are used as a binding for a type, the scoping annotations in the implementation classes are not used anymore, so we can remove them.</p>
+<p>If we buid the project right now, we&rsquo;ll see <code>DuplicateBindings</code> error:</p>
+<p><code>[Dagger/DuplicateBindings] com.example.android.hilt.data.LoggerDataSource is bound multiple times</code></p>
+<p>This is because the <code>LoggerDataSource</code> type is being injected in <code>Fragment</code>, but <strong>Hilt doesn&rsquo;t know which implementation to use because there are two bindings of the same tyoe!</strong></p>
+<p>To tell Hilt how to provide different implementations (multiple bindings) of the same type, we can use qualifier annotation.</p>
+<pre><code class="language-kotlin">@Qualifier
+annotation class InMemoryLogger
+
+@Qualifier
+annotation class DatabaseLogger
+
+@InstallIn(ApplicationComponent::class)
+@Module
+abstract class LoggingDatabaseModule {
+
+    @DatabaseLogger
+    @Singleton
+    @Binds
+    abstract fun bindDatabaseLogger(impl: LoggerLocalDataSource): LoggerDataSource
+}
+
+@InstallIn(ActivityComponent::class)
+@Module
+abstract class LoggingInMemoryModule {
+
+    @InMemoryLogger
+    @ActivityScoped
+    @Binds
+    abstract fun bindInMemoryLogger(impl: LoggerInMemoryDataSource): LoggerDataSource
+}
+</code></pre>
+<h2 id="inject-dependencies">Inject dependencies</h2>
+<p>We can make Hilt inject instances of different types with the <code>@Inject</code> annotation on the fields we want to be injected:</p>
+<pre><code class="language-kotlin">@AndroidEntryPoint
+class LoginFragment:Fragment() {
+    // note that fields injected by Hilt cannot be private.
+    @InmemoryLogger
+    @Inject lateinit var logger: LoggerDataSource
+    @Inject lateinit var formatter: Formatter
+}
+</code></pre>
+</article>
+
+
+      
+        <div class="my-4">
+    
+    <a href="https://zacash.cn/tags/hilt/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 me-2 hover:text-eureka">#hilt</a>
+    
+    <a href="https://zacash.cn/tags/dagger/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 me-2 hover:text-eureka">#dagger</a>
+    
+    <a href="https://zacash.cn/tags/di/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 me-2 hover:text-eureka">#di</a>
+    
+</div>
+      
+
+      
+
+
+
+      
+
+      
+  <div
+    class="-mx-2 mt-4 flex flex-col border-t px-2 pt-4 md:flex-row md:justify-between"
+  >
+    <div>
+      
+        <span class="text-primary-text block font-bold"
+          >Previous</span
+        >
+        <a href="https://zacash.cn/posts/how-to-learn-math/" class="block">How to Learn Math</a>
+      
+    </div>
+    <div class="mt-4 md:mt-0 md:text-right">
+      
+        <span class="text-primary-text block font-bold">Next</span>
+        <a href="https://zacash.cn/posts/custom-view-introduction/" class="block">Introduction to Custom View</a>
+      
+    </div>
+  </div>
+
+
+      
+
+
+
+    </div>
+    
+
+    
+    
+  </div>
+
+  
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        hljs.initHighlightingOnLoad();
+      });
+    </script>
+
+          </div>
+        </div>
+      
+    </main>
+    <footer class="pl-scrollbar">
+      <div class="mx-auto w-full max-w-screen-xl"><div class="text-center p-6 pin-b">
+    <p class="text-sm text-tertiary-text">&copy; Copyright © 2022, Copyright Zac
+ &middot;  Powered by the <a href="https://github.com/wangchucheng/hugo-eureka" class="hover:text-eureka">Eureka</a> theme for <a href="https://gohugo.io" class="hover:text-eureka">Hugo</a></p>
+</div></div>
+    </footer>
+  </body>
+</html>

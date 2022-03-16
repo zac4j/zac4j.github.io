@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>kotlin on Zac&#39;s blog</title>
+    <link>https://zacash.cn/tags/kotlin/</link>
+    <description>Recent content in kotlin on Zac&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>&amp;copy; Copyright © 2022, Copyright Zac
+</copyright>
+    <lastBuildDate>Fri, 19 Jun 2020 22:03:29 +0800</lastBuildDate><atom:link href="https://zacash.cn/tags/kotlin/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Top 10 Kotlin Questions in StackOverflow</title>
+      <link>https://zacash.cn/posts/top-10-kotlin-questions/</link>
+      <pubDate>Fri, 19 Jun 2020 22:03:29 +0800</pubDate>
+      
+      <guid>https://zacash.cn/posts/top-10-kotlin-questions/</guid>
+      <description>IntArray vs. Array&amp;lt;Int&amp;gt;   In java code
+ IntArray: int[] Array&amp;lt;Int&amp;gt;: Integer[]    Create method:
+ IntArray:  val intArray : IntArray = intArrayOf(1, 2, 3, 4, 5)   Array&amp;lt;Int&amp;gt;:  val arrayOfInts : Array&amp;lt;Int&amp;gt; = arrayOf(1, 2, 3, 4, 5)    Iterable vs. Sequence   Usage
+ Iterable:  getPeople() .filter { it.age &amp;gt;= 18 } .map { it.name } .take(5)   Sequence: start with asSequence() and end with toList() or toSet()&amp;hellip;  getPeople().</description>
+    </item>
+    
+  </channel>
+</rss>

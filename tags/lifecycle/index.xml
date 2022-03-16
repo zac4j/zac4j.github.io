@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Lifecycle on Zac&#39;s blog</title>
+    <link>https://zacash.cn/tags/lifecycle/</link>
+    <description>Recent content in Lifecycle on Zac&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>&amp;copy; Copyright © 2022, Copyright Zac
+</copyright>
+    <lastBuildDate>Thu, 07 May 2020 20:30:50 +0800</lastBuildDate><atom:link href="https://zacash.cn/tags/lifecycle/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Intro to Fragments</title>
+      <link>https://zacash.cn/posts/fragments/</link>
+      <pubDate>Thu, 07 May 2020 20:30:50 +0800</pubDate>
+      
+      <guid>https://zacash.cn/posts/fragments/</guid>
+      <description>Activity 和 Fragment 生命周期的关联    Activity 状态 Fragment 生命周期方法回调 Fragment 状态     Created onAttach(), onCreate(), onCreateView(), onActivityCreated() Fragment 添加到 Activity 且视图已初始化   Started onStart() Fragment 活跃并可见   Resumed onResume() Fragment 活跃并获取焦点   Paused onPause() Fragment 暂停   Stopped onStop() Fragment 停止并不再可见   Destroyed onDestroyView(), onDestroy(), onDetach() Fragment 销毁    Fragment 重要的生命周期方法的使用  onAttach(): Fragment 在被 attach 到宿主 Activity 时回调，可以在该方法里检查宿主 Activity 是否实现了某个接口。 onCreateView(): Fragment 的 XML 布局在这个回调方法里初始化，系统调用这个方法来绘制 Fragment 的 UI。 onPause(): 可以在 Fragment 销毁前在该回调方法保存必要数据或状态。 onActivityCreated(): 在宿主 Activity 的 onCreate() 方法调用后回调该方法。可以在该方法做最终的初始化，如检索 View getView().</description>
+    </item>
+    
+  </channel>
+</rss>

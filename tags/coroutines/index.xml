@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Coroutines on Zac&#39;s blog</title>
+    <link>https://zacash.cn/tags/coroutines/</link>
+    <description>Recent content in Coroutines on Zac&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>&amp;copy; Copyright © 2022, Copyright Zac
+</copyright>
+    <lastBuildDate>Sat, 25 Apr 2020 11:40:03 +0800</lastBuildDate><atom:link href="https://zacash.cn/tags/coroutines/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Coroutines Introduction</title>
+      <link>https://zacash.cn/posts/coroutines-introduction/</link>
+      <pubDate>Sat, 25 Apr 2020 11:40:03 +0800</pubDate>
+      
+      <guid>https://zacash.cn/posts/coroutines-introduction/</guid>
+      <description>协程用来解决什么问题 Kotlin 的协程提供了一种全新的并发处理方式，我们可以使用它来简化安卓异步执行的代码。
+在 Android 平台上协程主要用来解决两个问题：
+ 处理耗时任务(Long running tasks) 保证主线程安全(Main-safety)  处理耗时任务 我们常规处理耗时任务是通过异步回调的方式，比如：
+fun fetchDoc() { get(&amp;quot;https://doc.qq.com&amp;quot;) { result -&amp;gt; show(result) } }  通过协程的方式是这样：
+// 主线程执行 suspend fun fetchDoc() { // 直接返回结果 val result = get(&amp;quot;https://doc.qq.com&amp;quot;) show(result) } // 主线程执行 suspend fun get(url: String) = withContext(Dispatchers.IO) { /*IO 线程池执行*/ }  可以看到通过协程可以直接返回请求结果，而不用管理请求延迟和线程阻塞，这是如何实现的呢？
+协程在常规的函数操作 —— invoke 和 return 之外，还新增了2项：
+ suspend —— 称为挂起或暂停，用于暂停执行当前协程，并保存所有局部变量 resume —— 让暂停的协程继续执行  那么 suspend 是如何实现的呢？
+ Kotlin 使用堆栈帧来管理需要运行哪个函数及所有局部变量。suspend 协程时，系统会复制并保存当前的栈帧供后续使用，resume 协程时，系统会还原保存的栈帧，然后函数从暂停的位置继续执行。</description>
+    </item>
+    
+  </channel>
+</rss>

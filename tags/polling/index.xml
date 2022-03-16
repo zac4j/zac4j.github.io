@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>polling on Zac&#39;s blog</title>
+    <link>https://zacash.cn/tags/polling/</link>
+    <description>Recent content in polling on Zac&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>&amp;copy; Copyright © 2022, Copyright Zac
+</copyright>
+    <lastBuildDate>Tue, 21 Jul 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://zacash.cn/tags/polling/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>WebSocket 和长轮询</title>
+      <link>https://zacash.cn/posts/websocket-and-long-polling/</link>
+      <pubDate>Tue, 21 Jul 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://zacash.cn/posts/websocket-and-long-polling/</guid>
+      <description>&lt;p&gt;客户端的网络请求大部分都建立在请求/响应模式的 HTTP/HTTPS 协议之下，AJAX 技术使页面看起来更加动态。尽管如此，所有的 HTTP 连接仍由客户端控制，需要用户交互或定时轮询（periodic polling）才能从服务端加载新数据。&lt;/p&gt;
+&lt;p&gt;通过长轮询，客户端打开与服务端的 HTTP 连接，并保持连接直到服务端返回响应，只要服务端有新的数据，它就会发送响应。然而这些技术有共同的问题：它们带有 HTTP 的开销，并不适合低延时应用的需求。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

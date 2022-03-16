@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  dir="ltr"
+  
+><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<title>Handler in Code | Zac&#39;s blog</title>
+
+<meta name="generator" content="Hugo Eureka 0.9.1" />
+<link rel="stylesheet" href="https://zacash.cn/css/eureka.min.6a378a23360d238dc3ef4df2f5cd718093f02c10c9c7eb2437c29701cd8d389ab6da5d9f21bdd3afa305fd56c1235017.css" integrity="sha384-ajeKIzYNI43D703y9c1xgJPwLBDJx&#43;skN8KXAc2NOJq22l2fIb3Tr6MF/VbBI1AX">
+<script defer src="https://zacash.cn/js/eureka.min.f1639ee98d6cbd85b2b5f034d27320da962002ff83159ed4e01dbc5948c42a1ab26c2d6e74c66e93f5cec4d24dbd166d.js" integrity="sha384-8WOe6Y1svYWytfA00nMg2pYgAv&#43;DFZ7U4B28WUjEKhqybC1udMZuk/XOxNJNvRZt"></script>
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload"
+  href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Noto+Serif+SC:wght@400;600;700&display=swap"
+  as="style" onload="this.onload=null;this.rel='stylesheet'">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/styles/solarized-light.min.css"
+   media="print"
+  onload="this.media='all';this.onload=null" crossorigin>
+<script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/highlight.min.js"
+   crossorigin></script>
+  <script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/languages/dart.min.js"
+     crossorigin></script>
+  <script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/languages/java.min.js"
+     crossorigin></script>
+  <script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/languages/kotlin.min.js"
+     crossorigin></script>
+
+
+<script defer type="text/javascript" src="https://zacash.cn/js/fontawesome.min.1c5a4674b042785ed214cf0818a81724c6b37442fd61b0ed039237b93de25ed5103fc8079a05770648ccc9c66c4f540a.js" integrity="sha384-HFpGdLBCeF7SFM8IGKgXJMazdEL9YbDtA5I3uT3iXtUQP8gHmgV3BkjMycZsT1QK"></script>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/katex.min.css"
+   integrity="sha384-MlJdn/WNKDGXveldHDdyRP1R4CTHr3FeuDNfhsLPYrq2t0UBkUdK2jyTnXPEK1NQ"  media="print"
+  onload="this.media='all';this.onload=null" crossorigin>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/katex.min.js" 
+  integrity="sha384-VQ8d8WVFw0yHhCk5E8I86oOhv48xLpnDZx5T9GogA/Y84DcCKWXDmSDfn13bzFZY"  crossorigin></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/contrib/auto-render.min.js"
+   integrity="sha384-&#43;XBljXPPiv&#43;OzfbB3cVmLHf4hdUFHlWNZN5spNQ7rmHTXpd7WvJum6fIACpNNfIR"  crossorigin></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    renderMathInElement(document.body, {
+      delimiters: [
+        { left: "$$", right: "$$", display: true },
+        { left: "$", right: "$", display: false },
+        { left: "\\(", right: "\\)", display: false },
+        { left: "\\[", right: "\\]", display: true }
+      ],
+    });
+  });
+</script>
+
+
+<script defer src="https://cdn.jsdelivr.net/npm/mermaid@8.14.0/dist/mermaid.min.js" 
+  integrity="sha384-atOyb0FxAgN9LyAc6PEf9BjgwLISyansgdH8/VXQH8p2o5vfrRgmGIJ2Sg22L0A0"  crossorigin></script>
+
+
+<link rel="icon" type="image/png" sizes="32x32" href="https://zacash.cn/images/icon_huef3b68b5a9c9f864bc324bf255658730_3276_32x32_fill_box_center_3.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://zacash.cn/images/icon_huef3b68b5a9c9f864bc324bf255658730_3276_180x180_fill_box_center_3.png">
+
+<meta name="description"
+  content="Handler 消息机制的实现">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+      "@type": "ListItem",
+      "position": 1 ,
+      "name":"Posts",
+      "item":"https://zacash.cn/posts/"},{
+      "@type": "ListItem",
+      "position": 2 ,
+      "name":"Handler in Code",
+      "item":"https://zacash.cn/posts/handler-in-code/"}]
+}
+</script>
+
+
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://zacash.cn/posts/handler-in-code/"
+    },
+    "headline": "Handler in Code | Zac\u0027s blog","datePublished": "2020-04-12T20:36:33+08:00",
+    "dateModified": "2020-04-12T20:36:33+08:00",
+    "wordCount":  1000 ,
+    "publisher": {
+        "@type": "Person",
+        "name": "Zac Zhu",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://zacash.cn/images/icon.png"
+        }
+        },
+    "description": "Handler 消息机制的实现"
+}
+</script><meta property="og:title" content="Handler in Code | Zac&#39;s blog" />
+<meta property="og:type" content="article" />
+
+
+<meta property="og:image" content="https://zacash.cn/images/icon.png">
+
+
+<meta property="og:url" content="https://zacash.cn/posts/handler-in-code/" />
+
+
+
+<meta property="og:description" content="Handler 消息机制的实现" />
+
+
+
+<meta property="og:locale" content="en" />
+
+
+
+
+<meta property="og:site_name" content="Zac&#39;s blog" />
+
+
+
+
+
+
+<meta property="article:published_time" content="2020-04-12T20:36:33&#43;08:00" />
+
+
+<meta property="article:modified_time" content="2020-04-12T20:36:33&#43;08:00" />
+
+
+
+<meta property="article:section" content="posts" />
+
+
+<meta property="article:tag" content="Handler" />
+
+<meta property="article:tag" content="MessageQueue" />
+
+<meta property="article:tag" content="Looper" />
+
+
+
+
+
+
+  <body class="flex min-h-screen flex-col">
+    <header
+      class="min-h-16 pl-scrollbar bg-secondary-bg fixed z-50 flex w-full items-center shadow-sm"
+    >
+      <div class="mx-auto w-full max-w-screen-xl"><script>
+    let storageColorScheme = localStorage.getItem("lightDarkMode")
+    if (((storageColorScheme == 'Auto' || storageColorScheme == null) && window.matchMedia("(prefers-color-scheme: dark)").matches) || storageColorScheme == "Dark") {
+        document.getElementsByTagName('html')[0].classList.add('dark')
+    }
+</script>
+<nav class="flex items-center justify-between flex-wrap px-4 py-4 md:py-0">
+    <a href="/" class="me-6 text-primary-text text-xl font-bold">Zac&#39;s blog</a>
+    <button id="navbar-btn" class="md:hidden flex items-center px-3 py-2" aria-label="Open Navbar">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <div id="target"
+        class="hidden block md:flex md:grow md:justify-between md:items-center w-full md:w-auto text-primary-text z-20">
+        <div class="md:flex md:h-16 text-sm md:grow pb-4 md:pb-0 border-b md:border-b-0">
+            <a href="/posts/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  selected-menu-item  me-4">Posts</a>
+            <a href="/tags/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  me-4">Tags</a>
+            <a href="/#about" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  me-4">About</a>
+        </div>
+
+        <div class="flex">
+            <div class="relative pt-4 md:pt-0">
+                <div class="cursor-pointer hover:text-eureka" id="lightDarkMode">
+                    <i class="fas fa-adjust"></i>
+                </div>
+                <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-30" id="is-open">
+                </div>
+                <div class="absolute flex flex-col start-0 md:start-auto end-auto md:end-0 hidden bg-secondary-bg w-48 rounded py-2 border border-tertiary-bg cursor-pointer z-40"
+                    id='lightDarkOptions'>
+                    <span class="px-4 py-1 hover:text-eureka" name="Light">Light</span>
+                    <span class="px-4 py-1 hover:text-eureka" name="Dark">Dark</span>
+                    <span class="px-4 py-1 hover:text-eureka" name="Auto">Auto</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-0" id="is-open-mobile">
+    </div>
+
+</nav>
+<script>
+    
+    let element = document.getElementById('lightDarkMode')
+    if (storageColorScheme == null || storageColorScheme == 'Auto') {
+        document.addEventListener('DOMContentLoaded', () => {
+            window.matchMedia("(prefers-color-scheme: dark)").addEventListener('change', switchDarkMode)
+        })
+    } else if (storageColorScheme == "Light") {
+        element.firstElementChild.classList.remove('fa-adjust')
+        element.firstElementChild.setAttribute("data-icon", 'sun')
+        element.firstElementChild.classList.add('fa-sun')
+    } else if (storageColorScheme == "Dark") {
+        element.firstElementChild.classList.remove('fa-adjust')
+        element.firstElementChild.setAttribute("data-icon", 'moon')
+        element.firstElementChild.classList.add('fa-moon')
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        getcolorscheme();
+        switchBurger();
+    });
+</script>
+</div>
+    </header>
+    <main class="grow pt-16">
+        <div class="pl-scrollbar">
+          <div class="mx-auto w-full max-w-screen-xl lg:px-4 xl:px-8">
+  
+  
+  <div class="grid grid-cols-2 gap-4 lg:grid-cols-8 lg:pt-12">
+    <div
+      class="lg:col-start-2 bg-secondary-bg col-span-2 rounded px-6 py-8 lg:col-span-6"
+    >
+      <article class="prose">
+  <h1 class="mb-4">Handler in Code</h1>
+
+  <div
+  class="text-tertiary-text not-prose mt-2 flex flex-row flex-wrap items-center"
+>
+  <div class="me-6 my-2">
+    <i class="fas fa-calendar me-1"></i>
+    <span
+      >2020-04-12</span
+    >
+  </div>
+  <div class="me-6 my-2">
+    <i class="fas fa-clock me-1"></i>
+    <span>5 min read</span>
+  </div>
+
+  
+    <div class="me-6 my-2">
+      <i class="fas fa-folder me-1"></i>
+      
+        <a href="https://zacash.cn/categories/handler/" class="hover:text-eureka"
+          >Handler</a
+        >
+      
+    </div>
+  
+
+  
+</div>
+
+
+  
+  
+
+  <h3 id="handler-的创建">Handler 的创建</h3>
+<ul>
+<li>在主线程(UI Thread)中：</li>
+</ul>
+<pre><code class="language-kotlin">class MainActivity : Activity {
+    private val mLeakedHandler = object : Handler() {
+        override fun handleMessage(msg: Message) {
+            super.handleMessage(msg)
+        }
+    }
+}
+
+</code></pre>
+<ul>
+<li>在子线程中：</li>
+</ul>
+<pre><code class="language-kotlin">val thread = object : Thread() {
+    override fun run() {
+        Looper.prepare()
+        val handler = object : Handler() {
+            override fun handleMessage(msg: Message) {
+                super.handleMessage(msg)
+            }
+        }
+        Looper.loop()
+    }
+}
+</code></pre>
+<h4 id="为什么在子线程创建-handler-需要准备-looper而主线程却不用">为什么在子线程创建 Handler 需要准备 Looper，而主线程却不用</h4>
+<p>因为 ActivityThread 中的 <code>main()</code> 方法已经为我们初始化了 Looper</p>
+<pre><code class="language-java">public static void main(String[] args) {
+
+    // Install selective syscall interception
+    AndroidOs.install();
+
+    ...
+
+    Looper.prepareMainLooper();
+
+    ...
+    ActivityThread thread = new ActivityThread();
+    thread.attach(false, startSeq);
+
+    if (sMainThreadHandler == null) {
+        sMainThreadHandler = thread.getHandler();
+    }
+
+    if (false) {
+        Looper.myLooper().setMessageLogging(new
+                LogPrinter(Log.DEBUG, &quot;ActivityThread&quot;));
+    }
+
+    Looper.loop();
+
+    throw new RuntimeException(&quot;Main thread loop unexpectedly exited&quot;);
+}
+</code></pre>
+<h3 id="handler-和-looper">Handler 和 Looper</h3>
+<h4 id="为什么使用-handler-就需要显式的调用-looperprepare-和-looperloop-呢">为什么使用 Handler 就需要显式的调用 <code>Looper.prepare()</code> 和 <code>Looper.loop()</code> 呢</h4>
+<p>我们可以通过观察 Handler 的构造方法理解：</p>
+<pre><code class="language-java">public Handler(@Nullable Callback callback, boolean async) {
+    ...
+
+    mLooper = Looper.myLooper();
+    if (mLooper == null) {
+        throw new RuntimeException(&quot;Can't create handler inside thread &quot; + Thread.currentThread()
+                    + &quot; that has not called Looper.prepare()&quot;);
+    }
+    mQueue = mLooper.mQueue;
+    mCallback = callback;
+    mAsynchronous = async;
+}
+</code></pre>
+<p><code>Looper.myLooper()</code> 的实现则是：</p>
+<pre><code class="language-java">public static @Nullable Looper myLooper() {
+    return sThreadLocal.get();
+}
+</code></pre>
+<p>那么 sThreadLocal 在哪里 set 的呢？答案是 <code>Looper.prepare()</code> 方法:</p>
+<pre><code class="language-java">private static void prepare(boolean quitAllowed) {
+    if (sThreadLocal.get() != null) {
+        throw new RuntimeException(&quot;Only one Looper may be created per thread&quot;);
+    }
+    sThreadLocal.set(new Looper(quitAllowed));
+}
+</code></pre>
+<p>可以看到 Handler 和 Looper 是绑定的关系，每个 Handler 只会存在一个线程和 Looper，Looper 内的 ThreadLocal 标识对应的线程。</p>
+<h3 id="handler-的使用">Handler 的使用</h3>
+<p>根据官方文档的介绍，Handler 通常有2种用法：</p>
+<ul>
+<li>Schedule to be executed at some point in the future:
+Schedule Message 和 Runnable 比较容易理解，Handler 提供了如 <code>sendMessageAtTime(Message, long)</code> 和 <code>postAtTime(Runnable, long)</code> 方法，可以设定在未来某个时刻执行任务。</li>
+<li>Enqueue an action to be performed on a different thread than your own:
+在别的线程执行任务，我们通常的应用就是在子线程处理耗时任务后，我们可以通过 <code>Handler(getMainLooper())</code> 来执行更新 UI 的操作。</li>
+</ul>
+<h3 id="handler-和-messagequeue">Handler 和 MessageQueue</h3>
+<p>观察源码可以发现 handler 的 <code>sendMessage(msg)</code>、<code>sendMessageDelayed(msg, timeMillis)</code>、<code>post(runnable)</code> 方法最后都是通过调用 <code>sendMessageAtTime(msg, uptimeMillis)</code> 实现：</p>
+<pre><code class="language-java">public boolean sendMessageAtTime(@NonNull Message msg, long uptimeMillis) {
+    MessageQueue queue = mQueue;
+    if (queue == null) {
+        RuntimeException e = new RuntimeException(
+                this + &quot; sendMessageAtTime() called with no mQueue&quot;);
+        Log.w(&quot;Looper&quot;, e.getMessage(), e);
+        return false;
+    }
+    return enqueueMessage(queue, msg, uptimeMillis);
+}
+</code></pre>
+<p>这里 <code>Handler.mQueue</code> 是在 Handler 构造方法里通过 <code>mLooper.mQueue</code> 获取，而 <code>Looper.mQueue</code> 是在 Looper 初始化时创建:</p>
+<pre><code class="language-java">// android/os/Handler.java
+public Handler(@Nullable Callback callback, boolean async) {
+    ...
+    mLooper = Looper.myLooper();
+    if (mLooper == null) {
+        throw new RuntimeException(&quot;Can't create handler inside thread &quot; + Thread.currentThread()
+                    + &quot; that has not called Looper.prepare()&quot;);
+    }
+    mQueue = mLooper.mQueue;
+    mCallback = callback;
+    mAsynchronous = async;
+}
+
+// android/os/Looper.java
+private Looper(boolean quitAllowed) {
+    mQueue = new MessageQueue(quitAllowed);
+    mThread = Thread.currentThread();
+}
+</code></pre>
+<p>可以看到像官方文档描述的那样，每个 Handler 实例都关联着一条线程以及这条线程的消息队列(Each Handler instance is associated with a single thread and that thread&rsquo;s message queue)。</p>
+<h4 id="消息如何入列">消息如何入列</h4>
+<p>在 <code>sendMessageAtTime()</code> 方法最后返回了 <code>Handler.enqueueMessage()</code> 的值：</p>
+<pre><code class="language-java">private boolean enqueueMessage(@NonNull MessageQueue queue, @NonNull Message msg, long uptimeMillis) {
+    msg.target = this;
+    msg.workSourceUid = ThreadLocalWorkSource.getUid();
+
+    if (mAsynchronous) {
+        msg.setAsynchronous(true);
+    }
+    return queue.enqueueMessage(msg, uptimeMillis);
+}
+</code></pre>
+<p><code>Handler.enqueueMessage()</code> 调用的 <code>MessageQueue.enqueueMessage()</code> 实现如下：</p>
+<pre><code class="language-java">boolean enqueueMessage(Message msg, long when) {
+    if (msg.target == null) {
+        throw new IllegalArgumentException(&quot;Message must have a target.&quot;);
+    }
+    if (msg.isInUse()) {
+        throw new IllegalStateException(msg + &quot; This message is already in use.&quot;);
+    }
+
+    synchronized (this) {
+        if (mQuitting) {
+            IllegalStateException e = new IllegalStateException(
+                    msg.target + &quot; sending message to a Handler on a dead thread&quot;);
+            Log.w(TAG, e.getMessage(), e);
+            msg.recycle();
+            return false;
+        }
+
+        msg.markInUse();
+        msg.when = when;
+        Message p = mMessages;
+        boolean needWake;
+        if (p == null || when == 0 || when &lt; p.when) {
+            // New head, wake up the event queue if blocked.
+            msg.next = p;
+            mMessages = msg;
+            needWake = mBlocked;
+        } else {
+            // Inserted within the middle of the queue.  Usually we don't have to wake
+            // up the event queue unless there is a barrier at the head of the queue
+            // and the message is the earliest asynchronous message in the queue.
+            needWake = mBlocked &amp;&amp; p.target == null &amp;&amp; msg.isAsynchronous();
+            Message prev;
+            for (;;) {
+                prev = p;
+                p = p.next;
+                if (p == null || when &lt; p.when) {
+                    break;
+                }
+                if (needWake &amp;&amp; p.isAsynchronous()) {
+                    needWake = false;
+                }
+            }
+            msg.next = p; // invariant: p == prev.next
+            prev.next = msg;
+        }
+
+        // We can assume mPtr != 0 because mQuitting is false.
+        if (needWake) {
+            nativeWake(mPtr);
+        }
+    }
+    return true;
+}
+</code></pre>
+<p>我们分开来看，这里 <code>msg.target</code> 即消息对应的 handler, 在 <code>Handler.enqueueMessage()</code> 方法有赋值。</p>
+<p>MessageQueue 并没有队列的数据结构，而是以单链表的形式存储 msg，<code>mMessages</code> 为当前链表头部的消息，我们称为 head_msg，当前传入的消息称为 current_msg，</p>
+<pre><code class="language-java">if (p == null || when == 0 || when &lt; p.when) {
+    // New head, wake up the event queue if blocked.
+    msg.next = p;
+    mMessages = msg;
+    needWake = mBlocked;
+}
+</code></pre>
+<p><code>if</code> 的判断是，如果:</p>
+<ul>
+<li>1).当前队列没有 head_msg</li>
+<li>2).current_msg 是需要立即执行</li>
+<li>3).current_msg 的执行时间在 head_msg 执行时间之前</li>
+</ul>
+<p>则将 head_msg 标记为 current_msg 的下一条消息，current_msg 标记为头部消息，并且唤醒当前阻塞的队列。</p>
+<pre><code class="language-java">...
+} else {
+    // Inserted within the middle of the queue.  Usually we don't have to wake
+    // up the event queue unless there is a barrier at the head of the queue
+    // and the message is the earliest asynchronous message in the queue.
+    needWake = mBlocked &amp;&amp; p.target == null &amp;&amp; msg.isAsynchronous();
+    Message prev;
+    for (;;) {
+        prev = p;
+        p = p.next;
+        if (p == null || when &lt; p.when) {
+            break;
+        }
+        if (needWake &amp;&amp; p.isAsynchronous()) {
+            needWake = false;
+        }
+    }
+    msg.next = p; // invariant: p == prev.next
+    prev.next = msg;
+}
+</code></pre>
+<p><code>else</code> 内的逻辑是，根据 current_msg 的执行时间在消息队列中找到对应的位置入列。</p>
+<h4 id="何时执行入列的消息">何时执行入列的消息</h4>
+<p>答案就是在子线程使用 handler 时显式调用的 <code>Looper.loop()</code>:</p>
+<pre><code class="language-java">// android/os/Looper.java
+public static void loop() {
+    final Looper me = myLooper();
+    if (me == null) {
+        throw new RuntimeException(&quot;No Looper; Looper.prepare() wasn't called on this thread.&quot;);
+    }
+    final MessageQueue queue = me.mQueue;
+    ...
+    for (;;) {
+        Message msg = queue.next(); // might block
+        if (msg == null) {
+            // No message indicates that the message queue is quitting.
+            return;
+        }
+        ...
+        try {
+            msg.target.dispatchMessage(msg);
+            ...
+        } catch (Exception exception) {
+            ...
+            throw exception;
+        } finally {
+            ...
+        }
+        ...
+        msg.recycleUnchecked();
+    }
+}
+</code></pre>
+<p><code>Looper.loop()</code> 的实现就是在无限循环中不断从消息队列中取出 msg，并在 <code>msg.target</code>即 handler 中 <code>dispatchMessage</code>:</p>
+<pre><code class="language-java">public void dispatchMessage(@NonNull Message msg) {
+    if (msg.callback != null) {
+        handleCallback(msg);
+    } else {
+        if (mCallback != null) {
+            if (mCallback.handleMessage(msg)) {
+                return;
+            }
+        }
+        handleMessage(msg);
+    }
+}
+</code></pre>
+<p><code>msg.callback</code> 对应的是 <code>Handler.post(runnable)</code> 传递的 Runnable 对象，而 <code>mCallback.handleMessage(msg)</code> 或 <code>handleMessage(msg)</code> 则是实例话 Handler 对象时复写的方法。</p>
+<h3 id="总结">总结</h3>
+<p>Handler 帮助我们处理 Message 和 Runnable 对象，每个 Handler 实例都关联着一个线程以及这个线程的 MessageQueue。当你创建一个新的 Handler 对象时，它将与当前所在的线程(UI/Work Thread)和 MessageQueue 绑定在一起，通过 Handler 发出的 Message 或者 Runnable(msg.callback) 会根据执行时间插入 MessageQueue，Looper 会持续不断的从 MessageQueue 取出可执行的 Message 通过 Handler.handleMessage(msg) 处理。</p>
+<p>如下图所示：<img src="https://i1.wp.com/tutorial.eyehunts.com/wp-content/uploads/2018/08/Android-Handler-Background-Thread-Communicate-with-UI-thread-1.png?resize=1024%2C621&amp;ssl=1" alt="handler"></p>
+
+</article>
+
+
+      
+        <div class="my-4">
+    
+    <a href="https://zacash.cn/tags/handler/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 me-2 hover:text-eureka">#Handler</a>
+    
+    <a href="https://zacash.cn/tags/messagequeue/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 me-2 hover:text-eureka">#MessageQueue</a>
+    
+    <a href="https://zacash.cn/tags/looper/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 me-2 hover:text-eureka">#Looper</a>
+    
+</div>
+      
+
+      
+
+
+
+      
+
+      
+  <div
+    class="-mx-2 mt-4 flex flex-col border-t px-2 pt-4 md:flex-row md:justify-between"
+  >
+    <div>
+      
+        <span class="text-primary-text block font-bold"
+          >Previous</span
+        >
+        <a href="https://zacash.cn/posts/handler-in-action/" class="block">Handler in Action</a>
+      
+    </div>
+    <div class="mt-4 md:mt-0 md:text-right">
+      
+        <span class="text-primary-text block font-bold">Next</span>
+        <a href="https://zacash.cn/posts/hugo-basic/" class="block">Hugo Basic</a>
+      
+    </div>
+  </div>
+
+
+      
+
+
+
+    </div>
+    
+
+    
+    
+  </div>
+
+  
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        hljs.initHighlightingOnLoad();
+      });
+    </script>
+
+          </div>
+        </div>
+      
+    </main>
+    <footer class="pl-scrollbar">
+      <div class="mx-auto w-full max-w-screen-xl"><div class="text-center p-6 pin-b">
+    <p class="text-sm text-tertiary-text">&copy; Copyright © 2022, Copyright Zac
+ &middot;  Powered by the <a href="https://github.com/wangchucheng/hugo-eureka" class="hover:text-eureka">Eureka</a> theme for <a href="https://gohugo.io" class="hover:text-eureka">Hugo</a></p>
+</div></div>
+    </footer>
+  </body>
+</html>

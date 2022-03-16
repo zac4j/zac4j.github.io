@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  dir="ltr"
+  
+><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<title>Introduction to Custom View | Zac&#39;s blog</title>
+
+<meta name="generator" content="Hugo Eureka 0.9.1" />
+<link rel="stylesheet" href="https://zacash.cn/css/eureka.min.6a378a23360d238dc3ef4df2f5cd718093f02c10c9c7eb2437c29701cd8d389ab6da5d9f21bdd3afa305fd56c1235017.css" integrity="sha384-ajeKIzYNI43D703y9c1xgJPwLBDJx&#43;skN8KXAc2NOJq22l2fIb3Tr6MF/VbBI1AX">
+<script defer src="https://zacash.cn/js/eureka.min.f1639ee98d6cbd85b2b5f034d27320da962002ff83159ed4e01dbc5948c42a1ab26c2d6e74c66e93f5cec4d24dbd166d.js" integrity="sha384-8WOe6Y1svYWytfA00nMg2pYgAv&#43;DFZ7U4B28WUjEKhqybC1udMZuk/XOxNJNvRZt"></script>
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload"
+  href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Noto+Serif+SC:wght@400;600;700&display=swap"
+  as="style" onload="this.onload=null;this.rel='stylesheet'">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/styles/solarized-light.min.css"
+   media="print"
+  onload="this.media='all';this.onload=null" crossorigin>
+<script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/highlight.min.js"
+   crossorigin></script>
+  <script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/languages/dart.min.js"
+     crossorigin></script>
+  <script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/languages/java.min.js"
+     crossorigin></script>
+  <script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/languages/kotlin.min.js"
+     crossorigin></script>
+
+
+<script defer type="text/javascript" src="https://zacash.cn/js/fontawesome.min.1c5a4674b042785ed214cf0818a81724c6b37442fd61b0ed039237b93de25ed5103fc8079a05770648ccc9c66c4f540a.js" integrity="sha384-HFpGdLBCeF7SFM8IGKgXJMazdEL9YbDtA5I3uT3iXtUQP8gHmgV3BkjMycZsT1QK"></script>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/katex.min.css"
+   integrity="sha384-MlJdn/WNKDGXveldHDdyRP1R4CTHr3FeuDNfhsLPYrq2t0UBkUdK2jyTnXPEK1NQ"  media="print"
+  onload="this.media='all';this.onload=null" crossorigin>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/katex.min.js" 
+  integrity="sha384-VQ8d8WVFw0yHhCk5E8I86oOhv48xLpnDZx5T9GogA/Y84DcCKWXDmSDfn13bzFZY"  crossorigin></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/contrib/auto-render.min.js"
+   integrity="sha384-&#43;XBljXPPiv&#43;OzfbB3cVmLHf4hdUFHlWNZN5spNQ7rmHTXpd7WvJum6fIACpNNfIR"  crossorigin></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    renderMathInElement(document.body, {
+      delimiters: [
+        { left: "$$", right: "$$", display: true },
+        { left: "$", right: "$", display: false },
+        { left: "\\(", right: "\\)", display: false },
+        { left: "\\[", right: "\\]", display: true }
+      ],
+    });
+  });
+</script>
+
+
+<script defer src="https://cdn.jsdelivr.net/npm/mermaid@8.14.0/dist/mermaid.min.js" 
+  integrity="sha384-atOyb0FxAgN9LyAc6PEf9BjgwLISyansgdH8/VXQH8p2o5vfrRgmGIJ2Sg22L0A0"  crossorigin></script>
+
+
+<link rel="icon" type="image/png" sizes="32x32" href="https://zacash.cn/images/icon_huef3b68b5a9c9f864bc324bf255658730_3276_32x32_fill_box_center_3.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://zacash.cn/images/icon_huef3b68b5a9c9f864bc324bf255658730_3276_180x180_fill_box_center_3.png">
+
+<meta name="description"
+  content="Custom view introduction">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+      "@type": "ListItem",
+      "position": 1 ,
+      "name":"Posts",
+      "item":"https://zacash.cn/posts/"},{
+      "@type": "ListItem",
+      "position": 2 ,
+      "name":"Introduction to Custom View",
+      "item":"https://zacash.cn/posts/custom-view-introduction/"}]
+}
+</script>
+
+
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://zacash.cn/posts/custom-view-introduction/"
+    },
+    "headline": "Introduction to Custom View | Zac\u0027s blog","datePublished": "2020-09-06T11:11:13+08:00",
+    "dateModified": "2020-09-06T11:11:13+08:00",
+    "wordCount":  1060 ,
+    "publisher": {
+        "@type": "Person",
+        "name": "Zac Zhu",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://zacash.cn/images/icon.png"
+        }
+        },
+    "description": "Custom view introduction"
+}
+</script><meta property="og:title" content="Introduction to Custom View | Zac&#39;s blog" />
+<meta property="og:type" content="article" />
+
+
+<meta property="og:image" content="https://zacash.cn/images/icon.png">
+
+
+<meta property="og:url" content="https://zacash.cn/posts/custom-view-introduction/" />
+
+
+
+<meta property="og:description" content="Custom view introduction" />
+
+
+
+<meta property="og:locale" content="en" />
+
+
+
+
+<meta property="og:site_name" content="Zac&#39;s blog" />
+
+
+
+
+
+
+<meta property="article:published_time" content="2020-09-06T11:11:13&#43;08:00" />
+
+
+<meta property="article:modified_time" content="2020-09-06T11:11:13&#43;08:00" />
+
+
+
+<meta property="article:section" content="posts" />
+
+
+<meta property="article:tag" content="custom view" />
+
+
+
+
+
+
+  <body class="flex min-h-screen flex-col">
+    <header
+      class="min-h-16 pl-scrollbar bg-secondary-bg fixed z-50 flex w-full items-center shadow-sm"
+    >
+      <div class="mx-auto w-full max-w-screen-xl"><script>
+    let storageColorScheme = localStorage.getItem("lightDarkMode")
+    if (((storageColorScheme == 'Auto' || storageColorScheme == null) && window.matchMedia("(prefers-color-scheme: dark)").matches) || storageColorScheme == "Dark") {
+        document.getElementsByTagName('html')[0].classList.add('dark')
+    }
+</script>
+<nav class="flex items-center justify-between flex-wrap px-4 py-4 md:py-0">
+    <a href="/" class="me-6 text-primary-text text-xl font-bold">Zac&#39;s blog</a>
+    <button id="navbar-btn" class="md:hidden flex items-center px-3 py-2" aria-label="Open Navbar">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <div id="target"
+        class="hidden block md:flex md:grow md:justify-between md:items-center w-full md:w-auto text-primary-text z-20">
+        <div class="md:flex md:h-16 text-sm md:grow pb-4 md:pb-0 border-b md:border-b-0">
+            <a href="/posts/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  selected-menu-item  me-4">Posts</a>
+            <a href="/tags/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  me-4">Tags</a>
+            <a href="/#about" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  me-4">About</a>
+        </div>
+
+        <div class="flex">
+            <div class="relative pt-4 md:pt-0">
+                <div class="cursor-pointer hover:text-eureka" id="lightDarkMode">
+                    <i class="fas fa-adjust"></i>
+                </div>
+                <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-30" id="is-open">
+                </div>
+                <div class="absolute flex flex-col start-0 md:start-auto end-auto md:end-0 hidden bg-secondary-bg w-48 rounded py-2 border border-tertiary-bg cursor-pointer z-40"
+                    id='lightDarkOptions'>
+                    <span class="px-4 py-1 hover:text-eureka" name="Light">Light</span>
+                    <span class="px-4 py-1 hover:text-eureka" name="Dark">Dark</span>
+                    <span class="px-4 py-1 hover:text-eureka" name="Auto">Auto</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-0" id="is-open-mobile">
+    </div>
+
+</nav>
+<script>
+    
+    let element = document.getElementById('lightDarkMode')
+    if (storageColorScheme == null || storageColorScheme == 'Auto') {
+        document.addEventListener('DOMContentLoaded', () => {
+            window.matchMedia("(prefers-color-scheme: dark)").addEventListener('change', switchDarkMode)
+        })
+    } else if (storageColorScheme == "Light") {
+        element.firstElementChild.classList.remove('fa-adjust')
+        element.firstElementChild.setAttribute("data-icon", 'sun')
+        element.firstElementChild.classList.add('fa-sun')
+    } else if (storageColorScheme == "Dark") {
+        element.firstElementChild.classList.remove('fa-adjust')
+        element.firstElementChild.setAttribute("data-icon", 'moon')
+        element.firstElementChild.classList.add('fa-moon')
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        getcolorscheme();
+        switchBurger();
+    });
+</script>
+</div>
+    </header>
+    <main class="grow pt-16">
+        <div class="pl-scrollbar">
+          <div class="mx-auto w-full max-w-screen-xl lg:px-4 xl:px-8">
+  
+  
+  <div class="grid grid-cols-2 gap-4 lg:grid-cols-8 lg:pt-12">
+    <div
+      class="lg:col-start-2 bg-secondary-bg col-span-2 rounded px-6 py-8 lg:col-span-6"
+    >
+      <article class="prose">
+  <h1 class="mb-4">Introduction to Custom View</h1>
+
+  <div
+  class="text-tertiary-text not-prose mt-2 flex flex-row flex-wrap items-center"
+>
+  <div class="me-6 my-2">
+    <i class="fas fa-calendar me-1"></i>
+    <span
+      >2020-09-06</span
+    >
+  </div>
+  <div class="me-6 my-2">
+    <i class="fas fa-clock me-1"></i>
+    <span>5 min read</span>
+  </div>
+
+  
+    <div class="me-6 my-2">
+      <i class="fas fa-folder me-1"></i>
+      
+        <a href="https://zacash.cn/categories/custom-view/" class="hover:text-eureka"
+          >Custom View</a
+        >
+      
+    </div>
+  
+
+  
+</div>
+
+
+  
+  
+
+  <p>To create a custom view we can either extend an existing <code>View</code> subclass(like EditText), or create our own subclass of View. By extending View directly, we can create an interactive UI element of any size and shape by overriding the <code>onDraw()</code> method for the View to draw it.</p>
+<p>This article resource from official Android <a href="https://codelabs.developers.google.com/codelabs/advanced-andoid-kotlin-training-custom-views">custom view</a> codelab. I think you&rsquo;ll get the most value if you work through this codelab in sequence.</p>
+<h2 id="understanding-custom-views">Understanding custom views</h2>
+<p>Views are the basic blocks of an app&rsquo;s UI. the View class provides many subclasses, referred to as <em>UI widgets</em>, that cover many of the needs of a typical Android app&rsquo;s user interface.</p>
+<p>UI building blocks such as EditText or TextView are subclasses that extend the View class. To save time and development effort, we can extend one of these View subclasses.</p>
+<p>To create our custom view from scratch, extend the View class itself. Our code overrides <code>View</code> methods to define the view&rsquo;s appearance and functionality. Key to create our custom view is that we are responsible for <strong>drawing the entire UI element of any size and shape to the screen</strong>. If we subclass an existing view such as <code>Button</code>, that class handles drawing for us.</p>
+<h3 id="general-steps-to-create-a-custom-view">General steps to create a custom view</h3>
+<ul>
+<li>Create a custom view class that extends <code>View</code>, or extends a <code>View</code> subclass(such as <code>TextView</code> or <code>Button</code>)</li>
+<li>If we extend a subclass of View(like Button), override only the behavior or aspect of the appearance methods that we want to change.</li>
+<li>If we extend View class, draw the custom view&rsquo;s shape and control its appearance by overriding View methods such as <code>onDraw()</code> and <code>onMeasure()</code> in the new class.</li>
+<li>Add code to respond to user interaction and, if necessary, redraw the custom view.</li>
+<li>Use the custom view class as UI widget in activity&rsquo;s XML layout. We can also define custom attributes(in <code>attrs.xml</code> file) for the view, to provide customization for the view in different layouts.</li>
+</ul>
+<h2 id="drawing-custom-views">Drawing custom views</h2>
+<p>When we creating custom view from scratch(by extending <code>View</code>), we are responsible for drawing the entire view each time the screen refreshes, and for overriding the View methods that handle drawing. In order to properly <strong>draw a custom view</strong> that extends View, we need to follw this step:</p>
+<ul>
+<li>Calculate the view&rsquo;s size when it first appears, and each time that view&rsquo;s size changes, by overriding the <code>onSizeChanged()</code> method.</li>
+<li>Override the <code>onDraw()</code> method to draw the custom view, using a <code>Canvas</code> object styled by a <code>Paint</code> object.</li>
+<li>Call the <code>invalidate()</code> method when responding to a user click that changes how the view is drawn to invalidate the entire view, thereby forcing a call to <code>onDraw()</code> to redraw the view.</li>
+</ul>
+<p>The <code>onDraw()</code> method is called every time that screen refreshes, which can be many time a second. For performance reasons and to avoid visual glitches, we should do as little work as possible in <code>onDraw()</code>. In particular, don&rsquo;t place allocations in <code>onDraw()</code>, because allocations may lead to garbage collection that may cause a visual stutter.</p>
+<p>The <code>Canvas</code> and <code>Paint</code> classes offer a number of useful <strong>drawing shortcuts</strong>:</p>
+<ul>
+<li>Draw text using <code>drawText()</code>. Specify the typeface by calling <code>setTypeface()</code>, and the text color by calling <code>setColor()</code>.</li>
+<li>Draw primitive shapes using <code>drawRect()</code>, <code>drawOval()</code> and <code>drawArc()</code>. Change whether that shapes are filled, outlined, or both by calling <code>setStyle()</code>.</li>
+<li>Draw bitmaps using <code>drawBitmap()</code>.</li>
+</ul>
+<blockquote>
+<p><strong>Note</strong>: in apps that have a deep view hierarchy, we can also override the <code>onMeasure()</code> method to accurately define how custom view fits into the layout. That way, the parent layout can properly align the custom view. The <code>onMeasure()</code> method provides a set of <code>measureSpecs</code> that we can use to determine out view&rsquo;s height and width. Learn more <a href="https://developer.android.com/guide/topics/ui/how-android-draws.html">how android draws</a>.</p>
+</blockquote>
+<h2 id="change-custom-view-behavior">Change custom view behavior</h2>
+<h3 id="add-view-interactivity">Add view interactivity</h3>
+<p>Normally, with a standard Android view, we implement <code>OnClickListener()</code> to perform an action when the user clicks that view. For a custom view, we should:</p>
+<ul>
+<li>Set the view&rsquo;s isClickable property to true. This enables custom view to respond to clicks.</li>
+<li>Implement the <code>View</code> class&rsquo;s <code>performClick()</code> to perform operations when the view is clicked.</li>
+<li>Call the <code>invalidate()</code> method. This tells the Android system to call the <code>onDraw()</code> method to redraw the view.</li>
+</ul>
+<h3 id="use-custom-attributes-with-custom-view">Use custom attributes with custom view</h3>
+<p>To use a custom attributes we should:</p>
+<ul>
+<li>Create and open <code>res/values/attrs.xml</code></li>
+<li>Inside <code>&lt;resource&gt;</code>, add a <code>&lt;declare-styleable&gt;</code> resource element.</li>
+<li>Inside the <code>&lt;declare-styleable&gt;</code> resource element, add three <code>attr</code> elements, one for each attribute, with a <code>name</code> and <code>format</code>. The <code>format</code> is the attribute&rsquo;s type, such as <code>color</code> or <code>string</code>.</li>
+</ul>
+<p>The sample code is:</p>
+<pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;resources&gt;
+    &lt;declare-styleable name=&quot;CustomView&quot;&gt;
+        &lt;attr name=&quot;customColor&quot; format=&quot;color&quot; /&gt;
+        &lt;attr name=&quot;customString&quot; format=&quot;string&quot; /&gt;
+        &lt;attr name=&quot;customInteger&quot; format=&quot;integer&quot; /&gt;
+    &lt;/declare-styleable&gt;
+&lt;/resources&gt;
+</code></pre>
+<blockquote>
+<p>Note: the <code>attr</code> name is, by convention, the same name as the name ofthe class that defines the custom view. Although it&rsquo;s not strictly necessary to follow this convention, Android Studio depend on this naming convention to provide statement completion.</p>
+</blockquote>
+<ul>
+<li>Open <code>fragment_custom_ui.xml</code> layout file, in <code>CustomView</code>, add attribute for <code>customColor</code>, <code>customString</code>, <code>customInteger</code>, and set their value. Use <code>app:</code> as preface for the custom attribute rather than <code>android:</code> because we custom attribute belong to the <code>schemas.android.com/apk/res/app_package_name</code> namespace rather than the android namespace.</li>
+</ul>
+<pre><code class="language-xml">&lt;com.zac4j.ui.widget.CustomView
+    android:id=&quot;@+id/customView&quot;
+    android:layout_width=&quot;200dp&quot;
+    android:layout_height=&quot;200dp&quot;
+    android:layout_marginLeft=&quot;8dp&quot;
+    android:layout_marginTop=&quot;8dp&quot;
+    android:layout_marginRight=&quot;8dp&quot;
+    android:background=&quot;@android:color/darker_gray&quot;
+    app:customColor=&quot;#009688&quot;
+    app:customString=&quot;@string/hello&quot;
+    app:customInteger=&quot;0x101&quot;
+    app:layout_constraintLeft_toLeftOf=&quot;parent&quot;
+    app:layout_constraintRight_toRightOf=&quot;parent&quot;
+    app:layout_constraintTop_toBottomOf=&quot;@id/customViewLabel&quot;/&gt;
+</code></pre>
+<p>In order to use the attributes in <code>CustomView</code> class, we need to retrieve them. They are stored in an <code>AttributeSet</code>, which is handed to out class upon creation, if it exists. We retrieve the attributes in <code>init</code>, and assign the attribute values to local vaributes for caching.</p>
+<ul>
+<li>Open the <code>CustomView.kt</code> class file.</li>
+<li>Inside the <code>CustomView</code> declare vaributes to cache the attribute values.</li>
+</ul>
+<pre><code class="language-kotlin">private var customColor = 0
+private var customString = &quot;&quot;
+private var customInt = 0
+</code></pre>
+<ul>
+<li>Inside the <code>init</code> block, add the following code using the <code>withStyledAttributes</code> extension function. We supply the attributes and view, and set the local vaributes. Importing <code>withStyledAttributes</code> will also import the right <code>getColor</code> function.</li>
+</ul>
+<pre><code class="language-kotlin">context.withStyledAttributes(attrs, R.styleable.CustomView) {
+   customColor = getColor(R.styleable.CustomView_customColor, 0)
+   customString = getString(R.styleable.CustomView_customString, &quot;&quot;)
+   customInt = getInt(R.styleable.CustomView_customInteger, 0)
+}
+</code></pre>
+<blockquote>
+<p>Android and the Kotlin extension library (<a href="https://android.github.io/android-ktx/core-ktx/index.html">android-ktx</a>) do a lot of work for you here! The android-ktx library provides Kotlin extensions with a strong quality-of-life focus. For example, the <a href="https://android.github.io/android-ktx/core-ktx/androidx.content/android.content.-context/index.html">withStyledAttributes</a> extension replaces a significant number of lines of rather tedious boilerplate code. For more on this library, check out the documentation, and the <a href="https://android-developers.googleblog.com/2018/02/introducing-android-ktx-even-sweeter.html">original announcement</a> blog post!</p>
+</blockquote>
+<ul>
+<li>Use the local variables in <code>onDraw()</code> to set the color and label to the current view.</li>
+</ul>
+</article>
+
+
+      
+        <div class="my-4">
+    
+    <a href="https://zacash.cn/tags/custom-view/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 me-2 hover:text-eureka">#custom view</a>
+    
+</div>
+      
+
+      
+
+
+
+      
+
+      
+  <div
+    class="-mx-2 mt-4 flex flex-col border-t px-2 pt-4 md:flex-row md:justify-between"
+  >
+    <div>
+      
+        <span class="text-primary-text block font-bold"
+          >Previous</span
+        >
+        <a href="https://zacash.cn/posts/use-hilt-in-android/" class="block">Use Hilt in Android</a>
+      
+    </div>
+    <div class="mt-4 md:mt-0 md:text-right">
+      
+        <span class="text-primary-text block font-bold">Next</span>
+        <a href="https://zacash.cn/posts/intro-to-navigation/" class="block">Intro to Navigation</a>
+      
+    </div>
+  </div>
+
+
+      
+
+
+
+    </div>
+    
+
+    
+    
+  </div>
+
+  
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        hljs.initHighlightingOnLoad();
+      });
+    </script>
+
+          </div>
+        </div>
+      
+    </main>
+    <footer class="pl-scrollbar">
+      <div class="mx-auto w-full max-w-screen-xl"><div class="text-center p-6 pin-b">
+    <p class="text-sm text-tertiary-text">&copy; Copyright © 2022, Copyright Zac
+ &middot;  Powered by the <a href="https://github.com/wangchucheng/hugo-eureka" class="hover:text-eureka">Eureka</a> theme for <a href="https://gohugo.io" class="hover:text-eureka">Hugo</a></p>
+</div></div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>hybrid on Zac&#39;s blog</title>
+    <link>https://zacash.cn/tags/hybrid/</link>
+    <description>Recent content in hybrid on Zac&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>&amp;copy; Copyright © 2022, Copyright Zac
+</copyright>
+    <lastBuildDate>Sat, 04 Jul 2020 15:45:14 +0800</lastBuildDate><atom:link href="https://zacash.cn/tags/hybrid/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Intro to Hybrid App</title>
+      <link>https://zacash.cn/posts/intro-to-hybrid-app/</link>
+      <pubDate>Sat, 04 Jul 2020 15:45:14 +0800</pubDate>
+      
+      <guid>https://zacash.cn/posts/intro-to-hybrid-app/</guid>
+      <description>Hybrid App 的几种方案   PhoneGap/Cordova
+WebView 作为用户界面，以 Javascript 作为基本逻辑，以及和中间件通信，再由中间件访问底层 API 的方式，进行 App 开发。
+  React Native/Weex
+使用前端技术开发，通过 JSBridge 将 Javascript 代码解析的 Virtual DOM 传递到 Native 并使用原生进行渲染。
+  Native/H5 混合开发
+在原生的架构基础上，嵌入 WebView 业务逻辑，一般有 Native 和 Web 前端开发人员组成。Native 写好基本的架构以及 API 让 Web 开发人员开发页面以及大部分渲染。
+  PhoneGap/Cordova PhoneGap 由 Apache 接管后改名为 Cordova，实际上是一个项目。Cordova 其实不应该称为 Hybrid 方案。因为，它的目标是全面使用前端技术开发移动应用，而不是前端和原生混合使用。不过，这些框架和 React Native 的目标是一致的：使用前端技术开发移动应用，提高工程效率。
+Cordova 让前端技术尽可能多的完成开发工作，只有在前端无法直接调用的原生系统功能方面提供了前端可用的接口。主流的 Cordova 项目都将业务逻辑实现在一个 WebView 中，目标是让开发者使用前端技术就能完成一个应用开发。这种做法需要一个前提——前端技术可以解决移动开发的所有需求。
+Cordova 架构图  Web App 是开发人员编写代码的地方，应用以网页的形式呈现，在一个 index.html 的本地页面文件中引用所需要的各种 Web 资源，如 CSS、Javascript、图片和影音文件等。App 的配置保存在 config.</description>
+    </item>
+    
+  </channel>
+</rss>

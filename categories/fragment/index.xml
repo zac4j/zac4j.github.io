@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Fragment on Zac&#39;s blog</title>
+    <link>https://zacash.cn/categories/fragment/</link>
+    <description>Recent content in Fragment on Zac&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>&amp;copy; Copyright © 2022, Copyright Zac
+</copyright>
+    <lastBuildDate>Mon, 25 May 2020 20:55:31 +0800</lastBuildDate><atom:link href="https://zacash.cn/categories/fragment/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Fragment in ViewPager</title>
+      <link>https://zacash.cn/posts/fragment-in-viewpager/</link>
+      <pubDate>Mon, 25 May 2020 20:55:31 +0800</pubDate>
+      
+      <guid>https://zacash.cn/posts/fragment-in-viewpager/</guid>
+      <description>使用 ViewPager 通常我们使用 ViewPager + TabLayout 主要有这些步骤：
+ 页面的布局结构:  &amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;utf-8&amp;quot;?&amp;gt; &amp;lt;androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android=&amp;quot;http://schemas.android.com/apk/res/android&amp;quot; xmlns:app=&amp;quot;http://schemas.android.com/apk/res-auto&amp;quot; xmlns:tools=&amp;quot;http://schemas.android.com/tools&amp;quot; android:layout_width=&amp;quot;match_parent&amp;quot; android:layout_height=&amp;quot;match_parent&amp;quot; tools:context=&amp;quot;.MainActivity&amp;quot; &amp;gt; &amp;lt;com.google.android.material.appbar.AppBarLayout android:layout_width=&amp;quot;match_parent&amp;quot; android:layout_height=&amp;quot;wrap_content&amp;quot; android:theme=&amp;quot;@style/AppTheme.AppBarOverlay&amp;quot; &amp;gt; ... &amp;lt;com.google.android.material.tabs.TabLayout android:id=&amp;quot;@+id/tabs&amp;quot; android:layout_width=&amp;quot;match_parent&amp;quot; android:layout_height=&amp;quot;wrap_content&amp;quot; android:background=&amp;quot;?attr/colorPrimary&amp;quot; /&amp;gt; &amp;lt;androidx.viewpager.widget.ViewPager android:id=&amp;quot;@+id/view_pager&amp;quot; android:layout_width=&amp;quot;match_parent&amp;quot; android:layout_height=&amp;quot;match_parent&amp;quot; app:layout_behavior=&amp;quot;@string/appbar_scrolling_view_behavior&amp;quot; /&amp;gt; &amp;lt;/com.google.android.material.appbar.AppBarLayout&amp;gt; &amp;lt;/androidx.coordinatorlayout.widget.CoordinatorLayout&amp;gt;   在 PagerAdapter 中会指定我们使用的 Fragment:  class SectionsPagerAdapter(private val context: Context, fm: FragmentManager ) : FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) { override fun getItem(position: Int): Fragment { return SampleFragment.newInstance(position) } override fun getCount(): Int { return TAB_TITLES.</description>
+    </item>
+    
+    <item>
+      <title>Intro to Fragments</title>
+      <link>https://zacash.cn/posts/fragments/</link>
+      <pubDate>Thu, 07 May 2020 20:30:50 +0800</pubDate>
+      
+      <guid>https://zacash.cn/posts/fragments/</guid>
+      <description>Activity 和 Fragment 生命周期的关联    Activity 状态 Fragment 生命周期方法回调 Fragment 状态     Created onAttach(), onCreate(), onCreateView(), onActivityCreated() Fragment 添加到 Activity 且视图已初始化   Started onStart() Fragment 活跃并可见   Resumed onResume() Fragment 活跃并获取焦点   Paused onPause() Fragment 暂停   Stopped onStop() Fragment 停止并不再可见   Destroyed onDestroyView(), onDestroy(), onDetach() Fragment 销毁    Fragment 重要的生命周期方法的使用  onAttach(): Fragment 在被 attach 到宿主 Activity 时回调，可以在该方法里检查宿主 Activity 是否实现了某个接口。 onCreateView(): Fragment 的 XML 布局在这个回调方法里初始化，系统调用这个方法来绘制 Fragment 的 UI。 onPause(): 可以在 Fragment 销毁前在该回调方法保存必要数据或状态。 onActivityCreated(): 在宿主 Activity 的 onCreate() 方法调用后回调该方法。可以在该方法做最终的初始化，如检索 View getView().</description>
+    </item>
+    
+    <item>
+      <title>Check State Loss</title>
+      <link>https://zacash.cn/posts/check-state-loss/</link>
+      <pubDate>Tue, 11 Feb 2020 16:30:26 +0800</pubDate>
+      
+      <guid>https://zacash.cn/posts/check-state-loss/</guid>
+      <description>背景 最近做的一个 DialogFragment 在少数设备上会偶发闪退，Fabric 上的 Stacktrace 信息如下：
+Fatal Exception: java.lang.IllegalStateException: Can not perform this action after onSaveInstanceState at android.support.v4.app.FragmentManagerImpl.checkStateLoss(SourceFile) at android.support.v4.app.FragmentManagerImpl.enqueueAction(SourceFile) at android.support.v4.app.BackStackRecord.commitInternal(SourceFile) at android.support.v4.app.BackStackRecord.commit(SourceFile) at android.support.v4.app.DialogFragment.show(SourceFile）  看起来是弹窗在 show 的时候，发生了 state loss，粗略 copy 了下 StackOverflow 上的回答，做了如下修改：
+fun show(manager: FragmentManager?) { try { val ft = manager?.beginTransaction() ft?.add(this, &amp;quot;tag of dialog&amp;quot;) ft?.commitAllowingStateLoss() } catch (e: Exception) { } }  重写了 show 方法，允许 state loss，并加了异常捕捉，后续观察 Fabric， show 的时候的确没再出现异常情况，但 dismiss 的时候还是有闪退出现，异常信息如下：
+Fatal Exception: java.lang.IllegalStateException: Can not perform this action after onSaveInstanceState at android.</description>
+    </item>
+    
+  </channel>
+</rss>

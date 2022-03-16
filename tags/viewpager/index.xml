@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>viewpager on Zac&#39;s blog</title>
+    <link>https://zacash.cn/tags/viewpager/</link>
+    <description>Recent content in viewpager on Zac&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>&amp;copy; Copyright © 2022, Copyright Zac
+</copyright>
+    <lastBuildDate>Mon, 25 May 2020 20:55:31 +0800</lastBuildDate><atom:link href="https://zacash.cn/tags/viewpager/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Fragment in ViewPager</title>
+      <link>https://zacash.cn/posts/fragment-in-viewpager/</link>
+      <pubDate>Mon, 25 May 2020 20:55:31 +0800</pubDate>
+      
+      <guid>https://zacash.cn/posts/fragment-in-viewpager/</guid>
+      <description>使用 ViewPager 通常我们使用 ViewPager + TabLayout 主要有这些步骤：
+ 页面的布局结构:  &amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;utf-8&amp;quot;?&amp;gt; &amp;lt;androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android=&amp;quot;http://schemas.android.com/apk/res/android&amp;quot; xmlns:app=&amp;quot;http://schemas.android.com/apk/res-auto&amp;quot; xmlns:tools=&amp;quot;http://schemas.android.com/tools&amp;quot; android:layout_width=&amp;quot;match_parent&amp;quot; android:layout_height=&amp;quot;match_parent&amp;quot; tools:context=&amp;quot;.MainActivity&amp;quot; &amp;gt; &amp;lt;com.google.android.material.appbar.AppBarLayout android:layout_width=&amp;quot;match_parent&amp;quot; android:layout_height=&amp;quot;wrap_content&amp;quot; android:theme=&amp;quot;@style/AppTheme.AppBarOverlay&amp;quot; &amp;gt; ... &amp;lt;com.google.android.material.tabs.TabLayout android:id=&amp;quot;@+id/tabs&amp;quot; android:layout_width=&amp;quot;match_parent&amp;quot; android:layout_height=&amp;quot;wrap_content&amp;quot; android:background=&amp;quot;?attr/colorPrimary&amp;quot; /&amp;gt; &amp;lt;androidx.viewpager.widget.ViewPager android:id=&amp;quot;@+id/view_pager&amp;quot; android:layout_width=&amp;quot;match_parent&amp;quot; android:layout_height=&amp;quot;match_parent&amp;quot; app:layout_behavior=&amp;quot;@string/appbar_scrolling_view_behavior&amp;quot; /&amp;gt; &amp;lt;/com.google.android.material.appbar.AppBarLayout&amp;gt; &amp;lt;/androidx.coordinatorlayout.widget.CoordinatorLayout&amp;gt;   在 PagerAdapter 中会指定我们使用的 Fragment:  class SectionsPagerAdapter(private val context: Context, fm: FragmentManager ) : FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) { override fun getItem(position: Int): Fragment { return SampleFragment.newInstance(position) } override fun getCount(): Int { return TAB_TITLES.</description>
+    </item>
+    
+  </channel>
+</rss>

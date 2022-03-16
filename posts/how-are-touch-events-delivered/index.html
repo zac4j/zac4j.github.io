@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  dir="ltr"
+  
+><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<title>How Are Touch Events Delivered | Zac&#39;s blog</title>
+
+<meta name="generator" content="Hugo Eureka 0.9.1" />
+<link rel="stylesheet" href="https://zacash.cn/css/eureka.min.6a378a23360d238dc3ef4df2f5cd718093f02c10c9c7eb2437c29701cd8d389ab6da5d9f21bdd3afa305fd56c1235017.css" integrity="sha384-ajeKIzYNI43D703y9c1xgJPwLBDJx&#43;skN8KXAc2NOJq22l2fIb3Tr6MF/VbBI1AX">
+<script defer src="https://zacash.cn/js/eureka.min.f1639ee98d6cbd85b2b5f034d27320da962002ff83159ed4e01dbc5948c42a1ab26c2d6e74c66e93f5cec4d24dbd166d.js" integrity="sha384-8WOe6Y1svYWytfA00nMg2pYgAv&#43;DFZ7U4B28WUjEKhqybC1udMZuk/XOxNJNvRZt"></script>
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload"
+  href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Noto+Serif+SC:wght@400;600;700&display=swap"
+  as="style" onload="this.onload=null;this.rel='stylesheet'">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/styles/solarized-light.min.css"
+   media="print"
+  onload="this.media='all';this.onload=null" crossorigin>
+<script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/highlight.min.js"
+   crossorigin></script>
+  <script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/languages/dart.min.js"
+     crossorigin></script>
+  <script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/languages/java.min.js"
+     crossorigin></script>
+  <script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/languages/kotlin.min.js"
+     crossorigin></script>
+
+
+<script defer type="text/javascript" src="https://zacash.cn/js/fontawesome.min.1c5a4674b042785ed214cf0818a81724c6b37442fd61b0ed039237b93de25ed5103fc8079a05770648ccc9c66c4f540a.js" integrity="sha384-HFpGdLBCeF7SFM8IGKgXJMazdEL9YbDtA5I3uT3iXtUQP8gHmgV3BkjMycZsT1QK"></script>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/katex.min.css"
+   integrity="sha384-MlJdn/WNKDGXveldHDdyRP1R4CTHr3FeuDNfhsLPYrq2t0UBkUdK2jyTnXPEK1NQ"  media="print"
+  onload="this.media='all';this.onload=null" crossorigin>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/katex.min.js" 
+  integrity="sha384-VQ8d8WVFw0yHhCk5E8I86oOhv48xLpnDZx5T9GogA/Y84DcCKWXDmSDfn13bzFZY"  crossorigin></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/contrib/auto-render.min.js"
+   integrity="sha384-&#43;XBljXPPiv&#43;OzfbB3cVmLHf4hdUFHlWNZN5spNQ7rmHTXpd7WvJum6fIACpNNfIR"  crossorigin></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    renderMathInElement(document.body, {
+      delimiters: [
+        { left: "$$", right: "$$", display: true },
+        { left: "$", right: "$", display: false },
+        { left: "\\(", right: "\\)", display: false },
+        { left: "\\[", right: "\\]", display: true }
+      ],
+    });
+  });
+</script>
+
+
+<script defer src="https://cdn.jsdelivr.net/npm/mermaid@8.14.0/dist/mermaid.min.js" 
+  integrity="sha384-atOyb0FxAgN9LyAc6PEf9BjgwLISyansgdH8/VXQH8p2o5vfrRgmGIJ2Sg22L0A0"  crossorigin></script>
+
+
+<link rel="icon" type="image/png" sizes="32x32" href="https://zacash.cn/images/icon_huef3b68b5a9c9f864bc324bf255658730_3276_32x32_fill_box_center_3.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://zacash.cn/images/icon_huef3b68b5a9c9f864bc324bf255658730_3276_180x180_fill_box_center_3.png">
+
+<meta name="description"
+  content="根据例子来理解 Android 的事件传递
+页面的布局结构
+&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt; &lt;layout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot; xmlns:app=&quot;http://schemas.android.com/apk/res-auto&quot;&gt; &lt;data&gt; &lt;variable name=&quot;viewModel&quot; type=&quot;com.zac4j.system.data.TouchViewModel&quot; /&gt; &lt;/data&gt; &lt;com.zac4j.system.ui.widget.CustomLayout android:id=&quot;@id/touch_sample_container&quot; android:layout_width=&quot;match_parent&quot; android:layout_height=&quot;match_parent&quot;&gt; &lt;Button android:id=&quot;@id/touch_sample_btn&quot; style=&quot;@style/Widget.AppCompat.Button.Colored&quot; android:layout_width=&quot;match_parent&quot; android:layout_height=&quot;wrap_content&quot; android:text=&quot;Touch Me&quot; app:layout_constraintEnd_toEndOf=&quot;parent&quot; app:layout_constraintStart_toStartOf=&quot;parent&quot; app:layout_constraintTop_toTopOf=&quot;parent&quot; /&gt; &lt;/com.zac4j.system.ui.widget.CustomLayout&gt; &lt;/layout&gt;  TouchEvent 的传递 我们通常对 Button 创建点击事件:
+touchSampleBtn.setOnClickListener { Logger.i(TAG, &quot;setOnClickListener&quot;, &quot;sampleBtn clicked&quot;) }  可以先看下 View.dispatchTouchEvent() 的实现:
+public boolean dispatchTouchEvent(MotionEvent event) { ... if (onFilterTouchEventForSecurity(event)) { if ((mViewFlags &amp; ENABLED_MASK) == ENABLED &amp;&amp; handleScrollBarDragging(event)) { result = true; } //noinspection SimplifiableIfStatement ListenerInfo li = mListenerInfo; if (li !">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+      "@type": "ListItem",
+      "position": 1 ,
+      "name":"Posts",
+      "item":"https://zacash.cn/posts/"},{
+      "@type": "ListItem",
+      "position": 2 ,
+      "name":"How Are Touch Events Delivered",
+      "item":"https://zacash.cn/posts/how-are-touch-events-delivered/"}]
+}
+</script>
+
+
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://zacash.cn/posts/how-are-touch-events-delivered/"
+    },
+    "headline": "How Are Touch Events Delivered | Zac\u0027s blog","datePublished": "2020-07-11T08:37:45+08:00",
+    "dateModified": "2020-07-11T08:37:45+08:00",
+    "wordCount":  1230 ,
+    "publisher": {
+        "@type": "Person",
+        "name": "Zac Zhu",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://zacash.cn/images/icon.png"
+        }
+        },
+    "description": "根据例子来理解 Android 的事件传递\n页面的布局结构\n\u0026lt;?xml version=\u0026quot;1.0\u0026quot; encoding=\u0026quot;utf-8\u0026quot;?\u0026gt; \u0026lt;layout xmlns:android=\u0026quot;http:\/\/schemas.android.com\/apk\/res\/android\u0026quot; xmlns:app=\u0026quot;http:\/\/schemas.android.com\/apk\/res-auto\u0026quot;\u0026gt; \u0026lt;data\u0026gt; \u0026lt;variable name=\u0026quot;viewModel\u0026quot; type=\u0026quot;com.zac4j.system.data.TouchViewModel\u0026quot; \/\u0026gt; \u0026lt;\/data\u0026gt; \u0026lt;com.zac4j.system.ui.widget.CustomLayout android:id=\u0026quot;@id\/touch_sample_container\u0026quot; android:layout_width=\u0026quot;match_parent\u0026quot; android:layout_height=\u0026quot;match_parent\u0026quot;\u0026gt; \u0026lt;Button android:id=\u0026quot;@id\/touch_sample_btn\u0026quot; style=\u0026quot;@style\/Widget.AppCompat.Button.Colored\u0026quot; android:layout_width=\u0026quot;match_parent\u0026quot; android:layout_height=\u0026quot;wrap_content\u0026quot; android:text=\u0026quot;Touch Me\u0026quot; app:layout_constraintEnd_toEndOf=\u0026quot;parent\u0026quot; app:layout_constraintStart_toStartOf=\u0026quot;parent\u0026quot; app:layout_constraintTop_toTopOf=\u0026quot;parent\u0026quot; \/\u0026gt; \u0026lt;\/com.zac4j.system.ui.widget.CustomLayout\u0026gt; \u0026lt;\/layout\u0026gt;  TouchEvent 的传递 我们通常对 Button 创建点击事件:\ntouchSampleBtn.setOnClickListener { Logger.i(TAG, \u0026quot;setOnClickListener\u0026quot;, \u0026quot;sampleBtn clicked\u0026quot;) }  可以先看下 View.dispatchTouchEvent() 的实现:\npublic boolean dispatchTouchEvent(MotionEvent event) { ... if (onFilterTouchEventForSecurity(event)) { if ((mViewFlags \u0026amp; ENABLED_MASK) == ENABLED \u0026amp;\u0026amp; handleScrollBarDragging(event)) { result = true; } \/\/noinspection SimplifiableIfStatement ListenerInfo li = mListenerInfo; if (li !"
+}
+</script><meta property="og:title" content="How Are Touch Events Delivered | Zac&#39;s blog" />
+<meta property="og:type" content="article" />
+
+
+<meta property="og:image" content="https://zacash.cn/images/icon.png">
+
+
+<meta property="og:url" content="https://zacash.cn/posts/how-are-touch-events-delivered/" />
+
+
+
+
+<meta property="og:description" content="根据例子来理解 Android 的事件传递
+页面的布局结构
+&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt; &lt;layout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot; xmlns:app=&quot;http://schemas.android.com/apk/res-auto&quot;&gt; &lt;data&gt; &lt;variable name=&quot;viewModel&quot; type=&quot;com.zac4j.system.data.TouchViewModel&quot; /&gt; &lt;/data&gt; &lt;com.zac4j.system.ui.widget.CustomLayout android:id=&quot;@id/touch_sample_container&quot; android:layout_width=&quot;match_parent&quot; android:layout_height=&quot;match_parent&quot;&gt; &lt;Button android:id=&quot;@id/touch_sample_btn&quot; style=&quot;@style/Widget.AppCompat.Button.Colored&quot; android:layout_width=&quot;match_parent&quot; android:layout_height=&quot;wrap_content&quot; android:text=&quot;Touch Me&quot; app:layout_constraintEnd_toEndOf=&quot;parent&quot; app:layout_constraintStart_toStartOf=&quot;parent&quot; app:layout_constraintTop_toTopOf=&quot;parent&quot; /&gt; &lt;/com.zac4j.system.ui.widget.CustomLayout&gt; &lt;/layout&gt;  TouchEvent 的传递 我们通常对 Button 创建点击事件:
+touchSampleBtn.setOnClickListener { Logger.i(TAG, &quot;setOnClickListener&quot;, &quot;sampleBtn clicked&quot;) }  可以先看下 View.dispatchTouchEvent() 的实现:
+public boolean dispatchTouchEvent(MotionEvent event) { ... if (onFilterTouchEventForSecurity(event)) { if ((mViewFlags &amp; ENABLED_MASK) == ENABLED &amp;&amp; handleScrollBarDragging(event)) { result = true; } //noinspection SimplifiableIfStatement ListenerInfo li = mListenerInfo; if (li !" />
+
+
+
+
+<meta property="og:locale" content="en" />
+
+
+
+
+<meta property="og:site_name" content="Zac&#39;s blog" />
+
+
+
+
+
+
+<meta property="article:published_time" content="2020-07-11T08:37:45&#43;08:00" />
+
+
+<meta property="article:modified_time" content="2020-07-11T08:37:45&#43;08:00" />
+
+
+
+<meta property="article:section" content="posts" />
+
+
+
+
+
+  <body class="flex min-h-screen flex-col">
+    <header
+      class="min-h-16 pl-scrollbar bg-secondary-bg fixed z-50 flex w-full items-center shadow-sm"
+    >
+      <div class="mx-auto w-full max-w-screen-xl"><script>
+    let storageColorScheme = localStorage.getItem("lightDarkMode")
+    if (((storageColorScheme == 'Auto' || storageColorScheme == null) && window.matchMedia("(prefers-color-scheme: dark)").matches) || storageColorScheme == "Dark") {
+        document.getElementsByTagName('html')[0].classList.add('dark')
+    }
+</script>
+<nav class="flex items-center justify-between flex-wrap px-4 py-4 md:py-0">
+    <a href="/" class="me-6 text-primary-text text-xl font-bold">Zac&#39;s blog</a>
+    <button id="navbar-btn" class="md:hidden flex items-center px-3 py-2" aria-label="Open Navbar">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <div id="target"
+        class="hidden block md:flex md:grow md:justify-between md:items-center w-full md:w-auto text-primary-text z-20">
+        <div class="md:flex md:h-16 text-sm md:grow pb-4 md:pb-0 border-b md:border-b-0">
+            <a href="/posts/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  selected-menu-item  me-4">Posts</a>
+            <a href="/tags/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  me-4">Tags</a>
+            <a href="/#about" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  me-4">About</a>
+        </div>
+
+        <div class="flex">
+            <div class="relative pt-4 md:pt-0">
+                <div class="cursor-pointer hover:text-eureka" id="lightDarkMode">
+                    <i class="fas fa-adjust"></i>
+                </div>
+                <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-30" id="is-open">
+                </div>
+                <div class="absolute flex flex-col start-0 md:start-auto end-auto md:end-0 hidden bg-secondary-bg w-48 rounded py-2 border border-tertiary-bg cursor-pointer z-40"
+                    id='lightDarkOptions'>
+                    <span class="px-4 py-1 hover:text-eureka" name="Light">Light</span>
+                    <span class="px-4 py-1 hover:text-eureka" name="Dark">Dark</span>
+                    <span class="px-4 py-1 hover:text-eureka" name="Auto">Auto</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-0" id="is-open-mobile">
+    </div>
+
+</nav>
+<script>
+    
+    let element = document.getElementById('lightDarkMode')
+    if (storageColorScheme == null || storageColorScheme == 'Auto') {
+        document.addEventListener('DOMContentLoaded', () => {
+            window.matchMedia("(prefers-color-scheme: dark)").addEventListener('change', switchDarkMode)
+        })
+    } else if (storageColorScheme == "Light") {
+        element.firstElementChild.classList.remove('fa-adjust')
+        element.firstElementChild.setAttribute("data-icon", 'sun')
+        element.firstElementChild.classList.add('fa-sun')
+    } else if (storageColorScheme == "Dark") {
+        element.firstElementChild.classList.remove('fa-adjust')
+        element.firstElementChild.setAttribute("data-icon", 'moon')
+        element.firstElementChild.classList.add('fa-moon')
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        getcolorscheme();
+        switchBurger();
+    });
+</script>
+</div>
+    </header>
+    <main class="grow pt-16">
+        <div class="pl-scrollbar">
+          <div class="mx-auto w-full max-w-screen-xl lg:px-4 xl:px-8">
+  
+  
+  <div class="grid grid-cols-2 gap-4 lg:grid-cols-8 lg:pt-12">
+    <div
+      class="lg:col-start-2 bg-secondary-bg col-span-2 rounded px-6 py-8 lg:col-span-6"
+    >
+      <article class="prose">
+  <h1 class="mb-4">How Are Touch Events Delivered</h1>
+
+  <div
+  class="text-tertiary-text not-prose mt-2 flex flex-row flex-wrap items-center"
+>
+  <div class="me-6 my-2">
+    <i class="fas fa-calendar me-1"></i>
+    <span
+      >2020-07-11</span
+    >
+  </div>
+  <div class="me-6 my-2">
+    <i class="fas fa-clock me-1"></i>
+    <span>6 min read</span>
+  </div>
+
+  
+
+  
+</div>
+
+
+  
+  
+
+  <p>根据例子来理解 Android 的事件传递</p>
+<p>页面的布局结构</p>
+<pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;layout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
+  xmlns:app=&quot;http://schemas.android.com/apk/res-auto&quot;&gt;
+
+  &lt;data&gt;
+    &lt;variable
+      name=&quot;viewModel&quot;
+      type=&quot;com.zac4j.system.data.TouchViewModel&quot; /&gt;
+  &lt;/data&gt;
+
+  &lt;com.zac4j.system.ui.widget.CustomLayout
+    android:id=&quot;@id/touch_sample_container&quot;
+    android:layout_width=&quot;match_parent&quot;
+    android:layout_height=&quot;match_parent&quot;&gt;
+
+    &lt;Button
+      android:id=&quot;@id/touch_sample_btn&quot;
+      style=&quot;@style/Widget.AppCompat.Button.Colored&quot;
+      android:layout_width=&quot;match_parent&quot;
+      android:layout_height=&quot;wrap_content&quot;
+      android:text=&quot;Touch Me&quot;
+      app:layout_constraintEnd_toEndOf=&quot;parent&quot;
+      app:layout_constraintStart_toStartOf=&quot;parent&quot;
+      app:layout_constraintTop_toTopOf=&quot;parent&quot; /&gt;
+
+  &lt;/com.zac4j.system.ui.widget.CustomLayout&gt;
+&lt;/layout&gt;
+</code></pre>
+<h2 id="touchevent-的传递">TouchEvent 的传递</h2>
+<p>我们通常对 Button 创建点击事件:</p>
+<pre><code class="language-kotlin">touchSampleBtn.setOnClickListener {
+    Logger.i(TAG, &quot;setOnClickListener&quot;, &quot;sampleBtn clicked&quot;)
+}
+</code></pre>
+<p>可以先看下 View.dispatchTouchEvent() 的实现:</p>
+<pre><code class="language-kotlin">public boolean dispatchTouchEvent(MotionEvent event) {
+    ...
+    if (onFilterTouchEventForSecurity(event)) {
+        if ((mViewFlags &amp; ENABLED_MASK) == ENABLED &amp;&amp; handleScrollBarDragging(event)) {
+            result = true;
+        }
+        //noinspection SimplifiableIfStatement
+        ListenerInfo li = mListenerInfo;
+        if (li != null &amp;&amp; li.mOnTouchListener != null
+                &amp;&amp; (mViewFlags &amp; ENABLED_MASK) == ENABLED
+                &amp;&amp; li.mOnTouchListener.onTouch(this, event)) {
+            result = true;
+        }
+
+        if (!result &amp;&amp; onTouchEvent(event)) {
+            result = true;
+        }
+    }
+    ...
+}
+</code></pre>
+<p>可以看到 <code>View.mOnTouchListener.onTouch()</code> 会在 <code>View.onTouchEvent()</code> 前判断是否执行，假如 <code>View.mOnTouchListener.onTouch()</code> 返回 true(消费该事件) 的话，<code>View.onTouchEvent()</code> 将不会执行。</p>
+<p><code>View.mTouchListener.onTouch()</code> 的执行条件是:</p>
+<ul>
+<li>mTouchListener 不为空(即设置 <code>View.setOnTouchListener()</code> 方法)</li>
+<li>View 是 enable 状态(未设置 <code>View.setEnable(false)</code> 方法)</li>
+</ul>
+<h2 id="viewgrouponintercepttouchevent">ViewGroup.onInterceptTouchEvent</h2>
+<p>设置 <code>CustomLayout.onInterceptTouchEvent()</code> 返回 false，点击 touchSamleBtn 按钮.</p>
+<pre><code class="language-log"># MotionEvent.ACTION_DOWN 事件
+I/ZacLog: Page -&gt; TouchFragment, View -&gt; CustomLayout, Method -&gt; dispatchTouchEvent, Msg -&gt; MotionEvent::ACTION_DOWN
+I/ZacLog: Page -&gt; TouchFragment, View -&gt; CustomLayout, Method -&gt; onInterceptTouchEvent, Msg -&gt; MotionEvent::ACTION_DOWN
+I/ZacLog: Page -&gt; TouchFragment, View -&gt; touchSampleBtn::AppCompatButton, Method -&gt; setOnTouchListener, Msg -&gt; MotionEvent::ACTION_DOWN
+# MotionEvent.ACTION_UP 事件
+I/ZacLog: Page -&gt; TouchFragment, View -&gt; CustomLayout, Method -&gt; dispatchTouchEvent, Msg -&gt; MotionEvent::ACTION_UP
+I/ZacLog: Page -&gt; TouchFragment, View -&gt; CustomLayout, Method -&gt; onInterceptTouchEvent, Msg -&gt; MotionEvent::ACTION_UP
+I/ZacLog: Page -&gt; TouchFragment, View -&gt; touchSampleBtn::AppCompatButton, Method -&gt; setOnTouchListener, Msg -&gt; MotionEvent::ACTION_UP
+# View.onClick 事件
+I/ZacLog: Page -&gt; TouchFragment, View -&gt; touchSampleBtn::AppCompatButton, Method -&gt; setOnClickListener, Msg -&gt; clicked
+</code></pre>
+<p>事件的传递: CustomLayout.dispatchTouchEvent() -&gt; CustomLayout.onInterceptTouchEvent() -&gt; View.mOnTouchListener.onTouch()</p>
+<p>同时 MotionEvent.ACTION_DOWN + MotionEvent.ACTION_DOWN -&gt; View.mOnClickListener.onClick()</p>
+<p>设置 <code>CustomLayout.onInterceptTouchEvent()</code> 返回 true，点击 touchSampleBtn.</p>
+<pre><code class="language-log">I/ZacLog: Page -&gt; TouchFragment, View -&gt; CustomLayout, Method -&gt; onInterceptTouchEvent, Msg -&gt; MotionEvent::ACTION_DOWN
+I/ZacLog: Page -&gt; TouchFragment, View -&gt; touchSampleContainer::CustomLayout, Method -&gt; setOnTouchListener, Msg -&gt; MotionEvent::ACTION_DOWN
+</code></pre>
+<p>我们看下 ViewGroup.dispatchTouchEvent() 的实现：</p>
+<pre><code class="language-java">@Override
+public boolean dispatchTouchEvent(MotionEvent ev) {
+    if (mInputEventConsistencyVerifier != null) {
+        mInputEventConsistencyVerifier.onTouchEvent(ev, 1);
+    }
+
+    // If the event targets the accessibility focused view and this is it, start
+    // normal event dispatch. Maybe a descendant is what will handle the click.
+    if (ev.isTargetAccessibilityFocus() &amp;&amp; isAccessibilityFocusedViewOrHost()) {
+        ev.setTargetAccessibilityFocus(false);
+    }
+
+    boolean handled = false;
+    if (onFilterTouchEventForSecurity(ev)) {
+        final int action = ev.getAction();
+        final int actionMasked = action &amp; MotionEvent.ACTION_MASK;
+
+        // Handle an initial down.
+        if (actionMasked == MotionEvent.ACTION_DOWN) {
+            // Throw away all previous state when starting a new touch gesture.
+            // The framework may have dropped the up or cancel event for the previous gesture
+            // due to an app switch, ANR, or some other state change.
+            cancelAndClearTouchTargets(ev);
+            resetTouchState();
+        }
+
+        // Check for interception.
+        final boolean intercepted;
+        if (actionMasked == MotionEvent.ACTION_DOWN
+                || mFirstTouchTarget != null) {
+            final boolean disallowIntercept = (mGroupFlags &amp; FLAG_DISALLOW_INTERCEPT) != 0;
+            if (!disallowIntercept) {
+                intercepted = onInterceptTouchEvent(ev);
+                ev.setAction(action); // restore action in case it was changed
+            } else {
+                intercepted = false;
+            }
+        } else {
+            // There are no touch targets and this action is not an initial down
+            // so this view group continues to intercept touches.
+            intercepted = true;
+        }
+
+        // If intercepted, start normal event dispatch. Also if there is already
+        // a view that is handling the gesture, do normal event dispatch.
+        if (intercepted || mFirstTouchTarget != null) {
+            ev.setTargetAccessibilityFocus(false);
+        }
+
+        // Check for cancelation.
+        final boolean canceled = resetCancelNextUpFlag(this)
+                || actionMasked == MotionEvent.ACTION_CANCEL;
+
+        // Update list of touch targets for pointer down, if needed.
+        final boolean split = (mGroupFlags &amp; FLAG_SPLIT_MOTION_EVENTS) != 0;
+        TouchTarget newTouchTarget = null;
+        boolean alreadyDispatchedToNewTouchTarget = false;
+        if (!canceled &amp;&amp; !intercepted) {
+
+            // If the event is targeting accessibility focus we give it to the
+            // view that has accessibility focus and if it does not handle it
+            // we clear the flag and dispatch the event to all children as usual.
+            // We are looking up the accessibility focused host to avoid keeping
+            // state since these events are very rare.
+            View childWithAccessibilityFocus = ev.isTargetAccessibilityFocus()
+                    ? findChildWithAccessibilityFocus() : null;
+
+            if (actionMasked == MotionEvent.ACTION_DOWN
+                    || (split &amp;&amp; actionMasked == MotionEvent.ACTION_POINTER_DOWN)
+                    || actionMasked == MotionEvent.ACTION_HOVER_MOVE) {
+                final int actionIndex = ev.getActionIndex(); // always 0 for down
+                final int idBitsToAssign = split ? 1 &lt;&lt; ev.getPointerId(actionIndex)
+                        : TouchTarget.ALL_POINTER_IDS;
+
+                // Clean up earlier touch targets for this pointer id in case they
+                // have become out of sync.
+                removePointersFromTouchTargets(idBitsToAssign);
+
+                final int childrenCount = mChildrenCount;
+                if (newTouchTarget == null &amp;&amp; childrenCount != 0) {
+                    final float x = ev.getX(actionIndex);
+                    final float y = ev.getY(actionIndex);
+                    // Find a child that can receive the event.
+                    // Scan children from front to back.
+                    final ArrayList&lt;View&gt; preorderedList = buildTouchDispatchChildList();
+                    final boolean customOrder = preorderedList == null
+                            &amp;&amp; isChildrenDrawingOrderEnabled();
+                    final View[] children = mChildren;
+                    for (int i = childrenCount - 1; i &gt;= 0; i--) {
+                        final int childIndex = getAndVerifyPreorderedIndex(
+                                childrenCount, i, customOrder);
+                        final View child = getAndVerifyPreorderedView(
+                                preorderedList, children, childIndex);
+
+                        // If there is a view that has accessibility focus we want it
+                        // to get the event first and if not handled we will perform a
+                        // normal dispatch. We may do a double iteration but this is
+                        // safer given the timeframe.
+                        if (childWithAccessibilityFocus != null) {
+                            if (childWithAccessibilityFocus != child) {
+                                continue;
+                            }
+                            childWithAccessibilityFocus = null;
+                            i = childrenCount - 1;
+                        }
+
+                        if (!child.canReceivePointerEvents()
+                                || !isTransformedTouchPointInView(x, y, child, null)) {
+                            ev.setTargetAccessibilityFocus(false);
+                            continue;
+                        }
+
+                        newTouchTarget = getTouchTarget(child);
+                        if (newTouchTarget != null) {
+                            // Child is already receiving touch within its bounds.
+                            // Give it the new pointer in addition to the ones it is handling.
+                            newTouchTarget.pointerIdBits |= idBitsToAssign;
+                            break;
+                        }
+
+                        resetCancelNextUpFlag(child);
+                        if (dispatchTransformedTouchEvent(ev, false, child, idBitsToAssign)) {
+                            // Child wants to receive touch within its bounds.
+                            mLastTouchDownTime = ev.getDownTime();
+                            if (preorderedList != null) {
+                                // childIndex points into presorted list, find original index
+                                for (int j = 0; j &lt; childrenCount; j++) {
+                                    if (children[childIndex] == mChildren[j]) {
+                                        mLastTouchDownIndex = j;
+                                        break;
+                                    }
+                                }
+                            } else {
+                                mLastTouchDownIndex = childIndex;
+                            }
+                            mLastTouchDownX = ev.getX();
+                            mLastTouchDownY = ev.getY();
+                            newTouchTarget = addTouchTarget(child, idBitsToAssign);
+                            alreadyDispatchedToNewTouchTarget = true;
+                            break;
+                        }
+
+                        // The accessibility focus didn't handle the event, so clear
+                        // the flag and do a normal dispatch to all children.
+                        ev.setTargetAccessibilityFocus(false);
+                    }
+                    if (preorderedList != null) preorderedList.clear();
+                }
+
+                if (newTouchTarget == null &amp;&amp; mFirstTouchTarget != null) {
+                    // Did not find a child to receive the event.
+                    // Assign the pointer to the least recently added target.
+                    newTouchTarget = mFirstTouchTarget;
+                    while (newTouchTarget.next != null) {
+                        newTouchTarget = newTouchTarget.next;
+                    }
+                    newTouchTarget.pointerIdBits |= idBitsToAssign;
+                }
+            }
+        }
+
+        // Dispatch to touch targets.
+        if (mFirstTouchTarget == null) {
+            // No touch targets so treat this as an ordinary view.
+            handled = dispatchTransformedTouchEvent(ev, canceled, null,
+                    TouchTarget.ALL_POINTER_IDS);
+        } else {
+            // Dispatch to touch targets, excluding the new touch target if we already
+            // dispatched to it.  Cancel touch targets if necessary.
+            TouchTarget predecessor = null;
+            TouchTarget target = mFirstTouchTarget;
+            while (target != null) {
+                final TouchTarget next = target.next;
+                if (alreadyDispatchedToNewTouchTarget &amp;&amp; target == newTouchTarget) {
+                    handled = true;
+                } else {
+                    final boolean cancelChild = resetCancelNextUpFlag(target.child)
+                            || intercepted;
+                    if (dispatchTransformedTouchEvent(ev, cancelChild,
+                            target.child, target.pointerIdBits)) {
+                        handled = true;
+                    }
+                    if (cancelChild) {
+                        if (predecessor == null) {
+                            mFirstTouchTarget = next;
+                        } else {
+                            predecessor.next = next;
+                        }
+                        target.recycle();
+                        target = next;
+                        continue;
+                    }
+                }
+                predecessor = target;
+                target = next;
+            }
+        }
+
+        // Update list of touch targets for pointer up or cancel, if needed.
+        if (canceled
+                || actionMasked == MotionEvent.ACTION_UP
+                || actionMasked == MotionEvent.ACTION_HOVER_MOVE) {
+            resetTouchState();
+        } else if (split &amp;&amp; actionMasked == MotionEvent.ACTION_POINTER_UP) {
+            final int actionIndex = ev.getActionIndex();
+            final int idBitsToRemove = 1 &lt;&lt; ev.getPointerId(actionIndex);
+            removePointersFromTouchTargets(idBitsToRemove);
+        }
+    }
+
+    if (!handled &amp;&amp; mInputEventConsistencyVerifier != null) {
+        mInputEventConsistencyVerifier.onUnhandledEvent(ev, 1);
+    }
+    return handled;
+}
+</code></pre>
+
+</article>
+
+
+      
+
+      
+
+
+
+      
+
+      
+  <div
+    class="-mx-2 mt-4 flex flex-col border-t px-2 pt-4 md:flex-row md:justify-between"
+  >
+    <div>
+      
+        <span class="text-primary-text block font-bold"
+          >Previous</span
+        >
+        <a href="https://zacash.cn/posts/intro-to-hashmap/" class="block">Intro to HashMap</a>
+      
+    </div>
+    <div class="mt-4 md:mt-0 md:text-right">
+      
+        <span class="text-primary-text block font-bold">Next</span>
+        <a href="https://zacash.cn/posts/intro-to-hybrid-app/" class="block">Intro to Hybrid App</a>
+      
+    </div>
+  </div>
+
+
+      
+
+
+
+    </div>
+    
+
+    
+    
+  </div>
+
+  
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        hljs.initHighlightingOnLoad();
+      });
+    </script>
+
+          </div>
+        </div>
+      
+    </main>
+    <footer class="pl-scrollbar">
+      <div class="mx-auto w-full max-w-screen-xl"><div class="text-center p-6 pin-b">
+    <p class="text-sm text-tertiary-text">&copy; Copyright © 2022, Copyright Zac
+ &middot;  Powered by the <a href="https://github.com/wangchucheng/hugo-eureka" class="hover:text-eureka">Eureka</a> theme for <a href="https://gohugo.io" class="hover:text-eureka">Hugo</a></p>
+</div></div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  dir="ltr"
+  
+><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<title>Generics in Kotlin | Zac&#39;s blog</title>
+
+<meta name="generator" content="Hugo Eureka 0.9.1" />
+<link rel="stylesheet" href="https://zacash.cn/css/eureka.min.6a378a23360d238dc3ef4df2f5cd718093f02c10c9c7eb2437c29701cd8d389ab6da5d9f21bdd3afa305fd56c1235017.css" integrity="sha384-ajeKIzYNI43D703y9c1xgJPwLBDJx&#43;skN8KXAc2NOJq22l2fIb3Tr6MF/VbBI1AX">
+<script defer src="https://zacash.cn/js/eureka.min.f1639ee98d6cbd85b2b5f034d27320da962002ff83159ed4e01dbc5948c42a1ab26c2d6e74c66e93f5cec4d24dbd166d.js" integrity="sha384-8WOe6Y1svYWytfA00nMg2pYgAv&#43;DFZ7U4B28WUjEKhqybC1udMZuk/XOxNJNvRZt"></script>
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload"
+  href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Noto+Serif+SC:wght@400;600;700&display=swap"
+  as="style" onload="this.onload=null;this.rel='stylesheet'">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/styles/solarized-light.min.css"
+   media="print"
+  onload="this.media='all';this.onload=null" crossorigin>
+<script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/highlight.min.js"
+   crossorigin></script>
+  <script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/languages/dart.min.js"
+     crossorigin></script>
+  <script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/languages/java.min.js"
+     crossorigin></script>
+  <script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/languages/kotlin.min.js"
+     crossorigin></script>
+
+
+<script defer type="text/javascript" src="https://zacash.cn/js/fontawesome.min.1c5a4674b042785ed214cf0818a81724c6b37442fd61b0ed039237b93de25ed5103fc8079a05770648ccc9c66c4f540a.js" integrity="sha384-HFpGdLBCeF7SFM8IGKgXJMazdEL9YbDtA5I3uT3iXtUQP8gHmgV3BkjMycZsT1QK"></script>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/katex.min.css"
+   integrity="sha384-MlJdn/WNKDGXveldHDdyRP1R4CTHr3FeuDNfhsLPYrq2t0UBkUdK2jyTnXPEK1NQ"  media="print"
+  onload="this.media='all';this.onload=null" crossorigin>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/katex.min.js" 
+  integrity="sha384-VQ8d8WVFw0yHhCk5E8I86oOhv48xLpnDZx5T9GogA/Y84DcCKWXDmSDfn13bzFZY"  crossorigin></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/contrib/auto-render.min.js"
+   integrity="sha384-&#43;XBljXPPiv&#43;OzfbB3cVmLHf4hdUFHlWNZN5spNQ7rmHTXpd7WvJum6fIACpNNfIR"  crossorigin></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    renderMathInElement(document.body, {
+      delimiters: [
+        { left: "$$", right: "$$", display: true },
+        { left: "$", right: "$", display: false },
+        { left: "\\(", right: "\\)", display: false },
+        { left: "\\[", right: "\\]", display: true }
+      ],
+    });
+  });
+</script>
+
+
+<script defer src="https://cdn.jsdelivr.net/npm/mermaid@8.14.0/dist/mermaid.min.js" 
+  integrity="sha384-atOyb0FxAgN9LyAc6PEf9BjgwLISyansgdH8/VXQH8p2o5vfrRgmGIJ2Sg22L0A0"  crossorigin></script>
+
+
+<link rel="icon" type="image/png" sizes="32x32" href="https://zacash.cn/images/icon_huef3b68b5a9c9f864bc324bf255658730_3276_32x32_fill_box_center_3.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://zacash.cn/images/icon_huef3b68b5a9c9f864bc324bf255658730_3276_180x180_fill_box_center_3.png">
+
+<meta name="description"
+  content="Generics in Kotlin world">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+      "@type": "ListItem",
+      "position": 1 ,
+      "name":"Posts",
+      "item":"https://zacash.cn/posts/"},{
+      "@type": "ListItem",
+      "position": 2 ,
+      "name":"Generics in Kotlin",
+      "item":"https://zacash.cn/posts/generics-in-kotlin/"}]
+}
+</script>
+
+
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://zacash.cn/posts/generics-in-kotlin/"
+    },
+    "headline": "Generics in Kotlin | Zac\u0027s blog","datePublished": "2020-08-14T07:27:09+08:00",
+    "dateModified": "2020-08-14T07:27:09+08:00",
+    "wordCount":  524 ,
+    "publisher": {
+        "@type": "Person",
+        "name": "Zac Zhu",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://zacash.cn/images/icon.png"
+        }
+        },
+    "description": "Generics in Kotlin world"
+}
+</script><meta property="og:title" content="Generics in Kotlin | Zac&#39;s blog" />
+<meta property="og:type" content="article" />
+
+
+<meta property="og:image" content="https://zacash.cn/images/icon.png">
+
+
+<meta property="og:url" content="https://zacash.cn/posts/generics-in-kotlin/" />
+
+
+
+<meta property="og:description" content="Generics in Kotlin world" />
+
+
+
+<meta property="og:locale" content="en" />
+
+
+
+
+<meta property="og:site_name" content="Zac&#39;s blog" />
+
+
+
+
+
+
+<meta property="article:published_time" content="2020-08-14T07:27:09&#43;08:00" />
+
+
+<meta property="article:modified_time" content="2020-08-14T07:27:09&#43;08:00" />
+
+
+
+<meta property="article:section" content="posts" />
+
+
+<meta property="article:tag" content="generic" />
+
+
+
+
+
+
+  <body class="flex min-h-screen flex-col">
+    <header
+      class="min-h-16 pl-scrollbar bg-secondary-bg fixed z-50 flex w-full items-center shadow-sm"
+    >
+      <div class="mx-auto w-full max-w-screen-xl"><script>
+    let storageColorScheme = localStorage.getItem("lightDarkMode")
+    if (((storageColorScheme == 'Auto' || storageColorScheme == null) && window.matchMedia("(prefers-color-scheme: dark)").matches) || storageColorScheme == "Dark") {
+        document.getElementsByTagName('html')[0].classList.add('dark')
+    }
+</script>
+<nav class="flex items-center justify-between flex-wrap px-4 py-4 md:py-0">
+    <a href="/" class="me-6 text-primary-text text-xl font-bold">Zac&#39;s blog</a>
+    <button id="navbar-btn" class="md:hidden flex items-center px-3 py-2" aria-label="Open Navbar">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <div id="target"
+        class="hidden block md:flex md:grow md:justify-between md:items-center w-full md:w-auto text-primary-text z-20">
+        <div class="md:flex md:h-16 text-sm md:grow pb-4 md:pb-0 border-b md:border-b-0">
+            <a href="/posts/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  selected-menu-item  me-4">Posts</a>
+            <a href="/tags/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  me-4">Tags</a>
+            <a href="/#about" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  me-4">About</a>
+        </div>
+
+        <div class="flex">
+            <div class="relative pt-4 md:pt-0">
+                <div class="cursor-pointer hover:text-eureka" id="lightDarkMode">
+                    <i class="fas fa-adjust"></i>
+                </div>
+                <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-30" id="is-open">
+                </div>
+                <div class="absolute flex flex-col start-0 md:start-auto end-auto md:end-0 hidden bg-secondary-bg w-48 rounded py-2 border border-tertiary-bg cursor-pointer z-40"
+                    id='lightDarkOptions'>
+                    <span class="px-4 py-1 hover:text-eureka" name="Light">Light</span>
+                    <span class="px-4 py-1 hover:text-eureka" name="Dark">Dark</span>
+                    <span class="px-4 py-1 hover:text-eureka" name="Auto">Auto</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-0" id="is-open-mobile">
+    </div>
+
+</nav>
+<script>
+    
+    let element = document.getElementById('lightDarkMode')
+    if (storageColorScheme == null || storageColorScheme == 'Auto') {
+        document.addEventListener('DOMContentLoaded', () => {
+            window.matchMedia("(prefers-color-scheme: dark)").addEventListener('change', switchDarkMode)
+        })
+    } else if (storageColorScheme == "Light") {
+        element.firstElementChild.classList.remove('fa-adjust')
+        element.firstElementChild.setAttribute("data-icon", 'sun')
+        element.firstElementChild.classList.add('fa-sun')
+    } else if (storageColorScheme == "Dark") {
+        element.firstElementChild.classList.remove('fa-adjust')
+        element.firstElementChild.setAttribute("data-icon", 'moon')
+        element.firstElementChild.classList.add('fa-moon')
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        getcolorscheme();
+        switchBurger();
+    });
+</script>
+</div>
+    </header>
+    <main class="grow pt-16">
+        <div class="pl-scrollbar">
+          <div class="mx-auto w-full max-w-screen-xl lg:px-4 xl:px-8">
+  
+  
+  <div class="grid grid-cols-2 gap-4 lg:grid-cols-8 lg:pt-12">
+    <div
+      class="lg:col-start-2 bg-secondary-bg col-span-2 rounded px-6 py-8 lg:col-span-6"
+    >
+      <article class="prose">
+  <h1 class="mb-4">Generics in Kotlin</h1>
+
+  <div
+  class="text-tertiary-text not-prose mt-2 flex flex-row flex-wrap items-center"
+>
+  <div class="me-6 my-2">
+    <i class="fas fa-calendar me-1"></i>
+    <span
+      >2020-08-14</span
+    >
+  </div>
+  <div class="me-6 my-2">
+    <i class="fas fa-clock me-1"></i>
+    <span>3 min read</span>
+  </div>
+
+  
+
+  
+</div>
+
+
+  
+  
+
+  <p>val 和 var 与 variables 的 VALUES 相关，val 保护变量的值不变。in 和 out 与 variables 的 TYPES 相关，in 和 out 保证在范型的使用中，只有安全的类型才能传入或传出函数。</p>
+<h2 id="define-an-out-type">Define an out type</h2>
+<pre><code class="language-kotlin">/**
+ * Define a WaterSupply class and verify if water needs processing.
+ */
+open class WaterSupply(var needsProcessing: Boolean)
+
+/**
+ * Define a TapWater class extends [WaterSupply] class.
+ */
+class TapWater: WaterSupply(true) {
+    // We do water processing by add chemical cleaners.
+    fun addChemicalCleaners() {
+        needsProcessing = false
+  }
+}
+
+/**
+ * Define a Aquarium class, it accept water supply.
+ */
+class Aquarium&lt;out T: WaterSupply&gt;(val waterSupply: T) {
+    ...
+}
+
+/**
+ * Define a funtion that could add Aquarium item.
+ */
+fun addItem(aquarium: Aquarium&lt;WaterSupply&gt;) = println(&quot;item added&quot;)
+
+/**
+ * Test function
+ */
+fun g1() {
+    val aquarium = Aquarium(TapWater())
+    addItem(aquarium)
+}
+</code></pre>
+<p>如果我们移除了 <code>class Aquarium&lt;out T: WaterSupply&gt;</code> 定义中的 <code>out</code> 关键字，<code>addItem</code> 函数就会报 Type mismatch error:</p>
+<pre><code class="language-error">Type mismatch
+Required: Aquarium&lt;WaterSupply&gt;
+Found: Aquarium&lt;TapWater&gt;
+</code></pre>
+<h2 id="define-an-in-type">Define an in type</h2>
+<pre><code class="language-kotlin">/**
+ * Define a Cleaner interface that takes a generic T that's constrained to WaterSupply.Since it is only used as an argument to clean(), we can make it an in paramter.
+ */
+interface Cleaner&lt;in T : WaterSupply&gt; {
+  fun clean(waterSupply: T)
+}
+
+/**
+ * Create a class TapWaterCleaner that implements Cleaner for cleaning TapWater by adding chemicals
+ */
+class TapWaterCleaner : Cleaner&lt;TapWater&gt; {
+  override fun clean(waterSupply: TapWater) {
+    waterSupply.addChemicalCleaners()
+  }
+}
+
+/**
+ * In the Aquarium class, update addWater() to take a Cleaner of type T, and clean the water before adding it.
+ */
+class Aquarium&lt;out T: WaterSupply&gt;(val waterSupply: T) {
+  fun addWater(cleaner: Cleaner&lt;T&gt;) {
+    if (waterSupply.needsProcessing) {
+      cleaner.clean(waterSupply)
+    }
+    println(&quot;Water added!&quot;)
+  }
+}
+
+/**
+ * Test function
+ */
+fun g2() {
+    val cleaner = TapWaterCleaner()
+    val aquarium = Aquarium(TapWater())
+    aquarium.addWater(cleaner)
+}
+</code></pre>
+<p>Kotlin 将使用 in 和 out 类型来确保我们可以安全地使用泛型。out 和 in 的使用场景：out 类型可以作为返回值向外传递，in 类型可以作为参数向内传递。</p>
+<h2 id="type-erasure-and-generic-type-checks">Type erasure and generic type checks</h2>
+<p>Java 中泛型只在编译时使用，编译器确保所有类型相关的操作都可以安全的进行。在运行时，泛型类型的实例并不持有实际类型的信息（<a href="https://kotlinlang.org/docs/reference/typecasts.html#type-erasure-and-generic-type-checks">类型擦除</a>），比如 <code>List&lt;Foo&gt;</code> 会擦除为 <code>List&lt;*&gt;</code>。通常无法在运行时检查实例是否属于某种泛型类型，不过在 Kotlin 中我们可以通过 <code>inline + reified</code> 的组合实现运行时类型判断。</p>
+<pre><code class="language-kotlin">class Aquarium&lt;T : WaterSupply&gt;(val waterSupply: T) {
+  fun addWater(cleaner: Cleaner&lt;T&gt;) {
+    if (waterSupply.needsProcessing) {
+      cleaner.clean(waterSupply)
+    }
+    println(&quot;Water added!&quot;)
+  }
+
+  /*
+   * Declare the function inline, and make the type reified.
+   */
+  inline fun &lt;reified R : WaterSupply&gt; isOfType(): Boolean = waterSupply is R
+}
+</code></pre>
+<p>我们在 Aquarium 类中添加 <code>isOfType</code> 方法，通过 <code>inline</code> 声明方法，将泛型类型标记为 <code>reified</code>后，<code>is</code> 关键字可以在运行时做泛型类型检查。</p>
+<h3 id="make-extension-functions">Make extension functions</h3>
+<pre><code class="language-kotlin">inline fun &lt;reified T: WaterSupply&gt; Aquarium&lt;*&gt;.isOfType() = waterSupply is T
+</code></pre>
+<p><a href="https://kotlinlang.org/docs/reference/generics.html#star-projections">Star-projections</a> 很像 Java 编程中的 raw types，不过更加安全。</p>
+<h2 id="inline-functions">inline functions</h2>
+<p>Lambdas 和高阶函数都很有用，但我们应该了解一个事实：Lambda 是对象。Lambda 表达式是 <code>Function</code> 接口的实例，<code>Function</code> 接口是 <code>Object</code> 的子类。</p>
+<pre><code class="language-kotlin">/**
+ * 自定义 with 函数，接收 [name] 字符串，执行 name.block() 函数
+ */
+fun customWith(name: String, block: String.() -&gt; Unit) {
+  name.block()
+}
+
+/**
+ * 调用 customWith 函数，并将 fish.name 首字母大写
+ */
+customWith(fish.name) {
+  capitalize()
+}
+</code></pre>
+<p>上面调用 <code>customWith</code> 函数实际的实现像这样：</p>
+<pre><code class="language-kotlin">customWith(fish.name, object: Function1&lt;String, Unit&gt;) {
+  override fun invoke(name: String) {
+    name.capitalize()
+  }
+}
+</code></pre>
+<p>通常这不是问题，因为创建对象和调用函数不会产生太多的开销。不过假如 <code>customWith</code> 函数在非常多的地方都有调用，那么开销就会多起来。</p>
+<p>Kotlin 提供 <code>inline</code> 作为处理这种情况的一种方式，通过增加编译器的工作来减少运行时的开销。将函数标记为 <code>inline</code> 意味着每次调用该函数时，编译器实际上会将源码转换为内联函数。</p>
+<p>比如我们在使用 <code>customWith</code> 时标记为 <code>inline</code>：</p>
+<pre><code class="language-kotlin">inline customWith(fish.name) {
+  capitalize()
+}
+</code></pre>
+<p>它转换后像这样：</p>
+<pre><code class="language-kotlin">fish.name.capitalize()
+</code></pre>
+<p>需要注意的是，内联大型函数会增加代码大小，因此 <code>inline</code> 适用于多次使用的简单的函数，如 <code>customWith</code>。</p>
+<h2 id="sam">SAM</h2>
+<p><em>Single Abstract Method(SAM)</em> 即表示只有一个方法的接口。在 Java 编写 API 时非常常见，比如 <code>Runnable</code> 接口，只定义了一个 <code>run()</code> 方法，<code>Callable</code> 接口，定义了一个 <code>call()</code> 方法。</p>
+<p>我们定义个 SAM：</p>
+<pre><code class="language-java">class JavaRun {
+  public static void runNow(Runnable runnable) {
+    runnable.run();
+  }
+}
+</code></pre>
+<p>在 Kotlin 中调用该函数：</p>
+<pre><code class="language-kotlin">val runnable = object: Runnable {
+  override fun run() {
+    println(&quot;I'm a Runnable&quot;)
+  }
+}
+
+JavaNow.runNow(runnable)
+</code></pre>
+<p>Kotlin 提供的 SAM 机制会提示缩减代码：</p>
+<pre><code class="language-kotlin">JavaNow.runNow {
+  println(&quot;Lambda as a Runnable&quot;)
+}
+</code></pre>
+<p>SAM 的模版像这样：</p>
+<pre><code class="language-kotlin">Class.singleAbstractMethod {lambda_of_override}
+</code></pre>
+</article>
+
+
+      
+        <div class="my-4">
+    
+    <a href="https://zacash.cn/tags/generic/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 me-2 hover:text-eureka">#generic</a>
+    
+</div>
+      
+
+      
+
+
+
+      
+
+      
+  <div
+    class="-mx-2 mt-4 flex flex-col border-t px-2 pt-4 md:flex-row md:justify-between"
+  >
+    <div>
+      
+        <span class="text-primary-text block font-bold"
+          >Previous</span
+        >
+        <a href="https://zacash.cn/posts/databinding-in-android/" class="block">Data Binding in Android</a>
+      
+    </div>
+    <div class="mt-4 md:mt-0 md:text-right">
+      
+        <span class="text-primary-text block font-bold">Next</span>
+        <a href="https://zacash.cn/posts/interface-delegation/" class="block">Interface Delegation</a>
+      
+    </div>
+  </div>
+
+
+      
+
+
+
+    </div>
+    
+
+    
+    
+  </div>
+
+  
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        hljs.initHighlightingOnLoad();
+      });
+    </script>
+
+          </div>
+        </div>
+      
+    </main>
+    <footer class="pl-scrollbar">
+      <div class="mx-auto w-full max-w-screen-xl"><div class="text-center p-6 pin-b">
+    <p class="text-sm text-tertiary-text">&copy; Copyright © 2022, Copyright Zac
+ &middot;  Powered by the <a href="https://github.com/wangchucheng/hugo-eureka" class="hover:text-eureka">Eureka</a> theme for <a href="https://gohugo.io" class="hover:text-eureka">Hugo</a></p>
+</div></div>
+    </footer>
+  </body>
+</html>

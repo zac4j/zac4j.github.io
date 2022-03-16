@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>lock on Zac&#39;s blog</title>
+    <link>https://zacash.cn/categories/lock/</link>
+    <description>Recent content in lock on Zac&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>&amp;copy; Copyright © 2022, Copyright Zac
+</copyright>
+    <lastBuildDate>Mon, 27 Jul 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://zacash.cn/categories/lock/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Threads and Locks</title>
+      <link>https://zacash.cn/posts/threads-and-locks/</link>
+      <pubDate>Mon, 27 Jul 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://zacash.cn/posts/threads-and-locks/</guid>
+      <description>&lt;p&gt;Threads are created and managed by the classes Thread and ThreadGroup. Creating a Thread object creates a thread, and that is the only way to create a thread. When the thread is created, it is not yet active; it begins to run when its start method is called.&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

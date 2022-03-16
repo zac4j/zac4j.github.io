@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  dir="ltr"
+  
+><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<title>Java Basic | Zac&#39;s blog</title>
+
+<meta name="generator" content="Hugo Eureka 0.9.1" />
+<link rel="stylesheet" href="https://zacash.cn/css/eureka.min.6a378a23360d238dc3ef4df2f5cd718093f02c10c9c7eb2437c29701cd8d389ab6da5d9f21bdd3afa305fd56c1235017.css" integrity="sha384-ajeKIzYNI43D703y9c1xgJPwLBDJx&#43;skN8KXAc2NOJq22l2fIb3Tr6MF/VbBI1AX">
+<script defer src="https://zacash.cn/js/eureka.min.f1639ee98d6cbd85b2b5f034d27320da962002ff83159ed4e01dbc5948c42a1ab26c2d6e74c66e93f5cec4d24dbd166d.js" integrity="sha384-8WOe6Y1svYWytfA00nMg2pYgAv&#43;DFZ7U4B28WUjEKhqybC1udMZuk/XOxNJNvRZt"></script>
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload"
+  href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Noto+Serif+SC:wght@400;600;700&display=swap"
+  as="style" onload="this.onload=null;this.rel='stylesheet'">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/styles/solarized-light.min.css"
+   media="print"
+  onload="this.media='all';this.onload=null" crossorigin>
+<script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/highlight.min.js"
+   crossorigin></script>
+  <script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/languages/dart.min.js"
+     crossorigin></script>
+  <script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/languages/java.min.js"
+     crossorigin></script>
+  <script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/languages/kotlin.min.js"
+     crossorigin></script>
+
+
+<script defer type="text/javascript" src="https://zacash.cn/js/fontawesome.min.1c5a4674b042785ed214cf0818a81724c6b37442fd61b0ed039237b93de25ed5103fc8079a05770648ccc9c66c4f540a.js" integrity="sha384-HFpGdLBCeF7SFM8IGKgXJMazdEL9YbDtA5I3uT3iXtUQP8gHmgV3BkjMycZsT1QK"></script>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/katex.min.css"
+   integrity="sha384-MlJdn/WNKDGXveldHDdyRP1R4CTHr3FeuDNfhsLPYrq2t0UBkUdK2jyTnXPEK1NQ"  media="print"
+  onload="this.media='all';this.onload=null" crossorigin>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/katex.min.js" 
+  integrity="sha384-VQ8d8WVFw0yHhCk5E8I86oOhv48xLpnDZx5T9GogA/Y84DcCKWXDmSDfn13bzFZY"  crossorigin></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/contrib/auto-render.min.js"
+   integrity="sha384-&#43;XBljXPPiv&#43;OzfbB3cVmLHf4hdUFHlWNZN5spNQ7rmHTXpd7WvJum6fIACpNNfIR"  crossorigin></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    renderMathInElement(document.body, {
+      delimiters: [
+        { left: "$$", right: "$$", display: true },
+        { left: "$", right: "$", display: false },
+        { left: "\\(", right: "\\)", display: false },
+        { left: "\\[", right: "\\]", display: true }
+      ],
+    });
+  });
+</script>
+
+
+<script defer src="https://cdn.jsdelivr.net/npm/mermaid@8.14.0/dist/mermaid.min.js" 
+  integrity="sha384-atOyb0FxAgN9LyAc6PEf9BjgwLISyansgdH8/VXQH8p2o5vfrRgmGIJ2Sg22L0A0"  crossorigin></script>
+
+
+<link rel="icon" type="image/png" sizes="32x32" href="https://zacash.cn/images/icon_huef3b68b5a9c9f864bc324bf255658730_3276_32x32_fill_box_center_3.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://zacash.cn/images/icon_huef3b68b5a9c9f864bc324bf255658730_3276_180x180_fill_box_center_3.png">
+
+<meta name="description"
+  content="🌟答案的组织策略：知道是什么，知道为什么，知道怎么用
+0.JDK 和 JRE 有什么区别？  JDK 包含 JRE，同时还包含编译 Java 源码的编译器 javac，还包含了很多 Java 程序调试和分析的工具。 加分项：除了 javac 还了解哪些命令行工具，它们的用途是什么？  jcmd：综合工具 jps：虚拟机进程状况工具 jinfo：虚拟机配置信息工具 jstat：虚拟机统计信息监视工具 jmap：Java 内存映像工具 jhat：虚拟机堆转储快照分析工具 jstack：Java 堆栈追踪工具   加分项jstat 用过吗，有哪些参数？  -class：监视类装载、卸载数量、总空间和类装载所耗费的时间 -gc：监视 Java 堆的状况，包括 Eden 区，两个 survior 区，老年代、永久代等的容量，已用空间、GC 时间合计等统计    1.equals 和 == 的差别？ 两者都是判断等价性，区别要从入参类型来看：
+  对于基本类型，他们是比较值是否相等
+  对于引用类型，他们是判断引用的是否为同一对象
+  考察点：equals 的概念
+  🌟实际要求：平时对源码的深挖意识即技术钻研和批判性思维
+  考察目的：
+ 基础知识的扎实程度 候选人对技术的热情    2.Java 中操作字符串有那些类？它们之间有什么区别？  主要有：String，StringBuilder，StringBuffer 区别：StringBuffer 和 StringBuilder 都继承自 AbstractStringBuilder，StringBuffer 具备线程安全性  加分项：String 源码分析  String 是 final 关键字修饰 -&gt; 对象的值不可变 -&gt; 每次操作都会生成新的对象 StringBuffer 和 StringBuilder 对象的值可变，但拼接字符串开销比较小   加分项：StringBuffer 线程安全性分析（查源码、找 synchronized、线程锁）   使用场景：并发必选 StringBuffer，迭代必选 StringBuilder，普通场景选 String，避免中途不必要的类型转换开销  3.">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+      "@type": "ListItem",
+      "position": 1 ,
+      "name":"Posts",
+      "item":"https://zacash.cn/posts/"},{
+      "@type": "ListItem",
+      "position": 2 ,
+      "name":"Java Basic",
+      "item":"https://zacash.cn/posts/java-basic/"}]
+}
+</script>
+
+
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://zacash.cn/posts/java-basic/"
+    },
+    "headline": "Java Basic | Zac\u0027s blog","datePublished": "2020-07-03T09:28:31+08:00",
+    "dateModified": "2020-07-03T09:28:31+08:00",
+    "wordCount":  362 ,
+    "publisher": {
+        "@type": "Person",
+        "name": "Zac Zhu",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://zacash.cn/images/icon.png"
+        }
+        },
+    "description": "🌟答案的组织策略：知道是什么，知道为什么，知道怎么用\n0.JDK 和 JRE 有什么区别？  JDK 包含 JRE，同时还包含编译 Java 源码的编译器 javac，还包含了很多 Java 程序调试和分析的工具。 加分项：除了 javac 还了解哪些命令行工具，它们的用途是什么？  jcmd：综合工具 jps：虚拟机进程状况工具 jinfo：虚拟机配置信息工具 jstat：虚拟机统计信息监视工具 jmap：Java 内存映像工具 jhat：虚拟机堆转储快照分析工具 jstack：Java 堆栈追踪工具   加分项jstat 用过吗，有哪些参数？  -class：监视类装载、卸载数量、总空间和类装载所耗费的时间 -gc：监视 Java 堆的状况，包括 Eden 区，两个 survior 区，老年代、永久代等的容量，已用空间、GC 时间合计等统计    1.equals 和 == 的差别？ 两者都是判断等价性，区别要从入参类型来看：\n  对于基本类型，他们是比较值是否相等\n  对于引用类型，他们是判断引用的是否为同一对象\n  考察点：equals 的概念\n  🌟实际要求：平时对源码的深挖意识即技术钻研和批判性思维\n  考察目的：\n 基础知识的扎实程度 候选人对技术的热情    2.Java 中操作字符串有那些类？它们之间有什么区别？  主要有：String，StringBuilder，StringBuffer 区别：StringBuffer 和 StringBuilder 都继承自 AbstractStringBuilder，StringBuffer 具备线程安全性  加分项：String 源码分析  String 是 final 关键字修饰 -\u0026gt; 对象的值不可变 -\u0026gt; 每次操作都会生成新的对象 StringBuffer 和 StringBuilder 对象的值可变，但拼接字符串开销比较小   加分项：StringBuffer 线程安全性分析（查源码、找 synchronized、线程锁）   使用场景：并发必选 StringBuffer，迭代必选 StringBuilder，普通场景选 String，避免中途不必要的类型转换开销  3."
+}
+</script><meta property="og:title" content="Java Basic | Zac&#39;s blog" />
+<meta property="og:type" content="article" />
+
+
+<meta property="og:image" content="https://zacash.cn/images/icon.png">
+
+
+<meta property="og:url" content="https://zacash.cn/posts/java-basic/" />
+
+
+
+
+<meta property="og:description" content="🌟答案的组织策略：知道是什么，知道为什么，知道怎么用
+0.JDK 和 JRE 有什么区别？  JDK 包含 JRE，同时还包含编译 Java 源码的编译器 javac，还包含了很多 Java 程序调试和分析的工具。 加分项：除了 javac 还了解哪些命令行工具，它们的用途是什么？  jcmd：综合工具 jps：虚拟机进程状况工具 jinfo：虚拟机配置信息工具 jstat：虚拟机统计信息监视工具 jmap：Java 内存映像工具 jhat：虚拟机堆转储快照分析工具 jstack：Java 堆栈追踪工具   加分项jstat 用过吗，有哪些参数？  -class：监视类装载、卸载数量、总空间和类装载所耗费的时间 -gc：监视 Java 堆的状况，包括 Eden 区，两个 survior 区，老年代、永久代等的容量，已用空间、GC 时间合计等统计    1.equals 和 == 的差别？ 两者都是判断等价性，区别要从入参类型来看：
+  对于基本类型，他们是比较值是否相等
+  对于引用类型，他们是判断引用的是否为同一对象
+  考察点：equals 的概念
+  🌟实际要求：平时对源码的深挖意识即技术钻研和批判性思维
+  考察目的：
+ 基础知识的扎实程度 候选人对技术的热情    2.Java 中操作字符串有那些类？它们之间有什么区别？  主要有：String，StringBuilder，StringBuffer 区别：StringBuffer 和 StringBuilder 都继承自 AbstractStringBuilder，StringBuffer 具备线程安全性  加分项：String 源码分析  String 是 final 关键字修饰 -&gt; 对象的值不可变 -&gt; 每次操作都会生成新的对象 StringBuffer 和 StringBuilder 对象的值可变，但拼接字符串开销比较小   加分项：StringBuffer 线程安全性分析（查源码、找 synchronized、线程锁）   使用场景：并发必选 StringBuffer，迭代必选 StringBuilder，普通场景选 String，避免中途不必要的类型转换开销  3." />
+
+
+
+
+<meta property="og:locale" content="en" />
+
+
+
+
+<meta property="og:site_name" content="Zac&#39;s blog" />
+
+
+
+
+
+
+<meta property="article:published_time" content="2020-07-03T09:28:31&#43;08:00" />
+
+
+<meta property="article:modified_time" content="2020-07-03T09:28:31&#43;08:00" />
+
+
+
+<meta property="article:section" content="posts" />
+
+
+
+
+
+  <body class="flex min-h-screen flex-col">
+    <header
+      class="min-h-16 pl-scrollbar bg-secondary-bg fixed z-50 flex w-full items-center shadow-sm"
+    >
+      <div class="mx-auto w-full max-w-screen-xl"><script>
+    let storageColorScheme = localStorage.getItem("lightDarkMode")
+    if (((storageColorScheme == 'Auto' || storageColorScheme == null) && window.matchMedia("(prefers-color-scheme: dark)").matches) || storageColorScheme == "Dark") {
+        document.getElementsByTagName('html')[0].classList.add('dark')
+    }
+</script>
+<nav class="flex items-center justify-between flex-wrap px-4 py-4 md:py-0">
+    <a href="/" class="me-6 text-primary-text text-xl font-bold">Zac&#39;s blog</a>
+    <button id="navbar-btn" class="md:hidden flex items-center px-3 py-2" aria-label="Open Navbar">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <div id="target"
+        class="hidden block md:flex md:grow md:justify-between md:items-center w-full md:w-auto text-primary-text z-20">
+        <div class="md:flex md:h-16 text-sm md:grow pb-4 md:pb-0 border-b md:border-b-0">
+            <a href="/posts/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  selected-menu-item  me-4">Posts</a>
+            <a href="/tags/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  me-4">Tags</a>
+            <a href="/#about" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  me-4">About</a>
+        </div>
+
+        <div class="flex">
+            <div class="relative pt-4 md:pt-0">
+                <div class="cursor-pointer hover:text-eureka" id="lightDarkMode">
+                    <i class="fas fa-adjust"></i>
+                </div>
+                <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-30" id="is-open">
+                </div>
+                <div class="absolute flex flex-col start-0 md:start-auto end-auto md:end-0 hidden bg-secondary-bg w-48 rounded py-2 border border-tertiary-bg cursor-pointer z-40"
+                    id='lightDarkOptions'>
+                    <span class="px-4 py-1 hover:text-eureka" name="Light">Light</span>
+                    <span class="px-4 py-1 hover:text-eureka" name="Dark">Dark</span>
+                    <span class="px-4 py-1 hover:text-eureka" name="Auto">Auto</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-0" id="is-open-mobile">
+    </div>
+
+</nav>
+<script>
+    
+    let element = document.getElementById('lightDarkMode')
+    if (storageColorScheme == null || storageColorScheme == 'Auto') {
+        document.addEventListener('DOMContentLoaded', () => {
+            window.matchMedia("(prefers-color-scheme: dark)").addEventListener('change', switchDarkMode)
+        })
+    } else if (storageColorScheme == "Light") {
+        element.firstElementChild.classList.remove('fa-adjust')
+        element.firstElementChild.setAttribute("data-icon", 'sun')
+        element.firstElementChild.classList.add('fa-sun')
+    } else if (storageColorScheme == "Dark") {
+        element.firstElementChild.classList.remove('fa-adjust')
+        element.firstElementChild.setAttribute("data-icon", 'moon')
+        element.firstElementChild.classList.add('fa-moon')
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        getcolorscheme();
+        switchBurger();
+    });
+</script>
+</div>
+    </header>
+    <main class="grow pt-16">
+        <div class="pl-scrollbar">
+          <div class="mx-auto w-full max-w-screen-xl lg:px-4 xl:px-8">
+  
+  
+  <div class="grid grid-cols-2 gap-4 lg:grid-cols-8 lg:pt-12">
+    <div
+      class="lg:col-start-2 bg-secondary-bg col-span-2 rounded px-6 py-8 lg:col-span-6"
+    >
+      <article class="prose">
+  <h1 class="mb-4">Java Basic</h1>
+
+  <div
+  class="text-tertiary-text not-prose mt-2 flex flex-row flex-wrap items-center"
+>
+  <div class="me-6 my-2">
+    <i class="fas fa-calendar me-1"></i>
+    <span
+      >2020-07-03</span
+    >
+  </div>
+  <div class="me-6 my-2">
+    <i class="fas fa-clock me-1"></i>
+    <span>2 min read</span>
+  </div>
+
+  
+
+  
+</div>
+
+
+  
+  
+
+  <p>🌟答案的组织策略：知道是什么，知道为什么，知道怎么用</p>
+<h2 id="0jdk-和-jre-有什么区别">0.JDK 和 JRE 有什么区别？</h2>
+<ul>
+<li>JDK 包含 JRE，同时还包含编译 Java 源码的编译器 javac，还包含了很多 Java 程序调试和分析的工具。</li>
+<li>加分项：除了 javac 还了解哪些命令行工具，它们的用途是什么？
+<ul>
+<li>jcmd：综合工具</li>
+<li>jps：虚拟机进程状况工具</li>
+<li>jinfo：虚拟机配置信息工具</li>
+<li>jstat：虚拟机统计信息监视工具</li>
+<li>jmap：Java 内存映像工具</li>
+<li>jhat：虚拟机堆转储快照分析工具</li>
+<li>jstack：Java 堆栈追踪工具</li>
+</ul>
+</li>
+<li>加分项jstat 用过吗，有哪些参数？
+<ul>
+<li>-class：监视类装载、卸载数量、总空间和类装载所耗费的时间</li>
+<li>-gc：监视 Java 堆的状况，包括 Eden 区，两个 survior 区，老年代、永久代等的容量，已用空间、GC 时间合计等统计</li>
+</ul>
+</li>
+</ul>
+<h2 id="1equals-和--的差别">1.equals 和 == 的差别？</h2>
+<p>两者都是判断等价性，区别要从入参类型来看：</p>
+<ul>
+<li>
+<p>对于基本类型，他们是比较值是否相等</p>
+</li>
+<li>
+<p>对于引用类型，他们是判断引用的是否为同一对象</p>
+</li>
+<li>
+<p>考察点：equals 的概念</p>
+</li>
+<li>
+<p>🌟实际要求：平时对源码的深挖意识即技术钻研和<strong>批判性思维</strong></p>
+</li>
+<li>
+<p>考察目的：</p>
+<ul>
+<li>基础知识的扎实程度</li>
+<li>候选人对技术的热情</li>
+</ul>
+</li>
+</ul>
+<h2 id="2java-中操作字符串有那些类它们之间有什么区别">2.Java 中操作字符串有那些类？它们之间有什么区别？</h2>
+<ul>
+<li>主要有：String，StringBuilder，StringBuffer</li>
+<li>区别：StringBuffer 和 StringBuilder 都继承自 AbstractStringBuilder，StringBuffer 具备线程安全性
+<ul>
+<li><strong>加分项</strong>：String 源码分析
+<ul>
+<li>String 是 <em>final</em> 关键字修饰 -&gt; 对象的值不可变 -&gt; 每次操作都会生成新的对象</li>
+<li>StringBuffer 和 StringBuilder 对象的值可变，但拼接字符串开销比较小</li>
+</ul>
+</li>
+<li><strong>加分项</strong>：StringBuffer 线程安全性分析（查源码、找 synchronized、线程锁）</li>
+</ul>
+</li>
+<li>使用场景：并发必选 StringBuffer，迭代必选 StringBuilder，普通场景选 String，避免中途不必要的类型转换开销</li>
+</ul>
+<h2 id="3hashmaphashtabletreemap-有什么区别">3.HashMap、HashTable、TreeMap 有什么区别？</h2>
+<p>是什么：</p>
+<ul>
+<li>上面3种数据结构都是最常见的 Map 接口的实现，是以 key-value 的形式存储和操作数据的容器类型。</li>
+<li>HashTable 是 Java 类库提供的一个 hash 实现，本身是同步的，不支持 null key 和 null value，由于同步性能开销，所以已经很少推荐使用了。</li>
+<li>HashMap 是应用广泛的哈希表实现，行为上大致与 HashTable 一致，主要区别在于 HashMap 不是同步的，支持 null key 和 null value 等。通常情况下，HashMap 进行 get 和 put 操作可以达到<strong>常数时间的性能</strong>。所以大部分利用键值对存取场景的首选。</li>
+<li>TreeMap 则是基于红黑树的一种提供顺序访问的 Map，它的 get、put、remove 之类的操作都是 O(logn) 时间复杂度，具体顺序由可以指定的 Comparator 来决定，后者根据键的自然顺序来判断。</li>
+</ul>
+<h2 id="4内部类和静态嵌套类">4.内部类和静态嵌套类</h2>
+<h3 id="inner-class-vs-static-nested-class">Inner class vs. Static nested class</h3>
+<pre><code class="language-java">class OuterClass {
+  ...
+  static class StaticNestedClass {
+    ...
+  }
+  class InnerClass {
+    ...
+  }
+}
+</code></pre>
+<blockquote>
+<p>嵌套类（Nested class）可以分为两类：静态和非静态。声明为静态的嵌套类称为静态嵌套类（static nested classes）。非静态嵌套类称为内部类（inner classes）。</p>
+</blockquote>
+<p>嵌套类是其封闭类（enclosing class）的成员。内部类可以访问封闭类的其他成员，即使它们被声明为私有的可以访问。静态嵌套类无权访问封闭类的其他成员。作为 OuterClass 的成员，嵌套类可以声明为 <em>private</em>, <em>public</em>, <em>protected</em> 或 <em>package private</em>.</p>
+<h3 id="why-use-nested-classes">Why Use Nested Classes</h3>
+<ul>
+<li>
+<p>这是一种对仅在一个地方使用的类进行逻辑分组的方法</p>
+<p>如果一个类B仅对其他一个类A有用，那么将B嵌入类A将更合乎逻辑，嵌套将使 package 更精简。</p>
+</li>
+<li>
+<p>增加封装</p>
+<p>对于同一层级的类A和类B，如果类B需要访问类A的成员，通常情况需要实例化A再调用A的成员。通过将B封装到A内，A的成员可以声明为 <em>private</em>，同时B可以调用A的成员。此外B对外界完全隐藏。</p>
+</li>
+<li>
+<p>可以增加代码可读性，便于维护</p>
+<p>嵌套类可以使它更靠近使用的位置。</p>
+</li>
+</ul>
+<h3 id="静态嵌套类">静态嵌套类</h3>
+<p>与类的方法和变量一样，静态嵌套类与外部类相关联。与静态方法一样，静态嵌套类不能直接引用封闭类中定义的实例变量或方法：它只能通过对象的引用来使用它们。</p>
+<blockquote>
+<p>静态嵌套类和它外部类的实例成员进行交互，就像对其他 top-level 类一样。实际上，静态嵌套类在行为上是顶级类，为了包装方便（for packaging convenience），该顶级类已嵌套在另一个顶级类中。</p>
+</blockquote>
+<p>创建静态嵌套类通过：</p>
+<pre><code class="language-java">OuterClass.StaticNestedClass sKlass = new OuterClass.StaticNestedClass()
+</code></pre>
+<h3 id="内部类">内部类</h3>
+<p>和实例方法及变量一样，内部类与其所在类的实例相关联，并且可以直接访问该对象的方法和字段。另外，由于内部类与实例相关联，因此它本身不能定义任何静态成员。</p>
+<p>内部类的实例只能存在于外部类实例中，且可以直接访问其外部类实例的方法和字段。</p>
+<pre><code class="language-java">OuterClass outer = new OuterClass();
+// Instantiate inner class
+OuterClass.InnerClass inner = outer.new InnerClass();
+// Instantiate static nested class
+OuterClass.NestedClass nested = new OuterClass.NestedClass();
+</code></pre>
+<h4 id="局部内部类和匿名内部类">局部内部类和匿名内部类</h4>
+<p>局部内部类声明在别的类的实例方法内，匿名内部类与局部内部类相似，但写法是返回一次性对象的表达式。</p>
+<pre><code class="language-java">public class AnonymousClasses {
+
+    interface HelloWorld {
+        public void greet();
+        public void greetSomeone(String someone);
+    }
+
+    public void sayHello() {
+      // Local inner class
+        class EnglishGreeting implements HelloWorld {
+            String name = &quot;world&quot;;
+            public void greet() {
+                greetSomeone(&quot;world&quot;);
+            }
+            public void greetSomeone(String someone) {
+                name = someone;
+                System.out.println(&quot;Hello &quot; + name);
+            }
+        }
+
+        HelloWorld englishGreeting = new EnglishGreeting();
+
+        // Anonymous class
+        HelloWorld frenchGreeting = new HelloWorld() {
+            String name = &quot;tout le monde&quot;;
+            public void greet() {
+                greetSomeone(&quot;tout le monde&quot;);
+            }
+            public void greetSomeone(String someone) {
+                name = someone;
+                System.out.println(&quot;Salut &quot; + name);
+            }
+        };
+    }
+}
+</code></pre>
+<h3 id="序列化">序列化</h3>
+<p>强烈不建议对内部类，包括本地和匿名类进行序列化。当 Java 编译器编译某些构造时，它将创建<a href="https://docs.oracle.com/javase/tutorial/reflect/member/methodparameterreflection.html#implcit_and_synthetic">合成构造</a>（synthetic constructs）。这些是类、方法、字段和其他在源码中没有对应构造方法的构造。合成构造可以使 Java 编译器无需更改 JVM 即可实现新的 Java 语言功能。但是，合成构造在不同的 Java 编译器中的实现可能有所不同，这意味着 .class 文件在不同的实现中也可能有所不同。因此，如果序列化一个内部类，然后使用其他 JRE 实现对其进行反序列化，则可能出现兼容性问题。</p>
+<h2 id="5referenceref">5.<a href="https://community.oracle.com/blogs/enicholas/2006/05/04/understanding-weak-references">Reference</a></h2>
+<blockquote>
+<p>Package java.lang.ref 描述：
+提供引用-对象类，该类支持与<em>垃圾回收器进行有限程度的交互</em>。程序可以使用引用对象来维护对某个对象的引用，这样垃圾回收器可以收集后者的对象。垃圾回收器在确定给定对象的可达性更改后会通知程序。</p>
+</blockquote>
+<p>引用对象封装了对某个其他对象的引用，因此该引用本身可以像其他任何对象一样进行检查和操作。引用对象提供三种类型，引用依次减弱：soft, weak, 和 phantom，每种类型都对应不同级别的可达性。软引用用于实现内存敏感型缓存**（Android SDK 不建议这样做）**，弱引用用于实现规范化映射，这些映射不会阻止回收其键或值。虚引用用于安排比 Java 终止机制更灵活的事前清理行动。</p>
+<h3 id="strongreference">StrongReference</h3>
+<p>Strong 是描述它们如何与 garbage collector 进行交互的。如果一个对象通过一系列强引用访问（强可达性），那个该对象不符合垃圾回收的条件。</p>
+<h3 id="softreference">SoftReference</h3>
+<ul>
+<li>在虚拟机引发 OutOfMemoryError 之前，确保清除所有软引用的对象。</li>
+<li><strong>不建议使用软引用做缓存</strong>，运行时并没有足够的信息确定哪些引用需要保留，哪些需要清除，引用对象清除太早造成不必要的工作，引用清除太晚造成浪费内存。</li>
+<li>大多数 App 需要使用 LruCache 取代软引用。LruCache 具有有效的逐出策略，并允许用户调整分配的内存量。</li>
+</ul>
+<h3 id="weakreference">WeakReference</h3>
+<p>弱引用可以利用垃圾回收器的能力来确定可达性，因此我们不必自己做。</p>
+
+</article>
+
+
+      
+
+      
+
+
+
+      
+
+      
+  <div
+    class="-mx-2 mt-4 flex flex-col border-t px-2 pt-4 md:flex-row md:justify-between"
+  >
+    <div>
+      
+        <span class="text-primary-text block font-bold"
+          >Previous</span
+        >
+        <a href="https://zacash.cn/posts/intro-to-service/" class="block">Intro to Service</a>
+      
+    </div>
+    <div class="mt-4 md:mt-0 md:text-right">
+      
+        <span class="text-primary-text block font-bold">Next</span>
+        <a href="https://zacash.cn/posts/design-pattern-in-android/" class="block">Essential Design Pattern in Android</a>
+      
+    </div>
+  </div>
+
+
+      
+
+
+
+    </div>
+    
+
+    
+    
+  </div>
+
+  
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        hljs.initHighlightingOnLoad();
+      });
+    </script>
+
+          </div>
+        </div>
+      
+    </main>
+    <footer class="pl-scrollbar">
+      <div class="mx-auto w-full max-w-screen-xl"><div class="text-center p-6 pin-b">
+    <p class="text-sm text-tertiary-text">&copy; Copyright © 2022, Copyright Zac
+ &middot;  Powered by the <a href="https://github.com/wangchucheng/hugo-eureka" class="hover:text-eureka">Eureka</a> theme for <a href="https://gohugo.io" class="hover:text-eureka">Hugo</a></p>
+</div></div>
+    </footer>
+  </body>
+</html>

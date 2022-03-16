@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>activity on Zac&#39;s blog</title>
+    <link>https://zacash.cn/tags/activity/</link>
+    <description>Recent content in activity on Zac&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>&amp;copy; Copyright © 2022, Copyright Zac
+</copyright>
+    <lastBuildDate>Wed, 22 Apr 2020 08:10:27 +0800</lastBuildDate><atom:link href="https://zacash.cn/tags/activity/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Activity Start</title>
+      <link>https://zacash.cn/posts/activity-launch/</link>
+      <pubDate>Wed, 22 Apr 2020 08:10:27 +0800</pubDate>
+      
+      <guid>https://zacash.cn/posts/activity-launch/</guid>
+      <description>Task and Back Stack Task 就是执行某项任务时开启的一系列 Activity 的集合，这些 Activity 会按照打开的顺序排列在回退栈 (Back Stack) 中。
+Activity 的四种启动模式 (launchMode) 如通过 startActivity(Intent) 启动 Activity A
+ standard 模式：标准模式，创建 Activity A 实例并 push 到当前任务栈中 singleTop 模式：栈顶复用模式，如果当前栈顶是 Activity A ，直接复用并调用 onNewIntent(Intent)方法，不会创建新的实例 singleTask 模式：栈内复用模式，如果当前栈内含有 Activity A ，直接复用并调用 onNewIntent(Intent)方法，并清除栈内 Activity A 上方的所有 Activity 实例 singleInstance 模式：在新的任务栈开启 Activity A，如果新的任务栈和 Activity A 已创建，继续开启 Activity A 会调用其 onNewIntent(Intent)方法。  三种 Intent 标记 startActivity(Intent) 方法可以添加 3 种 Intent 标记：
+  FLAG_ACTIVITY_NEW_TASK
+在新的任务栈中启动 Activity A，如果当前运行的任务栈中已含有 Activity A，则将任务栈内的 Activity A 恢复到前台并调用 onNewInstent(Intent) 方法，此 flag 的功能同 singleTask 启动模式相同。</description>
+    </item>
+    
+  </channel>
+</rss>

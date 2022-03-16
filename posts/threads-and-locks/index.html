@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  dir="ltr"
+  
+><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<title>Threads and Locks | Zac&#39;s blog</title>
+
+<meta name="generator" content="Hugo Eureka 0.9.1" />
+<link rel="stylesheet" href="https://zacash.cn/css/eureka.min.6a378a23360d238dc3ef4df2f5cd718093f02c10c9c7eb2437c29701cd8d389ab6da5d9f21bdd3afa305fd56c1235017.css" integrity="sha384-ajeKIzYNI43D703y9c1xgJPwLBDJx&#43;skN8KXAc2NOJq22l2fIb3Tr6MF/VbBI1AX">
+<script defer src="https://zacash.cn/js/eureka.min.f1639ee98d6cbd85b2b5f034d27320da962002ff83159ed4e01dbc5948c42a1ab26c2d6e74c66e93f5cec4d24dbd166d.js" integrity="sha384-8WOe6Y1svYWytfA00nMg2pYgAv&#43;DFZ7U4B28WUjEKhqybC1udMZuk/XOxNJNvRZt"></script>
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload"
+  href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Noto+Serif+SC:wght@400;600;700&display=swap"
+  as="style" onload="this.onload=null;this.rel='stylesheet'">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/styles/solarized-light.min.css"
+   media="print"
+  onload="this.media='all';this.onload=null" crossorigin>
+<script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/highlight.min.js"
+   crossorigin></script>
+  <script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/languages/dart.min.js"
+     crossorigin></script>
+  <script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/languages/java.min.js"
+     crossorigin></script>
+  <script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/languages/kotlin.min.js"
+     crossorigin></script>
+
+
+<script defer type="text/javascript" src="https://zacash.cn/js/fontawesome.min.1c5a4674b042785ed214cf0818a81724c6b37442fd61b0ed039237b93de25ed5103fc8079a05770648ccc9c66c4f540a.js" integrity="sha384-HFpGdLBCeF7SFM8IGKgXJMazdEL9YbDtA5I3uT3iXtUQP8gHmgV3BkjMycZsT1QK"></script>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/katex.min.css"
+   integrity="sha384-MlJdn/WNKDGXveldHDdyRP1R4CTHr3FeuDNfhsLPYrq2t0UBkUdK2jyTnXPEK1NQ"  media="print"
+  onload="this.media='all';this.onload=null" crossorigin>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/katex.min.js" 
+  integrity="sha384-VQ8d8WVFw0yHhCk5E8I86oOhv48xLpnDZx5T9GogA/Y84DcCKWXDmSDfn13bzFZY"  crossorigin></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/contrib/auto-render.min.js"
+   integrity="sha384-&#43;XBljXPPiv&#43;OzfbB3cVmLHf4hdUFHlWNZN5spNQ7rmHTXpd7WvJum6fIACpNNfIR"  crossorigin></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    renderMathInElement(document.body, {
+      delimiters: [
+        { left: "$$", right: "$$", display: true },
+        { left: "$", right: "$", display: false },
+        { left: "\\(", right: "\\)", display: false },
+        { left: "\\[", right: "\\]", display: true }
+      ],
+    });
+  });
+</script>
+
+
+<script defer src="https://cdn.jsdelivr.net/npm/mermaid@8.14.0/dist/mermaid.min.js" 
+  integrity="sha384-atOyb0FxAgN9LyAc6PEf9BjgwLISyansgdH8/VXQH8p2o5vfrRgmGIJ2Sg22L0A0"  crossorigin></script>
+
+
+<link rel="icon" type="image/png" sizes="32x32" href="https://zacash.cn/images/icon_huef3b68b5a9c9f864bc324bf255658730_3276_32x32_fill_box_center_3.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://zacash.cn/images/icon_huef3b68b5a9c9f864bc324bf255658730_3276_180x180_fill_box_center_3.png">
+
+<meta name="description"
+  content="Threads and locks">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+      "@type": "ListItem",
+      "position": 1 ,
+      "name":"Posts",
+      "item":"https://zacash.cn/posts/"},{
+      "@type": "ListItem",
+      "position": 2 ,
+      "name":"Threads and Locks",
+      "item":"https://zacash.cn/posts/threads-and-locks/"}]
+}
+</script>
+
+
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://zacash.cn/posts/threads-and-locks/"
+    },
+    "headline": "Threads and Locks | Zac\u0027s blog","datePublished": "2020-07-27T00:00:00+00:00",
+    "dateModified": "2020-07-27T00:00:00+00:00",
+    "wordCount":  1818 ,
+    "publisher": {
+        "@type": "Person",
+        "name": "Zac Zhu",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://zacash.cn/images/icon.png"
+        }
+        },
+    "description": "Threads and locks"
+}
+</script><meta property="og:title" content="Threads and Locks | Zac&#39;s blog" />
+<meta property="og:type" content="article" />
+
+
+<meta property="og:image" content="https://zacash.cn/images/icon.png">
+
+
+<meta property="og:url" content="https://zacash.cn/posts/threads-and-locks/" />
+
+
+
+<meta property="og:description" content="Threads and locks" />
+
+
+
+<meta property="og:locale" content="en" />
+
+
+
+
+<meta property="og:site_name" content="Zac&#39;s blog" />
+
+
+
+
+
+
+<meta property="article:published_time" content="2020-07-27T00:00:00&#43;00:00" />
+
+
+<meta property="article:modified_time" content="2020-07-27T00:00:00&#43;00:00" />
+
+
+
+<meta property="article:section" content="posts" />
+
+
+<meta property="article:tag" content="thread" />
+
+<meta property="article:tag" content="lock" />
+
+
+
+
+
+
+  <body class="flex min-h-screen flex-col">
+    <header
+      class="min-h-16 pl-scrollbar bg-secondary-bg fixed z-50 flex w-full items-center shadow-sm"
+    >
+      <div class="mx-auto w-full max-w-screen-xl"><script>
+    let storageColorScheme = localStorage.getItem("lightDarkMode")
+    if (((storageColorScheme == 'Auto' || storageColorScheme == null) && window.matchMedia("(prefers-color-scheme: dark)").matches) || storageColorScheme == "Dark") {
+        document.getElementsByTagName('html')[0].classList.add('dark')
+    }
+</script>
+<nav class="flex items-center justify-between flex-wrap px-4 py-4 md:py-0">
+    <a href="/" class="me-6 text-primary-text text-xl font-bold">Zac&#39;s blog</a>
+    <button id="navbar-btn" class="md:hidden flex items-center px-3 py-2" aria-label="Open Navbar">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <div id="target"
+        class="hidden block md:flex md:grow md:justify-between md:items-center w-full md:w-auto text-primary-text z-20">
+        <div class="md:flex md:h-16 text-sm md:grow pb-4 md:pb-0 border-b md:border-b-0">
+            <a href="/posts/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  selected-menu-item  me-4">Posts</a>
+            <a href="/tags/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  me-4">Tags</a>
+            <a href="/#about" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  me-4">About</a>
+        </div>
+
+        <div class="flex">
+            <div class="relative pt-4 md:pt-0">
+                <div class="cursor-pointer hover:text-eureka" id="lightDarkMode">
+                    <i class="fas fa-adjust"></i>
+                </div>
+                <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-30" id="is-open">
+                </div>
+                <div class="absolute flex flex-col start-0 md:start-auto end-auto md:end-0 hidden bg-secondary-bg w-48 rounded py-2 border border-tertiary-bg cursor-pointer z-40"
+                    id='lightDarkOptions'>
+                    <span class="px-4 py-1 hover:text-eureka" name="Light">Light</span>
+                    <span class="px-4 py-1 hover:text-eureka" name="Dark">Dark</span>
+                    <span class="px-4 py-1 hover:text-eureka" name="Auto">Auto</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-0" id="is-open-mobile">
+    </div>
+
+</nav>
+<script>
+    
+    let element = document.getElementById('lightDarkMode')
+    if (storageColorScheme == null || storageColorScheme == 'Auto') {
+        document.addEventListener('DOMContentLoaded', () => {
+            window.matchMedia("(prefers-color-scheme: dark)").addEventListener('change', switchDarkMode)
+        })
+    } else if (storageColorScheme == "Light") {
+        element.firstElementChild.classList.remove('fa-adjust')
+        element.firstElementChild.setAttribute("data-icon", 'sun')
+        element.firstElementChild.classList.add('fa-sun')
+    } else if (storageColorScheme == "Dark") {
+        element.firstElementChild.classList.remove('fa-adjust')
+        element.firstElementChild.setAttribute("data-icon", 'moon')
+        element.firstElementChild.classList.add('fa-moon')
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        getcolorscheme();
+        switchBurger();
+    });
+</script>
+</div>
+    </header>
+    <main class="grow pt-16">
+        <div class="pl-scrollbar">
+          <div class="mx-auto w-full max-w-screen-xl lg:px-4 xl:px-8">
+  
+  
+  <div class="grid grid-cols-2 gap-4 lg:grid-cols-8 lg:pt-12">
+    <div
+      class="lg:col-start-2 bg-secondary-bg col-span-2 rounded px-6 py-8 lg:col-span-6"
+    >
+      <article class="prose">
+  <h1 class="mb-4">Threads and Locks</h1>
+
+  <div
+  class="text-tertiary-text not-prose mt-2 flex flex-row flex-wrap items-center"
+>
+  <div class="me-6 my-2">
+    <i class="fas fa-calendar me-1"></i>
+    <span
+      >2020-07-27</span
+    >
+  </div>
+  <div class="me-6 my-2">
+    <i class="fas fa-clock me-1"></i>
+    <span>9 min read</span>
+  </div>
+
+  
+    <div class="me-6 my-2">
+      <i class="fas fa-folder me-1"></i>
+      
+        <a href="https://zacash.cn/categories/thread/" class="hover:text-eureka"
+          >thread</a
+        >
+      
+        
+          <span>, </span>
+        <a href="https://zacash.cn/categories/lock/" class="hover:text-eureka"
+          >lock</a
+        >
+      
+    </div>
+  
+
+  
+</div>
+
+
+  
+  
+
+  <p>Threads are created and managed by the classes Thread and ThreadGroup. Creating a Thread object creates a thread, and that is the only way to create a thread. When the thread is created, it is not yet active; it begins to run when its start method is called.</p>
+<h2 id="813-locks-and-synchronization">8.13 Locks and Synchronization</h2>
+<p>There is a lock associated with every object. The Java programming language does not provide a way to perform separate lock and unlock operations; instead, they are implicitly performed by high-level constructs that always arrange to pair such operations correctly. (The Java virtual machine, however, provides separate monitorenter and monitorexit instructions that implement the lock and unlock operations.)</p>
+<p>每个对象都有一个锁。Java 没有单独提供锁定和解锁的方法；相反它们由始终安排准确配对操作的高阶构造隐式执行。Jvm 提供了单独的 <em>monitorenter</em> 和 <em>monitorexit</em> 指令，用于实现锁定和解锁操作。</p>
+<p>The synchronized statement computes a reference to an object; it then attempts to perform a lock operation on that object and does not proceed further until the lock operation has successfully completed. (A lock operation may be delayed because the rules about locks can prevent the main memory from participating until some other thread is ready to perform one or more unlock operations.) After the lock operation has been performed, the body of the synchronized statement is executed. Normally, a compiler for the Java programming language ensures that the lock operation implemented by a monitorenter instruction executed prior to the execution of the body of the synchronized statement is matched by an unlock operation implemented by a monitorexit instruction whenever the synchronized statement completes, whether completion is normal or abrupt.</p>
+<p>同步语句计算对象的引用，它尝试对该对象执行锁定操作，并且在锁定操作完成前不会进一步的操作。（锁定操作可能延迟，因为有关锁定的规则可能阻止主内存参与，直到线程准备一个或多个解锁操作为止。）指定锁定操作后，将执行同步语句的主体。通常，Java 编译器可以确保，由 <em>monitorenter</em> 指令（在执行同步语句的主体之前执行）实现的锁定操作和由 <em>monitorexit</em> 指令实现的解锁操作相匹配，而不管同步语句是否执行完成或打断。</p>
+<p>A synchronized method automatically performs a lock operation when it is invoked; its body is not executed until the lock operation has successfully completed. If the method is an instance method, it locks the lock associated with the instance for which it was invoked (that is, the object that will be known as this during execution of the method&rsquo;s body). If the method is static, it locks the lock associated with the Class object that represents the class in which the method is defined. If execution of the method&rsquo;s body is ever completed, either normally or abruptly, an unlock operation is automatically performed on that same lock.</p>
+<p>同步方法在被调用时会自动执行锁定操作。在锁定操作完成前不会执行方法主体。如果该方法是实例方法，则它将与调用该方法的实例锁定。如果该方法是静态的，则它将与定义该方法的 Class 对象相关联的类锁定。如果方法主体正常执行或突然中断，则与该锁配对解锁操作将自动执行。</p>
+<p>Best practice is that if a variable is ever to be assigned by one thread and used or assigned by another, then all accesses to that variable should be enclosed in synchronized methods or synchronized statements.</p>
+<p>最佳实践是对于某个变量由一个线程 <em>assign</em> 并由另一个线程 <em>use</em> 或 <em>assign</em>，则对该变量的所有访问都应该放在 <em>synchronized</em> 方法或 <em>synchronized</em> 语句中。</p>
+<p>Although a compiler for the Java programming language normally guarantees structured use of locks (see Section 7.14, &ldquo;Synchronization&rdquo;), there is no assurance that all code submitted to the Java virtual machine will obey this property. Implementations of the Java virtual machine are permitted but not required to enforce both of the following two rules guaranteeing structured locking.</p>
+<p>Let T be a thread and L be a lock. Then:</p>
+<p>The number of lock operations performed by T on L during a method invocation must equal the number of unlock operations performed by T on L during the method invocation whether the method invocation completes normally or abruptly.</p>
+<p>At no point during a method invocation may the number of unlock operations performed by T on L since the method invocation exceed the number of lock operations performed by T on L since the method invocation.
+In less formal terms, during a method invocation every unlock operation on L must match some preceding lock operation on L.
+Note that the locking and unlocking automatically performed by the Java virtual machine when invoking a synchronized method are considered to occur during the calling method&rsquo;s invocation.</p>
+<h2 id="714-synchronizationsynchronized">7.14 <a href="https://docs.oracle.com/javase/specs/jvms/se6/html/Compiling.doc.html#6530">Synchronization</a></h2>
+<p>The Java virtual machine provides explicit support for synchronization through its monitorenter and monitorexit instructions. For code written in the Java programming language, however, perhaps the most common form of synchronization is the synchronized method.</p>
+<p>Jvm 通过 <em>monitorenter</em> 和 <em>monitorexit</em> 指令为同步操作提供支持。但对于 Java 编写的代码，最常见的同步形式可能是 <em>synchronized</em> 方法。</p>
+<p>A synchronized method is not normally implemented using monitorenter and monitorexit. Rather, it is simply distinguished in the runtime constant pool by the ACC_SYNCHRONIZED flag, which is checked by the method invocation instructions. When invoking a method for which ACC_SYNCHRONIZED is set, the current thread acquires a monitor, invokes the method itself, and releases the monitor whether the method invocation completes normally or abruptly. During the time the executing thread owns the monitor, no other thread may acquire it. If an exception is thrown during invocation of the synchronized method and the synchronized method does not handle the exception, the monitor for the method is automatically released before the exception is rethrown out of the synchronized method.</p>
+<p>Jvm 通常不使用 <em>monitorenter</em> 和 <em>monitorexit</em> 实现同步方法，而是在运行时常量池通过 <em>ACC_SYNCHRONIZED</em> 标记加以区分，该标记由方法调用指令校验。当调用标记为 <em>ACC_SYNCHRONIZED</em> 的方法时，当前线程获取 monitor，调用这个方法自身，并释放 monitor，不管方法调用是正常完成或突然中断。</p>
+<p>正在执行的线程拥有 monitor 时，别的线程无法获取它。如果在调用同步方法时抛出异常，且同步方法无法处理该异常，则在异常从同步方法抛出执行，自动释放该方法的 monitor.</p>
+<p>The <em>monitorenter</em> and <em>monitorexit</em> instructions exist to support synchronized statements. For example:</p>
+<pre><code class="language-java">void onlyMe(Foo f) {
+    synchronized(f) {
+        doSomething();
+    }
+}
+</code></pre>
+<p>is compiled to</p>
+<pre><code class="language-assembly">Method void onlyMe(Foo)
+   0 	aload_1				// Push f	
+   1 	astore_2			// Store it in local variable 2
+   2 	aload_2				// Push local variable 2 (f)
+   3 	monitorenter		// Enter the monitor associated with f
+   4 	aload_0				// Holding the monitor, pass this and...
+   5 	invokevirtual #5 	// ...call Example.doSomething()V
+   8	aload_2				// Push local variable 2 (f)
+   9	monitorexit			// Exit the monitor associated with f
+  10	return				// Return normally
+  11 	aload_2				// In case of any throw, end up here
+  12 	monitorexit			// Be sure to exit monitor...
+  13 	athrow				// ...then rethrow the value to the invoker
+Exception table:
+   	From	To 	Target 		Type
+    4     	8   11   		any
+</code></pre>
+<h2 id="volatile">Volatile</h2>
+<p>The rules for volatile variables effectively require that main memory be touched exactly once for each use or assign of a volatile variable by a thread, and that main memory be touched in exactly the order dictated by the thread execution semantics. However, such memory operations are not ordered with respect to read and write operations on nonvolatile variables.</p>
+<h2 id="thread-pool">Thread Pool</h2>
+<p>Most of the executor implementations in <em>java.util.concurrent</em> use thread pools, which consist of <em>worker threads</em>. This kind of thread exists separately from the <em>Runnable</em> and <em>Callable</em> tasks it executes and is often used to execute multiple tasks.</p>
+<p><em>java.util.concurrent</em> 包中大部分 executor 实现都使用线程池，这些线程池由 <em>work threads</em> 组成。这些线程与它执行的 <em>Runnable</em> 和 <em>Callable</em> 任务分开，通常用于执行多个任务。</p>
+<p>Using <em>worker threads</em> minimizes the overhead due to thread creation. Thread objects use a significant amount of memory, and in a large-scale application, allocating and deallocating many thread objects creates a significant memory management overhead.</p>
+<p>使用 <em>worker threads</em> 可以最大限度减少线程创建所带来的开销。线程对象占用大量内存，并且在大规模 App 中，分配和取消分配许多线程会产生大量内存管理的开销。</p>
+<p>One common type of thread pool is the <em>fixed thread pool</em>. This type of pool always has a specified number of threads running; if a thread is somehow terminated while it is still in use, it is automatically replaced with a new thread. Tasks are submitted to the pool via an <em>internal queue</em>, which holds extra tasks whenever there are more active tasks than threads.</p>
+<p>线程池的一种常见类型是 <em>fixed thread pool</em>。这种类型的线程池始终有指定数量的线程在运行；如果一个线程在使用时被某种方式突然终止，则线程池会自动创建新的线程替换终止的线程。任务通过内部队列提交到线程池中，<em>该内部队列在活动任务多于线程数时容纳额外的任务。</em></p>
+<p>An important advantage of the fixed thread pool is that applications using it degrade gracefully. To understand this, consider a web server application where each HTTP request is handled by a separate thread. If the application simply creates a new thread for every new HTTP request, and the system receives more requests than it can handle immediately, the application will suddenly stop responding to all requests when the overhead of all those threads exceed the capacity of the system. With a limit on the number of the threads that can be created, the application will not be servicing HTTP requests as quickly as they come in, but it will be servicing them as quickly as the system can sustain.</p>
+<p>固定线程池的一个重要优势是使用该线程池的 App 可以正常降级。考虑一个 Web 服务应用，每个 HTTP 请求均由单独的线程处理。如果该应用仅简单针对每个 HTTP 请求创建新的线程，
+并且系统收到的请求超出了其立即处理的数量，当这些线程的所有开销超出系统的容量时，应用会突然停止响应所有请求。由于可以创建的线程数量受到限制，因此应用可以不尽快的处理 HTTP 请求，但
+可以根据系统能力尽快服务这些请求。</p>
+<p>A simple way to create an executor that uses a fixed thread pool is to invoke the <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Executors.html#newFixedThreadPool-int-">newFixedThreadPool</a> factory method in <em>java.util.concurrent.Executors</em> This class also provides the following factory methods:</p>
+<p>调用 <em>java.util.concurrent.Executors</em> 中的 newFixedThreadPool 工厂方法可以创建固定线程池的 executor。此类还提供如下工厂方法：</p>
+<ul>
+<li>
+<p>The <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Executors.html#newCachedThreadPool-int-">newCachedThreadPool</a> method creates an executor with an expandable thread pool. This executor is suitable for applications that launch many short-lived tasks.</p>
+<p><em>newCachedThreadPool</em> 使用可扩展的线程池创建 executor。此类线程池适用于启动许多短期任务的应用程序。</p>
+</li>
+<li>
+<p>The <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Executors.html#newSingleThreadExecutor-int-">newSingleThreadExecutor</a> method creates an executor that executes a single task at a time.</p>
+<p><em>newSingleThreadExecutor</em> 创建的 executor 每次只执行一个任务。</p>
+</li>
+<li>
+<p>Several factory methods are <em>ScheduledExecutorService</em> versions of the above executors.</p>
+<p>上述 executor 的 <em>ScheduledExecutorService</em> 版本有几种工厂方法。</p>
+</li>
+</ul>
+<p>If none of the executors provided by the above factory methods meet your needs, constructing instances of <em>java.util.concurrent.ThreadPoolExecutor</em> or <em>java.util.concurrent.ScheduledThreadPoolExecutor</em> will give you additional options.</p>
+<p>除了上面这些创建 executor 的方法，<em>java.util.concurrent.ThreadPoolExecutor</em> 和 <em>java.util.concurrent.ScheduledThreadPoolExecutor</em> 也会提供额外的方法。</p>
+<h2 id="processes-and-threads">Processes and Threads</h2>
+<p>In concurrent programming, there are two basic units of execution: <em>processes</em> and <em>threads</em>. In the Java programming language, concurrent programming is mostly concerned with threads. However, processes are also important.</p>
+<p>在并发编程中，有两个基本的执行单元：进程和线程。Java 并发编程主要和线程有关，不过进程也很重要。</p>
+<p>A computer system normally has many active processes and threads. This is true even in systems that only have a single execution core, and thus only have one thread actually executing at any given moment. Processing time for a single core is shared among processes and threads through an OS feature called <em>time slicing</em>.</p>
+<p>计算机系统通常有很多活跃的进程和线程。这在只有一个执行核心以至于任何时刻都只有一个线程实际执行的系统也是如此。通过称为 <em>时间分片</em> 的 OS 功能，进程和线程可以共享单个内核的处理时间。</p>
+<p>It&rsquo;s becoming more and more common for computer systems to have multiple processors or processors with multiple execution cores. This greatly enhances a system&rsquo;s capacity for concurrent execution of processes and threads — but concurrency is possible even on simple systems, without multiple processors or execution cores.</p>
+<p>具有多个处理器或多个执行核心的处理器的计算机系统正在变得越来越普遍。这极大增强了并发执行多进程和多线程的能力——即使是在没有多核处理器的简单系统上，并发也是可能的。</p>
+<h3 id="processes">Processes</h3>
+<p>A process has a self-contained execution environment. A process generally has a complete, private set of basic run-time resources; in particular, each process has its own memory space.</p>
+<p>进程具有独立的执行环境。进程通常具有一组完整的、私有的基本运行时资源，每个进程有自己的内存空间。</p>
+<p>Processes are often seen as synonymous with programs or applications. However, what the user sees as a single application may in fact be a set of cooperating processes. To facilitate communication between processes, most operating systems support <em>Inter Process Communication</em> (IPC) resources, such as pipes and sockets. IPC is used not just for communication between processes on the same system, but processes on different systems.</p>
+<p>进程通常被视为程序或应用的代名词。但实际上用户看见的单个应用可能一组协作进程。为了促进进程间的通信，大多数操作系统都支持 <em>进程间通信</em>（IPC）资源，比如管道（pipes）和sockets. IPC 不仅可以用在同一系统的进程间通信，还可用于不同系统上的进程。</p>
+<p>Most implementations of the Java virtual machine run as a single process. A Java application can create additional processes using a <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/ProcessBuilder.html">ProcessBuilder</a> object. Multiprocess applications are beyond the scope of this lesson.</p>
+<p>大多数的 Jvm 实现都是以单个进程运行的。Java 应用可以使用 <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/ProcessBuilder.html">ProcessBuilder</a> 创建新的进程，不过多进程应用不在这里的讨论范围。</p>
+<h3 id="threads">Threads</h3>
+<p>Threads are sometimes called <em>lightweight processes</em>. Both processes and threads provide an execution environment, but creating a new thread requires fewer resources than creating a new process.</p>
+<p>线程通常被称为 <em>轻量级进程</em>。进程和线程都可以提供执行环境，但创建线程要比创建进程需要更少的资源。</p>
+<p>Threads exist within a process — every process has at least one. Threads share the process&rsquo;s resources, including memory and open files. This makes for efficient, but potentially problematic, communication.</p>
+<p>线程存在于进程中 —— 每个进程至少有一个。线程分享进程资源，包括内存和打开的文件。这样可以进行高效的、但同时又可能有问题的通信。</p>
+<p>Multithreaded execution is an essential feature of the Java platform. Every application has at least one thread — or several, if you count &ldquo;system&rdquo; threads that do things like memory management and signal handling. But from the application programmer&rsquo;s point of view, you start with just one thread, called the main thread. This thread has the ability to create additional threads, as we&rsquo;ll demonstrate in the next section.</p>
+<p>多线程执行是 Java 平台基础的功能。每个应用至少有一个 —— 如果算上执行内存管理和信号处理的系统线程，则有多个。但从应用程序员的角度来看，我们从一个线程开始，称为<em>主线程（main thread）</em>，这个线程有能力创建别的线程。</p>
+<h4 id="thread-objects">Thread Objects</h4>
+<p>每个线程都与一个 <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Thread.html">Thread</a> 相关。有两种策略使用 <em>Thread</em> 对象创建并发应用。</p>
+<ul>
+<li>直接控制线程的创建和管理，每次应用需要启动异步任务时，只需实例化 <em>Thread</em>。</li>
+<li>要从应用的其他部分抽象线程管理，将应用的任务传递给 <em>executor</em>。</li>
+</ul>
+</article>
+
+
+      
+        <div class="my-4">
+    
+    <a href="https://zacash.cn/tags/thread/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 me-2 hover:text-eureka">#thread</a>
+    
+    <a href="https://zacash.cn/tags/lock/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 me-2 hover:text-eureka">#lock</a>
+    
+</div>
+      
+
+      
+
+
+
+      
+
+      
+  <div
+    class="-mx-2 mt-4 flex flex-col border-t px-2 pt-4 md:flex-row md:justify-between"
+  >
+    <div>
+      
+        <span class="text-primary-text block font-bold"
+          >Previous</span
+        >
+        <a href="https://zacash.cn/posts/lambdas-and-high-order-functions/" class="block">Lambdas and High-order Functions</a>
+      
+    </div>
+    <div class="mt-4 md:mt-0 md:text-right">
+      
+        <span class="text-primary-text block font-bold">Next</span>
+        <a href="https://zacash.cn/posts/websocket-and-long-polling/" class="block">WebSocket 和长轮询</a>
+      
+    </div>
+  </div>
+
+
+      
+
+
+
+    </div>
+    
+
+    
+    
+  </div>
+
+  
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        hljs.initHighlightingOnLoad();
+      });
+    </script>
+
+          </div>
+        </div>
+      
+    </main>
+    <footer class="pl-scrollbar">
+      <div class="mx-auto w-full max-w-screen-xl"><div class="text-center p-6 pin-b">
+    <p class="text-sm text-tertiary-text">&copy; Copyright © 2022, Copyright Zac
+ &middot;  Powered by the <a href="https://github.com/wangchucheng/hugo-eureka" class="hover:text-eureka">Eureka</a> theme for <a href="https://gohugo.io" class="hover:text-eureka">Hugo</a></p>
+</div></div>
+    </footer>
+  </body>
+</html>
