@@ -19,17 +19,6 @@
   as="style" onload="this.onload=null;this.rel='stylesheet'">
 
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/styles/solarized-light.min.css"
-   media="print"
-  onload="this.media='all';this.onload=null" crossorigin>
-<script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/highlight.min.js"
-   crossorigin></script>
-  <script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/languages/dart.min.js"
-     crossorigin></script>
-  <script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/languages/java.min.js"
-     crossorigin></script>
-  <script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/languages/kotlin.min.js"
-     crossorigin></script>
 
 
 <script defer type="text/javascript" src="https://zacash.cn/js/fontawesome.min.1c5a4674b042785ed214cf0818a81724c6b37442fd61b0ed039237b93de25ed5103fc8079a05770648ccc9c66c4f540a.js" integrity="sha384-HFpGdLBCeF7SFM8IGKgXJMazdEL9YbDtA5I3uT3iXtUQP8gHmgV3BkjMycZsT1QK"></script>
@@ -272,30 +261,28 @@
   <h3 id="memory-leaks">Memory Leaks</h3>
 <h4 id="11-背景">1.1 背景</h4>
 <p>1.Handler 在使用下面这种实现方式处理消息时:</p>
-<pre><code class="language-kotlin">class MainActivity : Activity() {
-
-    private val mLeakedHandler = object : Handler() {
-        override fun handleMessage(msg: Message) {
-            super.handleMessage(msg)
-        }
-    }
-</code></pre>
-<p><a href="http://tools.android.com/tips/lint-checks">Android Lint</a> 会发出这样的警告: <code>This Handler class should be static or leaks might occur(anonymous android.os.Handler)</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">class</span> <span style="color:#447fcf;text-decoration:underline">MainActivity</span> : Activity() {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">private</span> <span style="color:#6ab825;font-weight:bold">val</span> mLeakedHandler = <span style="color:#6ab825;font-weight:bold">object</span> <span style="color:#a61717;background-color:#e3d2d2">: </span><span style="color:#447fcf;text-decoration:underline">Handler</span>() {
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">override</span> <span style="color:#6ab825;font-weight:bold">fun</span> <span style="color:#447fcf">handleMessage</span>(msg: Message) {
+</span></span><span style="display:flex;"><span>            <span style="color:#6ab825;font-weight:bold">super</span>.handleMessage(msg)
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span></code></pre></div><p><a href="http://tools.android.com/tips/lint-checks">Android Lint</a> 会发出这样的警告: <code>This Handler class should be static or leaks might occur(anonymous android.os.Handler)</code></p>
 <p>2.我们在 Handler 构造方法里同样可以看到：</p>
-<pre><code class="language-java">public Handler(@Nullable Callback callback, boolean async) {
-    if (FIND_POTENTIAL_LEAKS) {
-        final Class&lt;? extends Handler&gt; klass = getClass();
-        if ((klass.isAnonymousClass() || klass.isMemberClass() || klass.isLocalClass()) &amp;&amp;
-                (klass.getModifiers() &amp; Modifier.STATIC) == 0) {
-            Log.w(TAG, &quot;The following Handler class should be static or leaks might occur: &quot; +
-                klass.getCanonicalName());
-        }
-    }
-
-    ...
-}
-</code></pre>
-<p>这里会检测 Handler 的实现类是否为匿名类/成员类/局部类之一，然后再检测该实现类未使用 <code>static</code> 关键字修饰，未使用的话便会有内存泄漏的警告。</p>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">public</span> <span style="color:#447fcf">Handler</span>(<span style="color:#ffa500">@Nullable</span> Callback callback, <span style="color:#6ab825;font-weight:bold">boolean</span> async) {
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">if</span> (FIND_POTENTIAL_LEAKS) {
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">final</span> Class&lt;? <span style="color:#6ab825;font-weight:bold">extends</span> Handler&gt; klass = getClass();
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">if</span> ((klass.<span style="color:#bbb">isAnonymousClass</span>() || klass.<span style="color:#bbb">isMemberClass</span>() || klass.<span style="color:#bbb">isLocalClass</span>()) &amp;&amp;
+</span></span><span style="display:flex;"><span>                (klass.<span style="color:#bbb">getModifiers</span>() &amp; Modifier.<span style="color:#bbb">STATIC</span>) == 0) {
+</span></span><span style="display:flex;"><span>            Log.<span style="color:#bbb">w</span>(TAG, <span style="color:#ed9d13">&#34;The following Handler class should be static or leaks might occur: &#34;</span> +
+</span></span><span style="display:flex;"><span>                klass.<span style="color:#bbb">getCanonicalName</span>());
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    ...
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>这里会检测 Handler 的实现类是否为匿名类/成员类/局部类之一，然后再检测该实现类未使用 <code>static</code> 关键字修饰，未使用的话便会有内存泄漏的警告。</p>
 <p>那么内存泄漏是如何产生的呢，为何加 static 就可以解决泄漏问题，实现是怎样的呢。</p>
 <h4 id="12-handler-如何产生内存泄漏">1.2 Handler 如何产生内存泄漏</h4>
 <p>在继续讨论之前我们先达成如下共识：</p>
@@ -305,57 +292,55 @@
 <li>我们在堆中创建内存而忘记删除它，就会导致了<a href="https://www.geeksforgeeks.org/what-is-memory-leak-how-can-we-avoid/">内存泄漏</a>。</li>
 </ul>
 <p>可以看如下的实现：</p>
-<pre><code class="language-kotlin">class MainActivity : AppCompatActivity() {
-
-    private val mHandler = object : Handler() {
-        override fun handleMessage(msg: Message) {
-            super.handleMessage(msg)
-        }
-    }
-
-    private val mJob = Runnable { /*do something*/ }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-
-        mHandler.postDelayed(mJob, 5 * 60 * 1000L)
-  
-        finish()
-    }
-}
-</code></pre>
-<p>上面的代码中，MainActivity 在 mHandler postDelay 任务后便立即销毁，此时主线程中的 mHandler 仍然隐式的持有外部 MainActivity 的引用，该引用会直到 <code>Handler.handleMessage(Message)</code> 在 5min 后执行后消失，也就是 MainActivity 销毁后并不会被及时的 GC，MainActivity 内的资源得不到释放，从而导致内存泄露。</p>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">class</span> <span style="color:#447fcf;text-decoration:underline">MainActivity</span> : AppCompatActivity() {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">private</span> <span style="color:#6ab825;font-weight:bold">val</span> mHandler = <span style="color:#6ab825;font-weight:bold">object</span> <span style="color:#a61717;background-color:#e3d2d2">: </span><span style="color:#447fcf;text-decoration:underline">Handler</span>() {
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">override</span> <span style="color:#6ab825;font-weight:bold">fun</span> <span style="color:#447fcf">handleMessage</span>(msg: Message) {
+</span></span><span style="display:flex;"><span>            <span style="color:#6ab825;font-weight:bold">super</span>.handleMessage(msg)
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">private</span> <span style="color:#6ab825;font-weight:bold">val</span> mJob = Runnable { <span style="color:#999;font-style:italic">/*do something*/</span> }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">override</span> <span style="color:#6ab825;font-weight:bold">fun</span> <span style="color:#447fcf">onCreate</span>(savedInstanceState: Bundle?) {
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">super</span>.onCreate(savedInstanceState)
+</span></span><span style="display:flex;"><span>        setContentView(R.layout.activity_main)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        mHandler.postDelayed(mJob, <span style="color:#3677a9">5</span> * <span style="color:#3677a9">60</span> * <span style="color:#3677a9">1000L</span>)
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>        finish()
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>上面的代码中，MainActivity 在 mHandler postDelay 任务后便立即销毁，此时主线程中的 mHandler 仍然隐式的持有外部 MainActivity 的引用，该引用会直到 <code>Handler.handleMessage(Message)</code> 在 5min 后执行后消失，也就是 MainActivity 销毁后并不会被及时的 GC，MainActivity 内的资源得不到释放，从而导致内存泄露。</p>
 <h4 id="13-如何避免内存泄露">1.3 如何避免内存泄露</h4>
 <p>为了避免内存泄露我们可以使用弱引用：</p>
-<pre><code class="language-kotlin">class MainActivity : AppCompatActivity() {
-
-    private class OkHandler(activity: Activity) : Handler() {
-        private val mActivity: WeakReference&lt;Activity&gt; = WeakReference(activity)
-
-        override fun handleMessage(msg: Message) {
-            val activity = mActivity.get()
-            if (activity != null &amp;&amp; !activity.isFinishing) {
-                // execute task
-            }
-        }
-    }
-
-    private val mJob = Runnable { /*do something*/ }
-
-    private val mHandler = OkHandler(this)
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-
-        mHandler.postDelay(mJob, 5 * 60 * 1000L)
-
-        finish()
-    }
-}
-</code></pre>
-
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">class</span> <span style="color:#447fcf;text-decoration:underline">MainActivity</span> : AppCompatActivity() {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">private</span> <span style="color:#6ab825;font-weight:bold">class</span> <span style="color:#447fcf;text-decoration:underline">OkHandler</span>(activity: Activity) : Handler() {
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">private</span> <span style="color:#6ab825;font-weight:bold">val</span> mActivity: WeakReference&lt;Activity&gt; = WeakReference(activity)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">override</span> <span style="color:#6ab825;font-weight:bold">fun</span> <span style="color:#447fcf">handleMessage</span>(msg: Message) {
+</span></span><span style="display:flex;"><span>            <span style="color:#6ab825;font-weight:bold">val</span> activity = mActivity.<span style="color:#6ab825;font-weight:bold">get</span>()
+</span></span><span style="display:flex;"><span>            <span style="color:#6ab825;font-weight:bold">if</span> (activity != <span style="color:#6ab825;font-weight:bold">null</span> &amp;&amp; !activity.isFinishing) {
+</span></span><span style="display:flex;"><span>                <span style="color:#999;font-style:italic">// execute task
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>            }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">private</span> <span style="color:#6ab825;font-weight:bold">val</span> mJob = Runnable { <span style="color:#999;font-style:italic">/*do something*/</span> }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">private</span> <span style="color:#6ab825;font-weight:bold">val</span> mHandler = OkHandler(<span style="color:#6ab825;font-weight:bold">this</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">override</span> <span style="color:#6ab825;font-weight:bold">fun</span> <span style="color:#447fcf">onCreate</span>(savedInstanceState: Bundle?) {
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">super</span>.onCreate(savedInstanceState)
+</span></span><span style="display:flex;"><span>        setContentView(R.layout.activity_main)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        mHandler.postDelay(mJob, <span style="color:#3677a9">5</span> * <span style="color:#3677a9">60</span> * <span style="color:#3677a9">1000L</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        finish()
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div>
 </article>
 
 
@@ -420,11 +405,6 @@
   </div>
 
   
-    <script>
-      document.addEventListener("DOMContentLoaded", () => {
-        hljs.initHighlightingOnLoad();
-      });
-    </script>
 
           </div>
         </div>

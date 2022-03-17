@@ -19,17 +19,6 @@
   as="style" onload="this.onload=null;this.rel='stylesheet'">
 
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/styles/solarized-light.min.css"
-   media="print"
-  onload="this.media='all';this.onload=null" crossorigin>
-<script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/highlight.min.js"
-   crossorigin></script>
-  <script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/languages/dart.min.js"
-     crossorigin></script>
-  <script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/languages/java.min.js"
-     crossorigin></script>
-  <script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/languages/kotlin.min.js"
-     crossorigin></script>
 
 
 <script defer type="text/javascript" src="https://zacash.cn/js/fontawesome.min.1c5a4674b042785ed214cf0818a81724c6b37442fd61b0ed039237b93de25ed5103fc8079a05770648ccc9c66c4f540a.js" integrity="sha384-HFpGdLBCeF7SFM8IGKgXJMazdEL9YbDtA5I3uT3iXtUQP8gHmgV3BkjMycZsT1QK"></script>
@@ -267,33 +256,30 @@
 
   <h4 id="背景">背景</h4>
 <p>最近做的一个 DialogFragment 在少数设备上会偶发闪退，Fabric 上的 Stacktrace 信息如下：</p>
-<pre><code class="language-java">Fatal Exception: java.lang.IllegalStateException: Can not perform this action after onSaveInstanceState
-       at android.support.v4.app.FragmentManagerImpl.checkStateLoss(SourceFile)
-       at android.support.v4.app.FragmentManagerImpl.enqueueAction(SourceFile)
-       at android.support.v4.app.BackStackRecord.commitInternal(SourceFile)
-       at android.support.v4.app.BackStackRecord.commit(SourceFile)
-       at android.support.v4.app.DialogFragment.show(SourceFile）
-</code></pre>
-<p>看起来是弹窗在 show 的时候，发生了 state loss，粗略 copy 了下 StackOverflow 上的回答，做了如下修改：</p>
-<pre><code class="language-java">fun show(manager: FragmentManager?) {
- try {
-   val ft = manager?.beginTransaction()
-   ft?.add(this, &quot;tag of dialog&quot;)
-   ft?.commitAllowingStateLoss()
- } catch (e: Exception) {
-
- }
-}
-</code></pre>
-<p>重写了 show 方法，允许 state loss，并加了异常捕捉，后续观察 Fabric， show 的时候的确没再出现异常情况，但 dismiss 的时候还是有闪退出现，异常信息如下：</p>
-<pre><code class="language-java">Fatal Exception: java.lang.IllegalStateException: Can not perform this action after onSaveInstanceState
-       at android.support.v4.app.FragmentManagerImpl.checkStateLoss(SourceFile)
-       at android.support.v4.app.FragmentManagerImpl.enqueueAction(SourceFile)
-       at android.support.v4.app.BackStackRecord.commitInternal(SourceFile)
-       at android.support.v4.app.BackStackRecord.commit(SourceFile)
-       at android.support.v4.app.DialogFragment.dismiss(SourceFile）  
-</code></pre>
-<p>可以看到与 show 出现的闪退如出一辙，只是闪退触发的位置换成了 dismiss，按照之前对 show 的修改，是不是也可以把 dismiss 方法也改下呢，实际上还真有 <code>dismissAllowingStateLoss()</code> 方法。。。但是真的可以这样写么？是什么原因导致的 state loss？如何才能有效避免这种情况呢？</p>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>Fatal Exception: java.<span style="color:#bbb">lang</span>.<span style="color:#bbb">IllegalStateException</span>: Can not perform <span style="color:#6ab825;font-weight:bold">this</span> action after onSaveInstanceState
+</span></span><span style="display:flex;"><span>       at android.<span style="color:#bbb">support</span>.<span style="color:#bbb">v4</span>.<span style="color:#bbb">app</span>.<span style="color:#bbb">FragmentManagerImpl</span>.<span style="color:#bbb">checkStateLoss</span>(SourceFile)
+</span></span><span style="display:flex;"><span>       at android.<span style="color:#bbb">support</span>.<span style="color:#bbb">v4</span>.<span style="color:#bbb">app</span>.<span style="color:#bbb">FragmentManagerImpl</span>.<span style="color:#bbb">enqueueAction</span>(SourceFile)
+</span></span><span style="display:flex;"><span>       at android.<span style="color:#bbb">support</span>.<span style="color:#bbb">v4</span>.<span style="color:#bbb">app</span>.<span style="color:#bbb">BackStackRecord</span>.<span style="color:#bbb">commitInternal</span>(SourceFile)
+</span></span><span style="display:flex;"><span>       at android.<span style="color:#bbb">support</span>.<span style="color:#bbb">v4</span>.<span style="color:#bbb">app</span>.<span style="color:#bbb">BackStackRecord</span>.<span style="color:#bbb">commit</span>(SourceFile)
+</span></span><span style="display:flex;"><span>       at android.<span style="color:#bbb">support</span>.<span style="color:#bbb">v4</span>.<span style="color:#bbb">app</span>.<span style="color:#bbb">DialogFragment</span>.<span style="color:#bbb">show</span>(SourceFile<span style="color:#a61717;background-color:#e3d2d2">）</span>
+</span></span></code></pre></div><p>看起来是弹窗在 show 的时候，发生了 state loss，粗略 copy 了下 StackOverflow 上的回答，做了如下修改：</p>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>fun <span style="color:#447fcf">show</span>(manager: FragmentManager?) {
+</span></span><span style="display:flex;"><span> <span style="color:#6ab825;font-weight:bold">try</span> {
+</span></span><span style="display:flex;"><span>   val ft = manager?.<span style="color:#bbb">beginTransaction</span>()
+</span></span><span style="display:flex;"><span>   ft?.<span style="color:#bbb">add</span>(<span style="color:#6ab825;font-weight:bold">this</span>, <span style="color:#ed9d13">&#34;tag of dialog&#34;</span>)
+</span></span><span style="display:flex;"><span>   ft?.<span style="color:#bbb">commitAllowingStateLoss</span>()
+</span></span><span style="display:flex;"><span> } <span style="color:#6ab825;font-weight:bold">catch</span> (e: Exception) {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>重写了 show 方法，允许 state loss，并加了异常捕捉，后续观察 Fabric， show 的时候的确没再出现异常情况，但 dismiss 的时候还是有闪退出现，异常信息如下：</p>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>Fatal Exception: java.<span style="color:#bbb">lang</span>.<span style="color:#bbb">IllegalStateException</span>: Can not perform <span style="color:#6ab825;font-weight:bold">this</span> action after onSaveInstanceState
+</span></span><span style="display:flex;"><span>       at android.<span style="color:#bbb">support</span>.<span style="color:#bbb">v4</span>.<span style="color:#bbb">app</span>.<span style="color:#bbb">FragmentManagerImpl</span>.<span style="color:#bbb">checkStateLoss</span>(SourceFile)
+</span></span><span style="display:flex;"><span>       at android.<span style="color:#bbb">support</span>.<span style="color:#bbb">v4</span>.<span style="color:#bbb">app</span>.<span style="color:#bbb">FragmentManagerImpl</span>.<span style="color:#bbb">enqueueAction</span>(SourceFile)
+</span></span><span style="display:flex;"><span>       at android.<span style="color:#bbb">support</span>.<span style="color:#bbb">v4</span>.<span style="color:#bbb">app</span>.<span style="color:#bbb">BackStackRecord</span>.<span style="color:#bbb">commitInternal</span>(SourceFile)
+</span></span><span style="display:flex;"><span>       at android.<span style="color:#bbb">support</span>.<span style="color:#bbb">v4</span>.<span style="color:#bbb">app</span>.<span style="color:#bbb">BackStackRecord</span>.<span style="color:#bbb">commit</span>(SourceFile)
+</span></span><span style="display:flex;"><span>       at android.<span style="color:#bbb">support</span>.<span style="color:#bbb">v4</span>.<span style="color:#bbb">app</span>.<span style="color:#bbb">DialogFragment</span>.<span style="color:#bbb">dismiss</span>(SourceFile<span style="color:#a61717;background-color:#e3d2d2">）</span>  
+</span></span></code></pre></div><p>可以看到与 show 出现的闪退如出一辙，只是闪退触发的位置换成了 dismiss，按照之前对 show 的修改，是不是也可以把 dismiss 方法也改下呢，实际上还真有 <code>dismissAllowingStateLoss()</code> 方法。。。但是真的可以这样写么？是什么原因导致的 state loss？如何才能有效避免这种情况呢？</p>
 <p>仔细看了下 Stack Overflow 问题下的评论，发现 <a href="https://twitter.com/alexjlockwood">Alex Lockwood</a> 写的<a href="https://www.androiddesignpatterns.com/2013/08/fragment-transaction-commit-state-loss.html">一篇文章</a>分析的很全面，下面对重点内容翻译一下。</p>
 <h4 id="为什么会抛异常">为什么会抛异常</h4>
 <p>简单来说，就是你在 Activity state saved 后，仍旧 commit 一个 FragmentTransaction，从而导致出现了所谓的 <code>Activity state loss</code> 现象。所以 <code>onSaveInstanceState()</code> 时发生了什么？</p>
@@ -376,11 +362,6 @@
   </div>
 
   
-    <script>
-      document.addEventListener("DOMContentLoaded", () => {
-        hljs.initHighlightingOnLoad();
-      });
-    </script>
 
           </div>
         </div>

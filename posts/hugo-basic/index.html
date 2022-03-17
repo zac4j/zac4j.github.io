@@ -19,17 +19,6 @@
   as="style" onload="this.onload=null;this.rel='stylesheet'">
 
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/styles/solarized-light.min.css"
-   media="print"
-  onload="this.media='all';this.onload=null" crossorigin>
-<script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/highlight.min.js"
-   crossorigin></script>
-  <script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/languages/dart.min.js"
-     crossorigin></script>
-  <script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/languages/java.min.js"
-     crossorigin></script>
-  <script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/languages/kotlin.min.js"
-     crossorigin></script>
 
 
 <script defer type="text/javascript" src="https://zacash.cn/js/fontawesome.min.1c5a4674b042785ed214cf0818a81724c6b37442fd61b0ed039237b93de25ed5103fc8079a05770648ccc9c66c4f540a.js" integrity="sha384-HFpGdLBCeF7SFM8IGKgXJMazdEL9YbDtA5I3uT3iXtUQP8gHmgV3BkjMycZsT1QK"></script>
@@ -93,7 +82,7 @@
     },
     "headline": "Hugo Basic | Zac\u0027s blog","datePublished": "2020-04-04T09:25:04+08:00",
     "dateModified": "2020-04-04T09:25:04+08:00",
-    "wordCount":  96 ,
+    "wordCount":  92 ,
     "publisher": {
         "@type": "Person",
         "name": "Zac Zhu",
@@ -266,25 +255,23 @@
   <h2 id="add-new-content">Add new content</h2>
 <p><code>hugo new posts/article-name.md</code></p>
 <h2 id="article-meta-info">Article meta info</h2>
-<pre><code class="language-md">---
-title: &quot;New Article&quot;
-date: 2020-04-04T09:25:04+08:00
-description: &quot;Hugo 的简单用法&quot;
-tags: [&quot;hugo&quot;, &quot;pages&quot;]
-categories: [&quot;hugo&quot;]
-draft: true
----
-</code></pre>
-<h2 id="start-server-with-drafts-enabled">Start server with drafts enabled</h2>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-md" data-lang="md"><span style="display:flex;"><span>---
+</span></span><span style="display:flex;"><span>title: &#34;New Article&#34;
+</span></span><span style="display:flex;"><span>date: 2020-04-04T09:25:04+08:00
+</span></span><span style="display:flex;"><span>description: &#34;Hugo 的简单用法&#34;
+</span></span><span style="display:flex;"><span>tags: [&#34;hugo&#34;, &#34;pages&#34;]
+</span></span><span style="display:flex;"><span>categories: [&#34;hugo&#34;]
+</span></span><span style="display:flex;"><span>draft: true
+</span></span><span style="display:flex;"><span>---
+</span></span></code></pre></div><h2 id="start-server-with-drafts-enabled">Start server with drafts enabled</h2>
 <p><code>hugo server -D</code></p>
 <h2 id="customize-the-theme">Customize the theme</h2>
 <p>Open up <code>config.toml</code> in a text editor:</p>
-<pre><code class="language-yaml">baseURL = &quot;https://example.org/&quot;
-languageCode = &quot;en-us&quot;
-title = &quot;My New Hugo Site&quot;
-theme = &quot;ananke&quot;
-</code></pre>
-<h2 id="build-static-pages">Build static pages</h2>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span>baseURL = &#34;https://example.org/&#34;<span style="color:#666">
+</span></span></span><span style="display:flex;"><span><span style="color:#666"></span>languageCode = &#34;en-us&#34;<span style="color:#666">
+</span></span></span><span style="display:flex;"><span><span style="color:#666"></span>title = &#34;My New Hugo Site&#34;<span style="color:#666">
+</span></span></span><span style="display:flex;"><span><span style="color:#666"></span>theme = &#34;ananke&#34;<span style="color:#666">
+</span></span></span></code></pre></div><h2 id="build-static-pages">Build static pages</h2>
 <p><code>hugo -D</code> output will be in <code>./public/</code> directory by default (<code>-d/--destination</code> flag to change it, or set <code>publishdir</code> in the config file)</p>
 <h2 id="publish-article">Publish article</h2>
 <ul>
@@ -344,11 +331,6 @@ theme = &quot;ananke&quot;
   </div>
 
   
-    <script>
-      document.addEventListener("DOMContentLoaded", () => {
-        hljs.initHighlightingOnLoad();
-      });
-    </script>
 
           </div>
         </div>

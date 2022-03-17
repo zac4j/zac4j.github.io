@@ -19,17 +19,6 @@
   as="style" onload="this.onload=null;this.rel='stylesheet'">
 
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/styles/solarized-light.min.css"
-   media="print"
-  onload="this.media='all';this.onload=null" crossorigin>
-<script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/highlight.min.js"
-   crossorigin></script>
-  <script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/languages/dart.min.js"
-     crossorigin></script>
-  <script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/languages/java.min.js"
-     crossorigin></script>
-  <script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/languages/kotlin.min.js"
-     crossorigin></script>
 
 
 <script defer type="text/javascript" src="https://zacash.cn/js/fontawesome.min.1c5a4674b042785ed214cf0818a81724c6b37442fd61b0ed039237b93de25ed5103fc8079a05770648ccc9c66c4f540a.js" integrity="sha384-HFpGdLBCeF7SFM8IGKgXJMazdEL9YbDtA5I3uT3iXtUQP8gHmgV3BkjMycZsT1QK"></script>
@@ -324,48 +313,43 @@
 </ul>
 <h4 id="fragment-的-backstack">Fragment 的 BackStack</h4>
 <p>对于 Activity，系统管理着 Activity 的回退栈，而对于 Fragment，是宿主 Activity 管理着回退栈，对于需要响应返回键的 Fragment 页面，我们需要调用 <code>addToBackStack(name)</code> 显式地将其添加到回退栈:</p>
-<pre><code class="language-kotlin">fragmentTransaction.add(R.id.fragment_container, fragment)
-fragmentTransaction.addToBackStack(null)
-fragmentTransaction.commit()
-</code></pre>
-<p>上面的代码中我们给 <code>addToBackStack()</code> 传入的 <code>null</code> ，如果是需要调用 <code>FragmentManager.BackStackEntry</code> 接口时，则必须传入具体的名称标记。
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span>fragmentTransaction.add(R.id.fragment_container, fragment)
+</span></span><span style="display:flex;"><span>fragmentTransaction.addToBackStack(<span style="color:#6ab825;font-weight:bold">null</span>)
+</span></span><span style="display:flex;"><span>fragmentTransaction.commit()
+</span></span></code></pre></div><p>上面的代码中我们给 <code>addToBackStack()</code> 传入的 <code>null</code> ，如果是需要调用 <code>FragmentManager.BackStackEntry</code> 接口时，则必须传入具体的名称标记。
 对于添加到 Activity 回退栈的 Fragment，当按下返回键，某个 Fragment 实例出栈时，其视图重建回调 <code>onCreateView()</code> 方法。</p>
 <h4 id="activity-向-fragment-传递数据">Activity 向 Fragment 传递数据</h4>
 <p>通常从 Activity 向 Fragment 传递数据，推荐使用 Fragment 的 <code>setArguments(Bundle)</code> 方法，具体的流程是：</p>
-<pre><code class="language-kotlin">companion object {
-    fun newInstance(name: String) : SimpleFragment {
-        val fragment = SimpleFragment()
-        val args = Bundle(ARGS_NAME, name)
-        fragment.arguments = argument
-        return fragment
-    }
-}
-</code></pre>
-<p>在 Activity 初始化该 Fragment 传入 <code>name</code> 参数:</p>
-<pre><code class="language-kotlin">val name = &quot;SimpleApp&quot;
-val ft = supportFragmentManager.beginTransaction()
-val fragment = SimpleFragment.newInstance(name)
-ft.add(R.id.fragment_container, fragment).commit()
-</code></pre>
-<p>在 Fragment 的 <code>onCreate()</code> 或 <code>onCreateView()</code> 的回调内，获取该参数：</p>
-<pre><code class="language-kotlin">if (arguments.containsKey(ARGS_NAME)) {
-    mName = arguments.getString(ARGS_NAME);
-}
-</code></pre>
-<h4 id="fragment-向-activity-传递数据">Fragment 向 Activity 传递数据</h4>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">companion</span> <span style="color:#6ab825;font-weight:bold">object</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">fun</span> <span style="color:#447fcf">newInstance</span>(name: String) : SimpleFragment {
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">val</span> fragment = SimpleFragment()
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">val</span> args = Bundle(ARGS_NAME, name)
+</span></span><span style="display:flex;"><span>        fragment.arguments = argument
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">return</span> fragment
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>在 Activity 初始化该 Fragment 传入 <code>name</code> 参数:</p>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">val</span> name = <span style="color:#ed9d13">&#34;SimpleApp&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">val</span> ft = supportFragmentManager.beginTransaction()
+</span></span><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">val</span> fragment = SimpleFragment.newInstance(name)
+</span></span><span style="display:flex;"><span>ft.add(R.id.fragment_container, fragment).commit()
+</span></span></code></pre></div><p>在 Fragment 的 <code>onCreate()</code> 或 <code>onCreateView()</code> 的回调内，获取该参数：</p>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">if</span> (arguments.containsKey(ARGS_NAME)) {
+</span></span><span style="display:flex;"><span>    mName = arguments.getString(ARGS_NAME);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h4 id="fragment-向-activity-传递数据">Fragment 向 Activity 传递数据</h4>
 <p>对于 Activity 内实现 Fragment 内定义的接口，在 <code>Fragment.onAttach()</code>方法获取宿主 Activity:</p>
-<pre><code class="language-kotlin">interface OnPanelClickListener {
-    void onClick()
-}
-
-override fun onAttach(context: Context) {
-    super.onAttach(context)
-    if (context is OnPanelClickListener) {
-        mListener = context as OnPanelClickListener
-    }
-}
-</code></pre>
-
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">interface</span> <span style="color:#447fcf;text-decoration:underline">OnPanelClickListener</span> {
+</span></span><span style="display:flex;"><span>    void onClick()
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">override</span> <span style="color:#6ab825;font-weight:bold">fun</span> <span style="color:#447fcf">onAttach</span>(context: Context) {
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">super</span>.onAttach(context)
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">if</span> (context <span style="color:#6ab825;font-weight:bold">is</span> OnPanelClickListener) {
+</span></span><span style="display:flex;"><span>        mListener = context <span style="color:#6ab825;font-weight:bold">as</span> OnPanelClickListener
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div>
 </article>
 
 
@@ -428,11 +412,6 @@ override fun onAttach(context: Context) {
   </div>
 
   
-    <script>
-      document.addEventListener("DOMContentLoaded", () => {
-        hljs.initHighlightingOnLoad();
-      });
-    </script>
 
           </div>
         </div>

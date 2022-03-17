@@ -19,17 +19,6 @@
   as="style" onload="this.onload=null;this.rel='stylesheet'">
 
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/styles/solarized-light.min.css"
-   media="print"
-  onload="this.media='all';this.onload=null" crossorigin>
-<script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/highlight.min.js"
-   crossorigin></script>
-  <script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/languages/dart.min.js"
-     crossorigin></script>
-  <script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/languages/java.min.js"
-     crossorigin></script>
-  <script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/languages/kotlin.min.js"
-     crossorigin></script>
 
 
 <script defer type="text/javascript" src="https://zacash.cn/js/fontawesome.min.1c5a4674b042785ed214cf0818a81724c6b37442fd61b0ed039237b93de25ed5103fc8079a05770648ccc9c66c4f540a.js" integrity="sha384-HFpGdLBCeF7SFM8IGKgXJMazdEL9YbDtA5I3uT3iXtUQP8gHmgV3BkjMycZsT1QK"></script>
@@ -269,89 +258,82 @@
 <ul>
 <li>在主线程(UI Thread)中：</li>
 </ul>
-<pre><code class="language-kotlin">class MainActivity : Activity {
-    private val mLeakedHandler = object : Handler() {
-        override fun handleMessage(msg: Message) {
-            super.handleMessage(msg)
-        }
-    }
-}
-
-</code></pre>
-<ul>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">class</span> <span style="color:#447fcf;text-decoration:underline">MainActivity</span> : Activity {
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">private</span> <span style="color:#6ab825;font-weight:bold">val</span> mLeakedHandler = <span style="color:#6ab825;font-weight:bold">object</span> <span style="color:#a61717;background-color:#e3d2d2">: </span><span style="color:#447fcf;text-decoration:underline">Handler</span>() {
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">override</span> <span style="color:#6ab825;font-weight:bold">fun</span> <span style="color:#447fcf">handleMessage</span>(msg: Message) {
+</span></span><span style="display:flex;"><span>            <span style="color:#6ab825;font-weight:bold">super</span>.handleMessage(msg)
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><ul>
 <li>在子线程中：</li>
 </ul>
-<pre><code class="language-kotlin">val thread = object : Thread() {
-    override fun run() {
-        Looper.prepare()
-        val handler = object : Handler() {
-            override fun handleMessage(msg: Message) {
-                super.handleMessage(msg)
-            }
-        }
-        Looper.loop()
-    }
-}
-</code></pre>
-<h4 id="为什么在子线程创建-handler-需要准备-looper而主线程却不用">为什么在子线程创建 Handler 需要准备 Looper，而主线程却不用</h4>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">val</span> thread = <span style="color:#6ab825;font-weight:bold">object</span> <span style="color:#a61717;background-color:#e3d2d2">: </span><span style="color:#447fcf;text-decoration:underline">Thread</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">override</span> <span style="color:#6ab825;font-weight:bold">fun</span> <span style="color:#447fcf">run</span>() {
+</span></span><span style="display:flex;"><span>        Looper.prepare()
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">val</span> handler = <span style="color:#6ab825;font-weight:bold">object</span> <span style="color:#a61717;background-color:#e3d2d2">: </span><span style="color:#447fcf;text-decoration:underline">Handler</span>() {
+</span></span><span style="display:flex;"><span>            <span style="color:#6ab825;font-weight:bold">override</span> <span style="color:#6ab825;font-weight:bold">fun</span> <span style="color:#447fcf">handleMessage</span>(msg: Message) {
+</span></span><span style="display:flex;"><span>                <span style="color:#6ab825;font-weight:bold">super</span>.handleMessage(msg)
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        Looper.loop()
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h4 id="为什么在子线程创建-handler-需要准备-looper而主线程却不用">为什么在子线程创建 Handler 需要准备 Looper，而主线程却不用</h4>
 <p>因为 ActivityThread 中的 <code>main()</code> 方法已经为我们初始化了 Looper</p>
-<pre><code class="language-java">public static void main(String[] args) {
-
-    // Install selective syscall interception
-    AndroidOs.install();
-
-    ...
-
-    Looper.prepareMainLooper();
-
-    ...
-    ActivityThread thread = new ActivityThread();
-    thread.attach(false, startSeq);
-
-    if (sMainThreadHandler == null) {
-        sMainThreadHandler = thread.getHandler();
-    }
-
-    if (false) {
-        Looper.myLooper().setMessageLogging(new
-                LogPrinter(Log.DEBUG, &quot;ActivityThread&quot;));
-    }
-
-    Looper.loop();
-
-    throw new RuntimeException(&quot;Main thread loop unexpectedly exited&quot;);
-}
-</code></pre>
-<h3 id="handler-和-looper">Handler 和 Looper</h3>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">public</span> <span style="color:#6ab825;font-weight:bold">static</span> <span style="color:#6ab825;font-weight:bold">void</span> <span style="color:#447fcf">main</span>(String[] args) {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#999;font-style:italic">// Install selective syscall interception
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>    AndroidOs.<span style="color:#bbb">install</span>();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    ...
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    Looper.<span style="color:#bbb">prepareMainLooper</span>();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    ...
+</span></span><span style="display:flex;"><span>    ActivityThread thread = <span style="color:#6ab825;font-weight:bold">new</span> ActivityThread();
+</span></span><span style="display:flex;"><span>    thread.<span style="color:#bbb">attach</span>(<span style="color:#6ab825;font-weight:bold">false</span>, startSeq);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">if</span> (sMainThreadHandler == <span style="color:#6ab825;font-weight:bold">null</span>) {
+</span></span><span style="display:flex;"><span>        sMainThreadHandler = thread.<span style="color:#bbb">getHandler</span>();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">if</span> (<span style="color:#6ab825;font-weight:bold">false</span>) {
+</span></span><span style="display:flex;"><span>        Looper.<span style="color:#bbb">myLooper</span>().<span style="color:#bbb">setMessageLogging</span>(<span style="color:#6ab825;font-weight:bold">new</span>
+</span></span><span style="display:flex;"><span>                LogPrinter(Log.<span style="color:#bbb">DEBUG</span>, <span style="color:#ed9d13">&#34;ActivityThread&#34;</span>));
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    Looper.<span style="color:#bbb">loop</span>();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">throw</span> <span style="color:#6ab825;font-weight:bold">new</span> RuntimeException(<span style="color:#ed9d13">&#34;Main thread loop unexpectedly exited&#34;</span>);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h3 id="handler-和-looper">Handler 和 Looper</h3>
 <h4 id="为什么使用-handler-就需要显式的调用-looperprepare-和-looperloop-呢">为什么使用 Handler 就需要显式的调用 <code>Looper.prepare()</code> 和 <code>Looper.loop()</code> 呢</h4>
 <p>我们可以通过观察 Handler 的构造方法理解：</p>
-<pre><code class="language-java">public Handler(@Nullable Callback callback, boolean async) {
-    ...
-
-    mLooper = Looper.myLooper();
-    if (mLooper == null) {
-        throw new RuntimeException(&quot;Can't create handler inside thread &quot; + Thread.currentThread()
-                    + &quot; that has not called Looper.prepare()&quot;);
-    }
-    mQueue = mLooper.mQueue;
-    mCallback = callback;
-    mAsynchronous = async;
-}
-</code></pre>
-<p><code>Looper.myLooper()</code> 的实现则是：</p>
-<pre><code class="language-java">public static @Nullable Looper myLooper() {
-    return sThreadLocal.get();
-}
-</code></pre>
-<p>那么 sThreadLocal 在哪里 set 的呢？答案是 <code>Looper.prepare()</code> 方法:</p>
-<pre><code class="language-java">private static void prepare(boolean quitAllowed) {
-    if (sThreadLocal.get() != null) {
-        throw new RuntimeException(&quot;Only one Looper may be created per thread&quot;);
-    }
-    sThreadLocal.set(new Looper(quitAllowed));
-}
-</code></pre>
-<p>可以看到 Handler 和 Looper 是绑定的关系，每个 Handler 只会存在一个线程和 Looper，Looper 内的 ThreadLocal 标识对应的线程。</p>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">public</span> <span style="color:#447fcf">Handler</span>(<span style="color:#ffa500">@Nullable</span> Callback callback, <span style="color:#6ab825;font-weight:bold">boolean</span> async) {
+</span></span><span style="display:flex;"><span>    ...
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    mLooper = Looper.<span style="color:#bbb">myLooper</span>();
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">if</span> (mLooper == <span style="color:#6ab825;font-weight:bold">null</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">throw</span> <span style="color:#6ab825;font-weight:bold">new</span> RuntimeException(<span style="color:#ed9d13">&#34;Can&#39;t create handler inside thread &#34;</span> + Thread.<span style="color:#bbb">currentThread</span>()
+</span></span><span style="display:flex;"><span>                    + <span style="color:#ed9d13">&#34; that has not called Looper.prepare()&#34;</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    mQueue = mLooper.<span style="color:#bbb">mQueue</span>;
+</span></span><span style="display:flex;"><span>    mCallback = callback;
+</span></span><span style="display:flex;"><span>    mAsynchronous = async;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p><code>Looper.myLooper()</code> 的实现则是：</p>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">public</span> <span style="color:#6ab825;font-weight:bold">static</span> <span style="color:#ffa500">@Nullable</span> Looper <span style="color:#447fcf">myLooper</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">return</span> sThreadLocal.<span style="color:#bbb">get</span>();
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>那么 sThreadLocal 在哪里 set 的呢？答案是 <code>Looper.prepare()</code> 方法:</p>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">private</span> <span style="color:#6ab825;font-weight:bold">static</span> <span style="color:#6ab825;font-weight:bold">void</span> <span style="color:#447fcf">prepare</span>(<span style="color:#6ab825;font-weight:bold">boolean</span> quitAllowed) {
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">if</span> (sThreadLocal.<span style="color:#bbb">get</span>() != <span style="color:#6ab825;font-weight:bold">null</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">throw</span> <span style="color:#6ab825;font-weight:bold">new</span> RuntimeException(<span style="color:#ed9d13">&#34;Only one Looper may be created per thread&#34;</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    sThreadLocal.<span style="color:#bbb">set</span>(<span style="color:#6ab825;font-weight:bold">new</span> Looper(quitAllowed));
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>可以看到 Handler 和 Looper 是绑定的关系，每个 Handler 只会存在一个线程和 Looper，Looper 内的 ThreadLocal 标识对应的线程。</p>
 <h3 id="handler-的使用">Handler 的使用</h3>
 <p>根据官方文档的介绍，Handler 通常有2种用法：</p>
 <ul>
@@ -362,189 +344,181 @@ Schedule Message 和 Runnable 比较容易理解，Handler 提供了如 <code>se
 </ul>
 <h3 id="handler-和-messagequeue">Handler 和 MessageQueue</h3>
 <p>观察源码可以发现 handler 的 <code>sendMessage(msg)</code>、<code>sendMessageDelayed(msg, timeMillis)</code>、<code>post(runnable)</code> 方法最后都是通过调用 <code>sendMessageAtTime(msg, uptimeMillis)</code> 实现：</p>
-<pre><code class="language-java">public boolean sendMessageAtTime(@NonNull Message msg, long uptimeMillis) {
-    MessageQueue queue = mQueue;
-    if (queue == null) {
-        RuntimeException e = new RuntimeException(
-                this + &quot; sendMessageAtTime() called with no mQueue&quot;);
-        Log.w(&quot;Looper&quot;, e.getMessage(), e);
-        return false;
-    }
-    return enqueueMessage(queue, msg, uptimeMillis);
-}
-</code></pre>
-<p>这里 <code>Handler.mQueue</code> 是在 Handler 构造方法里通过 <code>mLooper.mQueue</code> 获取，而 <code>Looper.mQueue</code> 是在 Looper 初始化时创建:</p>
-<pre><code class="language-java">// android/os/Handler.java
-public Handler(@Nullable Callback callback, boolean async) {
-    ...
-    mLooper = Looper.myLooper();
-    if (mLooper == null) {
-        throw new RuntimeException(&quot;Can't create handler inside thread &quot; + Thread.currentThread()
-                    + &quot; that has not called Looper.prepare()&quot;);
-    }
-    mQueue = mLooper.mQueue;
-    mCallback = callback;
-    mAsynchronous = async;
-}
-
-// android/os/Looper.java
-private Looper(boolean quitAllowed) {
-    mQueue = new MessageQueue(quitAllowed);
-    mThread = Thread.currentThread();
-}
-</code></pre>
-<p>可以看到像官方文档描述的那样，每个 Handler 实例都关联着一条线程以及这条线程的消息队列(Each Handler instance is associated with a single thread and that thread&rsquo;s message queue)。</p>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">public</span> <span style="color:#6ab825;font-weight:bold">boolean</span> <span style="color:#447fcf">sendMessageAtTime</span>(<span style="color:#ffa500">@NonNull</span> Message msg, <span style="color:#6ab825;font-weight:bold">long</span> uptimeMillis) {
+</span></span><span style="display:flex;"><span>    MessageQueue queue = mQueue;
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">if</span> (queue == <span style="color:#6ab825;font-weight:bold">null</span>) {
+</span></span><span style="display:flex;"><span>        RuntimeException e = <span style="color:#6ab825;font-weight:bold">new</span> RuntimeException(
+</span></span><span style="display:flex;"><span>                <span style="color:#6ab825;font-weight:bold">this</span> + <span style="color:#ed9d13">&#34; sendMessageAtTime() called with no mQueue&#34;</span>);
+</span></span><span style="display:flex;"><span>        Log.<span style="color:#bbb">w</span>(<span style="color:#ed9d13">&#34;Looper&#34;</span>, e.<span style="color:#bbb">getMessage</span>(), e);
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">return</span> <span style="color:#6ab825;font-weight:bold">false</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">return</span> enqueueMessage(queue, msg, uptimeMillis);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>这里 <code>Handler.mQueue</code> 是在 Handler 构造方法里通过 <code>mLooper.mQueue</code> 获取，而 <code>Looper.mQueue</code> 是在 Looper 初始化时创建:</p>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#999;font-style:italic">// android/os/Handler.java
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span><span style="color:#6ab825;font-weight:bold">public</span> <span style="color:#447fcf">Handler</span>(<span style="color:#ffa500">@Nullable</span> Callback callback, <span style="color:#6ab825;font-weight:bold">boolean</span> async) {
+</span></span><span style="display:flex;"><span>    ...
+</span></span><span style="display:flex;"><span>    mLooper = Looper.<span style="color:#bbb">myLooper</span>();
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">if</span> (mLooper == <span style="color:#6ab825;font-weight:bold">null</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">throw</span> <span style="color:#6ab825;font-weight:bold">new</span> RuntimeException(<span style="color:#ed9d13">&#34;Can&#39;t create handler inside thread &#34;</span> + Thread.<span style="color:#bbb">currentThread</span>()
+</span></span><span style="display:flex;"><span>                    + <span style="color:#ed9d13">&#34; that has not called Looper.prepare()&#34;</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    mQueue = mLooper.<span style="color:#bbb">mQueue</span>;
+</span></span><span style="display:flex;"><span>    mCallback = callback;
+</span></span><span style="display:flex;"><span>    mAsynchronous = async;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic">// android/os/Looper.java
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span><span style="color:#6ab825;font-weight:bold">private</span> <span style="color:#447fcf">Looper</span>(<span style="color:#6ab825;font-weight:bold">boolean</span> quitAllowed) {
+</span></span><span style="display:flex;"><span>    mQueue = <span style="color:#6ab825;font-weight:bold">new</span> MessageQueue(quitAllowed);
+</span></span><span style="display:flex;"><span>    mThread = Thread.<span style="color:#bbb">currentThread</span>();
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>可以看到像官方文档描述的那样，每个 Handler 实例都关联着一条线程以及这条线程的消息队列(Each Handler instance is associated with a single thread and that thread&rsquo;s message queue)。</p>
 <h4 id="消息如何入列">消息如何入列</h4>
 <p>在 <code>sendMessageAtTime()</code> 方法最后返回了 <code>Handler.enqueueMessage()</code> 的值：</p>
-<pre><code class="language-java">private boolean enqueueMessage(@NonNull MessageQueue queue, @NonNull Message msg, long uptimeMillis) {
-    msg.target = this;
-    msg.workSourceUid = ThreadLocalWorkSource.getUid();
-
-    if (mAsynchronous) {
-        msg.setAsynchronous(true);
-    }
-    return queue.enqueueMessage(msg, uptimeMillis);
-}
-</code></pre>
-<p><code>Handler.enqueueMessage()</code> 调用的 <code>MessageQueue.enqueueMessage()</code> 实现如下：</p>
-<pre><code class="language-java">boolean enqueueMessage(Message msg, long when) {
-    if (msg.target == null) {
-        throw new IllegalArgumentException(&quot;Message must have a target.&quot;);
-    }
-    if (msg.isInUse()) {
-        throw new IllegalStateException(msg + &quot; This message is already in use.&quot;);
-    }
-
-    synchronized (this) {
-        if (mQuitting) {
-            IllegalStateException e = new IllegalStateException(
-                    msg.target + &quot; sending message to a Handler on a dead thread&quot;);
-            Log.w(TAG, e.getMessage(), e);
-            msg.recycle();
-            return false;
-        }
-
-        msg.markInUse();
-        msg.when = when;
-        Message p = mMessages;
-        boolean needWake;
-        if (p == null || when == 0 || when &lt; p.when) {
-            // New head, wake up the event queue if blocked.
-            msg.next = p;
-            mMessages = msg;
-            needWake = mBlocked;
-        } else {
-            // Inserted within the middle of the queue.  Usually we don't have to wake
-            // up the event queue unless there is a barrier at the head of the queue
-            // and the message is the earliest asynchronous message in the queue.
-            needWake = mBlocked &amp;&amp; p.target == null &amp;&amp; msg.isAsynchronous();
-            Message prev;
-            for (;;) {
-                prev = p;
-                p = p.next;
-                if (p == null || when &lt; p.when) {
-                    break;
-                }
-                if (needWake &amp;&amp; p.isAsynchronous()) {
-                    needWake = false;
-                }
-            }
-            msg.next = p; // invariant: p == prev.next
-            prev.next = msg;
-        }
-
-        // We can assume mPtr != 0 because mQuitting is false.
-        if (needWake) {
-            nativeWake(mPtr);
-        }
-    }
-    return true;
-}
-</code></pre>
-<p>我们分开来看，这里 <code>msg.target</code> 即消息对应的 handler, 在 <code>Handler.enqueueMessage()</code> 方法有赋值。</p>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">private</span> <span style="color:#6ab825;font-weight:bold">boolean</span> <span style="color:#447fcf">enqueueMessage</span>(<span style="color:#ffa500">@NonNull</span> MessageQueue queue, <span style="color:#ffa500">@NonNull</span> Message msg, <span style="color:#6ab825;font-weight:bold">long</span> uptimeMillis) {
+</span></span><span style="display:flex;"><span>    msg.<span style="color:#bbb">target</span> = <span style="color:#6ab825;font-weight:bold">this</span>;
+</span></span><span style="display:flex;"><span>    msg.<span style="color:#bbb">workSourceUid</span> = ThreadLocalWorkSource.<span style="color:#bbb">getUid</span>();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">if</span> (mAsynchronous) {
+</span></span><span style="display:flex;"><span>        msg.<span style="color:#bbb">setAsynchronous</span>(<span style="color:#6ab825;font-weight:bold">true</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">return</span> queue.<span style="color:#bbb">enqueueMessage</span>(msg, uptimeMillis);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p><code>Handler.enqueueMessage()</code> 调用的 <code>MessageQueue.enqueueMessage()</code> 实现如下：</p>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">boolean</span> <span style="color:#447fcf">enqueueMessage</span>(Message msg, <span style="color:#6ab825;font-weight:bold">long</span> when) {
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">if</span> (msg.<span style="color:#bbb">target</span> == <span style="color:#6ab825;font-weight:bold">null</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">throw</span> <span style="color:#6ab825;font-weight:bold">new</span> IllegalArgumentException(<span style="color:#ed9d13">&#34;Message must have a target.&#34;</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">if</span> (msg.<span style="color:#bbb">isInUse</span>()) {
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">throw</span> <span style="color:#6ab825;font-weight:bold">new</span> IllegalStateException(msg + <span style="color:#ed9d13">&#34; This message is already in use.&#34;</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">synchronized</span> (<span style="color:#6ab825;font-weight:bold">this</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">if</span> (mQuitting) {
+</span></span><span style="display:flex;"><span>            IllegalStateException e = <span style="color:#6ab825;font-weight:bold">new</span> IllegalStateException(
+</span></span><span style="display:flex;"><span>                    msg.<span style="color:#bbb">target</span> + <span style="color:#ed9d13">&#34; sending message to a Handler on a dead thread&#34;</span>);
+</span></span><span style="display:flex;"><span>            Log.<span style="color:#bbb">w</span>(TAG, e.<span style="color:#bbb">getMessage</span>(), e);
+</span></span><span style="display:flex;"><span>            msg.<span style="color:#bbb">recycle</span>();
+</span></span><span style="display:flex;"><span>            <span style="color:#6ab825;font-weight:bold">return</span> <span style="color:#6ab825;font-weight:bold">false</span>;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        msg.<span style="color:#bbb">markInUse</span>();
+</span></span><span style="display:flex;"><span>        msg.<span style="color:#bbb">when</span> = when;
+</span></span><span style="display:flex;"><span>        Message p = mMessages;
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">boolean</span> needWake;
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">if</span> (p == <span style="color:#6ab825;font-weight:bold">null</span> || when == 0 || when &lt; p.<span style="color:#bbb">when</span>) {
+</span></span><span style="display:flex;"><span>            <span style="color:#999;font-style:italic">// New head, wake up the event queue if blocked.
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>            msg.<span style="color:#bbb">next</span> = p;
+</span></span><span style="display:flex;"><span>            mMessages = msg;
+</span></span><span style="display:flex;"><span>            needWake = mBlocked;
+</span></span><span style="display:flex;"><span>        } <span style="color:#6ab825;font-weight:bold">else</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#999;font-style:italic">// Inserted within the middle of the queue.  Usually we don&#39;t have to wake
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>            <span style="color:#999;font-style:italic">// up the event queue unless there is a barrier at the head of the queue
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>            <span style="color:#999;font-style:italic">// and the message is the earliest asynchronous message in the queue.
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>            needWake = mBlocked &amp;&amp; p.<span style="color:#bbb">target</span> == <span style="color:#6ab825;font-weight:bold">null</span> &amp;&amp; msg.<span style="color:#bbb">isAsynchronous</span>();
+</span></span><span style="display:flex;"><span>            Message prev;
+</span></span><span style="display:flex;"><span>            <span style="color:#6ab825;font-weight:bold">for</span> (;;) {
+</span></span><span style="display:flex;"><span>                prev = p;
+</span></span><span style="display:flex;"><span>                p = p.<span style="color:#bbb">next</span>;
+</span></span><span style="display:flex;"><span>                <span style="color:#6ab825;font-weight:bold">if</span> (p == <span style="color:#6ab825;font-weight:bold">null</span> || when &lt; p.<span style="color:#bbb">when</span>) {
+</span></span><span style="display:flex;"><span>                    <span style="color:#6ab825;font-weight:bold">break</span>;
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>                <span style="color:#6ab825;font-weight:bold">if</span> (needWake &amp;&amp; p.<span style="color:#bbb">isAsynchronous</span>()) {
+</span></span><span style="display:flex;"><span>                    needWake = <span style="color:#6ab825;font-weight:bold">false</span>;
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>            msg.<span style="color:#bbb">next</span> = p; <span style="color:#999;font-style:italic">// invariant: p == prev.next
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>            prev.<span style="color:#bbb">next</span> = msg;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#999;font-style:italic">// We can assume mPtr != 0 because mQuitting is false.
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>        <span style="color:#6ab825;font-weight:bold">if</span> (needWake) {
+</span></span><span style="display:flex;"><span>            nativeWake(mPtr);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">return</span> <span style="color:#6ab825;font-weight:bold">true</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>我们分开来看，这里 <code>msg.target</code> 即消息对应的 handler, 在 <code>Handler.enqueueMessage()</code> 方法有赋值。</p>
 <p>MessageQueue 并没有队列的数据结构，而是以单链表的形式存储 msg，<code>mMessages</code> 为当前链表头部的消息，我们称为 head_msg，当前传入的消息称为 current_msg，</p>
-<pre><code class="language-java">if (p == null || when == 0 || when &lt; p.when) {
-    // New head, wake up the event queue if blocked.
-    msg.next = p;
-    mMessages = msg;
-    needWake = mBlocked;
-}
-</code></pre>
-<p><code>if</code> 的判断是，如果:</p>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">if</span> (p == <span style="color:#6ab825;font-weight:bold">null</span> || when == 0 || when &lt; p.<span style="color:#bbb">when</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#999;font-style:italic">// New head, wake up the event queue if blocked.
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>    msg.<span style="color:#bbb">next</span> = p;
+</span></span><span style="display:flex;"><span>    mMessages = msg;
+</span></span><span style="display:flex;"><span>    needWake = mBlocked;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p><code>if</code> 的判断是，如果:</p>
 <ul>
 <li>1).当前队列没有 head_msg</li>
 <li>2).current_msg 是需要立即执行</li>
 <li>3).current_msg 的执行时间在 head_msg 执行时间之前</li>
 </ul>
 <p>则将 head_msg 标记为 current_msg 的下一条消息，current_msg 标记为头部消息，并且唤醒当前阻塞的队列。</p>
-<pre><code class="language-java">...
-} else {
-    // Inserted within the middle of the queue.  Usually we don't have to wake
-    // up the event queue unless there is a barrier at the head of the queue
-    // and the message is the earliest asynchronous message in the queue.
-    needWake = mBlocked &amp;&amp; p.target == null &amp;&amp; msg.isAsynchronous();
-    Message prev;
-    for (;;) {
-        prev = p;
-        p = p.next;
-        if (p == null || when &lt; p.when) {
-            break;
-        }
-        if (needWake &amp;&amp; p.isAsynchronous()) {
-            needWake = false;
-        }
-    }
-    msg.next = p; // invariant: p == prev.next
-    prev.next = msg;
-}
-</code></pre>
-<p><code>else</code> 内的逻辑是，根据 current_msg 的执行时间在消息队列中找到对应的位置入列。</p>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span>} <span style="color:#6ab825;font-weight:bold">else</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#999;font-style:italic">// Inserted within the middle of the queue.  Usually we don&#39;t have to wake
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>    <span style="color:#999;font-style:italic">// up the event queue unless there is a barrier at the head of the queue
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>    <span style="color:#999;font-style:italic">// and the message is the earliest asynchronous message in the queue.
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>    needWake = mBlocked &amp;&amp; p.<span style="color:#bbb">target</span> == <span style="color:#6ab825;font-weight:bold">null</span> &amp;&amp; msg.<span style="color:#bbb">isAsynchronous</span>();
+</span></span><span style="display:flex;"><span>    Message prev;
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">for</span> (;;) {
+</span></span><span style="display:flex;"><span>        prev = p;
+</span></span><span style="display:flex;"><span>        p = p.<span style="color:#bbb">next</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">if</span> (p == <span style="color:#6ab825;font-weight:bold">null</span> || when &lt; p.<span style="color:#bbb">when</span>) {
+</span></span><span style="display:flex;"><span>            <span style="color:#6ab825;font-weight:bold">break</span>;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">if</span> (needWake &amp;&amp; p.<span style="color:#bbb">isAsynchronous</span>()) {
+</span></span><span style="display:flex;"><span>            needWake = <span style="color:#6ab825;font-weight:bold">false</span>;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    msg.<span style="color:#bbb">next</span> = p; <span style="color:#999;font-style:italic">// invariant: p == prev.next
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>    prev.<span style="color:#bbb">next</span> = msg;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p><code>else</code> 内的逻辑是，根据 current_msg 的执行时间在消息队列中找到对应的位置入列。</p>
 <h4 id="何时执行入列的消息">何时执行入列的消息</h4>
 <p>答案就是在子线程使用 handler 时显式调用的 <code>Looper.loop()</code>:</p>
-<pre><code class="language-java">// android/os/Looper.java
-public static void loop() {
-    final Looper me = myLooper();
-    if (me == null) {
-        throw new RuntimeException(&quot;No Looper; Looper.prepare() wasn't called on this thread.&quot;);
-    }
-    final MessageQueue queue = me.mQueue;
-    ...
-    for (;;) {
-        Message msg = queue.next(); // might block
-        if (msg == null) {
-            // No message indicates that the message queue is quitting.
-            return;
-        }
-        ...
-        try {
-            msg.target.dispatchMessage(msg);
-            ...
-        } catch (Exception exception) {
-            ...
-            throw exception;
-        } finally {
-            ...
-        }
-        ...
-        msg.recycleUnchecked();
-    }
-}
-</code></pre>
-<p><code>Looper.loop()</code> 的实现就是在无限循环中不断从消息队列中取出 msg，并在 <code>msg.target</code>即 handler 中 <code>dispatchMessage</code>:</p>
-<pre><code class="language-java">public void dispatchMessage(@NonNull Message msg) {
-    if (msg.callback != null) {
-        handleCallback(msg);
-    } else {
-        if (mCallback != null) {
-            if (mCallback.handleMessage(msg)) {
-                return;
-            }
-        }
-        handleMessage(msg);
-    }
-}
-</code></pre>
-<p><code>msg.callback</code> 对应的是 <code>Handler.post(runnable)</code> 传递的 Runnable 对象，而 <code>mCallback.handleMessage(msg)</code> 或 <code>handleMessage(msg)</code> 则是实例话 Handler 对象时复写的方法。</p>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#999;font-style:italic">// android/os/Looper.java
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span><span style="color:#6ab825;font-weight:bold">public</span> <span style="color:#6ab825;font-weight:bold">static</span> <span style="color:#6ab825;font-weight:bold">void</span> <span style="color:#447fcf">loop</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">final</span> Looper me = myLooper();
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">if</span> (me == <span style="color:#6ab825;font-weight:bold">null</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">throw</span> <span style="color:#6ab825;font-weight:bold">new</span> RuntimeException(<span style="color:#ed9d13">&#34;No Looper; Looper.prepare() wasn&#39;t called on this thread.&#34;</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">final</span> MessageQueue queue = me.<span style="color:#bbb">mQueue</span>;
+</span></span><span style="display:flex;"><span>    ...
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">for</span> (;;) {
+</span></span><span style="display:flex;"><span>        Message msg = queue.<span style="color:#bbb">next</span>(); <span style="color:#999;font-style:italic">// might block
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>        <span style="color:#6ab825;font-weight:bold">if</span> (msg == <span style="color:#6ab825;font-weight:bold">null</span>) {
+</span></span><span style="display:flex;"><span>            <span style="color:#999;font-style:italic">// No message indicates that the message queue is quitting.
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>            <span style="color:#6ab825;font-weight:bold">return</span>;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        ...
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">try</span> {
+</span></span><span style="display:flex;"><span>            msg.<span style="color:#bbb">target</span>.<span style="color:#bbb">dispatchMessage</span>(msg);
+</span></span><span style="display:flex;"><span>            ...
+</span></span><span style="display:flex;"><span>        } <span style="color:#6ab825;font-weight:bold">catch</span> (Exception exception) {
+</span></span><span style="display:flex;"><span>            ...
+</span></span><span style="display:flex;"><span>            <span style="color:#6ab825;font-weight:bold">throw</span> exception;
+</span></span><span style="display:flex;"><span>        } <span style="color:#6ab825;font-weight:bold">finally</span> {
+</span></span><span style="display:flex;"><span>            ...
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        ...
+</span></span><span style="display:flex;"><span>        msg.<span style="color:#bbb">recycleUnchecked</span>();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p><code>Looper.loop()</code> 的实现就是在无限循环中不断从消息队列中取出 msg，并在 <code>msg.target</code>即 handler 中 <code>dispatchMessage</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">public</span> <span style="color:#6ab825;font-weight:bold">void</span> <span style="color:#447fcf">dispatchMessage</span>(<span style="color:#ffa500">@NonNull</span> Message msg) {
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">if</span> (msg.<span style="color:#bbb">callback</span> != <span style="color:#6ab825;font-weight:bold">null</span>) {
+</span></span><span style="display:flex;"><span>        handleCallback(msg);
+</span></span><span style="display:flex;"><span>    } <span style="color:#6ab825;font-weight:bold">else</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">if</span> (mCallback != <span style="color:#6ab825;font-weight:bold">null</span>) {
+</span></span><span style="display:flex;"><span>            <span style="color:#6ab825;font-weight:bold">if</span> (mCallback.<span style="color:#bbb">handleMessage</span>(msg)) {
+</span></span><span style="display:flex;"><span>                <span style="color:#6ab825;font-weight:bold">return</span>;
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        handleMessage(msg);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p><code>msg.callback</code> 对应的是 <code>Handler.post(runnable)</code> 传递的 Runnable 对象，而 <code>mCallback.handleMessage(msg)</code> 或 <code>handleMessage(msg)</code> 则是实例话 Handler 对象时复写的方法。</p>
 <h3 id="总结">总结</h3>
 <p>Handler 帮助我们处理 Message 和 Runnable 对象，每个 Handler 实例都关联着一个线程以及这个线程的 MessageQueue。当你创建一个新的 Handler 对象时，它将与当前所在的线程(UI/Work Thread)和 MessageQueue 绑定在一起，通过 Handler 发出的 Message 或者 Runnable(msg.callback) 会根据执行时间插入 MessageQueue，Looper 会持续不断的从 MessageQueue 取出可执行的 Message 通过 Handler.handleMessage(msg) 处理。</p>
 <p>如下图所示：<img src="https://i1.wp.com/tutorial.eyehunts.com/wp-content/uploads/2018/08/Android-Handler-Background-Thread-Communicate-with-UI-thread-1.png?resize=1024%2C621&amp;ssl=1" alt="handler"></p>
@@ -603,11 +577,6 @@ public static void loop() {
   </div>
 
   
-    <script>
-      document.addEventListener("DOMContentLoaded", () => {
-        hljs.initHighlightingOnLoad();
-      });
-    </script>
 
           </div>
         </div>

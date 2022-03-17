@@ -19,17 +19,6 @@
   as="style" onload="this.onload=null;this.rel='stylesheet'">
 
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/styles/solarized-light.min.css"
-   media="print"
-  onload="this.media='all';this.onload=null" crossorigin>
-<script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/highlight.min.js"
-   crossorigin></script>
-  <script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/languages/dart.min.js"
-     crossorigin></script>
-  <script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/languages/java.min.js"
-     crossorigin></script>
-  <script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/languages/kotlin.min.js"
-     crossorigin></script>
 
 
 <script defer type="text/javascript" src="https://zacash.cn/js/fontawesome.min.1c5a4674b042785ed214cf0818a81724c6b37442fd61b0ed039237b93de25ed5103fc8079a05770648ccc9c66c4f540a.js" integrity="sha384-HFpGdLBCeF7SFM8IGKgXJMazdEL9YbDtA5I3uT3iXtUQP8gHmgV3BkjMycZsT1QK"></script>
@@ -267,29 +256,26 @@
 <ul>
 <li>String res:</li>
 </ul>
-<pre><code class="language-xml">&lt;string name=&quot;quote_format&quot;&gt;\&quot;%s\&quot;&lt;/string&gt;
-&lt;string name=&quot;score_format&quot;&gt;Current Score: %d&lt;/string&gt;
-</code></pre>
-<ul>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">&lt;string</span> <span style="color:#bbb">name=</span><span style="color:#ed9d13">&#34;quote_format&#34;</span><span style="color:#6ab825;font-weight:bold">&gt;</span>\&#34;%s\&#34;<span style="color:#6ab825;font-weight:bold">&lt;/string&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">&lt;string</span> <span style="color:#bbb">name=</span><span style="color:#ed9d13">&#34;score_format&#34;</span><span style="color:#6ab825;font-weight:bold">&gt;</span>Current Score: %d<span style="color:#6ab825;font-weight:bold">&lt;/string&gt;</span>
+</span></span></code></pre></div><ul>
 <li>Layout res:</li>
 </ul>
-<pre><code class="language-xml">&lt;TextView
-    android:id=&quot;@+id/word_text&quot;
-   ...
-   android:text=&quot;@{@string/quote_format(gameViewModel.word)}&quot;
-/&gt;
-</code></pre>
-<h3 id="null-coalescing-operator">Null coalescing operator</h3>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">&lt;TextView</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#bbb">android:id=</span><span style="color:#ed9d13">&#34;@+id/word_text&#34;</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#a61717;background-color:#e3d2d2">...</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#bbb">android:text=</span><span style="color:#ed9d13">&#34;@{@string/quote_format(gameViewModel.word)}&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">/&gt;</span>
+</span></span></code></pre></div><h3 id="null-coalescing-operator">Null coalescing operator</h3>
 <p>The null coalescing operator (??) chooses the left operand if isn&rsquo;t null or the right if the former is null.</p>
-<pre><code class="language-xml">&lt;TextView
-    android:text=&quot;@{user.displayName ?? user.lastName}&quot;
-/&gt;
-</code></pre>
-<p>This is functionally equivalent to:</p>
-<pre><code class="language-xml">&lt;TextView
-    android:text=&quot;@{user.displayName != null ? user.displayName : user.lastName}&quot;
-/&gt;
-</code></pre>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">&lt;TextView</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#bbb">android:text=</span><span style="color:#ed9d13">&#34;@{user.displayName ?? user.lastName}&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">/&gt;</span>
+</span></span></code></pre></div><p>This is functionally equivalent to:</p>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">&lt;TextView</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#bbb">android:text=</span><span style="color:#ed9d13">&#34;@{user.displayName != null ? user.displayName : user.lastName}&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">/&gt;</span>
+</span></span></code></pre></div>
 </article>
 
 
@@ -334,11 +320,6 @@
   </div>
 
   
-    <script>
-      document.addEventListener("DOMContentLoaded", () => {
-        hljs.initHighlightingOnLoad();
-      });
-    </script>
 
           </div>
         </div>

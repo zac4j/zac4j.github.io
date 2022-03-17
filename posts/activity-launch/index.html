@@ -19,17 +19,6 @@
   as="style" onload="this.onload=null;this.rel='stylesheet'">
 
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/styles/solarized-light.min.css"
-   media="print"
-  onload="this.media='all';this.onload=null" crossorigin>
-<script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/highlight.min.js"
-   crossorigin></script>
-  <script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/languages/dart.min.js"
-     crossorigin></script>
-  <script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/languages/java.min.js"
-     crossorigin></script>
-  <script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/languages/kotlin.min.js"
-     crossorigin></script>
 
 
 <script defer type="text/javascript" src="https://zacash.cn/js/fontawesome.min.1c5a4674b042785ed214cf0818a81724c6b37442fd61b0ed039237b93de25ed5103fc8079a05770648ccc9c66c4f540a.js" integrity="sha384-HFpGdLBCeF7SFM8IGKgXJMazdEL9YbDtA5I3uT3iXtUQP8gHmgV3BkjMycZsT1QK"></script>
@@ -320,15 +309,14 @@
 </ul>
 <h4 id="开启任务">开启任务</h4>
 <p>一般来说 App 的入口 Activity 的 intent-filter 会设置成这样：</p>
-<pre><code class="language-xml">&lt;activity ... &gt;
-    &lt;intent-filter ... &gt;
-        &lt;action android:name=&quot;android.intent.action.MAIN&quot; /&gt;
-        &lt;category android:name=&quot;android.intent.category.LAUNCHER&quot; /&gt;
-    &lt;/intent-filter&gt;
-    ...
-&lt;/activity&gt;
-</code></pre>
-<p>这种配置会在 Launcher App 中显示该 Activity 对应的的 icon 和 label，从而为用户提供启动 Activity 或从别的任务回到该任务的入口。</p>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">&lt;activity</span> <span style="color:#a61717;background-color:#e3d2d2">...</span> <span style="color:#6ab825;font-weight:bold">&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">&lt;intent-filter</span> <span style="color:#a61717;background-color:#e3d2d2">...</span> <span style="color:#6ab825;font-weight:bold">&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">&lt;action</span> <span style="color:#bbb">android:name=</span><span style="color:#ed9d13">&#34;android.intent.action.MAIN&#34;</span> <span style="color:#6ab825;font-weight:bold">/&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">&lt;category</span> <span style="color:#bbb">android:name=</span><span style="color:#ed9d13">&#34;android.intent.category.LAUNCHER&#34;</span> <span style="color:#6ab825;font-weight:bold">/&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">&lt;/intent-filter&gt;</span>
+</span></span><span style="display:flex;"><span>    ...
+</span></span><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">&lt;/activity&gt;</span>
+</span></span></code></pre></div><p>这种配置会在 Launcher App 中显示该 Activity 对应的的 icon 和 label，从而为用户提供启动 Activity 或从别的任务回到该任务的入口。</p>
 <p>正如前面介绍通过 <code>FLAG_ACTIVITY_NEW_TASK</code> 创建新的任务，当用户按下 <em>HOME</em> 键离开该任务时，必须有方法供用户返回该任务，这种方法就是 activity launcher。因此对于可以启动新任务的2种启动模式, <code>singleTask</code> 和 <code>singleInstance</code>，应该仅在 Activity 的 intent filter 有 <a href="https://developer.android.com/reference/android/content/Intent#ACTION_MAIN">ACTION_MAIN</a> 和 <a href="https://developer.android.com/reference/android/content/Intent#CATEGORY_LAUNCHER">CATEGORY_LAUNCHER</a> 修饰时使用。</p>
 
 </article>
@@ -383,11 +371,6 @@
   </div>
 
   
-    <script>
-      document.addEventListener("DOMContentLoaded", () => {
-        hljs.initHighlightingOnLoad();
-      });
-    </script>
 
           </div>
         </div>

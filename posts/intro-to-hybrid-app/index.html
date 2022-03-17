@@ -19,17 +19,6 @@
   as="style" onload="this.onload=null;this.rel='stylesheet'">
 
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/styles/solarized-light.min.css"
-   media="print"
-  onload="this.media='all';this.onload=null" crossorigin>
-<script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/highlight.min.js"
-   crossorigin></script>
-  <script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/languages/dart.min.js"
-     crossorigin></script>
-  <script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/languages/java.min.js"
-     crossorigin></script>
-  <script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/languages/kotlin.min.js"
-     crossorigin></script>
 
 
 <script defer type="text/javascript" src="https://zacash.cn/js/fontawesome.min.1c5a4674b042785ed214cf0818a81724c6b37442fd61b0ed039237b93de25ed5103fc8079a05770648ccc9c66c4f540a.js" integrity="sha384-HFpGdLBCeF7SFM8IGKgXJMazdEL9YbDtA5I3uT3iXtUQP8gHmgV3BkjMycZsT1QK"></script>
@@ -318,14 +307,13 @@
 </li>
 <li>
 <p>Android 4.4+</p>
-<pre><code class="language-java">mWebView.evaluateJavascript(&quot;JSBridge.trigger('NativeCall')&quot;, new ValueCallback&lt;String&gt;() {
-    @Override
-    public void onReceiveValue(String value) {
-        // js callback
-    }
-});
-</code></pre>
-</li>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>mWebView.<span style="color:#bbb">evaluateJavascript</span>(<span style="color:#ed9d13">&#34;JSBridge.trigger(&#39;NativeCall&#39;)&#34;</span>, <span style="color:#6ab825;font-weight:bold">new</span> ValueCallback&lt;String&gt;() {
+</span></span><span style="display:flex;"><span>    <span style="color:#ffa500">@Override</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">public</span> <span style="color:#6ab825;font-weight:bold">void</span> <span style="color:#447fcf">onReceiveValue</span>(String value) {
+</span></span><span style="display:flex;"><span>        <span style="color:#999;font-style:italic">// js callback
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>    }
+</span></span><span style="display:flex;"><span>});
+</span></span></code></pre></div></li>
 </ul>
 <h4 id="定义拦截规则">定义拦截规则</h4>
 <p>我们根据公司业务会制定一套 URL scheme 规则，比较类似常用的 <code>https://</code> 或 <code>file:///</code>，不过我们自定义的 scheme 可以是任意样式，比如：</p>
@@ -338,82 +326,76 @@
 </ul>
 <h4 id="scheme-的回调">Scheme 的回调</h4>
 <p>一般 Native 拦截 scheme ，处理完成后，调用 Bridge 的 callback 方法。</p>
-<pre><code class="language-java">mWebView.evaluateJavascript(&quot;JSBridge.trigger('NativeCall')&quot;, new ValueCallback&lt;String&gt;() {
-    @Override
-    public void onReceiveValue(String value) {
-        // js callback
-    }
-});
-</code></pre>
-<h2 id="react-native-实现原理">React Native 实现原理</h2>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>mWebView.<span style="color:#bbb">evaluateJavascript</span>(<span style="color:#ed9d13">&#34;JSBridge.trigger(&#39;NativeCall&#39;)&#34;</span>, <span style="color:#6ab825;font-weight:bold">new</span> ValueCallback&lt;String&gt;() {
+</span></span><span style="display:flex;"><span>    <span style="color:#ffa500">@Override</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">public</span> <span style="color:#6ab825;font-weight:bold">void</span> <span style="color:#447fcf">onReceiveValue</span>(String value) {
+</span></span><span style="display:flex;"><span>        <span style="color:#999;font-style:italic">// js callback
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>    }
+</span></span><span style="display:flex;"><span>});
+</span></span></code></pre></div><h2 id="react-native-实现原理">React Native 实现原理</h2>
 <p>React Native 并没有运行在浏览器引擎（WebView/V8）中。不像大部分前端框架是简化 DOM 树的处理，React Native 和 DOM 没有关系。React Native 重写了大部分系统 UI 组件，并在框架内处理好了 Javascript 和原生组件之间的调用和通信。开发者可以通过 React 风格的 Javascript 代码使用这些 React Native UI 组件来构建应用的UI。可以认为 React Native 实现了一个渲染引擎，使用 React 作为渲染引擎的编程语言。</p>
 <h2 id="页面调用方案">页面调用方案</h2>
 <p>简单的页面跳转，从 MainScreen 跳转到 SecondaryScreen</p>
 <p>Android 中的实现：</p>
-<pre><code class="language-kotlin">startActivity(Intent(this, SecondaryScreen.class))
-</code></pre>
-<p>iOS 中的实现：</p>
-<pre><code class="language-oc">SecondaryViewController *secondaryViewController = [[SecondaryViewController alloc] init];
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span>startActivity(Intent(<span style="color:#6ab825;font-weight:bold">this</span>, SecondaryScreen.<span style="color:#6ab825;font-weight:bold">class</span>))
+</span></span></code></pre></div><p>iOS 中的实现：</p>
+<pre tabindex="0"><code class="language-oc" data-lang="oc">SecondaryViewController *secondaryViewController = [[SecondaryViewController alloc] init];
 [self.navigationController pushViewController:secondViewController animated:YES];
-</code></pre>
-<p>随着项目逐渐增大，我们需要做一些模块化的工作。模块化基本的要求是解除模块间的依赖，我们需要一个间接的调用目标页面的方案。</p>
+</code></pre><p>随着项目逐渐增大，我们需要做一些模块化的工作。模块化基本的要求是解除模块间的依赖，我们需要一个间接的调用目标页面的方案。</p>
 <h3 id="openurl-方案">openURL 方案</h3>
 <p>在这些间接方案中，有很多是基于 iOS 提供的 UIApplicationDelegate 中的用于响应 URL 调用的钩子方法。</p>
 <p>在 iOS 8 中，该方法为：</p>
-<pre><code class="language-oc">application:openURL:sourceApplication:annotation:
-</code></pre>
-<p>iOS 9 中该方法被标记为 Deprecated，并提供了一个替代方法：</p>
-<pre><code class="language-oc">application:openURL:options:
-</code></pre>
-<p>我们将这两个方法称为 <code>openURL</code> 钩子方法。</p>
+<pre tabindex="0"><code class="language-oc" data-lang="oc">application:openURL:sourceApplication:annotation:
+</code></pre><p>iOS 9 中该方法被标记为 Deprecated，并提供了一个替代方法：</p>
+<pre tabindex="0"><code class="language-oc" data-lang="oc">application:openURL:options:
+</code></pre><p>我们将这两个方法称为 <code>openURL</code> 钩子方法。</p>
 <p>如果应用注册了一个 URL scheme。任何第三方应用，以及应用自身对该 URL 的调用，都会调起以上 <code>openURL</code> 钩子方法。这就提供了一个在应用间通信的方法。同时这也是目前为止，iOS 系统中，应用间通信的唯一方式。</p>
 <h2 id="react-native">React Native</h2>
 <p>React Native 需要的技术栈比较特别，比较适合 Web 经验特别丰富，前端工程师特别优秀，但又缺乏优秀的客户端工程师的情况，React Native 是一个快速切入移动应用市场的技术选择。</p>
 <h2 id="常见问题">常见问题</h2>
 <h3 id="内存管理">内存管理</h3>
 <p>根据 adb shell 查看 app 占用内存信息</p>
-<pre><code class="language-shell"># 查看 app 基本信息
-Zac:Sample Zac$ adb shell ps | grep com.guotai.dazhihui
-u0_a674       9858   669 2205104 268448 0                   0 S com.guotai.dazhihui
-u0_a674      10039   669 1973628 101852 0                   0 S com.guotai.dazhihui:remote
-u0_a674      10129   669 1988412 113528 0                   0 S com.guotai.dazhihui:pushservice
-
-# 未开启 WebView 时的内存占用信息
-Zac:Sample Zac$ adb shell dumpsys meminfo com.guotai.dazhihui
-Applications Memory Usage (in Kilobytes):
-...
-App Summary
-                       Pss(KB)
-                        ------
-           Java Heap:    21264
-         Native Heap:    35988
-                Code:    15648
-               Stack:       52
-            Graphics:    72324
-       Private Other:     4528
-              System:    18578
-
-               TOTAL:   168382       TOTAL SWAP PSS:      420
-...
-
-# 开启 WebView 之后的内存占用
-...
-App Summary
-                       Pss(KB)
-                        ------
-           Java Heap:    25136
-         Native Heap:    55420
-                Code:    51480
-               Stack:       52
-            Graphics:    74704
-       Private Other:     6244
-              System:    29544
-
-               TOTAL:   242580       TOTAL SWAP PSS:      376
-
-内存
-</code></pre>
-
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#999;font-style:italic"># 查看 app 基本信息</span>
+</span></span><span style="display:flex;"><span>Zac:Sample Zac$ adb shell ps | grep com.guotai.dazhihui
+</span></span><span style="display:flex;"><span>u0_a674       <span style="color:#3677a9">9858</span>   <span style="color:#3677a9">669</span> <span style="color:#3677a9">2205104</span> <span style="color:#3677a9">268448</span> <span style="color:#3677a9">0</span>                   <span style="color:#3677a9">0</span> S com.guotai.dazhihui
+</span></span><span style="display:flex;"><span>u0_a674      <span style="color:#3677a9">10039</span>   <span style="color:#3677a9">669</span> <span style="color:#3677a9">1973628</span> <span style="color:#3677a9">101852</span> <span style="color:#3677a9">0</span>                   <span style="color:#3677a9">0</span> S com.guotai.dazhihui:remote
+</span></span><span style="display:flex;"><span>u0_a674      <span style="color:#3677a9">10129</span>   <span style="color:#3677a9">669</span> <span style="color:#3677a9">1988412</span> <span style="color:#3677a9">113528</span> <span style="color:#3677a9">0</span>                   <span style="color:#3677a9">0</span> S com.guotai.dazhihui:pushservice
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"># 未开启 WebView 时的内存占用信息</span>
+</span></span><span style="display:flex;"><span>Zac:Sample Zac$ adb shell dumpsys meminfo com.guotai.dazhihui
+</span></span><span style="display:flex;"><span>Applications Memory Usage (in Kilobytes):
+</span></span><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span>App Summary
+</span></span><span style="display:flex;"><span>                       Pss(KB)
+</span></span><span style="display:flex;"><span>                        ------
+</span></span><span style="display:flex;"><span>           Java Heap:    <span style="color:#3677a9">21264</span>
+</span></span><span style="display:flex;"><span>         Native Heap:    <span style="color:#3677a9">35988</span>
+</span></span><span style="display:flex;"><span>                Code:    <span style="color:#3677a9">15648</span>
+</span></span><span style="display:flex;"><span>               Stack:       <span style="color:#3677a9">52</span>
+</span></span><span style="display:flex;"><span>            Graphics:    <span style="color:#3677a9">72324</span>
+</span></span><span style="display:flex;"><span>       Private Other:     <span style="color:#3677a9">4528</span>
+</span></span><span style="display:flex;"><span>              System:    <span style="color:#3677a9">18578</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>               TOTAL:   <span style="color:#3677a9">168382</span>       TOTAL SWAP PSS:      <span style="color:#3677a9">420</span>
+</span></span><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"># 开启 WebView 之后的内存占用</span>
+</span></span><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span>App Summary
+</span></span><span style="display:flex;"><span>                       Pss(KB)
+</span></span><span style="display:flex;"><span>                        ------
+</span></span><span style="display:flex;"><span>           Java Heap:    <span style="color:#3677a9">25136</span>
+</span></span><span style="display:flex;"><span>         Native Heap:    <span style="color:#3677a9">55420</span>
+</span></span><span style="display:flex;"><span>                Code:    <span style="color:#3677a9">51480</span>
+</span></span><span style="display:flex;"><span>               Stack:       <span style="color:#3677a9">52</span>
+</span></span><span style="display:flex;"><span>            Graphics:    <span style="color:#3677a9">74704</span>
+</span></span><span style="display:flex;"><span>       Private Other:     <span style="color:#3677a9">6244</span>
+</span></span><span style="display:flex;"><span>              System:    <span style="color:#3677a9">29544</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>               TOTAL:   <span style="color:#3677a9">242580</span>       TOTAL SWAP PSS:      <span style="color:#3677a9">376</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>内存
+</span></span></code></pre></div>
 </article>
 
 
@@ -464,11 +446,6 @@ App Summary
   </div>
 
   
-    <script>
-      document.addEventListener("DOMContentLoaded", () => {
-        hljs.initHighlightingOnLoad();
-      });
-    </script>
 
           </div>
         </div>

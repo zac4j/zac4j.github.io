@@ -19,17 +19,6 @@
   as="style" onload="this.onload=null;this.rel='stylesheet'">
 
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/styles/solarized-light.min.css"
-   media="print"
-  onload="this.media='all';this.onload=null" crossorigin>
-<script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/highlight.min.js"
-   crossorigin></script>
-  <script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/languages/dart.min.js"
-     crossorigin></script>
-  <script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/languages/java.min.js"
-     crossorigin></script>
-  <script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/languages/kotlin.min.js"
-     crossorigin></script>
 
 
 <script defer type="text/javascript" src="https://zacash.cn/js/fontawesome.min.1c5a4674b042785ed214cf0818a81724c6b37442fd61b0ed039237b93de25ed5103fc8079a05770648ccc9c66c4f540a.js" integrity="sha384-HFpGdLBCeF7SFM8IGKgXJMazdEL9YbDtA5I3uT3iXtUQP8gHmgV3BkjMycZsT1QK"></script>
@@ -268,7 +257,7 @@
   <p>Class 文件的结构</p>
 <h2 id="class-file">Class File</h2>
 <h3 id="classfile-structure">ClassFile structure</h3>
-<pre><code class="language-class">ClassFile {
+<pre tabindex="0"><code class="language-class" data-lang="class">ClassFile {
     u4 magic;
     u2 minor_version;
     u2 major_version;
@@ -286,19 +275,17 @@
     u2 attributes_count;
     attribute_info attributes[attributes_count];
 }
-</code></pre>
-<blockquote>
+</code></pre><blockquote>
 <p>The constant_pool is a table of structures representing various string constants, class and interface names, field names, and other constants that are referred to within the ClassFile structure and its substructures. The format of each constant_pool table entry is indicated by its first &ldquo;tag&rdquo; byte.</p>
 </blockquote>
 <p><em>constant_pool</em> 是一个结构表，表示字符串常量、class 和 interface 名称、field 名称以及 ClassFile 结构和其子结构中引用的常量。每个 <em>constant_pool</em> 表条目的格式由其 &ldquo;tag&rdquo; 字节标识。</p>
 <h4 id="constant-pool">constant pool</h4>
 <p>Jvm 指令不依赖于类，接口，类实例或数组，相反，指令引用了 constant_pool 表中的符号信息（symbolic info）。常量池中的条目有如下的结构：</p>
-<pre><code class="language-class">cP_info {
+<pre tabindex="0"><code class="language-class" data-lang="class">cP_info {
     u1 tag;
     u1 info[];
 }
-</code></pre>
-<p>tag 表示常量的类型，info 存储常量的值</p>
+</code></pre><p>tag 表示常量的类型，info 存储常量的值</p>
 <p>tag 类型和对应的值：</p>
 <table>
 <thead>
@@ -356,15 +343,14 @@
 </table>
 <h3 id="fields">Fields</h3>
 <p><em>field_info</em> 的结构：</p>
-<pre><code class="language-class">field_info {
+<pre tabindex="0"><code class="language-class" data-lang="class">field_info {
     u2 access_flags;
     u2 name_index;
     u2 descriptor_index;
     u2 attributes_count;
     attribute_info attributes[attributes_count];
 }
-</code></pre>
-<h4 id="field-access_flags">Field access_flags</h4>
+</code></pre><h4 id="field-access_flags">Field access_flags</h4>
 <table>
 <thead>
 <tr>
@@ -413,15 +399,14 @@
 </table>
 <h3 id="methods">Methods</h3>
 <p><em>method_info</em> 的结构：</p>
-<pre><code class="language-class">method_info {
+<pre tabindex="0"><code class="language-class" data-lang="class">method_info {
     u2 access_flags;
     u2 name_index;
     u2 descriptor_index;
     u2 attributes_count;
     attribute_info attributes[attributes_count];
 }
-</code></pre>
-<h4 id="method-access_flags">Method access_flags</h4>
+</code></pre><h4 id="method-access_flags">Method access_flags</h4>
 <table>
 <thead>
 <tr>
@@ -550,11 +535,6 @@
   </div>
 
   
-    <script>
-      document.addEventListener("DOMContentLoaded", () => {
-        hljs.initHighlightingOnLoad();
-      });
-    </script>
 
           </div>
         </div>

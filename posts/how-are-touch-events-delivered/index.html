@@ -19,17 +19,6 @@
   as="style" onload="this.onload=null;this.rel='stylesheet'">
 
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/styles/solarized-light.min.css"
-   media="print"
-  onload="this.media='all';this.onload=null" crossorigin>
-<script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/highlight.min.js"
-   crossorigin></script>
-  <script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/languages/dart.min.js"
-     crossorigin></script>
-  <script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/languages/java.min.js"
-     crossorigin></script>
-  <script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/languages/kotlin.min.js"
-     crossorigin></script>
 
 
 <script defer type="text/javascript" src="https://zacash.cn/js/fontawesome.min.1c5a4674b042785ed214cf0818a81724c6b37442fd61b0ed039237b93de25ed5103fc8079a05770648ccc9c66c4f540a.js" integrity="sha384-HFpGdLBCeF7SFM8IGKgXJMazdEL9YbDtA5I3uT3iXtUQP8gHmgV3BkjMycZsT1QK"></script>
@@ -66,9 +55,9 @@
 <meta name="description"
   content="根据例子来理解 Android 的事件传递
 页面的布局结构
-&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt; &lt;layout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot; xmlns:app=&quot;http://schemas.android.com/apk/res-auto&quot;&gt; &lt;data&gt; &lt;variable name=&quot;viewModel&quot; type=&quot;com.zac4j.system.data.TouchViewModel&quot; /&gt; &lt;/data&gt; &lt;com.zac4j.system.ui.widget.CustomLayout android:id=&quot;@id/touch_sample_container&quot; android:layout_width=&quot;match_parent&quot; android:layout_height=&quot;match_parent&quot;&gt; &lt;Button android:id=&quot;@id/touch_sample_btn&quot; style=&quot;@style/Widget.AppCompat.Button.Colored&quot; android:layout_width=&quot;match_parent&quot; android:layout_height=&quot;wrap_content&quot; android:text=&quot;Touch Me&quot; app:layout_constraintEnd_toEndOf=&quot;parent&quot; app:layout_constraintStart_toStartOf=&quot;parent&quot; app:layout_constraintTop_toTopOf=&quot;parent&quot; /&gt; &lt;/com.zac4j.system.ui.widget.CustomLayout&gt; &lt;/layout&gt;  TouchEvent 的传递 我们通常对 Button 创建点击事件:
-touchSampleBtn.setOnClickListener { Logger.i(TAG, &quot;setOnClickListener&quot;, &quot;sampleBtn clicked&quot;) }  可以先看下 View.dispatchTouchEvent() 的实现:
-public boolean dispatchTouchEvent(MotionEvent event) { ... if (onFilterTouchEventForSecurity(event)) { if ((mViewFlags &amp; ENABLED_MASK) == ENABLED &amp;&amp; handleScrollBarDragging(event)) { result = true; } //noinspection SimplifiableIfStatement ListenerInfo li = mListenerInfo; if (li !">
+&lt;?xml version=&#34;1.0&#34; encoding=&#34;utf-8&#34;?&gt; &lt;layout xmlns:android=&#34;http://schemas.android.com/apk/res/android&#34;  xmlns:app=&#34;http://schemas.android.com/apk/res-auto&#34;&gt;   &lt;data&gt;  &lt;variable  name=&#34;viewModel&#34;  type=&#34;com.zac4j.system.data.TouchViewModel&#34; /&gt;  &lt;/data&gt;   &lt;com.zac4j.system.ui.widget.CustomLayout  android:id=&#34;@id/touch_sample_container&#34;  android:layout_width=&#34;match_parent&#34;  android:layout_height=&#34;match_parent&#34;&gt;   &lt;Button  android:id=&#34;@id/touch_sample_btn&#34;  style=&#34;@style/Widget.AppCompat.Button.Colored&#34;  android:layout_width=&#34;match_parent&#34;  android:layout_height=&#34;wrap_content&#34;  android:text=&#34;Touch Me&#34;  app:layout_constraintEnd_toEndOf=&#34;parent&#34;  app:layout_constraintStart_toStartOf=&#34;parent&#34;  app:layout_constraintTop_toTopOf=&#34;parent&#34; /&gt;   &lt;/com.zac4j.system.ui.widget.CustomLayout&gt; &lt;/layout&gt; TouchEvent 的传递 我们通常对 Button 创建点击事件:
+touchSampleBtn.setOnClickListener {  Logger.i(TAG, &#34;setOnClickListener&#34;, &#34;sampleBtn clicked&#34;) } 可以先看下 View.dispatchTouchEvent() 的实现:
+public boolean dispatchTouchEvent(MotionEvent event) {  .">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -106,7 +95,7 @@ public boolean dispatchTouchEvent(MotionEvent event) { ... if (onFilterTouchEven
             "url": "https://zacash.cn/images/icon.png"
         }
         },
-    "description": "根据例子来理解 Android 的事件传递\n页面的布局结构\n\u0026lt;?xml version=\u0026quot;1.0\u0026quot; encoding=\u0026quot;utf-8\u0026quot;?\u0026gt; \u0026lt;layout xmlns:android=\u0026quot;http:\/\/schemas.android.com\/apk\/res\/android\u0026quot; xmlns:app=\u0026quot;http:\/\/schemas.android.com\/apk\/res-auto\u0026quot;\u0026gt; \u0026lt;data\u0026gt; \u0026lt;variable name=\u0026quot;viewModel\u0026quot; type=\u0026quot;com.zac4j.system.data.TouchViewModel\u0026quot; \/\u0026gt; \u0026lt;\/data\u0026gt; \u0026lt;com.zac4j.system.ui.widget.CustomLayout android:id=\u0026quot;@id\/touch_sample_container\u0026quot; android:layout_width=\u0026quot;match_parent\u0026quot; android:layout_height=\u0026quot;match_parent\u0026quot;\u0026gt; \u0026lt;Button android:id=\u0026quot;@id\/touch_sample_btn\u0026quot; style=\u0026quot;@style\/Widget.AppCompat.Button.Colored\u0026quot; android:layout_width=\u0026quot;match_parent\u0026quot; android:layout_height=\u0026quot;wrap_content\u0026quot; android:text=\u0026quot;Touch Me\u0026quot; app:layout_constraintEnd_toEndOf=\u0026quot;parent\u0026quot; app:layout_constraintStart_toStartOf=\u0026quot;parent\u0026quot; app:layout_constraintTop_toTopOf=\u0026quot;parent\u0026quot; \/\u0026gt; \u0026lt;\/com.zac4j.system.ui.widget.CustomLayout\u0026gt; \u0026lt;\/layout\u0026gt;  TouchEvent 的传递 我们通常对 Button 创建点击事件:\ntouchSampleBtn.setOnClickListener { Logger.i(TAG, \u0026quot;setOnClickListener\u0026quot;, \u0026quot;sampleBtn clicked\u0026quot;) }  可以先看下 View.dispatchTouchEvent() 的实现:\npublic boolean dispatchTouchEvent(MotionEvent event) { ... if (onFilterTouchEventForSecurity(event)) { if ((mViewFlags \u0026amp; ENABLED_MASK) == ENABLED \u0026amp;\u0026amp; handleScrollBarDragging(event)) { result = true; } \/\/noinspection SimplifiableIfStatement ListenerInfo li = mListenerInfo; if (li !"
+    "description": "根据例子来理解 Android 的事件传递\n页面的布局结构\n\u0026lt;?xml version=\u0026#34;1.0\u0026#34; encoding=\u0026#34;utf-8\u0026#34;?\u0026gt; \u0026lt;layout xmlns:android=\u0026#34;http:\/\/schemas.android.com\/apk\/res\/android\u0026#34;  xmlns:app=\u0026#34;http:\/\/schemas.android.com\/apk\/res-auto\u0026#34;\u0026gt;   \u0026lt;data\u0026gt;  \u0026lt;variable  name=\u0026#34;viewModel\u0026#34;  type=\u0026#34;com.zac4j.system.data.TouchViewModel\u0026#34; \/\u0026gt;  \u0026lt;\/data\u0026gt;   \u0026lt;com.zac4j.system.ui.widget.CustomLayout  android:id=\u0026#34;@id\/touch_sample_container\u0026#34;  android:layout_width=\u0026#34;match_parent\u0026#34;  android:layout_height=\u0026#34;match_parent\u0026#34;\u0026gt;   \u0026lt;Button  android:id=\u0026#34;@id\/touch_sample_btn\u0026#34;  style=\u0026#34;@style\/Widget.AppCompat.Button.Colored\u0026#34;  android:layout_width=\u0026#34;match_parent\u0026#34;  android:layout_height=\u0026#34;wrap_content\u0026#34;  android:text=\u0026#34;Touch Me\u0026#34;  app:layout_constraintEnd_toEndOf=\u0026#34;parent\u0026#34;  app:layout_constraintStart_toStartOf=\u0026#34;parent\u0026#34;  app:layout_constraintTop_toTopOf=\u0026#34;parent\u0026#34; \/\u0026gt;   \u0026lt;\/com.zac4j.system.ui.widget.CustomLayout\u0026gt; \u0026lt;\/layout\u0026gt; TouchEvent 的传递 我们通常对 Button 创建点击事件:\ntouchSampleBtn.setOnClickListener {  Logger.i(TAG, \u0026#34;setOnClickListener\u0026#34;, \u0026#34;sampleBtn clicked\u0026#34;) } 可以先看下 View.dispatchTouchEvent() 的实现:\npublic boolean dispatchTouchEvent(MotionEvent event) {  ."
 }
 </script><meta property="og:title" content="How Are Touch Events Delivered | Zac&#39;s blog" />
 <meta property="og:type" content="article" />
@@ -122,9 +111,9 @@ public boolean dispatchTouchEvent(MotionEvent event) { ... if (onFilterTouchEven
 
 <meta property="og:description" content="根据例子来理解 Android 的事件传递
 页面的布局结构
-&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt; &lt;layout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot; xmlns:app=&quot;http://schemas.android.com/apk/res-auto&quot;&gt; &lt;data&gt; &lt;variable name=&quot;viewModel&quot; type=&quot;com.zac4j.system.data.TouchViewModel&quot; /&gt; &lt;/data&gt; &lt;com.zac4j.system.ui.widget.CustomLayout android:id=&quot;@id/touch_sample_container&quot; android:layout_width=&quot;match_parent&quot; android:layout_height=&quot;match_parent&quot;&gt; &lt;Button android:id=&quot;@id/touch_sample_btn&quot; style=&quot;@style/Widget.AppCompat.Button.Colored&quot; android:layout_width=&quot;match_parent&quot; android:layout_height=&quot;wrap_content&quot; android:text=&quot;Touch Me&quot; app:layout_constraintEnd_toEndOf=&quot;parent&quot; app:layout_constraintStart_toStartOf=&quot;parent&quot; app:layout_constraintTop_toTopOf=&quot;parent&quot; /&gt; &lt;/com.zac4j.system.ui.widget.CustomLayout&gt; &lt;/layout&gt;  TouchEvent 的传递 我们通常对 Button 创建点击事件:
-touchSampleBtn.setOnClickListener { Logger.i(TAG, &quot;setOnClickListener&quot;, &quot;sampleBtn clicked&quot;) }  可以先看下 View.dispatchTouchEvent() 的实现:
-public boolean dispatchTouchEvent(MotionEvent event) { ... if (onFilterTouchEventForSecurity(event)) { if ((mViewFlags &amp; ENABLED_MASK) == ENABLED &amp;&amp; handleScrollBarDragging(event)) { result = true; } //noinspection SimplifiableIfStatement ListenerInfo li = mListenerInfo; if (li !" />
+&lt;?xml version=&#34;1.0&#34; encoding=&#34;utf-8&#34;?&gt; &lt;layout xmlns:android=&#34;http://schemas.android.com/apk/res/android&#34;  xmlns:app=&#34;http://schemas.android.com/apk/res-auto&#34;&gt;   &lt;data&gt;  &lt;variable  name=&#34;viewModel&#34;  type=&#34;com.zac4j.system.data.TouchViewModel&#34; /&gt;  &lt;/data&gt;   &lt;com.zac4j.system.ui.widget.CustomLayout  android:id=&#34;@id/touch_sample_container&#34;  android:layout_width=&#34;match_parent&#34;  android:layout_height=&#34;match_parent&#34;&gt;   &lt;Button  android:id=&#34;@id/touch_sample_btn&#34;  style=&#34;@style/Widget.AppCompat.Button.Colored&#34;  android:layout_width=&#34;match_parent&#34;  android:layout_height=&#34;wrap_content&#34;  android:text=&#34;Touch Me&#34;  app:layout_constraintEnd_toEndOf=&#34;parent&#34;  app:layout_constraintStart_toStartOf=&#34;parent&#34;  app:layout_constraintTop_toTopOf=&#34;parent&#34; /&gt;   &lt;/com.zac4j.system.ui.widget.CustomLayout&gt; &lt;/layout&gt; TouchEvent 的传递 我们通常对 Button 创建点击事件:
+touchSampleBtn.setOnClickListener {  Logger.i(TAG, &#34;setOnClickListener&#34;, &#34;sampleBtn clicked&#34;) } 可以先看下 View.dispatchTouchEvent() 的实现:
+public boolean dispatchTouchEvent(MotionEvent event) {  ." />
 
 
 
@@ -260,63 +249,60 @@ public boolean dispatchTouchEvent(MotionEvent event) { ... if (onFilterTouchEven
 
   <p>根据例子来理解 Android 的事件传递</p>
 <p>页面的布局结构</p>
-<pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
-&lt;layout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
-  xmlns:app=&quot;http://schemas.android.com/apk/res-auto&quot;&gt;
-
-  &lt;data&gt;
-    &lt;variable
-      name=&quot;viewModel&quot;
-      type=&quot;com.zac4j.system.data.TouchViewModel&quot; /&gt;
-  &lt;/data&gt;
-
-  &lt;com.zac4j.system.ui.widget.CustomLayout
-    android:id=&quot;@id/touch_sample_container&quot;
-    android:layout_width=&quot;match_parent&quot;
-    android:layout_height=&quot;match_parent&quot;&gt;
-
-    &lt;Button
-      android:id=&quot;@id/touch_sample_btn&quot;
-      style=&quot;@style/Widget.AppCompat.Button.Colored&quot;
-      android:layout_width=&quot;match_parent&quot;
-      android:layout_height=&quot;wrap_content&quot;
-      android:text=&quot;Touch Me&quot;
-      app:layout_constraintEnd_toEndOf=&quot;parent&quot;
-      app:layout_constraintStart_toStartOf=&quot;parent&quot;
-      app:layout_constraintTop_toTopOf=&quot;parent&quot; /&gt;
-
-  &lt;/com.zac4j.system.ui.widget.CustomLayout&gt;
-&lt;/layout&gt;
-</code></pre>
-<h2 id="touchevent-的传递">TouchEvent 的传递</h2>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#cd2828;font-weight:bold">&lt;?xml version=&#34;1.0&#34; encoding=&#34;utf-8&#34;?&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">&lt;layout</span> <span style="color:#bbb">xmlns:android=</span><span style="color:#ed9d13">&#34;http://schemas.android.com/apk/res/android&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#bbb">xmlns:app=</span><span style="color:#ed9d13">&#34;http://schemas.android.com/apk/res-auto&#34;</span><span style="color:#6ab825;font-weight:bold">&gt;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#6ab825;font-weight:bold">&lt;data&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">&lt;variable</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#bbb">name=</span><span style="color:#ed9d13">&#34;viewModel&#34;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#bbb">type=</span><span style="color:#ed9d13">&#34;com.zac4j.system.data.TouchViewModel&#34;</span> <span style="color:#6ab825;font-weight:bold">/&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#6ab825;font-weight:bold">&lt;/data&gt;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#6ab825;font-weight:bold">&lt;com.zac4j.system.ui.widget.CustomLayout</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#bbb">android:id=</span><span style="color:#ed9d13">&#34;@id/touch_sample_container&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#bbb">android:layout_width=</span><span style="color:#ed9d13">&#34;match_parent&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#bbb">android:layout_height=</span><span style="color:#ed9d13">&#34;match_parent&#34;</span><span style="color:#6ab825;font-weight:bold">&gt;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">&lt;Button</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#bbb">android:id=</span><span style="color:#ed9d13">&#34;@id/touch_sample_btn&#34;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#bbb">style=</span><span style="color:#ed9d13">&#34;@style/Widget.AppCompat.Button.Colored&#34;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#bbb">android:layout_width=</span><span style="color:#ed9d13">&#34;match_parent&#34;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#bbb">android:layout_height=</span><span style="color:#ed9d13">&#34;wrap_content&#34;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#bbb">android:text=</span><span style="color:#ed9d13">&#34;Touch Me&#34;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#bbb">app:layout_constraintEnd_toEndOf=</span><span style="color:#ed9d13">&#34;parent&#34;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#bbb">app:layout_constraintStart_toStartOf=</span><span style="color:#ed9d13">&#34;parent&#34;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#bbb">app:layout_constraintTop_toTopOf=</span><span style="color:#ed9d13">&#34;parent&#34;</span> <span style="color:#6ab825;font-weight:bold">/&gt;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#6ab825;font-weight:bold">&lt;/com.zac4j.system.ui.widget.CustomLayout&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">&lt;/layout&gt;</span>
+</span></span></code></pre></div><h2 id="touchevent-的传递">TouchEvent 的传递</h2>
 <p>我们通常对 Button 创建点击事件:</p>
-<pre><code class="language-kotlin">touchSampleBtn.setOnClickListener {
-    Logger.i(TAG, &quot;setOnClickListener&quot;, &quot;sampleBtn clicked&quot;)
-}
-</code></pre>
-<p>可以先看下 View.dispatchTouchEvent() 的实现:</p>
-<pre><code class="language-kotlin">public boolean dispatchTouchEvent(MotionEvent event) {
-    ...
-    if (onFilterTouchEventForSecurity(event)) {
-        if ((mViewFlags &amp; ENABLED_MASK) == ENABLED &amp;&amp; handleScrollBarDragging(event)) {
-            result = true;
-        }
-        //noinspection SimplifiableIfStatement
-        ListenerInfo li = mListenerInfo;
-        if (li != null &amp;&amp; li.mOnTouchListener != null
-                &amp;&amp; (mViewFlags &amp; ENABLED_MASK) == ENABLED
-                &amp;&amp; li.mOnTouchListener.onTouch(this, event)) {
-            result = true;
-        }
-
-        if (!result &amp;&amp; onTouchEvent(event)) {
-            result = true;
-        }
-    }
-    ...
-}
-</code></pre>
-<p>可以看到 <code>View.mOnTouchListener.onTouch()</code> 会在 <code>View.onTouchEvent()</code> 前判断是否执行，假如 <code>View.mOnTouchListener.onTouch()</code> 返回 true(消费该事件) 的话，<code>View.onTouchEvent()</code> 将不会执行。</p>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span>touchSampleBtn.setOnClickListener {
+</span></span><span style="display:flex;"><span>    Logger.i(TAG, <span style="color:#ed9d13">&#34;setOnClickListener&#34;</span>, <span style="color:#ed9d13">&#34;sampleBtn clicked&#34;</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>可以先看下 View.dispatchTouchEvent() 的实现:</p>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">public</span> boolean dispatchTouchEvent(MotionEvent event) {
+</span></span><span style="display:flex;"><span>    ...
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">if</span> (onFilterTouchEventForSecurity(event)) {
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">if</span> ((mViewFlags &amp; ENABLED_MASK) == ENABLED &amp;&amp; handleScrollBarDragging(event)) {
+</span></span><span style="display:flex;"><span>            result = <span style="color:#6ab825;font-weight:bold">true</span>;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#999;font-style:italic">//noinspection SimplifiableIfStatement
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>        ListenerInfo li = mListenerInfo;
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">if</span> (li != <span style="color:#6ab825;font-weight:bold">null</span> &amp;&amp; li.mOnTouchListener != <span style="color:#6ab825;font-weight:bold">null</span>
+</span></span><span style="display:flex;"><span>                &amp;&amp; (mViewFlags &amp; ENABLED_MASK) == ENABLED
+</span></span><span style="display:flex;"><span>                &amp;&amp; li.mOnTouchListener.onTouch(<span style="color:#6ab825;font-weight:bold">this</span>, event)) {
+</span></span><span style="display:flex;"><span>            result = <span style="color:#6ab825;font-weight:bold">true</span>;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">if</span> (!result &amp;&amp; onTouchEvent(event)) {
+</span></span><span style="display:flex;"><span>            result = <span style="color:#6ab825;font-weight:bold">true</span>;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    ...
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>可以看到 <code>View.mOnTouchListener.onTouch()</code> 会在 <code>View.onTouchEvent()</code> 前判断是否执行，假如 <code>View.mOnTouchListener.onTouch()</code> 返回 true(消费该事件) 的话，<code>View.onTouchEvent()</code> 将不会执行。</p>
 <p><code>View.mTouchListener.onTouch()</code> 的执行条件是:</p>
 <ul>
 <li>mTouchListener 不为空(即设置 <code>View.setOnTouchListener()</code> 方法)</li>
@@ -324,7 +310,7 @@ public boolean dispatchTouchEvent(MotionEvent event) { ... if (onFilterTouchEven
 </ul>
 <h2 id="viewgrouponintercepttouchevent">ViewGroup.onInterceptTouchEvent</h2>
 <p>设置 <code>CustomLayout.onInterceptTouchEvent()</code> 返回 false，点击 touchSamleBtn 按钮.</p>
-<pre><code class="language-log"># MotionEvent.ACTION_DOWN 事件
+<pre tabindex="0"><code class="language-log" data-lang="log"># MotionEvent.ACTION_DOWN 事件
 I/ZacLog: Page -&gt; TouchFragment, View -&gt; CustomLayout, Method -&gt; dispatchTouchEvent, Msg -&gt; MotionEvent::ACTION_DOWN
 I/ZacLog: Page -&gt; TouchFragment, View -&gt; CustomLayout, Method -&gt; onInterceptTouchEvent, Msg -&gt; MotionEvent::ACTION_DOWN
 I/ZacLog: Page -&gt; TouchFragment, View -&gt; touchSampleBtn::AppCompatButton, Method -&gt; setOnTouchListener, Msg -&gt; MotionEvent::ACTION_DOWN
@@ -334,231 +320,228 @@ I/ZacLog: Page -&gt; TouchFragment, View -&gt; CustomLayout, Method -&gt; onInte
 I/ZacLog: Page -&gt; TouchFragment, View -&gt; touchSampleBtn::AppCompatButton, Method -&gt; setOnTouchListener, Msg -&gt; MotionEvent::ACTION_UP
 # View.onClick 事件
 I/ZacLog: Page -&gt; TouchFragment, View -&gt; touchSampleBtn::AppCompatButton, Method -&gt; setOnClickListener, Msg -&gt; clicked
-</code></pre>
-<p>事件的传递: CustomLayout.dispatchTouchEvent() -&gt; CustomLayout.onInterceptTouchEvent() -&gt; View.mOnTouchListener.onTouch()</p>
+</code></pre><p>事件的传递: CustomLayout.dispatchTouchEvent() -&gt; CustomLayout.onInterceptTouchEvent() -&gt; View.mOnTouchListener.onTouch()</p>
 <p>同时 MotionEvent.ACTION_DOWN + MotionEvent.ACTION_DOWN -&gt; View.mOnClickListener.onClick()</p>
 <p>设置 <code>CustomLayout.onInterceptTouchEvent()</code> 返回 true，点击 touchSampleBtn.</p>
-<pre><code class="language-log">I/ZacLog: Page -&gt; TouchFragment, View -&gt; CustomLayout, Method -&gt; onInterceptTouchEvent, Msg -&gt; MotionEvent::ACTION_DOWN
+<pre tabindex="0"><code class="language-log" data-lang="log">I/ZacLog: Page -&gt; TouchFragment, View -&gt; CustomLayout, Method -&gt; onInterceptTouchEvent, Msg -&gt; MotionEvent::ACTION_DOWN
 I/ZacLog: Page -&gt; TouchFragment, View -&gt; touchSampleContainer::CustomLayout, Method -&gt; setOnTouchListener, Msg -&gt; MotionEvent::ACTION_DOWN
-</code></pre>
-<p>我们看下 ViewGroup.dispatchTouchEvent() 的实现：</p>
-<pre><code class="language-java">@Override
-public boolean dispatchTouchEvent(MotionEvent ev) {
-    if (mInputEventConsistencyVerifier != null) {
-        mInputEventConsistencyVerifier.onTouchEvent(ev, 1);
-    }
-
-    // If the event targets the accessibility focused view and this is it, start
-    // normal event dispatch. Maybe a descendant is what will handle the click.
-    if (ev.isTargetAccessibilityFocus() &amp;&amp; isAccessibilityFocusedViewOrHost()) {
-        ev.setTargetAccessibilityFocus(false);
-    }
-
-    boolean handled = false;
-    if (onFilterTouchEventForSecurity(ev)) {
-        final int action = ev.getAction();
-        final int actionMasked = action &amp; MotionEvent.ACTION_MASK;
-
-        // Handle an initial down.
-        if (actionMasked == MotionEvent.ACTION_DOWN) {
-            // Throw away all previous state when starting a new touch gesture.
-            // The framework may have dropped the up or cancel event for the previous gesture
-            // due to an app switch, ANR, or some other state change.
-            cancelAndClearTouchTargets(ev);
-            resetTouchState();
-        }
-
-        // Check for interception.
-        final boolean intercepted;
-        if (actionMasked == MotionEvent.ACTION_DOWN
-                || mFirstTouchTarget != null) {
-            final boolean disallowIntercept = (mGroupFlags &amp; FLAG_DISALLOW_INTERCEPT) != 0;
-            if (!disallowIntercept) {
-                intercepted = onInterceptTouchEvent(ev);
-                ev.setAction(action); // restore action in case it was changed
-            } else {
-                intercepted = false;
-            }
-        } else {
-            // There are no touch targets and this action is not an initial down
-            // so this view group continues to intercept touches.
-            intercepted = true;
-        }
-
-        // If intercepted, start normal event dispatch. Also if there is already
-        // a view that is handling the gesture, do normal event dispatch.
-        if (intercepted || mFirstTouchTarget != null) {
-            ev.setTargetAccessibilityFocus(false);
-        }
-
-        // Check for cancelation.
-        final boolean canceled = resetCancelNextUpFlag(this)
-                || actionMasked == MotionEvent.ACTION_CANCEL;
-
-        // Update list of touch targets for pointer down, if needed.
-        final boolean split = (mGroupFlags &amp; FLAG_SPLIT_MOTION_EVENTS) != 0;
-        TouchTarget newTouchTarget = null;
-        boolean alreadyDispatchedToNewTouchTarget = false;
-        if (!canceled &amp;&amp; !intercepted) {
-
-            // If the event is targeting accessibility focus we give it to the
-            // view that has accessibility focus and if it does not handle it
-            // we clear the flag and dispatch the event to all children as usual.
-            // We are looking up the accessibility focused host to avoid keeping
-            // state since these events are very rare.
-            View childWithAccessibilityFocus = ev.isTargetAccessibilityFocus()
-                    ? findChildWithAccessibilityFocus() : null;
-
-            if (actionMasked == MotionEvent.ACTION_DOWN
-                    || (split &amp;&amp; actionMasked == MotionEvent.ACTION_POINTER_DOWN)
-                    || actionMasked == MotionEvent.ACTION_HOVER_MOVE) {
-                final int actionIndex = ev.getActionIndex(); // always 0 for down
-                final int idBitsToAssign = split ? 1 &lt;&lt; ev.getPointerId(actionIndex)
-                        : TouchTarget.ALL_POINTER_IDS;
-
-                // Clean up earlier touch targets for this pointer id in case they
-                // have become out of sync.
-                removePointersFromTouchTargets(idBitsToAssign);
-
-                final int childrenCount = mChildrenCount;
-                if (newTouchTarget == null &amp;&amp; childrenCount != 0) {
-                    final float x = ev.getX(actionIndex);
-                    final float y = ev.getY(actionIndex);
-                    // Find a child that can receive the event.
-                    // Scan children from front to back.
-                    final ArrayList&lt;View&gt; preorderedList = buildTouchDispatchChildList();
-                    final boolean customOrder = preorderedList == null
-                            &amp;&amp; isChildrenDrawingOrderEnabled();
-                    final View[] children = mChildren;
-                    for (int i = childrenCount - 1; i &gt;= 0; i--) {
-                        final int childIndex = getAndVerifyPreorderedIndex(
-                                childrenCount, i, customOrder);
-                        final View child = getAndVerifyPreorderedView(
-                                preorderedList, children, childIndex);
-
-                        // If there is a view that has accessibility focus we want it
-                        // to get the event first and if not handled we will perform a
-                        // normal dispatch. We may do a double iteration but this is
-                        // safer given the timeframe.
-                        if (childWithAccessibilityFocus != null) {
-                            if (childWithAccessibilityFocus != child) {
-                                continue;
-                            }
-                            childWithAccessibilityFocus = null;
-                            i = childrenCount - 1;
-                        }
-
-                        if (!child.canReceivePointerEvents()
-                                || !isTransformedTouchPointInView(x, y, child, null)) {
-                            ev.setTargetAccessibilityFocus(false);
-                            continue;
-                        }
-
-                        newTouchTarget = getTouchTarget(child);
-                        if (newTouchTarget != null) {
-                            // Child is already receiving touch within its bounds.
-                            // Give it the new pointer in addition to the ones it is handling.
-                            newTouchTarget.pointerIdBits |= idBitsToAssign;
-                            break;
-                        }
-
-                        resetCancelNextUpFlag(child);
-                        if (dispatchTransformedTouchEvent(ev, false, child, idBitsToAssign)) {
-                            // Child wants to receive touch within its bounds.
-                            mLastTouchDownTime = ev.getDownTime();
-                            if (preorderedList != null) {
-                                // childIndex points into presorted list, find original index
-                                for (int j = 0; j &lt; childrenCount; j++) {
-                                    if (children[childIndex] == mChildren[j]) {
-                                        mLastTouchDownIndex = j;
-                                        break;
-                                    }
-                                }
-                            } else {
-                                mLastTouchDownIndex = childIndex;
-                            }
-                            mLastTouchDownX = ev.getX();
-                            mLastTouchDownY = ev.getY();
-                            newTouchTarget = addTouchTarget(child, idBitsToAssign);
-                            alreadyDispatchedToNewTouchTarget = true;
-                            break;
-                        }
-
-                        // The accessibility focus didn't handle the event, so clear
-                        // the flag and do a normal dispatch to all children.
-                        ev.setTargetAccessibilityFocus(false);
-                    }
-                    if (preorderedList != null) preorderedList.clear();
-                }
-
-                if (newTouchTarget == null &amp;&amp; mFirstTouchTarget != null) {
-                    // Did not find a child to receive the event.
-                    // Assign the pointer to the least recently added target.
-                    newTouchTarget = mFirstTouchTarget;
-                    while (newTouchTarget.next != null) {
-                        newTouchTarget = newTouchTarget.next;
-                    }
-                    newTouchTarget.pointerIdBits |= idBitsToAssign;
-                }
-            }
-        }
-
-        // Dispatch to touch targets.
-        if (mFirstTouchTarget == null) {
-            // No touch targets so treat this as an ordinary view.
-            handled = dispatchTransformedTouchEvent(ev, canceled, null,
-                    TouchTarget.ALL_POINTER_IDS);
-        } else {
-            // Dispatch to touch targets, excluding the new touch target if we already
-            // dispatched to it.  Cancel touch targets if necessary.
-            TouchTarget predecessor = null;
-            TouchTarget target = mFirstTouchTarget;
-            while (target != null) {
-                final TouchTarget next = target.next;
-                if (alreadyDispatchedToNewTouchTarget &amp;&amp; target == newTouchTarget) {
-                    handled = true;
-                } else {
-                    final boolean cancelChild = resetCancelNextUpFlag(target.child)
-                            || intercepted;
-                    if (dispatchTransformedTouchEvent(ev, cancelChild,
-                            target.child, target.pointerIdBits)) {
-                        handled = true;
-                    }
-                    if (cancelChild) {
-                        if (predecessor == null) {
-                            mFirstTouchTarget = next;
-                        } else {
-                            predecessor.next = next;
-                        }
-                        target.recycle();
-                        target = next;
-                        continue;
-                    }
-                }
-                predecessor = target;
-                target = next;
-            }
-        }
-
-        // Update list of touch targets for pointer up or cancel, if needed.
-        if (canceled
-                || actionMasked == MotionEvent.ACTION_UP
-                || actionMasked == MotionEvent.ACTION_HOVER_MOVE) {
-            resetTouchState();
-        } else if (split &amp;&amp; actionMasked == MotionEvent.ACTION_POINTER_UP) {
-            final int actionIndex = ev.getActionIndex();
-            final int idBitsToRemove = 1 &lt;&lt; ev.getPointerId(actionIndex);
-            removePointersFromTouchTargets(idBitsToRemove);
-        }
-    }
-
-    if (!handled &amp;&amp; mInputEventConsistencyVerifier != null) {
-        mInputEventConsistencyVerifier.onUnhandledEvent(ev, 1);
-    }
-    return handled;
-}
-</code></pre>
-
+</code></pre><p>我们看下 ViewGroup.dispatchTouchEvent() 的实现：</p>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#ffa500">@Override</span>
+</span></span><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">public</span> <span style="color:#6ab825;font-weight:bold">boolean</span> <span style="color:#447fcf">dispatchTouchEvent</span>(MotionEvent ev) {
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">if</span> (mInputEventConsistencyVerifier != <span style="color:#6ab825;font-weight:bold">null</span>) {
+</span></span><span style="display:flex;"><span>        mInputEventConsistencyVerifier.<span style="color:#bbb">onTouchEvent</span>(ev, 1);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#999;font-style:italic">// If the event targets the accessibility focused view and this is it, start
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>    <span style="color:#999;font-style:italic">// normal event dispatch. Maybe a descendant is what will handle the click.
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>    <span style="color:#6ab825;font-weight:bold">if</span> (ev.<span style="color:#bbb">isTargetAccessibilityFocus</span>() &amp;&amp; isAccessibilityFocusedViewOrHost()) {
+</span></span><span style="display:flex;"><span>        ev.<span style="color:#bbb">setTargetAccessibilityFocus</span>(<span style="color:#6ab825;font-weight:bold">false</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">boolean</span> handled = <span style="color:#6ab825;font-weight:bold">false</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">if</span> (onFilterTouchEventForSecurity(ev)) {
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">final</span> <span style="color:#6ab825;font-weight:bold">int</span> action = ev.<span style="color:#bbb">getAction</span>();
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">final</span> <span style="color:#6ab825;font-weight:bold">int</span> actionMasked = action &amp; MotionEvent.<span style="color:#bbb">ACTION_MASK</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#999;font-style:italic">// Handle an initial down.
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>        <span style="color:#6ab825;font-weight:bold">if</span> (actionMasked == MotionEvent.<span style="color:#bbb">ACTION_DOWN</span>) {
+</span></span><span style="display:flex;"><span>            <span style="color:#999;font-style:italic">// Throw away all previous state when starting a new touch gesture.
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>            <span style="color:#999;font-style:italic">// The framework may have dropped the up or cancel event for the previous gesture
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>            <span style="color:#999;font-style:italic">// due to an app switch, ANR, or some other state change.
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>            cancelAndClearTouchTargets(ev);
+</span></span><span style="display:flex;"><span>            resetTouchState();
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#999;font-style:italic">// Check for interception.
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>        <span style="color:#6ab825;font-weight:bold">final</span> <span style="color:#6ab825;font-weight:bold">boolean</span> intercepted;
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">if</span> (actionMasked == MotionEvent.<span style="color:#bbb">ACTION_DOWN</span>
+</span></span><span style="display:flex;"><span>                || mFirstTouchTarget != <span style="color:#6ab825;font-weight:bold">null</span>) {
+</span></span><span style="display:flex;"><span>            <span style="color:#6ab825;font-weight:bold">final</span> <span style="color:#6ab825;font-weight:bold">boolean</span> disallowIntercept = (mGroupFlags &amp; FLAG_DISALLOW_INTERCEPT) != 0;
+</span></span><span style="display:flex;"><span>            <span style="color:#6ab825;font-weight:bold">if</span> (!disallowIntercept) {
+</span></span><span style="display:flex;"><span>                intercepted = onInterceptTouchEvent(ev);
+</span></span><span style="display:flex;"><span>                ev.<span style="color:#bbb">setAction</span>(action); <span style="color:#999;font-style:italic">// restore action in case it was changed
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>            } <span style="color:#6ab825;font-weight:bold">else</span> {
+</span></span><span style="display:flex;"><span>                intercepted = <span style="color:#6ab825;font-weight:bold">false</span>;
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        } <span style="color:#6ab825;font-weight:bold">else</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#999;font-style:italic">// There are no touch targets and this action is not an initial down
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>            <span style="color:#999;font-style:italic">// so this view group continues to intercept touches.
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>            intercepted = <span style="color:#6ab825;font-weight:bold">true</span>;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#999;font-style:italic">// If intercepted, start normal event dispatch. Also if there is already
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>        <span style="color:#999;font-style:italic">// a view that is handling the gesture, do normal event dispatch.
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>        <span style="color:#6ab825;font-weight:bold">if</span> (intercepted || mFirstTouchTarget != <span style="color:#6ab825;font-weight:bold">null</span>) {
+</span></span><span style="display:flex;"><span>            ev.<span style="color:#bbb">setTargetAccessibilityFocus</span>(<span style="color:#6ab825;font-weight:bold">false</span>);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#999;font-style:italic">// Check for cancelation.
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>        <span style="color:#6ab825;font-weight:bold">final</span> <span style="color:#6ab825;font-weight:bold">boolean</span> canceled = resetCancelNextUpFlag(<span style="color:#6ab825;font-weight:bold">this</span>)
+</span></span><span style="display:flex;"><span>                || actionMasked == MotionEvent.<span style="color:#bbb">ACTION_CANCEL</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#999;font-style:italic">// Update list of touch targets for pointer down, if needed.
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>        <span style="color:#6ab825;font-weight:bold">final</span> <span style="color:#6ab825;font-weight:bold">boolean</span> split = (mGroupFlags &amp; FLAG_SPLIT_MOTION_EVENTS) != 0;
+</span></span><span style="display:flex;"><span>        TouchTarget newTouchTarget = <span style="color:#6ab825;font-weight:bold">null</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">boolean</span> alreadyDispatchedToNewTouchTarget = <span style="color:#6ab825;font-weight:bold">false</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">if</span> (!canceled &amp;&amp; !intercepted) {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#999;font-style:italic">// If the event is targeting accessibility focus we give it to the
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>            <span style="color:#999;font-style:italic">// view that has accessibility focus and if it does not handle it
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>            <span style="color:#999;font-style:italic">// we clear the flag and dispatch the event to all children as usual.
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>            <span style="color:#999;font-style:italic">// We are looking up the accessibility focused host to avoid keeping
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>            <span style="color:#999;font-style:italic">// state since these events are very rare.
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>            View childWithAccessibilityFocus = ev.<span style="color:#bbb">isTargetAccessibilityFocus</span>()
+</span></span><span style="display:flex;"><span>                    ? findChildWithAccessibilityFocus() : <span style="color:#6ab825;font-weight:bold">null</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#6ab825;font-weight:bold">if</span> (actionMasked == MotionEvent.<span style="color:#bbb">ACTION_DOWN</span>
+</span></span><span style="display:flex;"><span>                    || (split &amp;&amp; actionMasked == MotionEvent.<span style="color:#bbb">ACTION_POINTER_DOWN</span>)
+</span></span><span style="display:flex;"><span>                    || actionMasked == MotionEvent.<span style="color:#bbb">ACTION_HOVER_MOVE</span>) {
+</span></span><span style="display:flex;"><span>                <span style="color:#6ab825;font-weight:bold">final</span> <span style="color:#6ab825;font-weight:bold">int</span> actionIndex = ev.<span style="color:#bbb">getActionIndex</span>(); <span style="color:#999;font-style:italic">// always 0 for down
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>                <span style="color:#6ab825;font-weight:bold">final</span> <span style="color:#6ab825;font-weight:bold">int</span> idBitsToAssign = split ? 1 &lt;&lt; ev.<span style="color:#bbb">getPointerId</span>(actionIndex)
+</span></span><span style="display:flex;"><span>                        : TouchTarget.<span style="color:#bbb">ALL_POINTER_IDS</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>                <span style="color:#999;font-style:italic">// Clean up earlier touch targets for this pointer id in case they
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>                <span style="color:#999;font-style:italic">// have become out of sync.
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>                removePointersFromTouchTargets(idBitsToAssign);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>                <span style="color:#6ab825;font-weight:bold">final</span> <span style="color:#6ab825;font-weight:bold">int</span> childrenCount = mChildrenCount;
+</span></span><span style="display:flex;"><span>                <span style="color:#6ab825;font-weight:bold">if</span> (newTouchTarget == <span style="color:#6ab825;font-weight:bold">null</span> &amp;&amp; childrenCount != 0) {
+</span></span><span style="display:flex;"><span>                    <span style="color:#6ab825;font-weight:bold">final</span> <span style="color:#6ab825;font-weight:bold">float</span> x = ev.<span style="color:#bbb">getX</span>(actionIndex);
+</span></span><span style="display:flex;"><span>                    <span style="color:#6ab825;font-weight:bold">final</span> <span style="color:#6ab825;font-weight:bold">float</span> y = ev.<span style="color:#bbb">getY</span>(actionIndex);
+</span></span><span style="display:flex;"><span>                    <span style="color:#999;font-style:italic">// Find a child that can receive the event.
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>                    <span style="color:#999;font-style:italic">// Scan children from front to back.
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>                    <span style="color:#6ab825;font-weight:bold">final</span> ArrayList&lt;View&gt; preorderedList = buildTouchDispatchChildList();
+</span></span><span style="display:flex;"><span>                    <span style="color:#6ab825;font-weight:bold">final</span> <span style="color:#6ab825;font-weight:bold">boolean</span> customOrder = preorderedList == <span style="color:#6ab825;font-weight:bold">null</span>
+</span></span><span style="display:flex;"><span>                            &amp;&amp; isChildrenDrawingOrderEnabled();
+</span></span><span style="display:flex;"><span>                    <span style="color:#6ab825;font-weight:bold">final</span> View[] children = mChildren;
+</span></span><span style="display:flex;"><span>                    <span style="color:#6ab825;font-weight:bold">for</span> (<span style="color:#6ab825;font-weight:bold">int</span> i = childrenCount - 1; i &gt;= 0; i--) {
+</span></span><span style="display:flex;"><span>                        <span style="color:#6ab825;font-weight:bold">final</span> <span style="color:#6ab825;font-weight:bold">int</span> childIndex = getAndVerifyPreorderedIndex(
+</span></span><span style="display:flex;"><span>                                childrenCount, i, customOrder);
+</span></span><span style="display:flex;"><span>                        <span style="color:#6ab825;font-weight:bold">final</span> View child = getAndVerifyPreorderedView(
+</span></span><span style="display:flex;"><span>                                preorderedList, children, childIndex);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>                        <span style="color:#999;font-style:italic">// If there is a view that has accessibility focus we want it
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>                        <span style="color:#999;font-style:italic">// to get the event first and if not handled we will perform a
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>                        <span style="color:#999;font-style:italic">// normal dispatch. We may do a double iteration but this is
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>                        <span style="color:#999;font-style:italic">// safer given the timeframe.
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>                        <span style="color:#6ab825;font-weight:bold">if</span> (childWithAccessibilityFocus != <span style="color:#6ab825;font-weight:bold">null</span>) {
+</span></span><span style="display:flex;"><span>                            <span style="color:#6ab825;font-weight:bold">if</span> (childWithAccessibilityFocus != child) {
+</span></span><span style="display:flex;"><span>                                <span style="color:#6ab825;font-weight:bold">continue</span>;
+</span></span><span style="display:flex;"><span>                            }
+</span></span><span style="display:flex;"><span>                            childWithAccessibilityFocus = <span style="color:#6ab825;font-weight:bold">null</span>;
+</span></span><span style="display:flex;"><span>                            i = childrenCount - 1;
+</span></span><span style="display:flex;"><span>                        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>                        <span style="color:#6ab825;font-weight:bold">if</span> (!child.<span style="color:#bbb">canReceivePointerEvents</span>()
+</span></span><span style="display:flex;"><span>                                || !isTransformedTouchPointInView(x, y, child, <span style="color:#6ab825;font-weight:bold">null</span>)) {
+</span></span><span style="display:flex;"><span>                            ev.<span style="color:#bbb">setTargetAccessibilityFocus</span>(<span style="color:#6ab825;font-weight:bold">false</span>);
+</span></span><span style="display:flex;"><span>                            <span style="color:#6ab825;font-weight:bold">continue</span>;
+</span></span><span style="display:flex;"><span>                        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>                        newTouchTarget = getTouchTarget(child);
+</span></span><span style="display:flex;"><span>                        <span style="color:#6ab825;font-weight:bold">if</span> (newTouchTarget != <span style="color:#6ab825;font-weight:bold">null</span>) {
+</span></span><span style="display:flex;"><span>                            <span style="color:#999;font-style:italic">// Child is already receiving touch within its bounds.
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>                            <span style="color:#999;font-style:italic">// Give it the new pointer in addition to the ones it is handling.
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>                            newTouchTarget.<span style="color:#bbb">pointerIdBits</span> |= idBitsToAssign;
+</span></span><span style="display:flex;"><span>                            <span style="color:#6ab825;font-weight:bold">break</span>;
+</span></span><span style="display:flex;"><span>                        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>                        resetCancelNextUpFlag(child);
+</span></span><span style="display:flex;"><span>                        <span style="color:#6ab825;font-weight:bold">if</span> (dispatchTransformedTouchEvent(ev, <span style="color:#6ab825;font-weight:bold">false</span>, child, idBitsToAssign)) {
+</span></span><span style="display:flex;"><span>                            <span style="color:#999;font-style:italic">// Child wants to receive touch within its bounds.
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>                            mLastTouchDownTime = ev.<span style="color:#bbb">getDownTime</span>();
+</span></span><span style="display:flex;"><span>                            <span style="color:#6ab825;font-weight:bold">if</span> (preorderedList != <span style="color:#6ab825;font-weight:bold">null</span>) {
+</span></span><span style="display:flex;"><span>                                <span style="color:#999;font-style:italic">// childIndex points into presorted list, find original index
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>                                <span style="color:#6ab825;font-weight:bold">for</span> (<span style="color:#6ab825;font-weight:bold">int</span> j = 0; j &lt; childrenCount; j++) {
+</span></span><span style="display:flex;"><span>                                    <span style="color:#6ab825;font-weight:bold">if</span> (children[childIndex] == mChildren[j]) {
+</span></span><span style="display:flex;"><span>                                        mLastTouchDownIndex = j;
+</span></span><span style="display:flex;"><span>                                        <span style="color:#6ab825;font-weight:bold">break</span>;
+</span></span><span style="display:flex;"><span>                                    }
+</span></span><span style="display:flex;"><span>                                }
+</span></span><span style="display:flex;"><span>                            } <span style="color:#6ab825;font-weight:bold">else</span> {
+</span></span><span style="display:flex;"><span>                                mLastTouchDownIndex = childIndex;
+</span></span><span style="display:flex;"><span>                            }
+</span></span><span style="display:flex;"><span>                            mLastTouchDownX = ev.<span style="color:#bbb">getX</span>();
+</span></span><span style="display:flex;"><span>                            mLastTouchDownY = ev.<span style="color:#bbb">getY</span>();
+</span></span><span style="display:flex;"><span>                            newTouchTarget = addTouchTarget(child, idBitsToAssign);
+</span></span><span style="display:flex;"><span>                            alreadyDispatchedToNewTouchTarget = <span style="color:#6ab825;font-weight:bold">true</span>;
+</span></span><span style="display:flex;"><span>                            <span style="color:#6ab825;font-weight:bold">break</span>;
+</span></span><span style="display:flex;"><span>                        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>                        <span style="color:#999;font-style:italic">// The accessibility focus didn&#39;t handle the event, so clear
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>                        <span style="color:#999;font-style:italic">// the flag and do a normal dispatch to all children.
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>                        ev.<span style="color:#bbb">setTargetAccessibilityFocus</span>(<span style="color:#6ab825;font-weight:bold">false</span>);
+</span></span><span style="display:flex;"><span>                    }
+</span></span><span style="display:flex;"><span>                    <span style="color:#6ab825;font-weight:bold">if</span> (preorderedList != <span style="color:#6ab825;font-weight:bold">null</span>) preorderedList.<span style="color:#bbb">clear</span>();
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>                <span style="color:#6ab825;font-weight:bold">if</span> (newTouchTarget == <span style="color:#6ab825;font-weight:bold">null</span> &amp;&amp; mFirstTouchTarget != <span style="color:#6ab825;font-weight:bold">null</span>) {
+</span></span><span style="display:flex;"><span>                    <span style="color:#999;font-style:italic">// Did not find a child to receive the event.
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>                    <span style="color:#999;font-style:italic">// Assign the pointer to the least recently added target.
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>                    newTouchTarget = mFirstTouchTarget;
+</span></span><span style="display:flex;"><span>                    <span style="color:#6ab825;font-weight:bold">while</span> (newTouchTarget.<span style="color:#bbb">next</span> != <span style="color:#6ab825;font-weight:bold">null</span>) {
+</span></span><span style="display:flex;"><span>                        newTouchTarget = newTouchTarget.<span style="color:#bbb">next</span>;
+</span></span><span style="display:flex;"><span>                    }
+</span></span><span style="display:flex;"><span>                    newTouchTarget.<span style="color:#bbb">pointerIdBits</span> |= idBitsToAssign;
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#999;font-style:italic">// Dispatch to touch targets.
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>        <span style="color:#6ab825;font-weight:bold">if</span> (mFirstTouchTarget == <span style="color:#6ab825;font-weight:bold">null</span>) {
+</span></span><span style="display:flex;"><span>            <span style="color:#999;font-style:italic">// No touch targets so treat this as an ordinary view.
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>            handled = dispatchTransformedTouchEvent(ev, canceled, <span style="color:#6ab825;font-weight:bold">null</span>,
+</span></span><span style="display:flex;"><span>                    TouchTarget.<span style="color:#bbb">ALL_POINTER_IDS</span>);
+</span></span><span style="display:flex;"><span>        } <span style="color:#6ab825;font-weight:bold">else</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#999;font-style:italic">// Dispatch to touch targets, excluding the new touch target if we already
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>            <span style="color:#999;font-style:italic">// dispatched to it.  Cancel touch targets if necessary.
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>            TouchTarget predecessor = <span style="color:#6ab825;font-weight:bold">null</span>;
+</span></span><span style="display:flex;"><span>            TouchTarget target = mFirstTouchTarget;
+</span></span><span style="display:flex;"><span>            <span style="color:#6ab825;font-weight:bold">while</span> (target != <span style="color:#6ab825;font-weight:bold">null</span>) {
+</span></span><span style="display:flex;"><span>                <span style="color:#6ab825;font-weight:bold">final</span> TouchTarget next = target.<span style="color:#bbb">next</span>;
+</span></span><span style="display:flex;"><span>                <span style="color:#6ab825;font-weight:bold">if</span> (alreadyDispatchedToNewTouchTarget &amp;&amp; target == newTouchTarget) {
+</span></span><span style="display:flex;"><span>                    handled = <span style="color:#6ab825;font-weight:bold">true</span>;
+</span></span><span style="display:flex;"><span>                } <span style="color:#6ab825;font-weight:bold">else</span> {
+</span></span><span style="display:flex;"><span>                    <span style="color:#6ab825;font-weight:bold">final</span> <span style="color:#6ab825;font-weight:bold">boolean</span> cancelChild = resetCancelNextUpFlag(target.<span style="color:#bbb">child</span>)
+</span></span><span style="display:flex;"><span>                            || intercepted;
+</span></span><span style="display:flex;"><span>                    <span style="color:#6ab825;font-weight:bold">if</span> (dispatchTransformedTouchEvent(ev, cancelChild,
+</span></span><span style="display:flex;"><span>                            target.<span style="color:#bbb">child</span>, target.<span style="color:#bbb">pointerIdBits</span>)) {
+</span></span><span style="display:flex;"><span>                        handled = <span style="color:#6ab825;font-weight:bold">true</span>;
+</span></span><span style="display:flex;"><span>                    }
+</span></span><span style="display:flex;"><span>                    <span style="color:#6ab825;font-weight:bold">if</span> (cancelChild) {
+</span></span><span style="display:flex;"><span>                        <span style="color:#6ab825;font-weight:bold">if</span> (predecessor == <span style="color:#6ab825;font-weight:bold">null</span>) {
+</span></span><span style="display:flex;"><span>                            mFirstTouchTarget = next;
+</span></span><span style="display:flex;"><span>                        } <span style="color:#6ab825;font-weight:bold">else</span> {
+</span></span><span style="display:flex;"><span>                            predecessor.<span style="color:#bbb">next</span> = next;
+</span></span><span style="display:flex;"><span>                        }
+</span></span><span style="display:flex;"><span>                        target.<span style="color:#bbb">recycle</span>();
+</span></span><span style="display:flex;"><span>                        target = next;
+</span></span><span style="display:flex;"><span>                        <span style="color:#6ab825;font-weight:bold">continue</span>;
+</span></span><span style="display:flex;"><span>                    }
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>                predecessor = target;
+</span></span><span style="display:flex;"><span>                target = next;
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#999;font-style:italic">// Update list of touch targets for pointer up or cancel, if needed.
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>        <span style="color:#6ab825;font-weight:bold">if</span> (canceled
+</span></span><span style="display:flex;"><span>                || actionMasked == MotionEvent.<span style="color:#bbb">ACTION_UP</span>
+</span></span><span style="display:flex;"><span>                || actionMasked == MotionEvent.<span style="color:#bbb">ACTION_HOVER_MOVE</span>) {
+</span></span><span style="display:flex;"><span>            resetTouchState();
+</span></span><span style="display:flex;"><span>        } <span style="color:#6ab825;font-weight:bold">else</span> <span style="color:#6ab825;font-weight:bold">if</span> (split &amp;&amp; actionMasked == MotionEvent.<span style="color:#bbb">ACTION_POINTER_UP</span>) {
+</span></span><span style="display:flex;"><span>            <span style="color:#6ab825;font-weight:bold">final</span> <span style="color:#6ab825;font-weight:bold">int</span> actionIndex = ev.<span style="color:#bbb">getActionIndex</span>();
+</span></span><span style="display:flex;"><span>            <span style="color:#6ab825;font-weight:bold">final</span> <span style="color:#6ab825;font-weight:bold">int</span> idBitsToRemove = 1 &lt;&lt; ev.<span style="color:#bbb">getPointerId</span>(actionIndex);
+</span></span><span style="display:flex;"><span>            removePointersFromTouchTargets(idBitsToRemove);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">if</span> (!handled &amp;&amp; mInputEventConsistencyVerifier != <span style="color:#6ab825;font-weight:bold">null</span>) {
+</span></span><span style="display:flex;"><span>        mInputEventConsistencyVerifier.<span style="color:#bbb">onUnhandledEvent</span>(ev, 1);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">return</span> handled;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div>
 </article>
 
 
@@ -603,11 +586,6 @@ public boolean dispatchTouchEvent(MotionEvent ev) {
   </div>
 
   
-    <script>
-      document.addEventListener("DOMContentLoaded", () => {
-        hljs.initHighlightingOnLoad();
-      });
-    </script>
 
           </div>
         </div>

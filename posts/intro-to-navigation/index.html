@@ -19,17 +19,6 @@
   as="style" onload="this.onload=null;this.rel='stylesheet'">
 
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/styles/solarized-light.min.css"
-   media="print"
-  onload="this.media='all';this.onload=null" crossorigin>
-<script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/highlight.min.js"
-   crossorigin></script>
-  <script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/languages/dart.min.js"
-     crossorigin></script>
-  <script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/languages/java.min.js"
-     crossorigin></script>
-  <script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/languages/kotlin.min.js"
-     crossorigin></script>
 
 
 <script defer type="text/javascript" src="https://zacash.cn/js/fontawesome.min.1c5a4674b042785ed214cf0818a81724c6b37442fd61b0ed039237b93de25ed5103fc8079a05770648ccc9c66c4f540a.js" integrity="sha384-HFpGdLBCeF7SFM8IGKgXJMazdEL9YbDtA5I3uT3iXtUQP8gHmgV3BkjMycZsT1QK"></script>
@@ -279,35 +268,31 @@ BackStack in Navigation Each time user goes to a new destination on the device, 
 <ul>
 <li>In <code>onCreate()</code>, call:</li>
 </ul>
-<pre><code class="language-kotlin">val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-val navController = navHostFragment.navController
-NavigationUI.setupActionBarWithNavController(this, navController)
-</code></pre>
-<ul>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">val</span> navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) <span style="color:#6ab825;font-weight:bold">as</span> NavHostFragment
+</span></span><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">val</span> navController = navHostFragment.navController
+</span></span><span style="display:flex;"><span>NavigationUI.setupActionBarWithNavController(<span style="color:#6ab825;font-weight:bold">this</span>, navController)
+</span></span></code></pre></div><ul>
 <li>Override <code>onSupportNavigateUp()</code> method to call <code>navigateUp()</code> in the navigatiohn controller:</li>
 </ul>
-<pre><code class="language-kotlin">override fun onSupportNavigateUp(): Boolean {
-    val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-    val navController = navHostFragment.navController
-    return navController.navigateUp()
-}
-</code></pre>
-<h3 id="navhostfragment-in-fragment-element">NavHostFragment in fragment element</h3>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">override</span> <span style="color:#6ab825;font-weight:bold">fun</span> <span style="color:#447fcf">onSupportNavigateUp</span>(): Boolean {
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">val</span> navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) <span style="color:#6ab825;font-weight:bold">as</span> NavHostFragment
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">val</span> navController = navHostFragment.navController
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">return</span> navController.navigateUp()
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h3 id="navhostfragment-in-fragment-element">NavHostFragment in fragment element</h3>
 <ul>
 <li>In <code>onCreate()</code>, call:</li>
 </ul>
-<pre><code class="language-kotlin">val navController = findNavController(R.id.nav_host_fragment)
-NavigationUI.setupActionBarWithNavController(this, navController)
-</code></pre>
-<ul>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">val</span> navController = findNavController(R.id.nav_host_fragment)
+</span></span><span style="display:flex;"><span>NavigationUI.setupActionBarWithNavController(<span style="color:#6ab825;font-weight:bold">this</span>, navController)
+</span></span></code></pre></div><ul>
 <li>Override <code>onSupportNavigateUp()</code> method to call <code>navigateUp()</code> in the navigatiohn controller:</li>
 </ul>
-<pre><code class="language-kotlin">override fun onSupportNavigateUp(): Boolean {
-    val navController = findNavController(R.id.nav_host_fragment)
-    return navController.navigateUp()
-}
-</code></pre>
-<h2 id="safe-args-plugin">Safe Args Plugin</h2>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">override</span> <span style="color:#6ab825;font-weight:bold">fun</span> <span style="color:#447fcf">onSupportNavigateUp</span>(): Boolean {
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">val</span> navController = findNavController(R.id.nav_host_fragment)
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">return</span> navController.navigateUp()
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h2 id="safe-args-plugin">Safe Args Plugin</h2>
 <p>When we needs to pass parameters from one fragment to another. To prevent bugs in these transactions and make them type-safe, we use a Gradle plugin called <a href="https://developer.android.com/topic/libraries/architecture/navigation/navigation-pass-data#Safe-args">Safe Args</a>. The plugin generates <code>NavDirection</code> class, and we could use these classes to pass parameters.</p>
 <p>We used a <code>Bundle</code> to pass data from fragment A to fragment B in the past. These lead two kinds of errors:</p>
 <ul>
@@ -360,11 +345,6 @@ NavigationUI.setupActionBarWithNavController(this, navController)
   </div>
 
   
-    <script>
-      document.addEventListener("DOMContentLoaded", () => {
-        hljs.initHighlightingOnLoad();
-      });
-    </script>
 
           </div>
         </div>

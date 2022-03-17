@@ -19,17 +19,6 @@
   as="style" onload="this.onload=null;this.rel='stylesheet'">
 
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/styles/solarized-light.min.css"
-   media="print"
-  onload="this.media='all';this.onload=null" crossorigin>
-<script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/highlight.min.js"
-   crossorigin></script>
-  <script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/languages/dart.min.js"
-     crossorigin></script>
-  <script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/languages/java.min.js"
-     crossorigin></script>
-  <script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/languages/kotlin.min.js"
-     crossorigin></script>
 
 
 <script defer type="text/javascript" src="https://zacash.cn/js/fontawesome.min.1c5a4674b042785ed214cf0818a81724c6b37442fd61b0ed039237b93de25ed5103fc8079a05770648ccc9c66c4f540a.js" integrity="sha384-HFpGdLBCeF7SFM8IGKgXJMazdEL9YbDtA5I3uT3iXtUQP8gHmgV3BkjMycZsT1QK"></script>
@@ -270,26 +259,24 @@
 </ul>
 <h4 id="处理耗时任务">处理耗时任务</h4>
 <p>我们常规处理耗时任务是通过异步回调的方式，比如：</p>
-<pre><code class="language-kotlin">fun fetchDoc() {
-    get(&quot;https://doc.qq.com&quot;) { result -&gt;
-        show(result)
-    }
-}
-</code></pre>
-<p>通过协程的方式是这样：</p>
-<pre><code class="language-kotlin">// 主线程执行
-suspend fun fetchDoc() {
-    // 直接返回结果
-    val result = get(&quot;https://doc.qq.com&quot;)
-    show(result)
-}
-
-// 主线程执行
-suspend fun get(url: String) = withContext(Dispatchers.IO) {
-    /*IO 线程池执行*/
-}
-</code></pre>
-<p>可以看到通过协程可以直接返回请求结果，而不用管理请求延迟和线程阻塞，这是如何实现的呢？</p>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">fun</span> <span style="color:#447fcf">fetchDoc</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">get</span>(<span style="color:#ed9d13">&#34;https://doc.qq.com&#34;</span>) { result -&gt;
+</span></span><span style="display:flex;"><span>        show(result)
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>通过协程的方式是这样：</p>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#999;font-style:italic">// 主线程执行
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span><span style="color:#6ab825;font-weight:bold">suspend</span> <span style="color:#6ab825;font-weight:bold">fun</span> <span style="color:#447fcf">fetchDoc</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#999;font-style:italic">// 直接返回结果
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>    <span style="color:#6ab825;font-weight:bold">val</span> result = <span style="color:#6ab825;font-weight:bold">get</span>(<span style="color:#ed9d13">&#34;https://doc.qq.com&#34;</span>)
+</span></span><span style="display:flex;"><span>    show(result)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic">// 主线程执行
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span><span style="color:#6ab825;font-weight:bold">suspend</span> <span style="color:#6ab825;font-weight:bold">fun</span> <span style="color:#447fcf">get</span>(url: String) = withContext(Dispatchers.IO) {
+</span></span><span style="display:flex;"><span>    <span style="color:#999;font-style:italic">/*IO 线程池执行*/</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>可以看到通过协程可以直接返回请求结果，而不用管理请求延迟和线程阻塞，这是如何实现的呢？</p>
 <p>协程在常规的函数操作 —— invoke 和 return 之外，还新增了2项：</p>
 <ul>
 <li>suspend —— 称为挂起或暂停，用于暂停执行当前协程，并保存所有局部变量</li>
@@ -352,46 +339,42 @@ suspend fun get(url: String) = withContext(Dispatchers.IO) {
 <li><code>async</code> 方式启动新协程并允许我们使用 await 的挂起函数返回 result.</li>
 </ul>
 <p>通常我们应该使用 <code>launch</code> 方式启动新协程。</p>
-<pre><code class="language-kotlin">scope.launch {
-    // launch 可以调用 suspend 函数
-    fetchDoc()
-}
-</code></pre>
-<h4 id="在-viewmodel-中启动协程">在 ViewModel 中启动协程</h4>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span>scope.launch {
+</span></span><span style="display:flex;"><span>    <span style="color:#999;font-style:italic">// launch 可以调用 suspend 函数
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>    fetchDoc()
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h4 id="在-viewmodel-中启动协程">在 ViewModel 中启动协程</h4>
 <p>当协程和 Android Architecture Components 结合时，我们应该在哪个组件使用协程呢？</p>
 <p>答案是 ViewModel，我们大部分任务都是在 ViewModel 中处理，而且 <a href="https://developer.android.google.cn/topic/libraries/architecture/coroutines#lifecycle-aware">AndroidX Lifecycle</a> 从 2.1.0 版本开始已经引入扩展属性 <code>ViewModel.viewModelScope</code>，可以更方便地在 ViewModel 中使用协程：</p>
-<pre><code class="language-kotlin">class MainViewModel(): ViewModel() {
-    fun setUserDoc() {
-        // 启动新的协程
-        viewModelScope.launch {
-            fetchDoc()
-        }
-    }
-}
-</code></pre>
-<p>当 viewModelScope 被清除时，它将自动取消所有它启动的协程，可以保证协程和 ViewModel 的生命周期是一致的。</p>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">class</span> <span style="color:#447fcf;text-decoration:underline">MainViewModel</span>(): ViewModel() {
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">fun</span> <span style="color:#447fcf">setUserDoc</span>() {
+</span></span><span style="display:flex;"><span>        <span style="color:#999;font-style:italic">// 启动新的协程
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>        viewModelScope.launch {
+</span></span><span style="display:flex;"><span>            fetchDoc()
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>当 viewModelScope 被清除时，它将自动取消所有它启动的协程，可以保证协程和 ViewModel 的生命周期是一致的。</p>
 <h4 id="启动多个协程">启动多个协程</h4>
 <p>可以使用 <a href="https://kotlin.github.io/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines/coroutine-scope.html"><code>coroutineScope</code></a> 或 <a href="https://kotlin.github.io/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines/supervisor-scope.html"><code>supervisorScope</code></a> 启动多个协程，结构化并发保证了当 <code>suspend</code> 函数返回时，它所处理的任务也都完成了。</p>
-<pre><code class="language-kotlin">suspend fun fetchDocs() {
-    coroutineScope {
-        async {fetchDoc()}
-        async {fetchPdf()}
-    }
-}
-</code></pre>
-<p>Kotlin 确保使用 <code>coroutineScope</code> 构造方法不让 <code>fetchDocs()</code> 方法发生泄漏，会先将 <code>coroutineScope</code> 自身挂起，等待它内部的所有协程完成时，再返回结果。</p>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">suspend</span> <span style="color:#6ab825;font-weight:bold">fun</span> <span style="color:#447fcf">fetchDocs</span>() {
+</span></span><span style="display:flex;"><span>    coroutineScope {
+</span></span><span style="display:flex;"><span>        async {fetchDoc()}
+</span></span><span style="display:flex;"><span>        async {fetchPdf()}
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Kotlin 确保使用 <code>coroutineScope</code> 构造方法不让 <code>fetchDocs()</code> 方法发生泄漏，会先将 <code>coroutineScope</code> 自身挂起，等待它内部的所有协程完成时，再返回结果。</p>
 <h4 id="异常处理">异常处理</h4>
 <p><code>coroutineScope</code> 和 <code>supervisorScope</code> 两者都适合启动多个协程的场景，区别在于当启动的某一子协程出错时，coroutineScope 将会取消所有协程，而 supervisorScope 会继续执行剩余的协程。</p>
 <p>协程中来自 suspend 函数的异常会通过 resume 重新抛给调用方 (Invoker) 来处理，跟函数一样，我们可以用 try/catch 处理异常。</p>
-<pre><code class="language-kotlin">suspend fun getError() {
-    coroutineScope {
-        async {
-            throw IllegalStateException(&quot;...&quot;)
-        }
-    }
-}
-</code></pre>
-<h4 id="参考">参考</h4>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">suspend</span> <span style="color:#6ab825;font-weight:bold">fun</span> <span style="color:#447fcf">getError</span>() {
+</span></span><span style="display:flex;"><span>    coroutineScope {
+</span></span><span style="display:flex;"><span>        async {
+</span></span><span style="display:flex;"><span>            <span style="color:#6ab825;font-weight:bold">throw</span> IllegalStateException(<span style="color:#ed9d13">&#34;...&#34;</span>)
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h4 id="参考">参考</h4>
 <p><a href="https://mp.weixin.qq.com/s/kPvWOCkMjYRKJSTX4I5VKg">在Android 开发中使用协程</a>
 <a href="https://www.reddit.com/r/androiddev/comments/ftqe6s/">Coroutines Discussion</a>
 <a href="https://www.youtube.com/watch?v=_hfBv0a09Jc">Introduction to Coroutines</a></p>
@@ -446,11 +429,6 @@ suspend fun get(url: String) = withContext(Dispatchers.IO) {
   </div>
 
   
-    <script>
-      document.addEventListener("DOMContentLoaded", () => {
-        hljs.initHighlightingOnLoad();
-      });
-    </script>
 
           </div>
         </div>

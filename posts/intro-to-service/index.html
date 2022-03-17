@@ -19,17 +19,6 @@
   as="style" onload="this.onload=null;this.rel='stylesheet'">
 
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/styles/solarized-light.min.css"
-   media="print"
-  onload="this.media='all';this.onload=null" crossorigin>
-<script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/highlight.min.js"
-   crossorigin></script>
-  <script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/languages/dart.min.js"
-     crossorigin></script>
-  <script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/languages/java.min.js"
-     crossorigin></script>
-  <script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/languages/kotlin.min.js"
-     crossorigin></script>
 
 
 <script defer type="text/javascript" src="https://zacash.cn/js/fontawesome.min.1c5a4674b042785ed214cf0818a81724c6b37442fd61b0ed039237b93de25ed5103fc8079a05770648ccc9c66c4f540a.js" integrity="sha384-HFpGdLBCeF7SFM8IGKgXJMazdEL9YbDtA5I3uT3iXtUQP8gHmgV3BkjMycZsT1QK"></script>
@@ -93,7 +82,7 @@
     },
     "headline": "Intro to Service | Zac\u0027s blog","datePublished": "2020-07-04T11:08:11+08:00",
     "dateModified": "2020-07-04T11:08:11+08:00",
-    "wordCount":  621 ,
+    "wordCount":  1107 ,
     "publisher": {
         "@type": "Person",
         "name": "Zac Zhu",
@@ -242,7 +231,7 @@
   </div>
   <div class="me-6 my-2">
     <i class="fas fa-clock me-1"></i>
-    <span>3 min read</span>
+    <span>6 min read</span>
   </div>
 
   
@@ -271,13 +260,12 @@
 
   <h2 id="查看进程基本信息">查看进程基本信息</h2>
 <p>使用 <code>adb shell ps|grep com.tencent.mobileqq</code> 可以查看 QQ 应用进程相关的基本信息</p>
-<pre><code class="language-shell">Zac:tivi Zac$ adb shell ps | grep com.tencent.mobileqq
-# curr_user   pid                                                 process name
-u0_a163       6779   669 1638852  27152 0                   0 S com.tencent.mobileqq:MSF
-u0_a163      22001   669 1915536 224004 0                   0 S com.tencent.mobileqq
-u0_a163      27829   669 1670960 236668 0                   0 S com.tencent.mobileqq:qzone
-</code></pre>
-<h2 id="进程的划分">进程的划分</h2>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>Zac:tivi Zac$ adb shell ps | grep com.tencent.mobileqq
+</span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"># curr_user   pid                                                 process name</span>
+</span></span><span style="display:flex;"><span>u0_a163       <span style="color:#3677a9">6779</span>   <span style="color:#3677a9">669</span> <span style="color:#3677a9">1638852</span>  <span style="color:#3677a9">27152</span> <span style="color:#3677a9">0</span>                   <span style="color:#3677a9">0</span> S com.tencent.mobileqq:MSF
+</span></span><span style="display:flex;"><span>u0_a163      <span style="color:#3677a9">22001</span>   <span style="color:#3677a9">669</span> <span style="color:#3677a9">1915536</span> <span style="color:#3677a9">224004</span> <span style="color:#3677a9">0</span>                   <span style="color:#3677a9">0</span> S com.tencent.mobileqq
+</span></span><span style="display:flex;"><span>u0_a163      <span style="color:#3677a9">27829</span>   <span style="color:#3677a9">669</span> <span style="color:#3677a9">1670960</span> <span style="color:#3677a9">236668</span> <span style="color:#3677a9">0</span>                   <span style="color:#3677a9">0</span> S com.tencent.mobileqq:qzone
+</span></span></code></pre></div><h2 id="进程的划分">进程的划分</h2>
 <p>为了确定在内存不足时 kill 哪些进程，Android 会依据进程中运行的组件（Activity/Service/BroadcastReceiver）和这些组件的状态，划分每个进程的重要层次结构（importance hierarchy）。这些进程按重要性排序:</p>
 <h3 id="前台进程foreground-process">前台进程（foreground process）</h3>
 <p>前台进程是用户当前正在执行的操作所必须的进程，应用进程内的组件可能以不同形式让其处于前台：</p>
@@ -304,146 +292,269 @@ u0_a163      27829   669 1670960 236668 0                   0 S com.tencent.mobi
 <h2 id="终止进程low-memory-killer-daemon-lmkd">终止进程（Low Memory Killer Daemon, lmkd）</h2>
 <p>Android lmkd 进程监控正在运行的系统内存状态，并通过杀死最不重要进程（least essential processes）来应对高内存压力，以使系统运行在可接收的水平。</p>
 <h3 id="查看手机的内存阀值">查看手机的内存阀值</h3>
-<pre><code class="language-shell"># root permission need
-adb shell cat /sys/module/lowmemorykiller/parameters/minfree
-</code></pre>
-<h3 id="adj">ADJ</h3>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#999;font-style:italic"># root permission need</span>
+</span></span><span style="display:flex;"><span>adb shell cat /sys/module/lowmemorykiller/parameters/minfree
+</span></span></code></pre></div><h3 id="adj">ADJ</h3>
 <p>Adj 定义在 <a href="https://android.googlesource.com/platform/frameworks/base/+/be4e6aa/services/java/com/android/server/am/ProcessList.java">frameworks/&hellip;/services/java/com/android/server/am/ProcessList.java</a> 中，<code>oom_adj</code> 表示进程的 adj 值，一般在 -17～16 间取值，adj 值越大，优先级越低，<code>adj &lt; 0</code>的进程都是系统进程。<code>adj = 0</code> 表示进程处于前台。</p>
 <p>通过命令查看 <code>pid = 4061</code> 进程的 adj 值：</p>
-<pre><code class="language-shell"># App 处于前台时
-adb shell cat /proc/4061/oom_adj
-0
-# App 处于后台时
-Zac:tivi Zac$ adb shell cat /proc/4061/oom_adj
-11
-</code></pre>
-<h3 id="进程终止策略">进程终止策略</h3>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#999;font-style:italic"># App 处于前台时</span>
+</span></span><span style="display:flex;"><span>adb shell cat /proc/4061/oom_adj
+</span></span><span style="display:flex;"><span><span style="color:#3677a9">0</span>
+</span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"># App 处于后台时</span>
+</span></span><span style="display:flex;"><span>Zac:tivi Zac$ adb shell cat /proc/4061/oom_adj
+</span></span><span style="display:flex;"><span><span style="color:#3677a9">11</span>
+</span></span></code></pre></div><h3 id="进程终止策略">进程终止策略</h3>
 <p><code>ProcessList</code> 中定义的 <code>oomAdj</code>：</p>
-<pre><code class="language-java">// These are the various interesting memory levels that we will give to
-// the OOM killer.  Note that the OOM killer only supports 6 slots, so we
-// can't give it a different value for every possible kind of process.
-private final int[] mOomAdj = new int[] {
-    FOREGROUND_APP_ADJ, VISIBLE_APP_ADJ, PERCEPTIBLE_APP_ADJ,
-    BACKUP_APP_ADJ, CACHED_APP_MIN_ADJ, CACHED_APP_MAX_ADJ
-};
-</code></pre>
-<p>在系统内存不足时，依次从 <code>CACHED_APP_MAX_ADJ -&gt; .. -&gt;  FOREGROUND_APP_ADJ</code> 终止进程。</p>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#999;font-style:italic">// These are the various interesting memory levels that we will give to
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic">// the OOM killer.  Note that the OOM killer only supports 6 slots, so we
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic">// can&#39;t give it a different value for every possible kind of process.
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span><span style="color:#6ab825;font-weight:bold">private</span> <span style="color:#6ab825;font-weight:bold">final</span> <span style="color:#6ab825;font-weight:bold">int</span>[] mOomAdj = <span style="color:#6ab825;font-weight:bold">new</span> <span style="color:#6ab825;font-weight:bold">int</span>[] {
+</span></span><span style="display:flex;"><span>    FOREGROUND_APP_ADJ, VISIBLE_APP_ADJ, PERCEPTIBLE_APP_ADJ,
+</span></span><span style="display:flex;"><span>    BACKUP_APP_ADJ, CACHED_APP_MIN_ADJ, CACHED_APP_MAX_ADJ
+</span></span><span style="display:flex;"><span>};
+</span></span></code></pre></div><p>在系统内存不足时，依次从 <code>CACHED_APP_MAX_ADJ -&gt; .. -&gt;  FOREGROUND_APP_ADJ</code> 终止进程。</p>
 <p>看完进程我们再看看服务</p>
 <h2 id="service-的生命周期">Service 的生命周期</h2>
 <p>Service 的生命周期比 Activity 的要简单很多。但关注其如何创建销毁反而更加重要，因为服务可以在用户没有意识到的情况下在后台运行。</p>
 <p>Service 的生命周期可以遵循两条不同的途径：</p>
 <ul>
-<li>启动服务
-该服务在其他组件中调用 <a href="https://developer.android.com/reference/android/content/Context.html#startService(android.content.Intent)">startService()</a> 时创建，然后无限运行，必须通过 <a href="https://developer.android.com/reference/android/app/Service.html#stopSelf()">stopSelf()</a> 来自行停止运行。此外，其他组件也可以通过调用 <a href="https://developer.android.com/reference/android/content/Context.html#stopService(android.content.Intent)">stopService()</a> 来停止服务。服务停止后，系统会将其销毁。</li>
-<li>绑定服务
-该服务在另一个组件（客户端）调用 <a href="https://developer.android.com/reference/android/content/Context.html#bindService(android.content.Intent,android.content.ServiceConnection,int)">bindService()</a> 时创建。然后客户端通过 <a href="https://developer.android.com/reference/android/os/IBinder.html">IBinder</a> 接口与 Service 进行进行通信。客户端可以通过调用 <a href="https://developer.android.com/reference/android/content/Context.html#unbindService(android.content.ServiceConnection)">unbindService()</a> 来关闭连接。多个客户端可以绑定到相同服务，而且当所有绑定全部取消后，系统会销毁该服务。（不必调用 <a href="https://developer.android.com/reference/android/content/Context.html#stopService(android.content.Intent)">stopService()</a> 来停止服务)</li>
+<li>
+<p>启动服务（Started service）
+该服务在别的组件（client）中调用 <a href="https://developer.android.com/reference/android/content/Context.html#startService(android.content.Intent)">startService()</a> 时创建，然后无限运行，必须通过 <a href="https://developer.android.com/reference/android/app/Service.html#stopSelf()">stopSelf()</a> 来自行停止运行。此外，其他组件也可以通过调用 <a href="https://developer.android.com/reference/android/content/Context.html#stopService(android.content.Intent)">stopService()</a> 来停止服务。服务停止后，系统会将其销毁。</p>
+<blockquote>
+<p>从 Android 8 开始，如果 app 不是位于前台，系统会对该 app 创建和使用后台服务施加限制，如果 app 需要创建前台服务，可以通过调用 <a href="https://developer.android.com/reference/android/content/Context#startForegroundService(android.content.Intent)">startForegroundService()</a>。这个方法创建了一个后台service，并向系统发出信号，把自己的 service 提升到前台。该 service 启动之后必须在 5s 内调用自己的 startForeground() 方法，否则系统会自动 crash 进程。</p>
+</blockquote>
+</li>
+<li>
+<p>绑定服务（Bound service）
+该服务在别的组件（client）中调用 <a href="https://developer.android.com/reference/android/content/Context.html#bindService(android.content.Intent,android.content.ServiceConnection,int)">bindService()</a> 时创建。然后 client 通过 <a href="https://developer.android.com/reference/android/os/IBinder.html">IBinder</a> 接口与 service 进行通信。Client 可以通过调用 <a href="https://developer.android.com/reference/android/content/Context.html#unbindService(android.content.ServiceConnection)">unbindService()</a> 来关闭连接。多个 clients 可以绑定（bind）到相同的服务 ，而当所有服务解绑（unbind）之后 ，系统会销毁该服务（不必主动调用 <a href="https://developer.android.com/reference/android/content/Context.html#stopService(android.content.Intent)">stopService()</a> 来停止服务)。</p>
+</li>
 </ul>
-<p>这两种状态并非完全独立，实际上是 <strong>可以共存</strong> 的。例如可以使用 Intent 调用 <a href="https://developer.android.com/reference/android/content/Context.html#startService(android.content.Intent)">startService()</a> 启动后台音乐服务。随后，可能用户需要加入控制播放器获取有关播放歌曲信息时，Activity 可以通过调用 <a href="https://developer.android.com/reference/android/content/Context.html#bindService(android.content.Intent,android.content.ServiceConnection,int)">bindService()</a> 绑定到该服务。这种情况下，除非所有客户端都取消绑定，否则 <a href="https://developer.android.com/reference/android/content/Context.html#stopService(android.content.Intent)">stopService()</a> 或 <a href="https://developer.android.com/reference/android/app/Service.html#stopSelf()">stopSelf()</a> 不会停止该服务。</p>
+<p>这两种途径并非完全独立，实际上是 <strong>可以共存</strong> 的。例如可以使用 Intent 调用 <a href="https://developer.android.com/reference/android/content/Context.html#startService(android.content.Intent)">startService()</a> 启动后台音乐服务。随后，可能用户需要加入控制播放器获取有关播放歌曲信息时，Activity 可以通过调用 <a href="https://developer.android.com/reference/android/content/Context.html#bindService(android.content.Intent,android.content.ServiceConnection,int)">bindService()</a> 绑定到该服务。这种情况下，除非<strong>所有客户端都取消绑定，否则 <a href="https://developer.android.com/reference/android/content/Context.html#stopService(android.content.Intent)">stopService()</a> 或 <a href="https://developer.android.com/reference/android/app/Service.html#stopSelf()">stopSelf()</a> 不会停止该服务</strong>。</p>
 <h2 id="实现-service-生命周期回调">实现 Service 生命周期回调</h2>
 <p>与 Activity 类似，Service 也拥有生命周期回调方法，可以通过实现这些方法来监控Service 状态的变化：</p>
-<pre><code class="language-java">import android.app.Service;
-import android.content.Intent;
-import android.os.IBinder;
-import android.support.annotation.Nullable;
-
-/**
- * Created by Zac on 2017/5/23.
- */
-
-public class SampleService extends Service {
-
-  private static final CHANNEL_NAME = &quot;default&quot;;
-
-  /**
-   * 表示服务被 kill 之后的行为
-   */
-  private int mStartMode;
-
-  /**
-   * 表示绑定该服务的 client
-   */
-  private IBinder mBinder;
-
-  /**
-   * 表示是否允许重新绑定
-   */
-  private boolean mAllowReind;
-
-  @Override public void onCreate() {
-    // 服务被创建
-    super.onCreate();
-    startForeground();
-  }
-
-  /**
-   * 创建定义的通知
-   */
-  private Notification.Builder getNotification(String title, String body) {
-    return new Notification.Builder(appContext, CHANNEL_NAME)
-            .setContentTitle(title)
-            .setContentText(body)
-            .setSmallIcon(smallIcon)
-            .setAutoCancel(true);
-  }
-
-  @Nullable @Override public IBinder onBind(Intent intent) {
-    // 客户端通过 bindService() 方法绑定服务
-    return mBinder;
-  }
-
-  @Override public int onStartCommand(Intent intent, int flags, int startId) {
-    // 组件调用 startService() 方法启动服务
-    return mStartMode;
-  }
-
-  @Override public boolean onUnbind(Intent intent) {
-    // 所有绑定的客户端都已调用 unbindService() 方法解绑
-    return mAllowReind;
-  }
-
-  @Override public void onRebind(Intent intent) {
-    // 客户端在onUnbind() 方法回调之后，调用 bindService() 方法绑定服务
-    super.onRebind(intent);
-  }
-
-  @Override public void onDestroy() {
-    // 服务不再被使用并被销毁
-    super.onDestroy();
-  }
-}
-</code></pre>
-<p><img src="images/service_lifecycle.png" alt="service_lifecycle.png"></p>
-<blockquote>
-<p>服务的生命周期，左边显示了使用 <a href="https://developer.android.com/reference/android/content/Context.html#startService(android.content.Intent)">startService()</a> 所创建的服务的生命周期，右边显示了 <a href="https://developer.android.com/reference/android/content/Context.html#bindService(android.content.Intent,android.content.ServiceConnection,int)">bindService()</a> 所创建的服务的生命周期。</p>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">import</span> <span style="color:#447fcf;text-decoration:underline">android.app.Notification</span>
+</span></span><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">import</span> <span style="color:#447fcf;text-decoration:underline">android.app.PendingIntent</span>
+</span></span><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">import</span> <span style="color:#447fcf;text-decoration:underline">android.app.Service</span>
+</span></span><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">import</span> <span style="color:#447fcf;text-decoration:underline">android.content.Intent</span>
+</span></span><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">import</span> <span style="color:#447fcf;text-decoration:underline">android.os.Build.VERSION_CODES</span>
+</span></span><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">import</span> <span style="color:#447fcf;text-decoration:underline">android.os.IBinder</span>
+</span></span><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">import</span> <span style="color:#447fcf;text-decoration:underline">androidx.annotation.RequiresApi</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"> * Service code sample.
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"> *
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"> * @author: Zac
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"> * @date: 2022/3/16
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"> */</span>
+</span></span><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">class</span> <span style="color:#447fcf;text-decoration:underline">SampleService</span> : Service() {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#6ab825;font-weight:bold">companion</span> <span style="color:#6ab825;font-weight:bold">object</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">private</span> <span style="color:#6ab825;font-weight:bold">const</span> <span style="color:#6ab825;font-weight:bold">val</span> NOTIFICATION_ID = <span style="color:#3677a9">0x1001</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">private</span> <span style="color:#6ab825;font-weight:bold">const</span> <span style="color:#6ab825;font-weight:bold">val</span> CHANNEL_NAME = <span style="color:#ed9d13">&#34;default&#34;</span>;
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#999;font-style:italic">// Indicates how to behave if the service is killed
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>  <span style="color:#6ab825;font-weight:bold">private</span> <span style="color:#6ab825;font-weight:bold">var</span> startMode: Int = START_STICKY
+</span></span><span style="display:flex;"><span>  <span style="color:#999;font-style:italic">// Interface for clients that bind
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>  <span style="color:#6ab825;font-weight:bold">private</span> <span style="color:#6ab825;font-weight:bold">var</span> binder: IBinder? = <span style="color:#6ab825;font-weight:bold">null</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#999;font-style:italic">// Indiacates whether onRebind should be used
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>  <span style="color:#6ab825;font-weight:bold">private</span> <span style="color:#6ab825;font-weight:bold">var</span> allowRebind: Boolean = <span style="color:#6ab825;font-weight:bold">false</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#6ab825;font-weight:bold">private</span> <span style="color:#6ab825;font-weight:bold">val</span> pendingIntent: PendingIntent =
+</span></span><span style="display:flex;"><span>    Intent(<span style="color:#6ab825;font-weight:bold">this</span>, MainActivity::<span style="color:#6ab825;font-weight:bold">class</span>.java).let { notificationIntent -&gt;
+</span></span><span style="display:flex;"><span>      PendingIntent.getActivity(<span style="color:#6ab825;font-weight:bold">this</span>, <span style="color:#3677a9">0</span>, notificationIntent, <span style="color:#3677a9">0</span>)
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#999;font-style:italic">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic">   * Create foreground service
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic">   */</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ffa500">@RequiresApi</span>(VERSION_CODES.O)
+</span></span><span style="display:flex;"><span>  <span style="color:#6ab825;font-weight:bold">private</span> <span style="color:#6ab825;font-weight:bold">val</span> notification: Notification = Notification.Builder(<span style="color:#6ab825;font-weight:bold">this</span>, CHANNEL_NAME)
+</span></span><span style="display:flex;"><span>    .setContentTitle(getText(R.string.notification_title))
+</span></span><span style="display:flex;"><span>    .setContentText(getText(R.string.notification_message))
+</span></span><span style="display:flex;"><span>    .setSmallIcon(R.drawable.icon)
+</span></span><span style="display:flex;"><span>    .setContentIntent(pendingIntent)
+</span></span><span style="display:flex;"><span>    .setTicker(getText(R.string.ticker_text))
+</span></span><span style="display:flex;"><span>    .build()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#6ab825;font-weight:bold">override</span> <span style="color:#6ab825;font-weight:bold">fun</span> <span style="color:#447fcf">onCreate</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#999;font-style:italic">// The service is being created
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>    startForeground(NOTIFICATION_ID, notification)
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#6ab825;font-weight:bold">override</span> <span style="color:#6ab825;font-weight:bold">fun</span> <span style="color:#447fcf">onStartCommand</span>(intent: Intent?, flags: Int, startId: Int): Int {
+</span></span><span style="display:flex;"><span>    <span style="color:#999;font-style:italic">// The service is starting, due to call startService()
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>    <span style="color:#6ab825;font-weight:bold">return</span> startMode
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#6ab825;font-weight:bold">override</span> <span style="color:#6ab825;font-weight:bold">fun</span> <span style="color:#447fcf">onUnbind</span>(intent: Intent?): Boolean {
+</span></span><span style="display:flex;"><span>    <span style="color:#999;font-style:italic">// All clients have unbound with unbindService()
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>    <span style="color:#6ab825;font-weight:bold">return</span> allowRebind
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#6ab825;font-weight:bold">override</span> <span style="color:#6ab825;font-weight:bold">fun</span> <span style="color:#447fcf">onRebind</span>(intent: Intent?) {
+</span></span><span style="display:flex;"><span>    <span style="color:#999;font-style:italic">// A client is binding to the service with bindService,
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>    <span style="color:#999;font-style:italic">// after onUnbind() has already been called
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#6ab825;font-weight:bold">override</span> <span style="color:#6ab825;font-weight:bold">fun</span> <span style="color:#447fcf">onBind</span>(intent: Intent?): IBinder? {
+</span></span><span style="display:flex;"><span>    <span style="color:#999;font-style:italic">// A client is binding to the service with bindService()
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>    <span style="color:#6ab825;font-weight:bold">return</span> binder
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><blockquote>
+<p>与 Activity 生命周期的回调方法不同，Service 的生命周期回调方法不需要调用超类的方法（not required call super.onCreate()）</p>
 </blockquote>
-<p>通过这些方法，我们可以监控 Service 生命周期的两个部分：</p>
+<p><img src="/img/service_lifecycle.png" alt="service_lifecycle.png"></p>
+<blockquote>
+<p>服务的生命周期，左边展示了使用 <a href="https://developer.android.com/reference/android/content/Context.html#startService(android.content.Intent)">startService()</a> 所创建的服务的生命周期，右边展示了 <a href="https://developer.android.com/reference/android/content/Context.html#bindService(android.content.Intent,android.content.ServiceConnection,int)">bindService()</a> 所创建的服务的生命周期。</p>
+</blockquote>
+<p>通过这些方法，我们可以监控服务生命周期的两个部分：</p>
 <ul>
 <li>
-<p>Service 的 <strong>整个生命周期</strong> 从调用 onCreate() 开始，到 onDestroy() 返回时结束。与 Activity 类似，Service 也在 onCreate() 中完成初始设置，并在 onDestroy() 中释放所有剩余资源。例如，音乐播放器可以在 onCreate() 中创建播放音乐的线程，然后在 onDestroy() 中停止该线程。无论 Service 是通过 <a href="https://developer.android.com/reference/android/content/Context.html#startService(android.content.Intent)">startService()</a> 还是 <a href="https://developer.android.com/reference/android/content/Context.html#bindService(android.content.Intent,android.content.ServiceConnection,int)">bindService()</a> 方法创建，都会调用 onCreate() 和 onDestroy() 方法。</p>
+<p>服务的 <strong>整个生命周期</strong>(<em>entire lifetime</em>) 从调用 onCreate() 开始，到 onDestroy() 结束。与 Activity 类似，Service 也在 onCreate() 中完成初始化，并在 onDestroy() 中释放所有资源。例如，音乐播放器可以在 onCreate() 中创建播放音乐的线程，然后在 onDestroy() 中停止该线程。</p>
+<blockquote>
+<p>无论 Service 是通过 <a href="https://developer.android.com/reference/android/content/Context.html#startService(android.content.Intent)">startService()</a> 还是 <a href="https://developer.android.com/reference/android/content/Context.html#bindService(android.content.Intent,android.content.ServiceConnection,int)">bindService()</a> 方法创建，都会调用 onCreate() 和 onDestroy() 方法。</p>
+</blockquote>
 </li>
 <li>
-<p>Service 的 <strong>有效生命周期</strong> 从调用 <a href="https://developer.android.com/reference/android/app/Service.html#onStartCommand(android.content.Intent,int,int)">onStartCommand()</a> 或 <a href="https://developer.android.com/reference/android/app/Service.html#onBind(android.content.Intent)">onBind()</a> 方法开始。每种方法均有 Intent 对象，该对象分别来自 <a href="https://developer.android.com/reference/android/content/Context.html#startService(android.content.Intent)">startService()</a> 和 <a href="https://developer.android.com/reference/android/content/Context.html#bindService(android.content.Intent,android.content.ServiceConnection,int)">bindService()</a> 。对于启动服务，有效生命周期和整个生命周期同时结束。对于绑定服务，有效生命周期在 <a href="https://developer.android.com/reference/android/app/Service.html#onUnbind(android.content.Intent)">onUnbind()</a> 返回时结束。</p>
-</li>
-</ul>
+<p>服务的 <strong>活动生命周期</strong>(<em>active lifetime</em>) 从调用 <a href="https://developer.android.com/reference/android/app/Service.html#onStartCommand(android.content.Intent,int,int)">onStartCommand()</a> 或 <a href="https://developer.android.com/reference/android/app/Service.html#onBind(android.content.Intent)">onBind()</a> 方法开始。两种方法均接收 Intent 对象，该对象分别来自 <a href="https://developer.android.com/reference/android/content/Context.html#startService(android.content.Intent)">startService()</a> 和 <a href="https://developer.android.com/reference/android/content/Context.html#bindService(android.content.Intent,android.content.ServiceConnection,int)">bindService()</a> 。对于启动服务，活动生命周期和整个生命周期同时结束。对于绑定服务，活动生命周期在 <a href="https://developer.android.com/reference/android/app/Service.html#onUnbind(android.content.Intent)">onUnbind()</a> 返回时结束。</p>
 <blockquote>
 <p>尽管启动服务是通过 <a href="https://developer.android.com/reference/android/app/Service.html#stopSelf()">stopSelf()</a> 或 <a href="https://developer.android.com/reference/android/content/Context.html#stopService(android.content.Intent)">stopService()</a> 来停止，但该服务没有相应的回调（没有 onStop() 回调）。因此，除非是绑定服务，否则在服务停止时，系统会将其在 onDestroy() 中销毁。</p>
 </blockquote>
-<p>上图说明了服务的典型回调方法。尽管该图分开介绍通过 <a href="https://developer.android.com/reference/android/content/Context.html#startService(android.content.Intent)">startService()</a> 创建的服务和通过 <a href="https://developer.android.com/reference/android/content/Context.html#bindService(android.content.Intent,android.content.ServiceConnection,int)">bindService()</a> 创建的服务，但是不管启动方式如何，任何服务均有可能允许客户端与其绑定。因此，最初使用 <a href="https://developer.android.com/reference/android/app/Service.html#onStartCommand(android.content.Intent,int,int)">onStartCommand()</a>（客户端调用 <a href="https://developer.android.com/reference/android/content/Context.html#startService(android.content.Intent)">startService()</a> ）启动的服务仍有可能接收 <a href="https://developer.android.com/reference/android/app/Service.html#onBind(android.content.Intent)">onBind()</a> 的调用（客户端调用 <a href="https://developer.android.com/reference/android/content/Context.html#bindService(android.content.Intent,android.content.ServiceConnection,int)">bindService()</a> 时）。</p>
-<h2 id="service-使用时需要注意的问题">Service 使用时需要注意的问题</h2>
-<h3 id="何时使用-bounded-service-和-unbounded-server">何时使用 Bounded service 和 Unbounded server</h3>
+</li>
+</ul>
+<p>上图说明了服务的典型回调方法。尽管该图分开介绍通过 <a href="https://developer.android.com/reference/android/content/Context.html#startService(android.content.Intent)">startService()</a> 方法和通过 <a href="https://developer.android.com/reference/android/content/Context.html#bindService(android.content.Intent,android.content.ServiceConnection,int)">bindService()</a> 方法创建的服务，但是不管启动方式如何，任何服务均有可能允许客户端与其绑定。因此，最初使用 <a href="https://developer.android.com/reference/android/app/Service.html#onStartCommand(android.content.Intent,int,int)">onStartCommand()</a>（客户端调用 <a href="https://developer.android.com/reference/android/content/Context.html#startService(android.content.Intent)">startService()</a> ）启动的服务仍有可能接收 <a href="https://developer.android.com/reference/android/app/Service.html#onBind(android.content.Intent)">onBind()</a> 的调用（客户端调用 <a href="https://developer.android.com/reference/android/content/Context.html#bindService(android.content.Intent,android.content.ServiceConnection,int)">bindService()</a> 时）。</p>
+<h2 id="创建绑定服务">创建绑定服务</h2>
+<p>创建绑定服务时我们需要提供 IBinder，该 IBinder 可用于 client 与 service 交互的编程接口。有三种定义这种接口的方式：</p>
+<ul>
+<li>
+<p><strong>扩展 Binder 类</strong></p>
+<p>服务对 app 私有，且与客户端处于同一进程。服务通过 <code>onBind()</code> 方法提供 <a href="https://developer.android.com/reference/android/os/Binder">Binder</a> 实例，客户端接收 Binder 并可以使用它直接访问 Binder 实现或服务中的公共方法。</p>
+<p>对于服务仅用于自己 app 后台工作时，该方式为首选。唯一不用该方式创建服务的场景是服务被别的 app 使用或跨进程。</p>
+</li>
+<li>
+<p><strong>使用 Messenger</strong></p>
+<p>对于跨进程的场景，可以使用 <a href="https://developer.android.com/reference/android/os/Messenger">Messenger</a> 为服务创建接口。这种方式服务定义 Handler 来处理不同的 Message 对象。这个 Handler 是 Messenger 的基础，它可以为客户端共享一个 IBinder，允许客户端使用 Message 对象。此外，客户端可以自己定义 Messenger，这样服务也可以送回 Message。</p>
+<p>这种是最简单的基于 Message 的跨进程（interprocess communication, IPC）的实现，因为 Messenger 将所有的请求加入到一个线程队列中，因此我们不必将服务设置为线程安全的。</p>
+</li>
+<li>
+<p><strong>使用 AIDL</strong></p>
+<p><a href="https://developer.android.com/guide/components/aidl">Android Interface Definition Language AIDL</a> 将对象分解为操作系统可以理解的基础类型，并跨进程编组对象以执行 IPC。Messenger 的底层结构基于 AIDL 实现。上面 Messenger 在单线程中创建包含所有客户端请求的队列，因此服务一次只能接收一个请求。如果我们需要服务能同时处理多个请求，那么就需要用到 AIDL。这种情况，我们的服务就需要线程安全，并且支持多线程。</p>
+<p>要使用 AIDL，我们需要创建一个 <code>.aidl</code> 文件定义编程接口。Android SDK tools 使用该文件生成一个抽象类，该类实现编程接口和处理 IPC，然后我们可以在服务中对其扩展。</p>
+</li>
+</ul>
+<blockquote>
+<p>官方提示：大多数 app 不应使用 AIDL 来创建绑定服务，因为它可能需要多线程功能并且可能导致实现起来更加复杂。</p>
+</blockquote>
+<h3 id="2022315-some-updates">2022/3/15 Some updates</h3>
+<h4 id="intentservice">IntentService</h4>
+<p>从 Android 8 开始，由于<a href="https://developer.android.com/about/versions/oreo/background#services">限制后台服务执行</a>，目前已<strong>不推荐</strong>使用 IntentService，并且该类已在 Android 11 废弃，我们可以使用 <a href="https://developer.android.com/reference/androidx/core/app/JobIntentService">JobIntentService</a> 来替换 IntentService。</p>
+<p>另外我们还可以使用扩展 Service 的方式来实现 IntentService 提供的功能：</p>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">import</span> <span style="color:#447fcf;text-decoration:underline">android.app.Notification</span>
+</span></span><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">import</span> <span style="color:#447fcf;text-decoration:underline">android.app.PendingIntent</span>
+</span></span><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">import</span> <span style="color:#447fcf;text-decoration:underline">android.app.Service</span>
+</span></span><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">import</span> <span style="color:#447fcf;text-decoration:underline">android.content.Intent</span>
+</span></span><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">import</span> <span style="color:#447fcf;text-decoration:underline">android.os.Build.VERSION_CODES</span>
+</span></span><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">import</span> <span style="color:#447fcf;text-decoration:underline">android.os.Handler</span>
+</span></span><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">import</span> <span style="color:#447fcf;text-decoration:underline">android.os.HandlerThread</span>
+</span></span><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">import</span> <span style="color:#447fcf;text-decoration:underline">android.os.IBinder</span>
+</span></span><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">import</span> <span style="color:#447fcf;text-decoration:underline">android.os.Looper</span>
+</span></span><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">import</span> <span style="color:#447fcf;text-decoration:underline">android.os.Message</span>
+</span></span><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">import</span> <span style="color:#447fcf;text-decoration:underline">android.os.Process.THREAD_PRIORITY_BACKGROUND</span>
+</span></span><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">import</span> <span style="color:#447fcf;text-decoration:underline">androidx.annotation.RequiresApi</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"> * Service code sample.
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"> *
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"> * @author: Zac
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"> * @date: 2022/3/16
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"> */</span>
+</span></span><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">class</span> <span style="color:#447fcf;text-decoration:underline">SampleIntentService</span> : Service() {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#6ab825;font-weight:bold">companion</span> <span style="color:#6ab825;font-weight:bold">object</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">private</span> <span style="color:#6ab825;font-weight:bold">const</span> <span style="color:#6ab825;font-weight:bold">val</span> NOTIFICATION_ID = <span style="color:#3677a9">0x1001</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">private</span> <span style="color:#6ab825;font-weight:bold">const</span> <span style="color:#6ab825;font-weight:bold">val</span> CHANNEL_NAME = <span style="color:#ed9d13">&#34;default&#34;</span>;
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#6ab825;font-weight:bold">private</span> <span style="color:#6ab825;font-weight:bold">var</span> serviceLooper: Looper? = <span style="color:#6ab825;font-weight:bold">null</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#6ab825;font-weight:bold">private</span> <span style="color:#6ab825;font-weight:bold">var</span> serviceHandler: ServiceHandler? = <span style="color:#6ab825;font-weight:bold">null</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#6ab825;font-weight:bold">private</span> <span style="color:#6ab825;font-weight:bold">inner</span> <span style="color:#6ab825;font-weight:bold">class</span> <span style="color:#447fcf;text-decoration:underline">ServiceHandler</span>(looper: Looper): Handler(looper) {
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">override</span> <span style="color:#6ab825;font-weight:bold">fun</span> <span style="color:#447fcf">handleMessage</span>(msg: Message) {
+</span></span><span style="display:flex;"><span>      <span style="color:#999;font-style:italic">// to do some work here
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>
+</span></span><span style="display:flex;"><span>      <span style="color:#999;font-style:italic">// Stop the service using the startId, so that we don&#39;t stop the
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>      <span style="color:#999;font-style:italic">// service in the middle of handling another job
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>      stopSelf(msg.arg1)
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#6ab825;font-weight:bold">private</span> <span style="color:#6ab825;font-weight:bold">val</span> pendingIntent: PendingIntent =
+</span></span><span style="display:flex;"><span>    Intent(<span style="color:#6ab825;font-weight:bold">this</span>, MainActivity::<span style="color:#6ab825;font-weight:bold">class</span>.java).let { notificationIntent -&gt;
+</span></span><span style="display:flex;"><span>      PendingIntent.getActivity(<span style="color:#6ab825;font-weight:bold">this</span>, <span style="color:#3677a9">0</span>, notificationIntent, <span style="color:#3677a9">0</span>)
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#999;font-style:italic">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic">   * Create foreground notification
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic">   */</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ffa500">@RequiresApi</span>(VERSION_CODES.O)
+</span></span><span style="display:flex;"><span>  <span style="color:#6ab825;font-weight:bold">private</span> <span style="color:#6ab825;font-weight:bold">val</span> notification: Notification = Notification.Builder(<span style="color:#6ab825;font-weight:bold">this</span>, CHANNEL_NAME)
+</span></span><span style="display:flex;"><span>    .setContentTitle(getText(R.string.notification_title))
+</span></span><span style="display:flex;"><span>    .setContentText(getText(R.string.notification_message))
+</span></span><span style="display:flex;"><span>    .setSmallIcon(R.drawable.icon)
+</span></span><span style="display:flex;"><span>    .setContentIntent(pendingIntent)
+</span></span><span style="display:flex;"><span>    .setTicker(getText(R.string.ticker_text))
+</span></span><span style="display:flex;"><span>    .build()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#6ab825;font-weight:bold">override</span> <span style="color:#6ab825;font-weight:bold">fun</span> <span style="color:#447fcf">onCreate</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#999;font-style:italic">// Start up the thread running the service.
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>    <span style="color:#999;font-style:italic">// We create a separate thread because the service normally runs in
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>    <span style="color:#999;font-style:italic">// the process&#39;s main thread, which we don&#39;t want block. We also make
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>    <span style="color:#999;font-style:italic">// it background priority so CPU-intensive work will not disrupt the UI.
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>    HandlerThread(<span style="color:#ed9d13">&#34;SampleIntentService&#34;</span>, THREAD_PRIORITY_BACKGROUND).apply {
+</span></span><span style="display:flex;"><span>      start()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>      <span style="color:#999;font-style:italic">// Get the HandlerThread&#39;s Looper
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>      serviceLooper = looper
+</span></span><span style="display:flex;"><span>      serviceHandler = ServiceHandler(looper)
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#6ab825;font-weight:bold">override</span> <span style="color:#6ab825;font-weight:bold">fun</span> <span style="color:#447fcf">onStartCommand</span>(intent: Intent?, flags: Int, startId: Int): Int {
+</span></span><span style="display:flex;"><span>    startForeground(NOTIFICATION_ID, notification)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#999;font-style:italic">// For each start request, send a message to start a job and deliver the
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>    <span style="color:#999;font-style:italic">// start ID so we know which request we&#39;re stopping when we finish the job
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>    serviceHandler?.obtainMessage()?.also { msg-&gt;
+</span></span><span style="display:flex;"><span>      msg.arg1 = startId
+</span></span><span style="display:flex;"><span>      serviceHandler?.sendMessage(msg)
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#999;font-style:italic">// If service get killed, after returning from here, restart
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>    <span style="color:#6ab825;font-weight:bold">return</span> START_STICKY
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#6ab825;font-weight:bold">override</span> <span style="color:#6ab825;font-weight:bold">fun</span> <span style="color:#447fcf">onBind</span>(intent: Intent?): IBinder? {
+</span></span><span style="display:flex;"><span>    <span style="color:#999;font-style:italic">// No binder provide here
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>    <span style="color:#6ab825;font-weight:bold">return</span> <span style="color:#6ab825;font-weight:bold">null</span>
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h3 id="何时使用绑定服务和启动服务">何时使用绑定服务和启动服务</h3>
 <p>官方文档在 <a href="https://developer.android.com/reference/android/content/Context.html#startService(android.content.Intent)">startService</a> 有描述：</p>
 <blockquote>
-<p>Note: Each call to startService() results in significant work done by the system to manage service lifecycle surrounding the processing of the intent, which can take multiple milliseconds of CPU time. Due to this cost, startService() should not be used for frequent intent delivery to a service, and only for scheduling significant work. Use bound services for high frequency calls.</p>
+<p>Note: Each call to startService() results in significant work done by the system to manage service lifecycle surrounding the processing of the intent, which can take multiple milliseconds of CPU time. Due to this cost, startService() should not be used for frequent intent delivery to a service, and only for scheduling significant work. Use bound services for high frequency调用s.</p>
 </blockquote>
-<p>大意是指 <code>startService()</code> 方法开销比较大，因此在高频次调用服务的场景，最好使用 Bounded service，Unbounded service 仅用于安排重要工作。</p>
+<p>大意是指 <code>startService()</code> 方法开销比较大，因此在高频次调用服务的场景，最好使用绑定服务，启动服务仅用于安排重要工作。</p>
 <h3 id="android-o-以上报-illegalstateexception">Android O 以上报 IllegalStateException</h3>
 <p>Android O 加强了后台执行的限制，App 处于后台时不允许通过 <code>startService()</code> 的形式启动服务，只能通过 <code>startForegroundService()</code> 方法启动服务，而且 App 必须在创建服务后5s内调用该服务的 <code>startForeground()</code> 方法。具体的实现如下：</p>
-<pre><code class="language-kotlin">if(Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.O) {
-  startForegroundService(new Intent(MainActivity.this, SampleService.class));
-}else{
-  startService(new Intent(MainActivity.this, SampleService.class));
-}
-</code></pre>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">if</span>(Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.O) {
+</span></span><span style="display:flex;"><span>  startForegroundService(new Intent(MainActivity.<span style="color:#6ab825;font-weight:bold">this</span>, SampleService.<span style="color:#6ab825;font-weight:bold">class</span>));
+</span></span><span style="display:flex;"><span>}<span style="color:#6ab825;font-weight:bold">else</span>{
+</span></span><span style="display:flex;"><span>  startService(new Intent(MainActivity.<span style="color:#6ab825;font-weight:bold">this</span>, SampleService.<span style="color:#6ab825;font-weight:bold">class</span>));
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div>
 </article>
 
 
@@ -496,11 +607,6 @@ public class SampleService extends Service {
   </div>
 
   
-    <script>
-      document.addEventListener("DOMContentLoaded", () => {
-        hljs.initHighlightingOnLoad();
-      });
-    </script>
 
           </div>
         </div>

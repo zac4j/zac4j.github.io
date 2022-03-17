@@ -19,17 +19,6 @@
   as="style" onload="this.onload=null;this.rel='stylesheet'">
 
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/styles/solarized-light.min.css"
-   media="print"
-  onload="this.media='all';this.onload=null" crossorigin>
-<script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/highlight.min.js"
-   crossorigin></script>
-  <script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/languages/dart.min.js"
-     crossorigin></script>
-  <script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/languages/java.min.js"
-     crossorigin></script>
-  <script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/languages/kotlin.min.js"
-     crossorigin></script>
 
 
 <script defer type="text/javascript" src="https://zacash.cn/js/fontawesome.min.1c5a4674b042785ed214cf0818a81724c6b37442fd61b0ed039237b93de25ed5103fc8079a05770648ccc9c66c4f540a.js" integrity="sha384-HFpGdLBCeF7SFM8IGKgXJMazdEL9YbDtA5I3uT3iXtUQP8gHmgV3BkjMycZsT1QK"></script>
@@ -66,8 +55,8 @@
 <meta name="description"
   content="IntArray vs. Array&lt;Int&gt;   In java code
  IntArray: int[] Array&lt;Int&gt;: Integer[]    Create method:
- IntArray:  val intArray : IntArray = intArrayOf(1, 2, 3, 4, 5)   Array&lt;Int&gt;:  val arrayOfInts : Array&lt;Int&gt; = arrayOf(1, 2, 3, 4, 5)    Iterable vs. Sequence   Usage
- Iterable:  getPeople() .filter { it.age &gt;= 18 } .map { it.name } .take(5)   Sequence: start with asSequence() and end with toList() or toSet()&hellip;  getPeople().">
+ IntArray:  val intArray : IntArray = intArrayOf(1, 2, 3, 4, 5)  Array&lt;Int&gt;:  val arrayOfInts : Array&lt;Int&gt; = arrayOf(1, 2, 3, 4, 5)   Iterable vs. Sequence   Usage
+ Iterable:  getPeople() .filter { it.age &gt;= 18 } .map { it.name } .take(5)  Sequence: start with asSequence() and end with toList() or toSet()&hellip;  getPeople().">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -105,7 +94,7 @@
             "url": "https://zacash.cn/images/icon.png"
         }
         },
-    "description": "IntArray vs. Array\u0026lt;Int\u0026gt;   In java code\n IntArray: int[] Array\u0026lt;Int\u0026gt;: Integer[]    Create method:\n IntArray:  val intArray : IntArray = intArrayOf(1, 2, 3, 4, 5)   Array\u0026lt;Int\u0026gt;:  val arrayOfInts : Array\u0026lt;Int\u0026gt; = arrayOf(1, 2, 3, 4, 5)    Iterable vs. Sequence   Usage\n Iterable:  getPeople() .filter { it.age \u0026gt;= 18 } .map { it.name } .take(5)   Sequence: start with asSequence() and end with toList() or toSet()\u0026hellip;  getPeople()."
+    "description": "IntArray vs. Array\u0026lt;Int\u0026gt;   In java code\n IntArray: int[] Array\u0026lt;Int\u0026gt;: Integer[]    Create method:\n IntArray:  val intArray : IntArray = intArrayOf(1, 2, 3, 4, 5)  Array\u0026lt;Int\u0026gt;:  val arrayOfInts : Array\u0026lt;Int\u0026gt; = arrayOf(1, 2, 3, 4, 5)   Iterable vs. Sequence   Usage\n Iterable:  getPeople() .filter { it.age \u0026gt;= 18 } .map { it.name } .take(5)  Sequence: start with asSequence() and end with toList() or toSet()\u0026hellip;  getPeople()."
 }
 </script><meta property="og:title" content="Top 10 Kotlin Questions in StackOverflow | Zac&#39;s blog" />
 <meta property="og:type" content="article" />
@@ -121,8 +110,8 @@
 
 <meta property="og:description" content="IntArray vs. Array&lt;Int&gt;   In java code
  IntArray: int[] Array&lt;Int&gt;: Integer[]    Create method:
- IntArray:  val intArray : IntArray = intArrayOf(1, 2, 3, 4, 5)   Array&lt;Int&gt;:  val arrayOfInts : Array&lt;Int&gt; = arrayOf(1, 2, 3, 4, 5)    Iterable vs. Sequence   Usage
- Iterable:  getPeople() .filter { it.age &gt;= 18 } .map { it.name } .take(5)   Sequence: start with asSequence() and end with toList() or toSet()&hellip;  getPeople()." />
+ IntArray:  val intArray : IntArray = intArrayOf(1, 2, 3, 4, 5)  Array&lt;Int&gt;:  val arrayOfInts : Array&lt;Int&gt; = arrayOf(1, 2, 3, 4, 5)   Iterable vs. Sequence   Usage
+ Iterable:  getPeople() .filter { it.age &gt;= 18 } .map { it.name } .take(5)  Sequence: start with asSequence() and end with toList() or toSet()&hellip;  getPeople()." />
 
 
 
@@ -283,14 +272,12 @@
 <ul>
 <li>IntArray:</li>
 </ul>
-<pre><code class="language-kt">val intArray : IntArray = intArrayOf(1, 2, 3, 4, 5)
-</code></pre>
-<ul>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kt" data-lang="kt"><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">val</span> intArray : IntArray = intArrayOf(<span style="color:#3677a9">1</span>, <span style="color:#3677a9">2</span>, <span style="color:#3677a9">3</span>, <span style="color:#3677a9">4</span>, <span style="color:#3677a9">5</span>)
+</span></span></code></pre></div><ul>
 <li><code>Array&lt;Int&gt;</code>:</li>
 </ul>
-<pre><code class="language-kt">val arrayOfInts : Array&lt;Int&gt; = arrayOf(1, 2, 3, 4, 5)
-</code></pre>
-</li>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kt" data-lang="kt"><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">val</span> arrayOfInts : Array&lt;Int&gt; = arrayOf(<span style="color:#3677a9">1</span>, <span style="color:#3677a9">2</span>, <span style="color:#3677a9">3</span>, <span style="color:#3677a9">4</span>, <span style="color:#3677a9">5</span>)
+</span></span></code></pre></div></li>
 </ul>
 <h4 id="iterable-vs-sequence">Iterable vs. Sequence</h4>
 <ul>
@@ -299,21 +286,19 @@
 <ul>
 <li>Iterable:</li>
 </ul>
-<pre><code class="language-kt">getPeople()
-.filter { it.age &gt;= 18 }
-.map { it.name }
-.take(5)
-</code></pre>
-<ul>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kt" data-lang="kt"><span style="display:flex;"><span>getPeople()
+</span></span><span style="display:flex;"><span>.filter { <span style="color:#6ab825;font-weight:bold">it</span>.age &gt;= <span style="color:#3677a9">18</span> }
+</span></span><span style="display:flex;"><span>.map { <span style="color:#6ab825;font-weight:bold">it</span>.name }
+</span></span><span style="display:flex;"><span>.take(<span style="color:#3677a9">5</span>)
+</span></span></code></pre></div><ul>
 <li>Sequence: start with <code>asSequence()</code> and end with <code>toList()</code> or <code>toSet()</code>&hellip;</li>
 </ul>
-<pre><code class="language-kt">getPeople().asSequence()
-.filter { it.age &gt;= 18 }
-.map { it.name }
-.take(5)
-.toList()
-</code></pre>
-</li>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kt" data-lang="kt"><span style="display:flex;"><span>getPeople().asSequence()
+</span></span><span style="display:flex;"><span>.filter { <span style="color:#6ab825;font-weight:bold">it</span>.age &gt;= <span style="color:#3677a9">18</span> }
+</span></span><span style="display:flex;"><span>.map { <span style="color:#6ab825;font-weight:bold">it</span>.name }
+</span></span><span style="display:flex;"><span>.take(<span style="color:#3677a9">5</span>)
+</span></span><span style="display:flex;"><span>.toList()
+</span></span></code></pre></div></li>
 <li>
 <p>Use for</p>
 <ul>
@@ -326,60 +311,52 @@
 <ul>
 <li>
 <p>eg.1</p>
-<pre><code class="language-kt">for(i in 0..args.size - 1) {
-    println(args[i])
-}
-</code></pre>
-</li>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kt" data-lang="kt"><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">for</span>(i <span style="color:#6ab825;font-weight:bold">in</span> <span style="color:#3677a9">0.</span>.args.size - <span style="color:#3677a9">1</span>) {
+</span></span><span style="display:flex;"><span>    println(args[i])
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div></li>
 <li>
 <p>eg.2, use Array&rsquo;s <code>lastIndex</code> extension property.</p>
-<pre><code class="language-kt">for(i in 0..args.lastIndex) {
-    println(args[i])
-}
-</code></pre>
-</li>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kt" data-lang="kt"><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">for</span>(i <span style="color:#6ab825;font-weight:bold">in</span> <span style="color:#3677a9">0.</span>.args.lastIndex) {
+</span></span><span style="display:flex;"><span>    println(args[i])
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div></li>
 <li>
 <p>eg., use <code>until</code> to create open ended range.</p>
-<pre><code class="language-kt">for(i in 0 until args.size) {
-    println(args[i])
-}
-</code></pre>
-</li>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kt" data-lang="kt"><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">for</span>(i <span style="color:#6ab825;font-weight:bold">in</span> <span style="color:#3677a9">0</span> until args.size) {
+</span></span><span style="display:flex;"><span>    println(args[i])
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div></li>
 <li>
 <p>eg.4, use <code>indices</code> extension property.</p>
-<pre><code class="language-kt">for(i in args.indices) {
-    println(args[i])
-}
-</code></pre>
-</li>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kt" data-lang="kt"><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">for</span>(i <span style="color:#6ab825;font-weight:bold">in</span> args.indices) {
+</span></span><span style="display:flex;"><span>    println(args[i])
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div></li>
 <li>
 <p>eg.5</p>
-<pre><code class="language-kt">for (arg in args) {
-    println(arg)
-}
-</code></pre>
-</li>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kt" data-lang="kt"><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">for</span> (arg <span style="color:#6ab825;font-weight:bold">in</span> args) {
+</span></span><span style="display:flex;"><span>    println(arg)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div></li>
 <li>
 <p>eg.6, use <code>forEach</code> extension function.</p>
-<pre><code class="language-kt">args.forEach { arg -&gt;
-    println(arg)
-}
-</code></pre>
-</li>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kt" data-lang="kt"><span style="display:flex;"><span>args.forEach { arg -&gt;
+</span></span><span style="display:flex;"><span>    println(arg)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div></li>
 <li>
 <p>eg.7, use <code>withIndex</code> function.</p>
-<pre><code class="language-kt">for((index, arg) in args.withIndex()) {
-    println(&quot;index: $index, arg: $arg&quot;)
-}
-</code></pre>
-</li>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kt" data-lang="kt"><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">for</span>((index, arg) <span style="color:#6ab825;font-weight:bold">in</span> args.withIndex()) {
+</span></span><span style="display:flex;"><span>    println(<span style="color:#ed9d13">&#34;index: </span><span style="color:#ed9d13">$index</span><span style="color:#ed9d13">, arg: </span><span style="color:#ed9d13">$arg</span><span style="color:#ed9d13">&#34;</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div></li>
 <li>
 <p>eg.8, use <code>forEachIndexed</code> functions.</p>
-<pre><code class="language-kt">args.forEachIndexed { index, arg -&gt;
-    println(&quot;index: $index, arg: $arg&quot;)
-}
-</code></pre>
-</li>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kt" data-lang="kt"><span style="display:flex;"><span>args.forEachIndexed { index, arg -&gt;
+</span></span><span style="display:flex;"><span>    println(<span style="color:#ed9d13">&#34;index: </span><span style="color:#ed9d13">$index</span><span style="color:#ed9d13">, arg: </span><span style="color:#ed9d13">$arg</span><span style="color:#ed9d13">&#34;</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div></li>
 </ul>
 <h4 id="sam-conversion">SAM conversion</h4>
 <blockquote>
@@ -388,49 +365,46 @@
 <ul>
 <li>
 <p>This code will work fine:</p>
-<pre><code class="language-kt">button.setListener {
-    println(&quot;Clicked!&quot;)
-}
-</code></pre>
-</li>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kt" data-lang="kt"><span style="display:flex;"><span>button.setListener {
+</span></span><span style="display:flex;"><span>    println(<span style="color:#ed9d13">&#34;Clicked!&#34;</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div></li>
 <li>
 <p>The following will not work:</p>
-<pre><code class="language-kt">/**
-* This gives the button a lambda that will create an anonymous instance of an OnClickListener
-* every time the button is clicked, which is then just thrown away (never assigned anywhere,
-* never invoked).
-*/
-button.setListener {
-    object: OnClickListener {
-        override fun onClick(button: Button) {
-            println(&quot;Clicked!&quot;)
-        }
-    }
-}
-
-/**
-* This one declares a useless local function in a very simliar fashion
-*/
-button.setListener {
-    fun onClick(button: Button) {
-        println(&quot;Clicked!&quot;)
-    }
-}
-</code></pre>
-</li>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kt" data-lang="kt"><span style="display:flex;"><span><span style="color:#999;font-style:italic">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic">* This gives the button a lambda that will create an anonymous instance of an OnClickListener
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic">* every time the button is clicked, which is then just thrown away (never assigned anywhere,
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic">* never invoked).
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic">*/</span>
+</span></span><span style="display:flex;"><span>button.setListener {
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">object</span>: OnClickListener {
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">override</span> <span style="color:#6ab825;font-weight:bold">fun</span> <span style="color:#447fcf">onClick</span>(button: Button) {
+</span></span><span style="display:flex;"><span>            println(<span style="color:#ed9d13">&#34;Clicked!&#34;</span>)
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic">* This one declares a useless local function in a very simliar fashion
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic">*/</span>
+</span></span><span style="display:flex;"><span>button.setListener {
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">fun</span> <span style="color:#447fcf">onClick</span>(button: Button) {
+</span></span><span style="display:flex;"><span>        println(<span style="color:#ed9d13">&#34;Clicked!&#34;</span>)
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div></li>
 <li>
 <p><a href="https://stackoverflow.com/questions/48284994/lambda-implementation-of-interface-in-kotlin">SAM constructor</a></p>
 </li>
 </ul>
-<pre><code class="language-kt">/**
- * If the interface is defined in Java, but the function that takes an instance of its defined in Kotlin,
- * try to use a SAM constructor.
- */
- button.setListener(OnClickListener {
-    println(&quot;Clicked&quot;)
- })
-</code></pre>
-<ul>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kt" data-lang="kt"><span style="display:flex;"><span><span style="color:#999;font-style:italic">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"> * If the interface is defined in Java, but the function that takes an instance of its defined in Kotlin,
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"> * try to use a SAM constructor.
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"> */</span>
+</span></span><span style="display:flex;"><span> button.setListener(OnClickListener {
+</span></span><span style="display:flex;"><span>    println(<span style="color:#ed9d13">&#34;Clicked&#34;</span>)
+</span></span><span style="display:flex;"><span> })
+</span></span></code></pre></div><ul>
 <li>Explanation
 <table>
 <thead>
@@ -459,29 +433,26 @@ button.setListener {
 <ul>
 <li>
 <p>If your class has &ldquo;non-static&rdquo; parts as well, put the &ldquo;static&rdquo; parts in a companion object:</p>
-<pre><code class="language-kt">class Foo {
-    companion object {
-        fun x() {...}
-    }
-    fun y() {...}
-}
-</code></pre>
-</li>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kt" data-lang="kt"><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">class</span> <span style="color:#447fcf;text-decoration:underline">Foo</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">companion</span> <span style="color:#6ab825;font-weight:bold">object</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">fun</span> <span style="color:#447fcf">x</span>() {...}
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">fun</span> <span style="color:#447fcf">y</span>() {...}
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div></li>
 <li>
 <p>If your class is completely static, replace <code>class</code> with a singleton <code>object</code> :</p>
 </li>
 </ul>
-<pre><code class="language-kt">object Foo {
-    fun x() {...}
-}
-</code></pre>
-<ul>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kt" data-lang="kt"><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">object</span> <span style="color:#447fcf;text-decoration:underline">Foo</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">fun</span> <span style="color:#447fcf">x</span>() {...}
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><ul>
 <li>And if you don&rsquo;t want to always scope your calls as <code>Foo.x()</code> but want to just use <code>x()</code> instead, use a top level function:</li>
 </ul>
-<pre><code class="language-kt">// file Foo.kt
-fun x() {...}
-</code></pre>
-<ul>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kt" data-lang="kt"><span style="display:flex;"><span><span style="color:#999;font-style:italic">// file Foo.kt
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span><span style="color:#6ab825;font-weight:bold">fun</span> <span style="color:#447fcf">x</span>() {...}
+</span></span></code></pre></div><ul>
 <li>For function, there has this table:
 <table>
 <thead>
@@ -614,72 +585,65 @@ fun x() {...}
 <blockquote>
 <p>Kotlin: Smart cast to &lsquo;Toy&rsquo; is impossible, because &rsquo;toy&rsquo; is a mutable property that could have been changed by this time</p>
 </blockquote>
-<pre><code class="language-kt">class Dog(var toy: Toy? = null) {
-    fun play() {
-        if (toy != null) {
-            toy.chew()
-        }
-    }
-}
-</code></pre>
-<p>原因：
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kt" data-lang="kt"><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">class</span> <span style="color:#447fcf;text-decoration:underline">Dog</span>(<span style="color:#6ab825;font-weight:bold">var</span> toy: Toy? = <span style="color:#6ab825;font-weight:bold">null</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">fun</span> <span style="color:#447fcf">play</span>() {
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">if</span> (toy != <span style="color:#6ab825;font-weight:bold">null</span>) {
+</span></span><span style="display:flex;"><span>            toy.chew()
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>原因：
 因为 mutable 的变量<code>Dog</code> 实例可能在<code>toy!=null</code>检查后在另一条线程上被修改，而在 <code>toy.chew()</code>执行时可能产生 NPE.</p>
 <p>可以做以下修改：</p>
 <ul>
 <li>使用局部变量</li>
 </ul>
-<pre><code class="language-kt">class Dog(var toy: Toy? = null) {
-    fun play() {
-        val _toy = toy
-        if (_toy != null) {
-            _toy.chew()
-        }
-    }
-}
-</code></pre>
-<ul>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kt" data-lang="kt"><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">class</span> <span style="color:#447fcf;text-decoration:underline">Dog</span>(<span style="color:#6ab825;font-weight:bold">var</span> toy: Toy? = <span style="color:#6ab825;font-weight:bold">null</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">fun</span> <span style="color:#447fcf">play</span>() {
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">val</span> _toy = toy
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">if</span> (_toy != <span style="color:#6ab825;font-weight:bold">null</span>) {
+</span></span><span style="display:flex;"><span>            _toy.chew()
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><ul>
 <li>临时 let 操作符，使用范围更广泛：</li>
 </ul>
-<pre><code class="language-kt">class Dog(var toy: Toy? = null) {
-    fun play() {
-        toy?.let {
-            it.chew()
-        }
-    }
-}
-</code></pre>
-<ul>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kt" data-lang="kt"><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">class</span> <span style="color:#447fcf;text-decoration:underline">Dog</span>(<span style="color:#6ab825;font-weight:bold">var</span> toy: Toy? = <span style="color:#6ab825;font-weight:bold">null</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">fun</span> <span style="color:#447fcf">play</span>() {
+</span></span><span style="display:flex;"><span>        toy?.let {
+</span></span><span style="display:flex;"><span>            <span style="color:#6ab825;font-weight:bold">it</span>.chew()
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><ul>
 <li>?. 操作符</li>
 </ul>
-<pre><code class="language-kt">class Dog(var toy: Toy? = null) {
-    fun play() {
-        toy?.chew()
-    }
-}
-</code></pre>
-<h4 id="override-java-方法">override Java 方法</h4>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kt" data-lang="kt"><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">class</span> <span style="color:#447fcf;text-decoration:underline">Dog</span>(<span style="color:#6ab825;font-weight:bold">var</span> toy: Toy? = <span style="color:#6ab825;font-weight:bold">null</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">fun</span> <span style="color:#447fcf">play</span>() {
+</span></span><span style="display:flex;"><span>        toy?.chew()
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h4 id="override-java-方法">override Java 方法</h4>
 <p>假设 Java 中定义了接口 <code>OnClickListener</code>:</p>
-<pre><code class="language-java">public interface OnClickListener {
-    void onClick(Button button)
-}
-</code></pre>
-<p>在 Kotlin 中实现该接口，如果使用IDEA生成：</p>
-<pre><code class="language-kt">class KtListener: OnClickListener {
-    override fun onClick(button: Button?): Unit {
-        val name = button?.name ?: &quot;Unknown button&quot;
-        println(&quot;Clicked $name&quot;)
-    }
-}
-</code></pre>
-<p>对于我们知道不可能为 <code>null</code> 的场景，可以这样写：</p>
-<pre><code class="language-kt">class KtListener: OnClickListener {
-    override fun onClick(button: Button): Unit {
-        val name = button.name
-        println(&quot;Clicked $name&quot;)
-    }
-}
-</code></pre>
-
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">public</span> <span style="color:#6ab825;font-weight:bold">interface</span> <span style="color:#447fcf;text-decoration:underline">OnClickListener</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">void</span> <span style="color:#447fcf">onClick</span>(Button button)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>在 Kotlin 中实现该接口，如果使用IDEA生成：</p>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kt" data-lang="kt"><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">class</span> <span style="color:#447fcf;text-decoration:underline">KtListener</span>: OnClickListener {
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">override</span> <span style="color:#6ab825;font-weight:bold">fun</span> <span style="color:#447fcf">onClick</span>(button: Button?): Unit {
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">val</span> name = button?.name ?: <span style="color:#ed9d13">&#34;Unknown button&#34;</span>
+</span></span><span style="display:flex;"><span>        println(<span style="color:#ed9d13">&#34;Clicked </span><span style="color:#ed9d13">$name</span><span style="color:#ed9d13">&#34;</span>)
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>对于我们知道不可能为 <code>null</code> 的场景，可以这样写：</p>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kt" data-lang="kt"><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">class</span> <span style="color:#447fcf;text-decoration:underline">KtListener</span>: OnClickListener {
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">override</span> <span style="color:#6ab825;font-weight:bold">fun</span> <span style="color:#447fcf">onClick</span>(button: Button): Unit {
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">val</span> name = button.name
+</span></span><span style="display:flex;"><span>        println(<span style="color:#ed9d13">&#34;Clicked </span><span style="color:#ed9d13">$name</span><span style="color:#ed9d13">&#34;</span>)
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div>
 </article>
 
 
@@ -730,11 +694,6 @@ fun x() {...}
   </div>
 
   
-    <script>
-      document.addEventListener("DOMContentLoaded", () => {
-        hljs.initHighlightingOnLoad();
-      });
-    </script>
 
           </div>
         </div>

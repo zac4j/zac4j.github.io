@@ -19,17 +19,6 @@
   as="style" onload="this.onload=null;this.rel='stylesheet'">
 
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/styles/solarized-light.min.css"
-   media="print"
-  onload="this.media='all';this.onload=null" crossorigin>
-<script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/highlight.min.js"
-   crossorigin></script>
-  <script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/languages/dart.min.js"
-     crossorigin></script>
-  <script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/languages/java.min.js"
-     crossorigin></script>
-  <script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/languages/kotlin.min.js"
-     crossorigin></script>
 
 
 <script defer type="text/javascript" src="https://zacash.cn/js/fontawesome.min.1c5a4674b042785ed214cf0818a81724c6b37442fd61b0ed039237b93de25ed5103fc8079a05770648ccc9c66c4f540a.js" integrity="sha384-HFpGdLBCeF7SFM8IGKgXJMazdEL9YbDtA5I3uT3iXtUQP8gHmgV3BkjMycZsT1QK"></script>
@@ -89,7 +78,7 @@
             "@type":"ListItem",
             "position":  3 ,
             "name": "How Are Touch Events Delivered",
-            "description": "根据例子来理解 Android 的事件传递\n页面的布局结构\n\u0026lt;?xml version=\u0026quot;1.0\u0026quot; encoding=\u0026quot;utf-8\u0026quot;?\u0026gt; \u0026lt;layout xmlns:android=\u0026quot;http://schemas.android.com/apk/res/android\u0026quot; xmlns:app=\u0026quot;http://schemas.android.com/apk/res-auto\u0026quot;\u0026gt; \u0026lt;data\u0026gt; \u0026lt;variable name=\u0026quot;viewModel\u0026quot; type=\u0026quot;com.zac4j.system.data.TouchViewModel\u0026quot; /\u0026gt; \u0026lt;/data\u0026gt; \u0026lt;com.zac4j.system.ui.widget.CustomLayout android:id=\u0026quot;@id/touch_sample_container\u0026quot; android:layout_width=\u0026quot;match_parent\u0026quot; android:layout_height=\u0026quot;match_parent\u0026quot;\u0026gt; \u0026lt;Button android:id=\u0026quot;@id/touch_sample_btn\u0026quot; style=\u0026quot;@style/Widget.AppCompat.Button.Colored\u0026quot; android:layout_width=\u0026quot;match_parent\u0026quot; android:layout_height=\u0026quot;wrap_content\u0026quot; android:text=\u0026quot;Touch Me\u0026quot; app:layout_constraintEnd_toEndOf=\u0026quot;parent\u0026quot; app:layout_constraintStart_toStartOf=\u0026quot;parent\u0026quot; app:layout_constraintTop_toTopOf=\u0026quot;parent\u0026quot; /\u0026gt; \u0026lt;/com.zac4j.system.ui.widget.CustomLayout\u0026gt; \u0026lt;/layout\u0026gt;  TouchEvent 的传递 我们通常对 Button 创建点击事件:\ntouchSampleBtn.setOnClickListener { Logger.i(TAG, \u0026quot;setOnClickListener\u0026quot;, \u0026quot;sampleBtn clicked\u0026quot;) }  可以先看下 View.dispatchTouchEvent() 的实现:\npublic boolean dispatchTouchEvent(MotionEvent event) { ... if (onFilterTouchEventForSecurity(event)) { if ((mViewFlags \u0026amp; ENABLED_MASK) == ENABLED \u0026amp;\u0026amp; handleScrollBarDragging(event)) { result = true; } //noinspection SimplifiableIfStatement ListenerInfo li = mListenerInfo; if (li !",
+            "description": "根据例子来理解 Android 的事件传递\n页面的布局结构\n\u0026lt;?xml version=\u0026#34;1.0\u0026#34; encoding=\u0026#34;utf-8\u0026#34;?\u0026gt; \u0026lt;layout xmlns:android=\u0026#34;http://schemas.android.com/apk/res/android\u0026#34;  xmlns:app=\u0026#34;http://schemas.android.com/apk/res-auto\u0026#34;\u0026gt;   \u0026lt;data\u0026gt;  \u0026lt;variable  name=\u0026#34;viewModel\u0026#34;  type=\u0026#34;com.zac4j.system.data.TouchViewModel\u0026#34; /\u0026gt;  \u0026lt;/data\u0026gt;   \u0026lt;com.zac4j.system.ui.widget.CustomLayout  android:id=\u0026#34;@id/touch_sample_container\u0026#34;  android:layout_width=\u0026#34;match_parent\u0026#34;  android:layout_height=\u0026#34;match_parent\u0026#34;\u0026gt;   \u0026lt;Button  android:id=\u0026#34;@id/touch_sample_btn\u0026#34;  style=\u0026#34;@style/Widget.AppCompat.Button.Colored\u0026#34;  android:layout_width=\u0026#34;match_parent\u0026#34;  android:layout_height=\u0026#34;wrap_content\u0026#34;  android:text=\u0026#34;Touch Me\u0026#34;  app:layout_constraintEnd_toEndOf=\u0026#34;parent\u0026#34;  app:layout_constraintStart_toStartOf=\u0026#34;parent\u0026#34;  app:layout_constraintTop_toTopOf=\u0026#34;parent\u0026#34; /\u0026gt;   \u0026lt;/com.zac4j.system.ui.widget.CustomLayout\u0026gt; \u0026lt;/layout\u0026gt; TouchEvent 的传递 我们通常对 Button 创建点击事件:\ntouchSampleBtn.setOnClickListener {  Logger.i(TAG, \u0026#34;setOnClickListener\u0026#34;, \u0026#34;sampleBtn clicked\u0026#34;) } 可以先看下 View.dispatchTouchEvent() 的实现:\npublic boolean dispatchTouchEvent(MotionEvent event) {  .",
             "url": "https://zacash.cn/posts/how-are-touch-events-delivered/"
         }
     ]
@@ -338,9 +327,9 @@
   
     根据例子来理解 Android 的事件传递
 页面的布局结构
-&lt;?xml version=&#34;1.0&#34; encoding=&#34;utf-8&#34;?&gt; &lt;layout xmlns:android=&#34;http://schemas.android.com/apk/res/android&#34; xmlns:app=&#34;http://schemas.android.com/apk/res-auto&#34;&gt; &lt;data&gt; &lt;variable name=&#34;viewModel&#34; type=&#34;com.zac4j.system.data.TouchViewModel&#34; /&gt; &lt;/data&gt; &lt;com.zac4j.system.ui.widget.CustomLayout android:id=&#34;@id/touch_sample_container&#34; android:layout_width=&#34;match_parent&#34; android:layout_height=&#34;match_parent&#34;&gt; &lt;Button android:id=&#34;@id/touch_sample_btn&#34; style=&#34;@style/Widget.AppCompat.Button.Colored&#34; android:layout_width=&#34;match_parent&#34; android:layout_height=&#34;wrap_content&#34; android:text=&#34;Touch Me&#34; app:layout_constraintEnd_toEndOf=&#34;parent&#34; app:layout_constraintStart_toStartOf=&#34;parent&#34; app:layout_constraintTop_toTopOf=&#34;parent&#34; /&gt; &lt;/com.zac4j.system.ui.widget.CustomLayout&gt; &lt;/layout&gt;  TouchEvent 的传递 我们通常对 Button 创建点击事件:
-touchSampleBtn.setOnClickListener { Logger.i(TAG, &#34;setOnClickListener&#34;, &#34;sampleBtn clicked&#34;) }  可以先看下 View.dispatchTouchEvent() 的实现:
-public boolean dispatchTouchEvent(MotionEvent event) { ... if (onFilterTouchEventForSecurity(event)) { if ((mViewFlags &amp; ENABLED_MASK) == ENABLED &amp;&amp; handleScrollBarDragging(event)) { result = true; } //noinspection SimplifiableIfStatement ListenerInfo li = mListenerInfo; if (li !
+&lt;?xml version=&#34;1.0&#34; encoding=&#34;utf-8&#34;?&gt; &lt;layout xmlns:android=&#34;http://schemas.android.com/apk/res/android&#34;  xmlns:app=&#34;http://schemas.android.com/apk/res-auto&#34;&gt;   &lt;data&gt;  &lt;variable  name=&#34;viewModel&#34;  type=&#34;com.zac4j.system.data.TouchViewModel&#34; /&gt;  &lt;/data&gt;   &lt;com.zac4j.system.ui.widget.CustomLayout  android:id=&#34;@id/touch_sample_container&#34;  android:layout_width=&#34;match_parent&#34;  android:layout_height=&#34;match_parent&#34;&gt;   &lt;Button  android:id=&#34;@id/touch_sample_btn&#34;  style=&#34;@style/Widget.AppCompat.Button.Colored&#34;  android:layout_width=&#34;match_parent&#34;  android:layout_height=&#34;wrap_content&#34;  android:text=&#34;Touch Me&#34;  app:layout_constraintEnd_toEndOf=&#34;parent&#34;  app:layout_constraintStart_toStartOf=&#34;parent&#34;  app:layout_constraintTop_toTopOf=&#34;parent&#34; /&gt;   &lt;/com.zac4j.system.ui.widget.CustomLayout&gt; &lt;/layout&gt; TouchEvent 的传递 我们通常对 Button 创建点击事件:
+touchSampleBtn.setOnClickListener {  Logger.i(TAG, &#34;setOnClickListener&#34;, &#34;sampleBtn clicked&#34;) } 可以先看下 View.dispatchTouchEvent() 的实现:
+public boolean dispatchTouchEvent(MotionEvent event) {  .
   
 
   

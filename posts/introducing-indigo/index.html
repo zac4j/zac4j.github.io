@@ -19,17 +19,6 @@
   as="style" onload="this.onload=null;this.rel='stylesheet'">
 
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/styles/solarized-light.min.css"
-   media="print"
-  onload="this.media='all';this.onload=null" crossorigin>
-<script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/highlight.min.js"
-   crossorigin></script>
-  <script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/languages/dart.min.js"
-     crossorigin></script>
-  <script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/languages/java.min.js"
-     crossorigin></script>
-  <script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/languages/kotlin.min.js"
-     crossorigin></script>
 
 
 <script defer type="text/javascript" src="https://zacash.cn/js/fontawesome.min.1c5a4674b042785ed214cf0818a81724c6b37442fd61b0ed039237b93de25ed5103fc8079a05770648ccc9c66c4f540a.js" integrity="sha384-HFpGdLBCeF7SFM8IGKgXJMazdEL9YbDtA5I3uT3iXtUQP8gHmgV3BkjMycZsT1QK"></script>
@@ -290,14 +279,14 @@
 <p>Sed interdum tincidunt venenatis. Sed hendrerit dictum nisi, at dignissim orci consectetur quis. Aenean sed nisl et nisl placerat euismod. Proin hendrerit nulla at rhoncus molestie. Cras eu gravida erat, vestibulum ornare diam. <em>Praesent nunc arcu, ultrices et risus sed, dictum mattis dui. Maecenas vitae nisl at massa porta pellentesque</em>. Donec eget urna eget nisl imperdiet scelerisque eget a mauris. Nam fringilla sem id vehicula rhoncus. Curabitur tincidunt massa mauris, facilisis placerat odio eleifend sit amet. Etiam nec vehicula sapien, at dignissim risus. Sed elit erat, lacinia eu vulputate at, semper eu nulla. Quisque a urna sed nulla viverra egestas nec quis nunc. Curabitur iaculis elit in orci sollicitudin suscipit.</p>
 <hr>
 <p>And code snippets look great with Fira Code:</p>
-<pre><code>&lt;article&gt;
+<pre tabindex="0"><code>&lt;article&gt;
     &lt;header&gt;
     {{ if .Title }}
-    &lt;h2 class=&quot;list-title&quot;&gt;&lt;a href=&quot;{{ .Permalink }}&quot;&gt;{{ .Title }}&lt;/a&gt;&lt;/h2&gt;
+    &lt;h2 class=&#34;list-title&#34;&gt;&lt;a href=&#34;{{ .Permalink }}&#34;&gt;{{ .Title }}&lt;/a&gt;&lt;/h2&gt;
     {{ end }}
-    &lt;p class=&quot;list-post-date&quot;&gt;
-        &lt;time datetime=&quot;{{ .Date.Format &quot;2006-01-02T15:04:05Z07:00&quot; | safeHTML }}&quot;&gt;
-        {{ .PublishDate.Format &quot;2 January, 2006 at 15:04 MST&quot; }}
+    &lt;p class=&#34;list-post-date&#34;&gt;
+        &lt;time datetime=&#34;{{ .Date.Format &#34;2006-01-02T15:04:05Z07:00&#34; | safeHTML }}&#34;&gt;
+        {{ .PublishDate.Format &#34;2 January, 2006 at 15:04 MST&#34; }}
         &lt;/time&gt;
     &lt;/p&gt;
     &lt;/header&gt;
@@ -305,11 +294,10 @@
     {{ .Summary | plainify | safeHTML }}
     &lt;/div&gt;
     {{ if .Truncated }}
-    &lt;p&gt;&lt;a class=&quot;read-more&quot; href=&quot;{{ .Permalink }}&quot;&gt;Read more &amp;rarr;&lt;/a&gt;&lt;/p&gt;
+    &lt;p&gt;&lt;a class=&#34;read-more&#34; href=&#34;{{ .Permalink }}&#34;&gt;Read more &amp;rarr;&lt;/a&gt;&lt;/p&gt;
     {{ end }}
 &lt;/article&gt;
-</code></pre>
-<h2 id="contributions-welcome">Contributions welcome</h2>
+</code></pre><h2 id="contributions-welcome">Contributions welcome</h2>
 <p>Indigo is distributed under the <a href="https://github.com/AngeloStavrow/indigo/blob/master/LICENSE.md">MIT license</a>, so feel free to fork the repository and make it your own! If you&rsquo;ve got ideas on how to improve the theme, let me know by <a href="issue">opening an issue in GitHub</a> — but please be sure to review the documentation on <a href="https://github.com/AngeloStavrow/indigo/blob/master/CONTRIBUTING.md">contributing</a>.</p>
 </article>
 
@@ -363,11 +351,6 @@
   </div>
 
   
-    <script>
-      document.addEventListener("DOMContentLoaded", () => {
-        hljs.initHighlightingOnLoad();
-      });
-    </script>
 
           </div>
         </div>

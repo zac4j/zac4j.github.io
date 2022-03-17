@@ -19,17 +19,6 @@
   as="style" onload="this.onload=null;this.rel='stylesheet'">
 
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/styles/solarized-light.min.css"
-   media="print"
-  onload="this.media='all';this.onload=null" crossorigin>
-<script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/highlight.min.js"
-   crossorigin></script>
-  <script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/languages/dart.min.js"
-     crossorigin></script>
-  <script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/languages/java.min.js"
-     crossorigin></script>
-  <script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/languages/kotlin.min.js"
-     crossorigin></script>
 
 
 <script defer type="text/javascript" src="https://zacash.cn/js/fontawesome.min.1c5a4674b042785ed214cf0818a81724c6b37442fd61b0ed039237b93de25ed5103fc8079a05770648ccc9c66c4f540a.js" integrity="sha384-HFpGdLBCeF7SFM8IGKgXJMazdEL9YbDtA5I3uT3iXtUQP8gHmgV3BkjMycZsT1QK"></script>
@@ -254,166 +243,154 @@
 
   <p>val 和 var 与 variables 的 VALUES 相关，val 保护变量的值不变。in 和 out 与 variables 的 TYPES 相关，in 和 out 保证在范型的使用中，只有安全的类型才能传入或传出函数。</p>
 <h2 id="define-an-out-type">Define an out type</h2>
-<pre><code class="language-kotlin">/**
- * Define a WaterSupply class and verify if water needs processing.
- */
-open class WaterSupply(var needsProcessing: Boolean)
-
-/**
- * Define a TapWater class extends [WaterSupply] class.
- */
-class TapWater: WaterSupply(true) {
-    // We do water processing by add chemical cleaners.
-    fun addChemicalCleaners() {
-        needsProcessing = false
-  }
-}
-
-/**
- * Define a Aquarium class, it accept water supply.
- */
-class Aquarium&lt;out T: WaterSupply&gt;(val waterSupply: T) {
-    ...
-}
-
-/**
- * Define a funtion that could add Aquarium item.
- */
-fun addItem(aquarium: Aquarium&lt;WaterSupply&gt;) = println(&quot;item added&quot;)
-
-/**
- * Test function
- */
-fun g1() {
-    val aquarium = Aquarium(TapWater())
-    addItem(aquarium)
-}
-</code></pre>
-<p>如果我们移除了 <code>class Aquarium&lt;out T: WaterSupply&gt;</code> 定义中的 <code>out</code> 关键字，<code>addItem</code> 函数就会报 Type mismatch error:</p>
-<pre><code class="language-error">Type mismatch
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#999;font-style:italic">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"> * Define a WaterSupply class and verify if water needs processing.
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"> */</span>
+</span></span><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">open</span> <span style="color:#6ab825;font-weight:bold">class</span> <span style="color:#447fcf;text-decoration:underline">WaterSupply</span>(<span style="color:#6ab825;font-weight:bold">var</span> needsProcessing: Boolean)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"> * Define a TapWater class extends [WaterSupply] class.
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"> */</span>
+</span></span><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">class</span> <span style="color:#447fcf;text-decoration:underline">TapWater</span>: WaterSupply(<span style="color:#6ab825;font-weight:bold">true</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#999;font-style:italic">// We do water processing by add chemical cleaners.
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>    <span style="color:#6ab825;font-weight:bold">fun</span> <span style="color:#447fcf">addChemicalCleaners</span>() {
+</span></span><span style="display:flex;"><span>        needsProcessing = <span style="color:#6ab825;font-weight:bold">false</span>
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"> * Define a Aquarium class, it accept water supply.
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"> */</span>
+</span></span><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">class</span> <span style="color:#447fcf;text-decoration:underline">Aquarium</span>&lt;<span style="color:#6ab825;font-weight:bold">out</span> T: WaterSupply&gt;(<span style="color:#6ab825;font-weight:bold">val</span> waterSupply: T) {
+</span></span><span style="display:flex;"><span>    ...
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"> * Define a funtion that could add Aquarium item.
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"> */</span>
+</span></span><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">fun</span> <span style="color:#447fcf">addItem</span>(aquarium: Aquarium&lt;WaterSupply&gt;) = println(<span style="color:#ed9d13">&#34;item added&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"> * Test function
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"> */</span>
+</span></span><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">fun</span> <span style="color:#447fcf">g1</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">val</span> aquarium = Aquarium(TapWater())
+</span></span><span style="display:flex;"><span>    addItem(aquarium)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>如果我们移除了 <code>class Aquarium&lt;out T: WaterSupply&gt;</code> 定义中的 <code>out</code> 关键字，<code>addItem</code> 函数就会报 Type mismatch error:</p>
+<pre tabindex="0"><code class="language-error" data-lang="error">Type mismatch
 Required: Aquarium&lt;WaterSupply&gt;
 Found: Aquarium&lt;TapWater&gt;
-</code></pre>
-<h2 id="define-an-in-type">Define an in type</h2>
-<pre><code class="language-kotlin">/**
- * Define a Cleaner interface that takes a generic T that's constrained to WaterSupply.Since it is only used as an argument to clean(), we can make it an in paramter.
- */
-interface Cleaner&lt;in T : WaterSupply&gt; {
-  fun clean(waterSupply: T)
-}
-
-/**
- * Create a class TapWaterCleaner that implements Cleaner for cleaning TapWater by adding chemicals
- */
-class TapWaterCleaner : Cleaner&lt;TapWater&gt; {
-  override fun clean(waterSupply: TapWater) {
-    waterSupply.addChemicalCleaners()
-  }
-}
-
-/**
- * In the Aquarium class, update addWater() to take a Cleaner of type T, and clean the water before adding it.
- */
-class Aquarium&lt;out T: WaterSupply&gt;(val waterSupply: T) {
-  fun addWater(cleaner: Cleaner&lt;T&gt;) {
-    if (waterSupply.needsProcessing) {
-      cleaner.clean(waterSupply)
-    }
-    println(&quot;Water added!&quot;)
-  }
-}
-
-/**
- * Test function
- */
-fun g2() {
-    val cleaner = TapWaterCleaner()
-    val aquarium = Aquarium(TapWater())
-    aquarium.addWater(cleaner)
-}
-</code></pre>
-<p>Kotlin 将使用 in 和 out 类型来确保我们可以安全地使用泛型。out 和 in 的使用场景：out 类型可以作为返回值向外传递，in 类型可以作为参数向内传递。</p>
+</code></pre><h2 id="define-an-in-type">Define an in type</h2>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#999;font-style:italic">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"> * Define a Cleaner interface that takes a generic T that&#39;s constrained to WaterSupply.Since it is only used as an argument to clean(), we can make it an in paramter.
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"> */</span>
+</span></span><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">interface</span> <span style="color:#447fcf;text-decoration:underline">Cleaner</span>&lt;<span style="color:#6ab825;font-weight:bold">in</span> T : WaterSupply&gt; {
+</span></span><span style="display:flex;"><span>  <span style="color:#6ab825;font-weight:bold">fun</span> <span style="color:#447fcf">clean</span>(waterSupply: T)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"> * Create a class TapWaterCleaner that implements Cleaner for cleaning TapWater by adding chemicals
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"> */</span>
+</span></span><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">class</span> <span style="color:#447fcf;text-decoration:underline">TapWaterCleaner</span> : Cleaner&lt;TapWater&gt; {
+</span></span><span style="display:flex;"><span>  <span style="color:#6ab825;font-weight:bold">override</span> <span style="color:#6ab825;font-weight:bold">fun</span> <span style="color:#447fcf">clean</span>(waterSupply: TapWater) {
+</span></span><span style="display:flex;"><span>    waterSupply.addChemicalCleaners()
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"> * In the Aquarium class, update addWater() to take a Cleaner of type T, and clean the water before adding it.
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"> */</span>
+</span></span><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">class</span> <span style="color:#447fcf;text-decoration:underline">Aquarium</span>&lt;<span style="color:#6ab825;font-weight:bold">out</span> T: WaterSupply&gt;(<span style="color:#6ab825;font-weight:bold">val</span> waterSupply: T) {
+</span></span><span style="display:flex;"><span>  <span style="color:#6ab825;font-weight:bold">fun</span> <span style="color:#447fcf">addWater</span>(cleaner: Cleaner&lt;T&gt;) {
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">if</span> (waterSupply.needsProcessing) {
+</span></span><span style="display:flex;"><span>      cleaner.clean(waterSupply)
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    println(<span style="color:#ed9d13">&#34;Water added!&#34;</span>)
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"> * Test function
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"> */</span>
+</span></span><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">fun</span> <span style="color:#447fcf">g2</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">val</span> cleaner = TapWaterCleaner()
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">val</span> aquarium = Aquarium(TapWater())
+</span></span><span style="display:flex;"><span>    aquarium.addWater(cleaner)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Kotlin 将使用 in 和 out 类型来确保我们可以安全地使用泛型。out 和 in 的使用场景：out 类型可以作为返回值向外传递，in 类型可以作为参数向内传递。</p>
 <h2 id="type-erasure-and-generic-type-checks">Type erasure and generic type checks</h2>
 <p>Java 中泛型只在编译时使用，编译器确保所有类型相关的操作都可以安全的进行。在运行时，泛型类型的实例并不持有实际类型的信息（<a href="https://kotlinlang.org/docs/reference/typecasts.html#type-erasure-and-generic-type-checks">类型擦除</a>），比如 <code>List&lt;Foo&gt;</code> 会擦除为 <code>List&lt;*&gt;</code>。通常无法在运行时检查实例是否属于某种泛型类型，不过在 Kotlin 中我们可以通过 <code>inline + reified</code> 的组合实现运行时类型判断。</p>
-<pre><code class="language-kotlin">class Aquarium&lt;T : WaterSupply&gt;(val waterSupply: T) {
-  fun addWater(cleaner: Cleaner&lt;T&gt;) {
-    if (waterSupply.needsProcessing) {
-      cleaner.clean(waterSupply)
-    }
-    println(&quot;Water added!&quot;)
-  }
-
-  /*
-   * Declare the function inline, and make the type reified.
-   */
-  inline fun &lt;reified R : WaterSupply&gt; isOfType(): Boolean = waterSupply is R
-}
-</code></pre>
-<p>我们在 Aquarium 类中添加 <code>isOfType</code> 方法，通过 <code>inline</code> 声明方法，将泛型类型标记为 <code>reified</code>后，<code>is</code> 关键字可以在运行时做泛型类型检查。</p>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">class</span> <span style="color:#447fcf;text-decoration:underline">Aquarium</span>&lt;T : WaterSupply&gt;(<span style="color:#6ab825;font-weight:bold">val</span> waterSupply: T) {
+</span></span><span style="display:flex;"><span>  <span style="color:#6ab825;font-weight:bold">fun</span> <span style="color:#447fcf">addWater</span>(cleaner: Cleaner&lt;T&gt;) {
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">if</span> (waterSupply.needsProcessing) {
+</span></span><span style="display:flex;"><span>      cleaner.clean(waterSupply)
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    println(<span style="color:#ed9d13">&#34;Water added!&#34;</span>)
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#999;font-style:italic">/*
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic">   * Declare the function inline, and make the type reified.
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic">   */</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#6ab825;font-weight:bold">inline</span> <span style="color:#6ab825;font-weight:bold">fun</span> &lt;<span style="color:#6ab825;font-weight:bold">reified</span> <span style="color:#447fcf;text-decoration:underline">R</span> : <span style="color:#447fcf;text-decoration:underline">WaterSupply</span>&gt; <span style="color:#447fcf">isOfType</span>(): Boolean = waterSupply <span style="color:#6ab825;font-weight:bold">is</span> R
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>我们在 Aquarium 类中添加 <code>isOfType</code> 方法，通过 <code>inline</code> 声明方法，将泛型类型标记为 <code>reified</code>后，<code>is</code> 关键字可以在运行时做泛型类型检查。</p>
 <h3 id="make-extension-functions">Make extension functions</h3>
-<pre><code class="language-kotlin">inline fun &lt;reified T: WaterSupply&gt; Aquarium&lt;*&gt;.isOfType() = waterSupply is T
-</code></pre>
-<p><a href="https://kotlinlang.org/docs/reference/generics.html#star-projections">Star-projections</a> 很像 Java 编程中的 raw types，不过更加安全。</p>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">inline</span> <span style="color:#6ab825;font-weight:bold">fun</span> &lt;<span style="color:#6ab825;font-weight:bold">reified</span> <span style="color:#447fcf;text-decoration:underline">T</span>: <span style="color:#447fcf;text-decoration:underline">WaterSupply</span>&gt; <span style="color:#447fcf">Aquarium</span>&lt;*&gt;.isOfType() = waterSupply <span style="color:#6ab825;font-weight:bold">is</span> T
+</span></span></code></pre></div><p><a href="https://kotlinlang.org/docs/reference/generics.html#star-projections">Star-projections</a> 很像 Java 编程中的 raw types，不过更加安全。</p>
 <h2 id="inline-functions">inline functions</h2>
 <p>Lambdas 和高阶函数都很有用，但我们应该了解一个事实：Lambda 是对象。Lambda 表达式是 <code>Function</code> 接口的实例，<code>Function</code> 接口是 <code>Object</code> 的子类。</p>
-<pre><code class="language-kotlin">/**
- * 自定义 with 函数，接收 [name] 字符串，执行 name.block() 函数
- */
-fun customWith(name: String, block: String.() -&gt; Unit) {
-  name.block()
-}
-
-/**
- * 调用 customWith 函数，并将 fish.name 首字母大写
- */
-customWith(fish.name) {
-  capitalize()
-}
-</code></pre>
-<p>上面调用 <code>customWith</code> 函数实际的实现像这样：</p>
-<pre><code class="language-kotlin">customWith(fish.name, object: Function1&lt;String, Unit&gt;) {
-  override fun invoke(name: String) {
-    name.capitalize()
-  }
-}
-</code></pre>
-<p>通常这不是问题，因为创建对象和调用函数不会产生太多的开销。不过假如 <code>customWith</code> 函数在非常多的地方都有调用，那么开销就会多起来。</p>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#999;font-style:italic">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"> * 自定义 with 函数，接收 [name] 字符串，执行 name.block() 函数
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"> */</span>
+</span></span><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">fun</span> <span style="color:#447fcf">customWith</span>(name: String, block: String.() -&gt; Unit) {
+</span></span><span style="display:flex;"><span>  name.block()
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"> * 调用 customWith 函数，并将 fish.name 首字母大写
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"> */</span>
+</span></span><span style="display:flex;"><span>customWith(fish.name) {
+</span></span><span style="display:flex;"><span>  capitalize()
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>上面调用 <code>customWith</code> 函数实际的实现像这样：</p>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span>customWith(fish.name, <span style="color:#6ab825;font-weight:bold">object</span>: Function1&lt;String, Unit&gt;) {
+</span></span><span style="display:flex;"><span>  <span style="color:#6ab825;font-weight:bold">override</span> <span style="color:#6ab825;font-weight:bold">fun</span> <span style="color:#447fcf">invoke</span>(name: String) {
+</span></span><span style="display:flex;"><span>    name.capitalize()
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>通常这不是问题，因为创建对象和调用函数不会产生太多的开销。不过假如 <code>customWith</code> 函数在非常多的地方都有调用，那么开销就会多起来。</p>
 <p>Kotlin 提供 <code>inline</code> 作为处理这种情况的一种方式，通过增加编译器的工作来减少运行时的开销。将函数标记为 <code>inline</code> 意味着每次调用该函数时，编译器实际上会将源码转换为内联函数。</p>
 <p>比如我们在使用 <code>customWith</code> 时标记为 <code>inline</code>：</p>
-<pre><code class="language-kotlin">inline customWith(fish.name) {
-  capitalize()
-}
-</code></pre>
-<p>它转换后像这样：</p>
-<pre><code class="language-kotlin">fish.name.capitalize()
-</code></pre>
-<p>需要注意的是，内联大型函数会增加代码大小，因此 <code>inline</code> 适用于多次使用的简单的函数，如 <code>customWith</code>。</p>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">inline</span> customWith(fish.name) {
+</span></span><span style="display:flex;"><span>  capitalize()
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>它转换后像这样：</p>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span>fish.name.capitalize()
+</span></span></code></pre></div><p>需要注意的是，内联大型函数会增加代码大小，因此 <code>inline</code> 适用于多次使用的简单的函数，如 <code>customWith</code>。</p>
 <h2 id="sam">SAM</h2>
 <p><em>Single Abstract Method(SAM)</em> 即表示只有一个方法的接口。在 Java 编写 API 时非常常见，比如 <code>Runnable</code> 接口，只定义了一个 <code>run()</code> 方法，<code>Callable</code> 接口，定义了一个 <code>call()</code> 方法。</p>
 <p>我们定义个 SAM：</p>
-<pre><code class="language-java">class JavaRun {
-  public static void runNow(Runnable runnable) {
-    runnable.run();
-  }
-}
-</code></pre>
-<p>在 Kotlin 中调用该函数：</p>
-<pre><code class="language-kotlin">val runnable = object: Runnable {
-  override fun run() {
-    println(&quot;I'm a Runnable&quot;)
-  }
-}
-
-JavaNow.runNow(runnable)
-</code></pre>
-<p>Kotlin 提供的 SAM 机制会提示缩减代码：</p>
-<pre><code class="language-kotlin">JavaNow.runNow {
-  println(&quot;Lambda as a Runnable&quot;)
-}
-</code></pre>
-<p>SAM 的模版像这样：</p>
-<pre><code class="language-kotlin">Class.singleAbstractMethod {lambda_of_override}
-</code></pre>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">class</span> <span style="color:#447fcf;text-decoration:underline">JavaRun</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#6ab825;font-weight:bold">public</span> <span style="color:#6ab825;font-weight:bold">static</span> <span style="color:#6ab825;font-weight:bold">void</span> <span style="color:#447fcf">runNow</span>(Runnable runnable) {
+</span></span><span style="display:flex;"><span>    runnable.<span style="color:#bbb">run</span>();
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>在 Kotlin 中调用该函数：</p>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">val</span> runnable = <span style="color:#6ab825;font-weight:bold">object</span>: Runnable {
+</span></span><span style="display:flex;"><span>  <span style="color:#6ab825;font-weight:bold">override</span> <span style="color:#6ab825;font-weight:bold">fun</span> <span style="color:#447fcf">run</span>() {
+</span></span><span style="display:flex;"><span>    println(<span style="color:#ed9d13">&#34;I&#39;m a Runnable&#34;</span>)
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>JavaNow.runNow(runnable)
+</span></span></code></pre></div><p>Kotlin 提供的 SAM 机制会提示缩减代码：</p>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span>JavaNow.runNow {
+</span></span><span style="display:flex;"><span>  println(<span style="color:#ed9d13">&#34;Lambda as a Runnable&#34;</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>SAM 的模版像这样：</p>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span>Class.singleAbstractMethod {lambda_of_override}
+</span></span></code></pre></div>
 </article>
 
 
@@ -464,11 +441,6 @@ JavaNow.runNow(runnable)
   </div>
 
   
-    <script>
-      document.addEventListener("DOMContentLoaded", () => {
-        hljs.initHighlightingOnLoad();
-      });
-    </script>
 
           </div>
         </div>

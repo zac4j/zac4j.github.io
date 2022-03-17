@@ -19,17 +19,6 @@
   as="style" onload="this.onload=null;this.rel='stylesheet'">
 
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/styles/solarized-light.min.css"
-   media="print"
-  onload="this.media='all';this.onload=null" crossorigin>
-<script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/highlight.min.js"
-   crossorigin></script>
-  <script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/languages/dart.min.js"
-     crossorigin></script>
-  <script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/languages/java.min.js"
-     crossorigin></script>
-  <script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/languages/kotlin.min.js"
-     crossorigin></script>
 
 
 <script defer type="text/javascript" src="https://zacash.cn/js/fontawesome.min.1c5a4674b042785ed214cf0818a81724c6b37442fd61b0ed039237b93de25ed5103fc8079a05770648ccc9c66c4f540a.js" integrity="sha384-HFpGdLBCeF7SFM8IGKgXJMazdEL9YbDtA5I3uT3iXtUQP8gHmgV3BkjMycZsT1QK"></script>
@@ -282,50 +271,48 @@
 <li>release 构建类型则会压缩(shrink)和混淆(obfuscate) APK，并使用 release key 为 APK 签名。</li>
 </ul>
 <p>构建 App 时必须指定一个构建类型。可以参考 <a href="https://google.github.io/android-gradle-dsl/current/com.android.build.gradle.internal.dsl.BuildType.html">BuildType DSL</a>，了解配置构建类型属性。</p>
-<pre><code class="language-groovy">buildTypes {
-  release {
-    minifyEnabled false
-    shrinkResources true
-    proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-  }
-  debug {
-    applicationIdSuffix &quot;.debug&quot;
-    debuggable true
-  }
-  staging {
-    initWith debug
-    manifestPlaceholders = [hostname:&quot;internal.zacash.cn&quot;]
-    applicationIdSuffix &quot;.debugStaging&quot;
-  }
-}
-</code></pre>
-<h4 id="产品类型-product-flavors">产品类型 Product Flavors</h4>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-groovy" data-lang="groovy"><span style="display:flex;"><span>buildTypes {
+</span></span><span style="display:flex;"><span>  release {
+</span></span><span style="display:flex;"><span>    minifyEnabled <span style="color:#6ab825;font-weight:bold">false</span>
+</span></span><span style="display:flex;"><span>    shrinkResources <span style="color:#6ab825;font-weight:bold">true</span>
+</span></span><span style="display:flex;"><span>    proguardFiles <span style="color:#447fcf">getDefaultProguardFile</span>(<span style="color:#ed9d13">&#39;proguard-android-optimize.txt&#39;</span>), <span style="color:#ed9d13">&#39;proguard-rules.pro&#39;</span>
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  debug {
+</span></span><span style="display:flex;"><span>    applicationIdSuffix <span style="color:#ed9d13">&#34;.debug&#34;</span>
+</span></span><span style="display:flex;"><span>    debuggable <span style="color:#6ab825;font-weight:bold">true</span>
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  staging {
+</span></span><span style="display:flex;"><span>    initWith debug
+</span></span><span style="display:flex;"><span>    manifestPlaceholders = [hostname:<span style="color:#ed9d13">&#34;internal.zacash.cn&#34;</span>]
+</span></span><span style="display:flex;"><span>    applicationIdSuffix <span style="color:#ed9d13">&#34;.debugStaging&#34;</span>
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h4 id="产品类型-product-flavors">产品类型 Product Flavors</h4>
 <p>Product flavors 表示我们可以向用户发布 App 不同的版本，如免费版和付费版。我们可以自定义 product flavor 来使用不同的代码和资源。</p>
 <p>Product flavors 支持与 <code>defaultConfig</code> 相同的属性，这是因为 <code>defaultConfig</code> 实际上属于 <a href="http://google.github.io/android-gradle-dsl/current/com.android.build.gradle.internal.dsl.ProductFlavor.html">ProductFlavor</a> 类。</p>
 <blockquote>
 <p>Google Play 的<a href="https://developer.android.com/google/play/publishing/multiple-apks">多 APK</a> 分发应用，是将同一 applicationId 分配给所有的 flavor，并为每个 flavor 分配不同的 versionCode。</p>
 </blockquote>
-<pre><code class="language-groovy">flavorDimensions &quot;api&quot;, &quot;mode&quot;
-productFlavors {
-  demo {
-    dimension &quot;mode&quot;
-    applicationIdSuffix &quot;.demo&quot;
-    versionNameSuffix &quot;-demo&quot;
-  }
-  full {
-    dimension &quot;mode&quot;
-    applicationIdSuffix &quot;.full&quot;
-    versionNameSuffix &quot;-full&quot;
-  }
-  minApi21 {
-    dimension &quot;api&quot;
-    minSdkVersion 21
-    versionCode 10000 + android.defaultConfig.versionCode
-    versionNameSuffix &quot;-minApi21&quot;
-  }
-}
-</code></pre>
-<h4 id="构建变体-build-variants">构建变体 Build Variants</h4>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-groovy" data-lang="groovy"><span style="display:flex;"><span>flavorDimensions <span style="color:#ed9d13">&#34;api&#34;</span>, <span style="color:#ed9d13">&#34;mode&#34;</span>
+</span></span><span style="display:flex;"><span>productFlavors {
+</span></span><span style="display:flex;"><span>  demo {
+</span></span><span style="display:flex;"><span>    dimension <span style="color:#ed9d13">&#34;mode&#34;</span>
+</span></span><span style="display:flex;"><span>    applicationIdSuffix <span style="color:#ed9d13">&#34;.demo&#34;</span>
+</span></span><span style="display:flex;"><span>    versionNameSuffix <span style="color:#ed9d13">&#34;-demo&#34;</span>
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  full {
+</span></span><span style="display:flex;"><span>    dimension <span style="color:#ed9d13">&#34;mode&#34;</span>
+</span></span><span style="display:flex;"><span>    applicationIdSuffix <span style="color:#ed9d13">&#34;.full&#34;</span>
+</span></span><span style="display:flex;"><span>    versionNameSuffix <span style="color:#ed9d13">&#34;-full&#34;</span>
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  minApi21 {
+</span></span><span style="display:flex;"><span>    dimension <span style="color:#ed9d13">&#34;api&#34;</span>
+</span></span><span style="display:flex;"><span>    minSdkVersion <span style="color:#3677a9">21</span>
+</span></span><span style="display:flex;"><span>    versionCode <span style="color:#3677a9">10000</span> + android.<span style="color:#bbb">defaultConfig</span>.<span style="color:#bbb">versionCode</span>
+</span></span><span style="display:flex;"><span>    versionNameSuffix <span style="color:#ed9d13">&#34;-minApi21&#34;</span>
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h4 id="构建变体-build-variants">构建变体 Build Variants</h4>
 <p>Build variants 是由 build type 和 product flavor 组成，也是 Gradle 用来构建应用的配置。配置 Build variants 就是指配置组成它的 build type 和 product flavor。</p>
 <p>Gradle 创建的 build varuants 数量等于 productFlavors * buildTypes. Gradle 构建 APK 命名时，会先以高优先级的 flavorDimension 的 ProductFlavor 显示，而后是低优先级 flavorDimension 的 ProductFlavor，最后是 BuildType。比如上面的 ProductFlavor 和 BuildType 配置，在构建 APK 时对应的 Build Variants：</p>
 <ul>
@@ -389,11 +376,6 @@ productFlavors {
   </div>
 
   
-    <script>
-      document.addEventListener("DOMContentLoaded", () => {
-        hljs.initHighlightingOnLoad();
-      });
-    </script>
 
           </div>
         </div>

@@ -19,17 +19,6 @@
   as="style" onload="this.onload=null;this.rel='stylesheet'">
 
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/styles/solarized-light.min.css"
-   media="print"
-  onload="this.media='all';this.onload=null" crossorigin>
-<script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/highlight.min.js"
-   crossorigin></script>
-  <script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/languages/dart.min.js"
-     crossorigin></script>
-  <script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/languages/java.min.js"
-     crossorigin></script>
-  <script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/languages/kotlin.min.js"
-     crossorigin></script>
 
 
 <script defer type="text/javascript" src="https://zacash.cn/js/fontawesome.min.1c5a4674b042785ed214cf0818a81724c6b37442fd61b0ed039237b93de25ed5103fc8079a05770648ccc9c66c4f540a.js" integrity="sha384-HFpGdLBCeF7SFM8IGKgXJMazdEL9YbDtA5I3uT3iXtUQP8gHmgV3BkjMycZsT1QK"></script>
@@ -321,56 +310,55 @@
 <li>实现类版本控制机制，如为具有相同名称和包名的类加载不同的字节码（热修复）。这可以通过 URL 类加载器或自定义加载器完成。</li>
 </ul>
 <p>我们可以自定义类加载器实现指定类的加载：</p>
-<pre><code class="language-kotlin">package com.zac4j.system.util
-
-import java.io.ByteArrayOutputStream
-import java.io.File
-import java.io.IOException
-
-/**
- * Custom ClassLoader sample
- *
- * @author: zac
- * @date: 2020/7/19
- */
-internal object Test {
-  @JvmStatic fun main(args: Array&lt;String&gt;) {
-    val classLoader = CustomClassLoader()
-    val clazz = classLoader.loadClass(&quot;com.zac4j.system.util.Utils&quot;)
-    println(&quot;custom classloader:${clazz.canonicalName}&quot;)
-  }
-}
-
-/**
- * 自定义 ClassLoader，加载指定类文件。
- */
-class CustomClassLoader : ClassLoader() {
-  override fun findClass(name: String): Class&lt;*&gt; {
-    val b = loadClassFromFile(name)
-    return defineClass(name, b, 0, b.size)
-  }
-
-  /**
-   * 根据类名加载类文件
-   */
-  private fun loadClassFromFile(filename: String): ByteArray {
-    val inStream = javaClass.classLoader?.getResourceAsStream(
-        filename.replace('.', File.separatorChar) + &quot;.class&quot;
-    ) ?: return byteArrayOf()
-    val outStream = ByteArrayOutputStream()
-    try {
-      while (inStream.read() != -1) {
-        val nextVal = inStream.read()
-        outStream.write(nextVal)
-      }
-    } catch (e: IOException) {
-
-    }
-    return outStream.toByteArray()
-  }
-}
-</code></pre>
-<h3 id="responsibility">Responsibility</h3>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">package</span> <span style="color:#447fcf;text-decoration:underline">com.zac4j.system.util</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">import</span> <span style="color:#447fcf;text-decoration:underline">java.io.ByteArrayOutputStream</span>
+</span></span><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">import</span> <span style="color:#447fcf;text-decoration:underline">java.io.File</span>
+</span></span><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">import</span> <span style="color:#447fcf;text-decoration:underline">java.io.IOException</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"> * Custom ClassLoader sample
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"> *
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"> * @author: zac
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"> * @date: 2020/7/19
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"> */</span>
+</span></span><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">internal</span> <span style="color:#6ab825;font-weight:bold">object</span> <span style="color:#447fcf;text-decoration:underline">Test</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#ffa500">@JvmStatic</span> <span style="color:#6ab825;font-weight:bold">fun</span> <span style="color:#447fcf">main</span>(args: Array&lt;String&gt;) {
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">val</span> classLoader = CustomClassLoader()
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">val</span> clazz = classLoader.loadClass(<span style="color:#ed9d13">&#34;com.zac4j.system.util.Utils&#34;</span>)
+</span></span><span style="display:flex;"><span>    println(<span style="color:#ed9d13">&#34;custom classloader:</span><span style="color:#ed9d13">${clazz.canonicalName}</span><span style="color:#ed9d13">&#34;</span>)
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"> * 自定义 ClassLoader，加载指定类文件。
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"> */</span>
+</span></span><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">class</span> <span style="color:#447fcf;text-decoration:underline">CustomClassLoader</span> : ClassLoader() {
+</span></span><span style="display:flex;"><span>  <span style="color:#6ab825;font-weight:bold">override</span> <span style="color:#6ab825;font-weight:bold">fun</span> <span style="color:#447fcf">findClass</span>(name: String): Class&lt;*&gt; {
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">val</span> b = loadClassFromFile(name)
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">return</span> defineClass(name, b, <span style="color:#3677a9">0</span>, b.size)
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#999;font-style:italic">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic">   * 根据类名加载类文件
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic">   */</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#6ab825;font-weight:bold">private</span> <span style="color:#6ab825;font-weight:bold">fun</span> <span style="color:#447fcf">loadClassFromFile</span>(filename: String): ByteArray {
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">val</span> inStream = javaClass.classLoader?.getResourceAsStream(
+</span></span><span style="display:flex;"><span>        filename.replace(<span style="color:#ed9d13">&#39;.&#39;</span>, File.separatorChar) + <span style="color:#ed9d13">&#34;.class&#34;</span>
+</span></span><span style="display:flex;"><span>    ) ?: <span style="color:#6ab825;font-weight:bold">return</span> byteArrayOf()
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">val</span> outStream = ByteArrayOutputStream()
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">try</span> {
+</span></span><span style="display:flex;"><span>      <span style="color:#6ab825;font-weight:bold">while</span> (inStream.read() != -<span style="color:#3677a9">1</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">val</span> nextVal = inStream.read()
+</span></span><span style="display:flex;"><span>        outStream.write(nextVal)
+</span></span><span style="display:flex;"><span>      }
+</span></span><span style="display:flex;"><span>    } <span style="color:#6ab825;font-weight:bold">catch</span> (e: IOException) {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">return</span> outStream.toByteArray()
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h3 id="responsibility">Responsibility</h3>
 <p>Class Loader 系统主要有<a href="https://docs.oracle.com/javase/specs/jvms/se6/html/ConstantPool.doc.html#67960">3种功能</a>：</p>
 <ul>
 <li>Loading</li>
@@ -535,11 +523,6 @@ Class Loader: <a href="https://www.baeldung.com/java-classloaders">https://www.b
   </div>
 
   
-    <script>
-      document.addEventListener("DOMContentLoaded", () => {
-        hljs.initHighlightingOnLoad();
-      });
-    </script>
 
           </div>
         </div>

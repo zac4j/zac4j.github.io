@@ -149,9 +149,9 @@ BackStack in Navigation Each time user goes to a new destination on the device, 
       <guid>https://zacash.cn/posts/how-are-touch-events-delivered/</guid>
       <description>根据例子来理解 Android 的事件传递
 页面的布局结构
-&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;utf-8&amp;quot;?&amp;gt; &amp;lt;layout xmlns:android=&amp;quot;http://schemas.android.com/apk/res/android&amp;quot; xmlns:app=&amp;quot;http://schemas.android.com/apk/res-auto&amp;quot;&amp;gt; &amp;lt;data&amp;gt; &amp;lt;variable name=&amp;quot;viewModel&amp;quot; type=&amp;quot;com.zac4j.system.data.TouchViewModel&amp;quot; /&amp;gt; &amp;lt;/data&amp;gt; &amp;lt;com.zac4j.system.ui.widget.CustomLayout android:id=&amp;quot;@id/touch_sample_container&amp;quot; android:layout_width=&amp;quot;match_parent&amp;quot; android:layout_height=&amp;quot;match_parent&amp;quot;&amp;gt; &amp;lt;Button android:id=&amp;quot;@id/touch_sample_btn&amp;quot; style=&amp;quot;@style/Widget.AppCompat.Button.Colored&amp;quot; android:layout_width=&amp;quot;match_parent&amp;quot; android:layout_height=&amp;quot;wrap_content&amp;quot; android:text=&amp;quot;Touch Me&amp;quot; app:layout_constraintEnd_toEndOf=&amp;quot;parent&amp;quot; app:layout_constraintStart_toStartOf=&amp;quot;parent&amp;quot; app:layout_constraintTop_toTopOf=&amp;quot;parent&amp;quot; /&amp;gt; &amp;lt;/com.zac4j.system.ui.widget.CustomLayout&amp;gt; &amp;lt;/layout&amp;gt;  TouchEvent 的传递 我们通常对 Button 创建点击事件:
-touchSampleBtn.setOnClickListener { Logger.i(TAG, &amp;quot;setOnClickListener&amp;quot;, &amp;quot;sampleBtn clicked&amp;quot;) }  可以先看下 View.dispatchTouchEvent() 的实现:
-public boolean dispatchTouchEvent(MotionEvent event) { ... if (onFilterTouchEventForSecurity(event)) { if ((mViewFlags &amp;amp; ENABLED_MASK) == ENABLED &amp;amp;&amp;amp; handleScrollBarDragging(event)) { result = true; } //noinspection SimplifiableIfStatement ListenerInfo li = mListenerInfo; if (li !</description>
+&amp;lt;?xml version=&amp;#34;1.0&amp;#34; encoding=&amp;#34;utf-8&amp;#34;?&amp;gt; &amp;lt;layout xmlns:android=&amp;#34;http://schemas.android.com/apk/res/android&amp;#34;  xmlns:app=&amp;#34;http://schemas.android.com/apk/res-auto&amp;#34;&amp;gt;   &amp;lt;data&amp;gt;  &amp;lt;variable  name=&amp;#34;viewModel&amp;#34;  type=&amp;#34;com.zac4j.system.data.TouchViewModel&amp;#34; /&amp;gt;  &amp;lt;/data&amp;gt;   &amp;lt;com.zac4j.system.ui.widget.CustomLayout  android:id=&amp;#34;@id/touch_sample_container&amp;#34;  android:layout_width=&amp;#34;match_parent&amp;#34;  android:layout_height=&amp;#34;match_parent&amp;#34;&amp;gt;   &amp;lt;Button  android:id=&amp;#34;@id/touch_sample_btn&amp;#34;  style=&amp;#34;@style/Widget.AppCompat.Button.Colored&amp;#34;  android:layout_width=&amp;#34;match_parent&amp;#34;  android:layout_height=&amp;#34;wrap_content&amp;#34;  android:text=&amp;#34;Touch Me&amp;#34;  app:layout_constraintEnd_toEndOf=&amp;#34;parent&amp;#34;  app:layout_constraintStart_toStartOf=&amp;#34;parent&amp;#34;  app:layout_constraintTop_toTopOf=&amp;#34;parent&amp;#34; /&amp;gt;   &amp;lt;/com.zac4j.system.ui.widget.CustomLayout&amp;gt; &amp;lt;/layout&amp;gt; TouchEvent 的传递 我们通常对 Button 创建点击事件:
+touchSampleBtn.setOnClickListener {  Logger.i(TAG, &amp;#34;setOnClickListener&amp;#34;, &amp;#34;sampleBtn clicked&amp;#34;) } 可以先看下 View.dispatchTouchEvent() 的实现:
+public boolean dispatchTouchEvent(MotionEvent event) {  .</description>
     </item>
     
     <item>
@@ -210,7 +210,7 @@ Cordova 架构图  Web App 是开发人员编写代码的地方，应用以网�
 Android 常用的创造型模式：
 Builder Builder 模式主要解决创建复杂对象过程中遇到的问题：
  类如何创建复杂对象不同的表现形式(different presentations) 如何简化包含创建复杂对象的类  Builder 模式在 Android 中常见的应用是 AlertDialog 的创建过程：
-AlertDialog.Builder(context) .setTitle(&amp;quot;Builder Sample&amp;quot;) .setMessage(&amp;quot;Builder Nessage&amp;quot;) .setNegativeButton(&amp;quot;Cancel&amp;quot;, {_,_ -&amp;gt; }) .setPositiveButton(&amp;quot;OK&amp;quot;, {_, _ -&amp;gt; }) .show()  Builder 模式通过这种方式解决问题：
+AlertDialog.Builder(context)  .setTitle(&amp;#34;Builder Sample&amp;#34;)  .setMessage(&amp;#34;Builder Nessage&amp;#34;)  .setNegativeButton(&amp;#34;Cancel&amp;#34;, {_,_ -&amp;gt; })  .setPositiveButton(&amp;#34;OK&amp;#34;, {_, _ -&amp;gt; })  .show() Builder 模式通过这种方式解决问题：
  将复杂对象的各个部分的创建(creating)和组装(assembling)封装在一个独立的 Builder 对象中。 类将对象的创建委托给 Builder 对象，而不是直接创建。  Dependency injection 依赖注入（Dependency injection, 简称 Di）通常表示某个对象接收(receives)它依赖的对象(objects)的技术，这些依赖的对象称为依赖项(dependencies)。在典型的使用关系中，接收者被称为客户端（client），传递的对象被称为服务（service）。将服务传递给客户端的代码可能有很多种，被称为注入器（injector）, 注入器提供给客户端需要使用哪些服务。注入(injection)是指将依赖项（服务）传递给使用依赖项的对象（客户端）。</description>
     </item>
     
@@ -222,8 +222,8 @@ AlertDialog.Builder(context) .setTitle(&amp;quot;Builder Sample&amp;quot;) .setM
       <guid>https://zacash.cn/posts/top-10-kotlin-questions/</guid>
       <description>IntArray vs. Array&amp;lt;Int&amp;gt;   In java code
  IntArray: int[] Array&amp;lt;Int&amp;gt;: Integer[]    Create method:
- IntArray:  val intArray : IntArray = intArrayOf(1, 2, 3, 4, 5)   Array&amp;lt;Int&amp;gt;:  val arrayOfInts : Array&amp;lt;Int&amp;gt; = arrayOf(1, 2, 3, 4, 5)    Iterable vs. Sequence   Usage
- Iterable:  getPeople() .filter { it.age &amp;gt;= 18 } .map { it.name } .take(5)   Sequence: start with asSequence() and end with toList() or toSet()&amp;hellip;  getPeople().</description>
+ IntArray:  val intArray : IntArray = intArrayOf(1, 2, 3, 4, 5)  Array&amp;lt;Int&amp;gt;:  val arrayOfInts : Array&amp;lt;Int&amp;gt; = arrayOf(1, 2, 3, 4, 5)   Iterable vs. Sequence   Usage
+ Iterable:  getPeople() .filter { it.age &amp;gt;= 18 } .map { it.name } .take(5)  Sequence: start with asSequence() and end with toList() or toSet()&amp;hellip;  getPeople().</description>
     </item>
     
     <item>
@@ -246,7 +246,7 @@ AlertDialog.Builder(context) .setTitle(&amp;quot;Builder Sample&amp;quot;) .setM
       
       <guid>https://zacash.cn/posts/fragment-in-viewpager/</guid>
       <description>使用 ViewPager 通常我们使用 ViewPager + TabLayout 主要有这些步骤：
- 页面的布局结构:  &amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;utf-8&amp;quot;?&amp;gt; &amp;lt;androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android=&amp;quot;http://schemas.android.com/apk/res/android&amp;quot; xmlns:app=&amp;quot;http://schemas.android.com/apk/res-auto&amp;quot; xmlns:tools=&amp;quot;http://schemas.android.com/tools&amp;quot; android:layout_width=&amp;quot;match_parent&amp;quot; android:layout_height=&amp;quot;match_parent&amp;quot; tools:context=&amp;quot;.MainActivity&amp;quot; &amp;gt; &amp;lt;com.google.android.material.appbar.AppBarLayout android:layout_width=&amp;quot;match_parent&amp;quot; android:layout_height=&amp;quot;wrap_content&amp;quot; android:theme=&amp;quot;@style/AppTheme.AppBarOverlay&amp;quot; &amp;gt; ... &amp;lt;com.google.android.material.tabs.TabLayout android:id=&amp;quot;@+id/tabs&amp;quot; android:layout_width=&amp;quot;match_parent&amp;quot; android:layout_height=&amp;quot;wrap_content&amp;quot; android:background=&amp;quot;?attr/colorPrimary&amp;quot; /&amp;gt; &amp;lt;androidx.viewpager.widget.ViewPager android:id=&amp;quot;@+id/view_pager&amp;quot; android:layout_width=&amp;quot;match_parent&amp;quot; android:layout_height=&amp;quot;match_parent&amp;quot; app:layout_behavior=&amp;quot;@string/appbar_scrolling_view_behavior&amp;quot; /&amp;gt; &amp;lt;/com.google.android.material.appbar.AppBarLayout&amp;gt; &amp;lt;/androidx.coordinatorlayout.widget.CoordinatorLayout&amp;gt;   在 PagerAdapter 中会指定我们使用的 Fragment:  class SectionsPagerAdapter(private val context: Context, fm: FragmentManager ) : FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) { override fun getItem(position: Int): Fragment { return SampleFragment.newInstance(position) } override fun getCount(): Int { return TAB_TITLES.</description>
+ 页面的布局结构:  &amp;lt;?xml version=&amp;#34;1.0&amp;#34; encoding=&amp;#34;utf-8&amp;#34;?&amp;gt; &amp;lt;androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android=&amp;#34;http://schemas.android.com/apk/res/android&amp;#34;  xmlns:app=&amp;#34;http://schemas.android.com/apk/res-auto&amp;#34;  xmlns:tools=&amp;#34;http://schemas.android.com/tools&amp;#34;  android:layout_width=&amp;#34;match_parent&amp;#34;  android:layout_height=&amp;#34;match_parent&amp;#34;  tools:context=&amp;#34;.MainActivity&amp;#34;  &amp;gt;   &amp;lt;com.google.android.material.appbar.AppBarLayout  android:layout_width=&amp;#34;match_parent&amp;#34;  android:layout_height=&amp;#34;wrap_content&amp;#34;  android:theme=&amp;#34;@style/AppTheme.AppBarOverlay&amp;#34;  &amp;gt;   ...   &amp;lt;com.google.android.material.tabs.TabLayout  android:id=&amp;#34;@+id/tabs&amp;#34;  android:layout_width=&amp;#34;match_parent&amp;#34;  android:layout_height=&amp;#34;wrap_content&amp;#34;  android:background=&amp;#34;?attr/colorPrimary&amp;#34;  /&amp;gt;   &amp;lt;androidx.viewpager.widget.ViewPager  android:id=&amp;#34;@+id/view_pager&amp;#34;  android:layout_width=&amp;#34;match_parent&amp;#34;  android:layout_height=&amp;#34;match_parent&amp;#34;  app:layout_behavior=&amp;#34;@string/appbar_scrolling_view_behavior&amp;#34;  /&amp;gt;  &amp;lt;/com.google.android.material.appbar.AppBarLayout&amp;gt; &amp;lt;/androidx.coordinatorlayout.widget.CoordinatorLayout&amp;gt;  在 PagerAdapter 中会指定我们使用的 Fragment:  class SectionsPagerAdapter(private val context: Context,  fm: FragmentManager ) : FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {   override fun getItem(position: Int): Fragment {  return SampleFragment.</description>
     </item>
     
     <item>
@@ -285,11 +285,10 @@ git remote set-url origin newRepoUrl
       <description>协程用来解决什么问题 Kotlin 的协程提供了一种全新的并发处理方式，我们可以使用它来简化安卓异步执行的代码。
 在 Android 平台上协程主要用来解决两个问题：
  处理耗时任务(Long running tasks) 保证主线程安全(Main-safety)  处理耗时任务 我们常规处理耗时任务是通过异步回调的方式，比如：
-fun fetchDoc() { get(&amp;quot;https://doc.qq.com&amp;quot;) { result -&amp;gt; show(result) } }  通过协程的方式是这样：
-// 主线程执行 suspend fun fetchDoc() { // 直接返回结果 val result = get(&amp;quot;https://doc.qq.com&amp;quot;) show(result) } // 主线程执行 suspend fun get(url: String) = withContext(Dispatchers.IO) { /*IO 线程池执行*/ }  可以看到通过协程可以直接返回请求结果，而不用管理请求延迟和线程阻塞，这是如何实现的呢？
+fun fetchDoc() {  get(&amp;#34;https://doc.qq.com&amp;#34;) { result -&amp;gt;  show(result)  } } 通过协程的方式是这样：
+// 主线程执行 suspend fun fetchDoc() {  // 直接返回结果  val result = get(&amp;#34;https://doc.qq.com&amp;#34;)  show(result) }  // 主线程执行 suspend fun get(url: String) = withContext(Dispatchers.IO) {  /*IO 线程池执行*/ } 可以看到通过协程可以直接返回请求结果，而不用管理请求延迟和线程阻塞，这是如何实现的呢？
 协程在常规的函数操作 —— invoke 和 return 之外，还新增了2项：
- suspend —— 称为挂起或暂停，用于暂停执行当前协程，并保存所有局部变量 resume —— 让暂停的协程继续执行  那么 suspend 是如何实现的呢？
- Kotlin 使用堆栈帧来管理需要运行哪个函数及所有局部变量。suspend 协程时，系统会复制并保存当前的栈帧供后续使用，resume 协程时，系统会还原保存的栈帧，然后函数从暂停的位置继续执行。</description>
+ suspend —— 称为挂起或暂停，用于暂停执行当前协程，并保存所有局部变量 resume —— 让暂停的协程继续执行  那么 suspend 是如何实现的呢？</description>
     </item>
     
     <item>
@@ -312,9 +311,9 @@ Activity 的四种启动模式 (launchMode) 如通过 startActivity(Intent) 启�
       
       <guid>https://zacash.cn/posts/handler-in-action/</guid>
       <description>Memory Leaks 1.1 背景 1.Handler 在使用下面这种实现方式处理消息时:
-class MainActivity : Activity() { private val mLeakedHandler = object : Handler() { override fun handleMessage(msg: Message) { super.handleMessage(msg) } }  Android Lint 会发出这样的警告: This Handler class should be static or leaks might occur(anonymous android.os.Handler)
+class MainActivity : Activity() {   private val mLeakedHandler = object : Handler() {  override fun handleMessage(msg: Message) {  super.handleMessage(msg)  }  } Android Lint 会发出这样的警告: This Handler class should be static or leaks might occur(anonymous android.os.Handler)
 2.我们在 Handler 构造方法里同样可以看到：
-public Handler(@Nullable Callback callback, boolean async) { if (FIND_POTENTIAL_LEAKS) { final Class&amp;lt;? extends Handler&amp;gt; klass = getClass(); if ((klass.isAnonymousClass() || klass.isMemberClass() || klass.isLocalClass()) &amp;amp;&amp;amp; (klass.getModifiers() &amp;amp; Modifier.STATIC) == 0) { Log.</description>
+public Handler(@Nullable Callback callback, boolean async) {  if (FIND_POTENTIAL_LEAKS) {  final Class&amp;lt;? extends Handler&amp;gt; klass = getClass();  if ((klass.isAnonymousClass() || klass.isMemberClass() || klass.</description>
     </item>
     
     <item>
@@ -323,8 +322,7 @@ public Handler(@Nullable Callback callback, boolean async) { if (FIND_POTENTIAL_
       <pubDate>Sun, 12 Apr 2020 20:36:33 +0800</pubDate>
       
       <guid>https://zacash.cn/posts/handler-in-code/</guid>
-      <description>Handler 的创建  在主线程(UI Thread)中：  class MainActivity : Activity { private val mLeakedHandler = object : Handler() { override fun handleMessage(msg: Message) { super.handleMessage(msg) } } }   在子线程中：  val thread = object : Thread() { override fun run() { Looper.prepare() val handler = object : Handler() { override fun handleMessage(msg: Message) { super.handleMessage(msg) } } Looper.loop() } }  为什么在子线程创建 Handler 需要准备 Looper，而主线程却不用 因为 ActivityThread 中的 main() 方法已经为我们初始化了 Looper
-public static void main(String[] args) { // Install selective syscall interception AndroidOs.</description>
+      <description>Handler 的创建  在主线程(UI Thread)中：  class MainActivity : Activity {  private val mLeakedHandler = object : Handler() {  override fun handleMessage(msg: Message) {  super.handleMessage(msg)  }  } }  在子线程中：  val thread = object : Thread() {  override fun run() {  Looper.prepare()  val handler = object : Handler() {  override fun handleMessage(msg: Message) {  super.handleMessage(msg)  }  }  Looper.loop()  } } 为什么在子线程创建 Handler 需要准备 Looper，而主线程却不用 因为 ActivityThread 中的 main() 方法已经为我们初始化了 Looper</description>
     </item>
     
     <item>
@@ -334,9 +332,9 @@ public static void main(String[] args) { // Install selective syscall intercepti
       
       <guid>https://zacash.cn/posts/hugo-basic/</guid>
       <description>Add new content hugo new posts/article-name.md
-Article meta info --- title: &amp;quot;New Article&amp;quot; date: 2020-04-04T09:25:04+08:00 description: &amp;quot;Hugo 的简单用法&amp;quot; tags: [&amp;quot;hugo&amp;quot;, &amp;quot;pages&amp;quot;] categories: [&amp;quot;hugo&amp;quot;] draft: true ---  Start server with drafts enabled hugo server -D
+Article meta info --- title: &amp;#34;New Article&amp;#34; date: 2020-04-04T09:25:04+08:00 description: &amp;#34;Hugo 的简单用法&amp;#34; tags: [&amp;#34;hugo&amp;#34;, &amp;#34;pages&amp;#34;] categories: [&amp;#34;hugo&amp;#34;] draft: true --- Start server with drafts enabled hugo server -D
 Customize the theme Open up config.toml in a text editor:
-baseURL = &amp;quot;https://example.org/&amp;quot; languageCode = &amp;quot;en-us&amp;quot; title = &amp;quot;My New Hugo Site&amp;quot; theme = &amp;quot;ananke&amp;quot;  Build static pages hugo -D output will be in ./public/ directory by default (-d/--destination flag to change it, or set publishdir in the config file)</description>
+baseURL = &amp;#34;https://example.org/&amp;#34;languageCode = &amp;#34;en-us&amp;#34;title = &amp;#34;My New Hugo Site&amp;#34;theme = &amp;#34;ananke&amp;#34;Build static pages hugo -D output will be in ./public/ directory by default (-d/--destination flag to change it, or set publishdir in the config file)</description>
     </item>
     
     <item>
@@ -346,9 +344,8 @@ baseURL = &amp;quot;https://example.org/&amp;quot; languageCode = &amp;quot;en-u
       
       <guid>https://zacash.cn/posts/check-state-loss/</guid>
       <description>背景 最近做的一个 DialogFragment 在少数设备上会偶发闪退，Fabric 上的 Stacktrace 信息如下：
-Fatal Exception: java.lang.IllegalStateException: Can not perform this action after onSaveInstanceState at android.support.v4.app.FragmentManagerImpl.checkStateLoss(SourceFile) at android.support.v4.app.FragmentManagerImpl.enqueueAction(SourceFile) at android.support.v4.app.BackStackRecord.commitInternal(SourceFile) at android.support.v4.app.BackStackRecord.commit(SourceFile) at android.support.v4.app.DialogFragment.show(SourceFile）  看起来是弹窗在 show 的时候，发生了 state loss，粗略 copy 了下 StackOverflow 上的回答，做了如下修改：
-fun show(manager: FragmentManager?) { try { val ft = manager?.beginTransaction() ft?.add(this, &amp;quot;tag of dialog&amp;quot;) ft?.commitAllowingStateLoss() } catch (e: Exception) { } }  重写了 show 方法，允许 state loss，并加了异常捕捉，后续观察 Fabric， show 的时候的确没再出现异常情况，但 dismiss 的时候还是有闪退出现，异常信息如下：
-Fatal Exception: java.lang.IllegalStateException: Can not perform this action after onSaveInstanceState at android.</description>
+Fatal Exception: java.lang.IllegalStateException: Can not perform this action after onSaveInstanceState  at android.support.v4.app.FragmentManagerImpl.checkStateLoss(SourceFile)  at android.support.v4.app.FragmentManagerImpl.enqueueAction(SourceFile)  at android.support.v4.app.BackStackRecord.commitInternal(SourceFile)  at android.support.v4.app.BackStackRecord.commit(SourceFile)  at android.support.v4.app.DialogFragment.show(SourceFile） 看起来是弹窗在 show 的时候，发生了 state loss，粗略 copy 了下 StackOverflow 上的回答，做了如下修改：
+fun show(manager: FragmentManager?) {  try {  val ft = manager?.beginTransaction()  ft?.add(this, &amp;#34;tag of dialog&amp;#34;)  ft?.commitAllowingStateLoss()  } catch (e: Exception) {   } } 重写了 show 方法，允许 state loss，并加了异常捕捉，后续观察 Fabric， show 的时候的确没再出现异常情况，但 dismiss 的时候还是有闪退出现，异常信息如下：</description>
     </item>
     
     <item>

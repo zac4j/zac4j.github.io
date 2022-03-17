@@ -19,17 +19,6 @@
   as="style" onload="this.onload=null;this.rel='stylesheet'">
 
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/styles/solarized-light.min.css"
-   media="print"
-  onload="this.media='all';this.onload=null" crossorigin>
-<script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/highlight.min.js"
-   crossorigin></script>
-  <script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/languages/dart.min.js"
-     crossorigin></script>
-  <script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/languages/java.min.js"
-     crossorigin></script>
-  <script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/languages/kotlin.min.js"
-     crossorigin></script>
 
 
 <script defer type="text/javascript" src="https://zacash.cn/js/fontawesome.min.1c5a4674b042785ed214cf0818a81724c6b37442fd61b0ed039237b93de25ed5103fc8079a05770648ccc9c66c4f540a.js" integrity="sha384-HFpGdLBCeF7SFM8IGKgXJMazdEL9YbDtA5I3uT3iXtUQP8gHmgV3BkjMycZsT1QK"></script>
@@ -77,13 +66,13 @@
             "@type":"ListItem",
             "position":  1 ,
             "name": "Essential Design Pattern in Android",
-            "description": "什么是设计模式 设计模式的经典解释：软件工程中，设计模式是针对软件设计中给定上下文的常见问题的通用、可复用的解决方案。设计模式并非可以直接转换为源码或机器码的最终设计。相反，它是可以在不同场景下使用的解决问题的描述或模版。设计模式是程序员在设计 App 或系统时解决常见问题的最佳实践。\n面向对象的设计模式通常展示了类和对象之间的关系和交互，而不是指定 App 的类或对象。\n设计模式可以看作是一种编程的结构化方法，介于编程范式和具体算法之间。\n设计模式根据其解决的问题分为三个类别：\n 创造型模式（Creational Patterns）：提供创建类，对象的方法（Singleton, Dependency Inject, Builder等）。 结构型模式（Structural Patterns）：提供对象和类之间组合的方法（Composite, Bridge, Adapter 等）。 行为型模式（Bahavioral Patterns）：提供对象和类之间相互交流的方法（Command, Observer, Strategy 等）。  创造型模式 当我们用最基本的形式创建创建对象可能导致设计问题，或增加设计的复杂性。创造型设计模式通过控制对象的创建方式来解决这种问题。\nAndroid 常用的创造型模式：\nBuilder Builder 模式主要解决创建复杂对象过程中遇到的问题：\n 类如何创建复杂对象不同的表现形式(different presentations) 如何简化包含创建复杂对象的类  Builder 模式在 Android 中常见的应用是 AlertDialog 的创建过程：\nAlertDialog.Builder(context) .setTitle(\u0026quot;Builder Sample\u0026quot;) .setMessage(\u0026quot;Builder Nessage\u0026quot;) .setNegativeButton(\u0026quot;Cancel\u0026quot;, {_,_ -\u0026gt; }) .setPositiveButton(\u0026quot;OK\u0026quot;, {_, _ -\u0026gt; }) .show()  Builder 模式通过这种方式解决问题：\n 将复杂对象的各个部分的创建(creating)和组装(assembling)封装在一个独立的 Builder 对象中。 类将对象的创建委托给 Builder 对象，而不是直接创建。  Dependency injection 依赖注入（Dependency injection, 简称 Di）通常表示某个对象接收(receives)它依赖的对象(objects)的技术，这些依赖的对象称为依赖项(dependencies)。在典型的使用关系中，接收者被称为客户端（client），传递的对象被称为服务（service）。将服务传递给客户端的代码可能有很多种，被称为注入器（injector）, 注入器提供给客户端需要使用哪些服务。注入(injection)是指将依赖项（服务）传递给使用依赖项的对象（客户端）。",
+            "description": "什么是设计模式 设计模式的经典解释：软件工程中，设计模式是针对软件设计中给定上下文的常见问题的通用、可复用的解决方案。设计模式并非可以直接转换为源码或机器码的最终设计。相反，它是可以在不同场景下使用的解决问题的描述或模版。设计模式是程序员在设计 App 或系统时解决常见问题的最佳实践。\n面向对象的设计模式通常展示了类和对象之间的关系和交互，而不是指定 App 的类或对象。\n设计模式可以看作是一种编程的结构化方法，介于编程范式和具体算法之间。\n设计模式根据其解决的问题分为三个类别：\n 创造型模式（Creational Patterns）：提供创建类，对象的方法（Singleton, Dependency Inject, Builder等）。 结构型模式（Structural Patterns）：提供对象和类之间组合的方法（Composite, Bridge, Adapter 等）。 行为型模式（Bahavioral Patterns）：提供对象和类之间相互交流的方法（Command, Observer, Strategy 等）。  创造型模式 当我们用最基本的形式创建创建对象可能导致设计问题，或增加设计的复杂性。创造型设计模式通过控制对象的创建方式来解决这种问题。\nAndroid 常用的创造型模式：\nBuilder Builder 模式主要解决创建复杂对象过程中遇到的问题：\n 类如何创建复杂对象不同的表现形式(different presentations) 如何简化包含创建复杂对象的类  Builder 模式在 Android 中常见的应用是 AlertDialog 的创建过程：\nAlertDialog.Builder(context)  .setTitle(\u0026#34;Builder Sample\u0026#34;)  .setMessage(\u0026#34;Builder Nessage\u0026#34;)  .setNegativeButton(\u0026#34;Cancel\u0026#34;, {_,_ -\u0026gt; })  .setPositiveButton(\u0026#34;OK\u0026#34;, {_, _ -\u0026gt; })  .show() Builder 模式通过这种方式解决问题：\n 将复杂对象的各个部分的创建(creating)和组装(assembling)封装在一个独立的 Builder 对象中。 类将对象的创建委托给 Builder 对象，而不是直接创建。  Dependency injection 依赖注入（Dependency injection, 简称 Di）通常表示某个对象接收(receives)它依赖的对象(objects)的技术，这些依赖的对象称为依赖项(dependencies)。在典型的使用关系中，接收者被称为客户端（client），传递的对象被称为服务（service）。将服务传递给客户端的代码可能有很多种，被称为注入器（injector）, 注入器提供给客户端需要使用哪些服务。注入(injection)是指将依赖项（服务）传递给使用依赖项的对象（客户端）。",
             "url": "https://zacash.cn/posts/design-pattern-in-android/"
         },{
             "@type":"ListItem",
             "position":  2 ,
             "name": "Top 10 Kotlin Questions in StackOverflow",
-            "description": "IntArray vs. Array\u0026lt;Int\u0026gt;   In java code\n IntArray: int[] Array\u0026lt;Int\u0026gt;: Integer[]    Create method:\n IntArray:  val intArray : IntArray = intArrayOf(1, 2, 3, 4, 5)   Array\u0026lt;Int\u0026gt;:  val arrayOfInts : Array\u0026lt;Int\u0026gt; = arrayOf(1, 2, 3, 4, 5)    Iterable vs. Sequence   Usage\n Iterable:  getPeople() .filter { it.age \u0026gt;= 18 } .map { it.name } .take(5)   Sequence: start with asSequence() and end with toList() or toSet()\u0026hellip;  getPeople().",
+            "description": "IntArray vs. Array\u0026lt;Int\u0026gt;   In java code\n IntArray: int[] Array\u0026lt;Int\u0026gt;: Integer[]    Create method:\n IntArray:  val intArray : IntArray = intArrayOf(1, 2, 3, 4, 5)  Array\u0026lt;Int\u0026gt;:  val arrayOfInts : Array\u0026lt;Int\u0026gt; = arrayOf(1, 2, 3, 4, 5)   Iterable vs. Sequence   Usage\n Iterable:  getPeople() .filter { it.age \u0026gt;= 18 } .map { it.name } .take(5)  Sequence: start with asSequence() and end with toList() or toSet()\u0026hellip;  getPeople().",
             "url": "https://zacash.cn/posts/top-10-kotlin-questions/"
         },{
             "@type":"ListItem",
@@ -232,7 +221,7 @@
 Android 常用的创造型模式：
 Builder Builder 模式主要解决创建复杂对象过程中遇到的问题：
  类如何创建复杂对象不同的表现形式(different presentations) 如何简化包含创建复杂对象的类  Builder 模式在 Android 中常见的应用是 AlertDialog 的创建过程：
-AlertDialog.Builder(context) .setTitle(&#34;Builder Sample&#34;) .setMessage(&#34;Builder Nessage&#34;) .setNegativeButton(&#34;Cancel&#34;, {_,_ -&gt; }) .setPositiveButton(&#34;OK&#34;, {_, _ -&gt; }) .show()  Builder 模式通过这种方式解决问题：
+AlertDialog.Builder(context)  .setTitle(&#34;Builder Sample&#34;)  .setMessage(&#34;Builder Nessage&#34;)  .setNegativeButton(&#34;Cancel&#34;, {_,_ -&gt; })  .setPositiveButton(&#34;OK&#34;, {_, _ -&gt; })  .show() Builder 模式通过这种方式解决问题：
  将复杂对象的各个部分的创建(creating)和组装(assembling)封装在一个独立的 Builder 对象中。 类将对象的创建委托给 Builder 对象，而不是直接创建。  Dependency injection 依赖注入（Dependency injection, 简称 Di）通常表示某个对象接收(receives)它依赖的对象(objects)的技术，这些依赖的对象称为依赖项(dependencies)。在典型的使用关系中，接收者被称为客户端（client），传递的对象被称为服务（service）。将服务传递给客户端的代码可能有很多种，被称为注入器（injector）, 注入器提供给客户端需要使用哪些服务。注入(injection)是指将依赖项（服务）传递给使用依赖项的对象（客户端）。
   
 
@@ -276,8 +265,8 @@ AlertDialog.Builder(context) .setTitle(&#34;Builder Sample&#34;) .setMessage(&#3
   
     IntArray vs. Array&lt;Int&gt;   In java code
  IntArray: int[] Array&lt;Int&gt;: Integer[]    Create method:
- IntArray:  val intArray : IntArray = intArrayOf(1, 2, 3, 4, 5)   Array&lt;Int&gt;:  val arrayOfInts : Array&lt;Int&gt; = arrayOf(1, 2, 3, 4, 5)    Iterable vs. Sequence   Usage
- Iterable:  getPeople() .filter { it.age &gt;= 18 } .map { it.name } .take(5)   Sequence: start with asSequence() and end with toList() or toSet()…  getPeople().
+ IntArray:  val intArray : IntArray = intArrayOf(1, 2, 3, 4, 5)  Array&lt;Int&gt;:  val arrayOfInts : Array&lt;Int&gt; = arrayOf(1, 2, 3, 4, 5)   Iterable vs. Sequence   Usage
+ Iterable:  getPeople() .filter { it.age &gt;= 18 } .map { it.name } .take(5)  Sequence: start with asSequence() and end with toList() or toSet()…  getPeople().
   
 
   

@@ -19,17 +19,6 @@
   as="style" onload="this.onload=null;this.rel='stylesheet'">
 
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/styles/solarized-light.min.css"
-   media="print"
-  onload="this.media='all';this.onload=null" crossorigin>
-<script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/highlight.min.js"
-   crossorigin></script>
-  <script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/languages/dart.min.js"
-     crossorigin></script>
-  <script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/languages/java.min.js"
-     crossorigin></script>
-  <script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/languages/kotlin.min.js"
-     crossorigin></script>
 
 
 <script defer type="text/javascript" src="https://zacash.cn/js/fontawesome.min.1c5a4674b042785ed214cf0818a81724c6b37442fd61b0ed039237b93de25ed5103fc8079a05770648ccc9c66c4f540a.js" integrity="sha384-HFpGdLBCeF7SFM8IGKgXJMazdEL9YbDtA5I3uT3iXtUQP8gHmgV3BkjMycZsT1QK"></script>
@@ -335,17 +324,16 @@
 </ul>
 <h2 id="4内部类和静态嵌套类">4.内部类和静态嵌套类</h2>
 <h3 id="inner-class-vs-static-nested-class">Inner class vs. Static nested class</h3>
-<pre><code class="language-java">class OuterClass {
-  ...
-  static class StaticNestedClass {
-    ...
-  }
-  class InnerClass {
-    ...
-  }
-}
-</code></pre>
-<blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">class</span> <span style="color:#447fcf;text-decoration:underline">OuterClass</span> {
+</span></span><span style="display:flex;"><span>  ...
+</span></span><span style="display:flex;"><span>  <span style="color:#6ab825;font-weight:bold">static</span> <span style="color:#6ab825;font-weight:bold">class</span> <span style="color:#447fcf;text-decoration:underline">StaticNestedClass</span> {
+</span></span><span style="display:flex;"><span>    ...
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  <span style="color:#6ab825;font-weight:bold">class</span> <span style="color:#447fcf;text-decoration:underline">InnerClass</span> {
+</span></span><span style="display:flex;"><span>    ...
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><blockquote>
 <p>嵌套类（Nested class）可以分为两类：静态和非静态。声明为静态的嵌套类称为静态嵌套类（static nested classes）。非静态嵌套类称为内部类（inner classes）。</p>
 </blockquote>
 <p>嵌套类是其封闭类（enclosing class）的成员。内部类可以访问封闭类的其他成员，即使它们被声明为私有的可以访问。静态嵌套类无权访问封闭类的其他成员。作为 OuterClass 的成员，嵌套类可以声明为 <em>private</em>, <em>public</em>, <em>protected</em> 或 <em>package private</em>.</p>
@@ -370,56 +358,53 @@
 <p>静态嵌套类和它外部类的实例成员进行交互，就像对其他 top-level 类一样。实际上，静态嵌套类在行为上是顶级类，为了包装方便（for packaging convenience），该顶级类已嵌套在另一个顶级类中。</p>
 </blockquote>
 <p>创建静态嵌套类通过：</p>
-<pre><code class="language-java">OuterClass.StaticNestedClass sKlass = new OuterClass.StaticNestedClass()
-</code></pre>
-<h3 id="内部类">内部类</h3>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>OuterClass.<span style="color:#bbb">StaticNestedClass</span> sKlass = <span style="color:#6ab825;font-weight:bold">new</span> OuterClass.<span style="color:#bbb">StaticNestedClass</span>()
+</span></span></code></pre></div><h3 id="内部类">内部类</h3>
 <p>和实例方法及变量一样，内部类与其所在类的实例相关联，并且可以直接访问该对象的方法和字段。另外，由于内部类与实例相关联，因此它本身不能定义任何静态成员。</p>
 <p>内部类的实例只能存在于外部类实例中，且可以直接访问其外部类实例的方法和字段。</p>
-<pre><code class="language-java">OuterClass outer = new OuterClass();
-// Instantiate inner class
-OuterClass.InnerClass inner = outer.new InnerClass();
-// Instantiate static nested class
-OuterClass.NestedClass nested = new OuterClass.NestedClass();
-</code></pre>
-<h4 id="局部内部类和匿名内部类">局部内部类和匿名内部类</h4>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>OuterClass outer = <span style="color:#6ab825;font-weight:bold">new</span> OuterClass();
+</span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic">// Instantiate inner class
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>OuterClass.<span style="color:#bbb">InnerClass</span> inner = outer.<span style="color:#bbb">new</span> <span style="color:#447fcf">InnerClass</span>();
+</span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic">// Instantiate static nested class
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>OuterClass.<span style="color:#bbb">NestedClass</span> nested = <span style="color:#6ab825;font-weight:bold">new</span> OuterClass.<span style="color:#bbb">NestedClass</span>();
+</span></span></code></pre></div><h4 id="局部内部类和匿名内部类">局部内部类和匿名内部类</h4>
 <p>局部内部类声明在别的类的实例方法内，匿名内部类与局部内部类相似，但写法是返回一次性对象的表达式。</p>
-<pre><code class="language-java">public class AnonymousClasses {
-
-    interface HelloWorld {
-        public void greet();
-        public void greetSomeone(String someone);
-    }
-
-    public void sayHello() {
-      // Local inner class
-        class EnglishGreeting implements HelloWorld {
-            String name = &quot;world&quot;;
-            public void greet() {
-                greetSomeone(&quot;world&quot;);
-            }
-            public void greetSomeone(String someone) {
-                name = someone;
-                System.out.println(&quot;Hello &quot; + name);
-            }
-        }
-
-        HelloWorld englishGreeting = new EnglishGreeting();
-
-        // Anonymous class
-        HelloWorld frenchGreeting = new HelloWorld() {
-            String name = &quot;tout le monde&quot;;
-            public void greet() {
-                greetSomeone(&quot;tout le monde&quot;);
-            }
-            public void greetSomeone(String someone) {
-                name = someone;
-                System.out.println(&quot;Salut &quot; + name);
-            }
-        };
-    }
-}
-</code></pre>
-<h3 id="序列化">序列化</h3>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">public</span> <span style="color:#6ab825;font-weight:bold">class</span> <span style="color:#447fcf;text-decoration:underline">AnonymousClasses</span> {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">interface</span> <span style="color:#447fcf;text-decoration:underline">HelloWorld</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">public</span> <span style="color:#6ab825;font-weight:bold">void</span> <span style="color:#447fcf">greet</span>();
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">public</span> <span style="color:#6ab825;font-weight:bold">void</span> <span style="color:#447fcf">greetSomeone</span>(String someone);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">public</span> <span style="color:#6ab825;font-weight:bold">void</span> <span style="color:#447fcf">sayHello</span>() {
+</span></span><span style="display:flex;"><span>      <span style="color:#999;font-style:italic">// Local inner class
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>        <span style="color:#6ab825;font-weight:bold">class</span> <span style="color:#447fcf;text-decoration:underline">EnglishGreeting</span> <span style="color:#6ab825;font-weight:bold">implements</span> HelloWorld {
+</span></span><span style="display:flex;"><span>            String name = <span style="color:#ed9d13">&#34;world&#34;</span>;
+</span></span><span style="display:flex;"><span>            <span style="color:#6ab825;font-weight:bold">public</span> <span style="color:#6ab825;font-weight:bold">void</span> <span style="color:#447fcf">greet</span>() {
+</span></span><span style="display:flex;"><span>                greetSomeone(<span style="color:#ed9d13">&#34;world&#34;</span>);
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>            <span style="color:#6ab825;font-weight:bold">public</span> <span style="color:#6ab825;font-weight:bold">void</span> <span style="color:#447fcf">greetSomeone</span>(String someone) {
+</span></span><span style="display:flex;"><span>                name = someone;
+</span></span><span style="display:flex;"><span>                System.<span style="color:#bbb">out</span>.<span style="color:#bbb">println</span>(<span style="color:#ed9d13">&#34;Hello &#34;</span> + name);
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        HelloWorld englishGreeting = <span style="color:#6ab825;font-weight:bold">new</span> EnglishGreeting();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#999;font-style:italic">// Anonymous class
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>        HelloWorld frenchGreeting = <span style="color:#6ab825;font-weight:bold">new</span> HelloWorld() {
+</span></span><span style="display:flex;"><span>            String name = <span style="color:#ed9d13">&#34;tout le monde&#34;</span>;
+</span></span><span style="display:flex;"><span>            <span style="color:#6ab825;font-weight:bold">public</span> <span style="color:#6ab825;font-weight:bold">void</span> <span style="color:#447fcf">greet</span>() {
+</span></span><span style="display:flex;"><span>                greetSomeone(<span style="color:#ed9d13">&#34;tout le monde&#34;</span>);
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>            <span style="color:#6ab825;font-weight:bold">public</span> <span style="color:#6ab825;font-weight:bold">void</span> <span style="color:#447fcf">greetSomeone</span>(String someone) {
+</span></span><span style="display:flex;"><span>                name = someone;
+</span></span><span style="display:flex;"><span>                System.<span style="color:#bbb">out</span>.<span style="color:#bbb">println</span>(<span style="color:#ed9d13">&#34;Salut &#34;</span> + name);
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        };
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h3 id="序列化">序列化</h3>
 <p>强烈不建议对内部类，包括本地和匿名类进行序列化。当 Java 编译器编译某些构造时，它将创建<a href="https://docs.oracle.com/javase/tutorial/reflect/member/methodparameterreflection.html#implcit_and_synthetic">合成构造</a>（synthetic constructs）。这些是类、方法、字段和其他在源码中没有对应构造方法的构造。合成构造可以使 Java 编译器无需更改 JVM 即可实现新的 Java 语言功能。但是，合成构造在不同的 Java 编译器中的实现可能有所不同，这意味着 .class 文件在不同的实现中也可能有所不同。因此，如果序列化一个内部类，然后使用其他 JRE 实现对其进行反序列化，则可能出现兼容性问题。</p>
 <h2 id="5referenceref">5.<a href="https://community.oracle.com/blogs/enicholas/2006/05/04/understanding-weak-references">Reference</a></h2>
 <blockquote>
@@ -482,11 +467,6 @@ OuterClass.NestedClass nested = new OuterClass.NestedClass();
   </div>
 
   
-    <script>
-      document.addEventListener("DOMContentLoaded", () => {
-        hljs.initHighlightingOnLoad();
-      });
-    </script>
 
           </div>
         </div>
