@@ -8,7 +8,17 @@
     <language>en</language>
     <copyright>&amp;copy; Copyright © 2022, Copyright Zac
 </copyright>
-    <lastBuildDate>Sun, 20 Dec 2020 11:18:43 +0800</lastBuildDate><atom:link href="https://zacash.cn/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 12 Mar 2022 20:36:33 +0800</lastBuildDate><atom:link href="https://zacash.cn/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>What is HTTPS</title>
+      <link>https://zacash.cn/posts/intro-to-https/</link>
+      <pubDate>Sat, 12 Mar 2022 20:36:33 +0800</pubDate>
+      
+      <guid>https://zacash.cn/posts/intro-to-https/</guid>
+      <description>HTTPS(Hypertext transfer protocol sercure) is a secure version of HTTP protocol that uses the SSL/TLS protocol for encryption and authentication. HTTPS is specified by RFC 2818 and uses port 443 as default port(which HTTP is 80).
+Why HTTPS is important The HTTPS protocol makes it possible for website users to transmit sensitive data such as credit card numbers, banking information, and login credentials securely over the internet. For this reason, HTTPS is especially important for securing online activities such as shopping, trading and banking.</description>
+    </item>
+    
     <item>
       <title>How to Learn Math</title>
       <link>https://zacash.cn/posts/how-to-learn-math/</link>
@@ -44,10 +54,10 @@
       <pubDate>Sun, 23 Aug 2020 11:11:13 +0800</pubDate>
       
       <guid>https://zacash.cn/posts/intro-to-navigation/</guid>
-      <description>NavHostFragment NavHostFragment acts as a host for the fragments in the navigation graph.
+      <description>The Jetpack&amp;rsquo;s Navigation component helps us implement navigation feature in a single MainActivity, it contains 3 core parts: Navigation graph, NavHost, NavController.
+NavHostFragment NavHostFragment acts as a host for the fragments in the navigation graph.
 As the user moves between destination defined in the navigation graph, the NavHostFragment swaps the fragments in and out and manages the Fragment back stack.
-In the activity_main.xml layout file, the NavHostFragment is represented by a fragment element with the name android:name=&amp;quot;androidx.navigation.fragment.NavHostFragment&amp;quot;.
-BackStack in Navigation Each time user goes to a new destination on the device, Android adds that destination to the back stack.</description>
+In the activity_main.xml layout file, the NavHostFragment is represented by a fragment element with the name android:name=&amp;quot;androidx.</description>
     </item>
     
     <item>
@@ -317,12 +327,12 @@ public Handler(@Nullable Callback callback, boolean async) {  if (FIND_POTENTIAL
     </item>
     
     <item>
-      <title>Handler in Code</title>
+      <title>Handler in Details</title>
       <link>https://zacash.cn/posts/handler-in-code/</link>
       <pubDate>Sun, 12 Apr 2020 20:36:33 +0800</pubDate>
       
       <guid>https://zacash.cn/posts/handler-in-code/</guid>
-      <description>Handler 的创建  在主线程(UI Thread)中：  class MainActivity : Activity {  private val mLeakedHandler = object : Handler() {  override fun handleMessage(msg: Message) {  super.handleMessage(msg)  }  } }  在子线程中：  val thread = object : Thread() {  override fun run() {  Looper.prepare()  val handler = object : Handler() {  override fun handleMessage(msg: Message) {  super.handleMessage(msg)  }  }  Looper.loop()  } } 为什么在子线程创建 Handler 需要准备 Looper，而主线程却不用 因为 ActivityThread 中的 main() 方法已经为我们初始化了 Looper</description>
+      <description>Handler 的创建  在主线程(UI Thread)中：  class MainActivity: Activity {  private val mLeakedHandler = object: Handler(Looper.getMainLooper()) {  override fun handleMessage(msg: Message) {  super.handleMessage(msg)  }  } }  在子线程中：  val thread = object: Thread() {  override fun run() {  val looper = Looper.prepare()  val handler = object: Handler(Looper.myLooper()) {  override fun handleMessage(msg: Message) {  super.handleMessage(msg)  }  }  Looper.loop()  } } 为什么在子线程创建 Handler 需要准备 Looper，而主线程却不用 因为 ActivityThread 中的 main() 方法已经为我们初始化了 Looper</description>
     </item>
     
     <item>

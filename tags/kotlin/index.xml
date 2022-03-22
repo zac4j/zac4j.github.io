@@ -8,7 +8,16 @@
     <language>en</language>
     <copyright>&amp;copy; Copyright © 2022, Copyright Zac
 </copyright>
-    <lastBuildDate>Fri, 19 Jun 2020 22:03:29 +0800</lastBuildDate><atom:link href="https://zacash.cn/tags/kotlin/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 14 Aug 2020 07:27:09 +0800</lastBuildDate><atom:link href="https://zacash.cn/tags/kotlin/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Generics in Kotlin</title>
+      <link>https://zacash.cn/posts/generics-in-kotlin/</link>
+      <pubDate>Fri, 14 Aug 2020 07:27:09 +0800</pubDate>
+      
+      <guid>https://zacash.cn/posts/generics-in-kotlin/</guid>
+      <description>&lt;p&gt;val 和 var 与 variables 的 VALUES 相关，val 保护变量的值不变。in 和 out 与 variables 的 TYPES 相关，in 和 out 保证在范型的使用中，只有安全的类型才能传入或传出函数。&lt;/p&gt;</description>
+    </item>
+    
     <item>
       <title>Top 10 Kotlin Questions in StackOverflow</title>
       <link>https://zacash.cn/posts/top-10-kotlin-questions/</link>

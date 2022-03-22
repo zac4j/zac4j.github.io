@@ -8,7 +8,17 @@
     <language>en</language>
     <copyright>&amp;copy; Copyright © 2022, Copyright Zac
 </copyright>
-    <lastBuildDate>Tue, 21 Jul 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://zacash.cn/categories/network/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 12 Mar 2022 20:36:33 +0800</lastBuildDate><atom:link href="https://zacash.cn/categories/network/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>What is HTTPS</title>
+      <link>https://zacash.cn/posts/intro-to-https/</link>
+      <pubDate>Sat, 12 Mar 2022 20:36:33 +0800</pubDate>
+      
+      <guid>https://zacash.cn/posts/intro-to-https/</guid>
+      <description>HTTPS(Hypertext transfer protocol sercure) is a secure version of HTTP protocol that uses the SSL/TLS protocol for encryption and authentication. HTTPS is specified by RFC 2818 and uses port 443 as default port(which HTTP is 80).
+Why HTTPS is important The HTTPS protocol makes it possible for website users to transmit sensitive data such as credit card numbers, banking information, and login credentials securely over the internet. For this reason, HTTPS is especially important for securing online activities such as shopping, trading and banking.</description>
+    </item>
+    
     <item>
       <title>WebSocket 和长轮询</title>
       <link>https://zacash.cn/posts/websocket-and-long-polling/</link>

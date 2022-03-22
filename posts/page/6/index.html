@@ -65,21 +65,21 @@
     "itemListElement":[{
             "@type":"ListItem",
             "position":  1 ,
+            "name": "How Are Touch Events Delivered",
+            "description": "根据例子来理解 Android 的事件传递\n页面的布局结构\n\u0026lt;?xml version=\u0026#34;1.0\u0026#34; encoding=\u0026#34;utf-8\u0026#34;?\u0026gt; \u0026lt;layout xmlns:android=\u0026#34;http://schemas.android.com/apk/res/android\u0026#34;  xmlns:app=\u0026#34;http://schemas.android.com/apk/res-auto\u0026#34;\u0026gt;   \u0026lt;data\u0026gt;  \u0026lt;variable  name=\u0026#34;viewModel\u0026#34;  type=\u0026#34;com.zac4j.system.data.TouchViewModel\u0026#34; /\u0026gt;  \u0026lt;/data\u0026gt;   \u0026lt;com.zac4j.system.ui.widget.CustomLayout  android:id=\u0026#34;@id/touch_sample_container\u0026#34;  android:layout_width=\u0026#34;match_parent\u0026#34;  android:layout_height=\u0026#34;match_parent\u0026#34;\u0026gt;   \u0026lt;Button  android:id=\u0026#34;@id/touch_sample_btn\u0026#34;  style=\u0026#34;@style/Widget.AppCompat.Button.Colored\u0026#34;  android:layout_width=\u0026#34;match_parent\u0026#34;  android:layout_height=\u0026#34;wrap_content\u0026#34;  android:text=\u0026#34;Touch Me\u0026#34;  app:layout_constraintEnd_toEndOf=\u0026#34;parent\u0026#34;  app:layout_constraintStart_toStartOf=\u0026#34;parent\u0026#34;  app:layout_constraintTop_toTopOf=\u0026#34;parent\u0026#34; /\u0026gt;   \u0026lt;/com.zac4j.system.ui.widget.CustomLayout\u0026gt; \u0026lt;/layout\u0026gt; TouchEvent 的传递 我们通常对 Button 创建点击事件:\ntouchSampleBtn.setOnClickListener {  Logger.i(TAG, \u0026#34;setOnClickListener\u0026#34;, \u0026#34;sampleBtn clicked\u0026#34;) } 可以先看下 View.dispatchTouchEvent() 的实现:\npublic boolean dispatchTouchEvent(MotionEvent event) {  .",
+            "url": "https://zacash.cn/posts/how-are-touch-events-delivered/"
+        },{
+            "@type":"ListItem",
+            "position":  2 ,
             "name": "Intro to Hybrid App",
             "description": "Android Hybrid Development Introduction",
             "url": "https://zacash.cn/posts/intro-to-hybrid-app/"
         },{
             "@type":"ListItem",
-            "position":  2 ,
+            "position":  3 ,
             "name": "Intro to Service",
             "description": "Introduction to Android Service",
             "url": "https://zacash.cn/posts/intro-to-service/"
-        },{
-            "@type":"ListItem",
-            "position":  3 ,
-            "name": "Java Basic",
-            "description": "🌟答案的组织策略：知道是什么，知道为什么，知道怎么用\n0.JDK 和 JRE 有什么区别？  JDK 包含 JRE，同时还包含编译 Java 源码的编译器 javac，还包含了很多 Java 程序调试和分析的工具。 加分项：除了 javac 还了解哪些命令行工具，它们的用途是什么？  jcmd：综合工具 jps：虚拟机进程状况工具 jinfo：虚拟机配置信息工具 jstat：虚拟机统计信息监视工具 jmap：Java 内存映像工具 jhat：虚拟机堆转储快照分析工具 jstack：Java 堆栈追踪工具   加分项jstat 用过吗，有哪些参数？  -class：监视类装载、卸载数量、总空间和类装载所耗费的时间 -gc：监视 Java 堆的状况，包括 Eden 区，两个 survior 区，老年代、永久代等的容量，已用空间、GC 时间合计等统计    1.equals 和 == 的差别？ 两者都是判断等价性，区别要从入参类型来看：\n  对于基本类型，他们是比较值是否相等\n  对于引用类型，他们是判断引用的是否为同一对象\n  考察点：equals 的概念\n  🌟实际要求：平时对源码的深挖意识即技术钻研和批判性思维\n  考察目的：\n 基础知识的扎实程度 候选人对技术的热情    2.Java 中操作字符串有那些类？它们之间有什么区别？  主要有：String，StringBuilder，StringBuffer 区别：StringBuffer 和 StringBuilder 都继承自 AbstractStringBuilder，StringBuffer 具备线程安全性  加分项：String 源码分析  String 是 final 关键字修饰 -\u0026gt; 对象的值不可变 -\u0026gt; 每次操作都会生成新的对象 StringBuffer 和 StringBuilder 对象的值可变，但拼接字符串开销比较小   加分项：StringBuffer 线程安全性分析（查源码、找 synchronized、线程锁）   使用场景：并发必选 StringBuffer，迭代必选 StringBuilder，普通场景选 String，避免中途不必要的类型转换开销  3.",
-            "url": "https://zacash.cn/posts/java-basic/"
         }
     ]
 }
@@ -114,7 +114,7 @@
 
 
 
-<meta property="og:updated_time" content="2020-12-20T11:18:43&#43;08:00" />
+<meta property="og:updated_time" content="2022-03-12T20:36:33&#43;08:00" />
 
 
 
@@ -209,6 +209,51 @@
   
   <div class="w-full ">
     <div class="prose">
+  <a href="https://zacash.cn/posts/how-are-touch-events-delivered/" class="no-underline">
+    <h3 class="mt-0">How Are Touch Events Delivered</h3>
+  </a>
+  
+    根据例子来理解 Android 的事件传递
+页面的布局结构
+&lt;?xml version=&#34;1.0&#34; encoding=&#34;utf-8&#34;?&gt; &lt;layout xmlns:android=&#34;http://schemas.android.com/apk/res/android&#34;  xmlns:app=&#34;http://schemas.android.com/apk/res-auto&#34;&gt;   &lt;data&gt;  &lt;variable  name=&#34;viewModel&#34;  type=&#34;com.zac4j.system.data.TouchViewModel&#34; /&gt;  &lt;/data&gt;   &lt;com.zac4j.system.ui.widget.CustomLayout  android:id=&#34;@id/touch_sample_container&#34;  android:layout_width=&#34;match_parent&#34;  android:layout_height=&#34;match_parent&#34;&gt;   &lt;Button  android:id=&#34;@id/touch_sample_btn&#34;  style=&#34;@style/Widget.AppCompat.Button.Colored&#34;  android:layout_width=&#34;match_parent&#34;  android:layout_height=&#34;wrap_content&#34;  android:text=&#34;Touch Me&#34;  app:layout_constraintEnd_toEndOf=&#34;parent&#34;  app:layout_constraintStart_toStartOf=&#34;parent&#34;  app:layout_constraintTop_toTopOf=&#34;parent&#34; /&gt;   &lt;/com.zac4j.system.ui.widget.CustomLayout&gt; &lt;/layout&gt; TouchEvent 的传递 我们通常对 Button 创建点击事件:
+touchSampleBtn.setOnClickListener {  Logger.i(TAG, &#34;setOnClickListener&#34;, &#34;sampleBtn clicked&#34;) } 可以先看下 View.dispatchTouchEvent() 的实现:
+public boolean dispatchTouchEvent(MotionEvent event) {  .
+  
+
+  
+    <div
+  class="text-tertiary-text not-prose mt-2 flex flex-row flex-wrap items-center"
+>
+  <div class="me-6 my-2">
+    <i class="fas fa-calendar me-1"></i>
+    <span
+      >2020-07-11</span
+    >
+  </div>
+  <div class="me-6 my-2">
+    <i class="fas fa-clock me-1"></i>
+    <span>6 min read</span>
+  </div>
+
+  
+
+  
+</div>
+
+  
+</div>
+
+  </div>
+
+  
+</div>
+  </div>
+  
+  <div class="py-6">
+    <div class="flex flex-col-reverse lg:flex-row justify-between">
+  
+  <div class="w-full ">
+    <div class="prose">
   <a href="https://zacash.cn/posts/intro-to-hybrid-app/" class="no-underline">
     <h3 class="mt-0">Intro to Hybrid App</h3>
   </a>
@@ -276,65 +321,11 @@
     <div class="me-6 my-2">
       <i class="fas fa-folder me-1"></i>
       
-        <a href="https://zacash.cn/categories/programming/" class="hover:text-eureka"
-          >programming</a
-        >
-      
-        
-          <span>, </span>
         <a href="https://zacash.cn/categories/android/" class="hover:text-eureka"
-          >android</a
+          >Android</a
         >
       
     </div>
-  
-
-  
-</div>
-
-  
-</div>
-
-  </div>
-
-  
-</div>
-  </div>
-  
-  <div class="py-6">
-    <div class="flex flex-col-reverse lg:flex-row justify-between">
-  
-  <div class="w-full ">
-    <div class="prose">
-  <a href="https://zacash.cn/posts/java-basic/" class="no-underline">
-    <h3 class="mt-0">Java Basic</h3>
-  </a>
-  
-    🌟答案的组织策略：知道是什么，知道为什么，知道怎么用
-0.JDK 和 JRE 有什么区别？  JDK 包含 JRE，同时还包含编译 Java 源码的编译器 javac，还包含了很多 Java 程序调试和分析的工具。 加分项：除了 javac 还了解哪些命令行工具，它们的用途是什么？  jcmd：综合工具 jps：虚拟机进程状况工具 jinfo：虚拟机配置信息工具 jstat：虚拟机统计信息监视工具 jmap：Java 内存映像工具 jhat：虚拟机堆转储快照分析工具 jstack：Java 堆栈追踪工具   加分项jstat 用过吗，有哪些参数？  -class：监视类装载、卸载数量、总空间和类装载所耗费的时间 -gc：监视 Java 堆的状况，包括 Eden 区，两个 survior 区，老年代、永久代等的容量，已用空间、GC 时间合计等统计    1.equals 和 == 的差别？ 两者都是判断等价性，区别要从入参类型来看：
-  对于基本类型，他们是比较值是否相等
-  对于引用类型，他们是判断引用的是否为同一对象
-  考察点：equals 的概念
-  🌟实际要求：平时对源码的深挖意识即技术钻研和批判性思维
-  考察目的：
- 基础知识的扎实程度 候选人对技术的热情    2.Java 中操作字符串有那些类？它们之间有什么区别？  主要有：String，StringBuilder，StringBuffer 区别：StringBuffer 和 StringBuilder 都继承自 AbstractStringBuilder，StringBuffer 具备线程安全性  加分项：String 源码分析  String 是 final 关键字修饰 -&gt; 对象的值不可变 -&gt; 每次操作都会生成新的对象 StringBuffer 和 StringBuilder 对象的值可变，但拼接字符串开销比较小   加分项：StringBuffer 线程安全性分析（查源码、找 synchronized、线程锁）   使用场景：并发必选 StringBuffer，迭代必选 StringBuilder，普通场景选 String，避免中途不必要的类型转换开销  3.
-  
-
-  
-    <div
-  class="text-tertiary-text not-prose mt-2 flex flex-row flex-wrap items-center"
->
-  <div class="me-6 my-2">
-    <i class="fas fa-calendar me-1"></i>
-    <span
-      >2020-07-03</span
-    >
-  </div>
-  <div class="me-6 my-2">
-    <i class="fas fa-clock me-1"></i>
-    <span>2 min read</span>
-  </div>
-
   
 
   

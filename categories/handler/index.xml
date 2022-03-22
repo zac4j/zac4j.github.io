@@ -8,26 +8,14 @@
     <language>en</language>
     <copyright>&amp;copy; Copyright © 2022, Copyright Zac
 </copyright>
-    <lastBuildDate>Tue, 14 Apr 2020 21:53:54 +0800</lastBuildDate><atom:link href="https://zacash.cn/categories/handler/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 12 Apr 2020 20:36:33 +0800</lastBuildDate><atom:link href="https://zacash.cn/categories/handler/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Handler in Action</title>
-      <link>https://zacash.cn/posts/handler-in-action/</link>
-      <pubDate>Tue, 14 Apr 2020 21:53:54 +0800</pubDate>
-      
-      <guid>https://zacash.cn/posts/handler-in-action/</guid>
-      <description>Memory Leaks 1.1 背景 1.Handler 在使用下面这种实现方式处理消息时:
-class MainActivity : Activity() {   private val mLeakedHandler = object : Handler() {  override fun handleMessage(msg: Message) {  super.handleMessage(msg)  }  } Android Lint 会发出这样的警告: This Handler class should be static or leaks might occur(anonymous android.os.Handler)
-2.我们在 Handler 构造方法里同样可以看到：
-public Handler(@Nullable Callback callback, boolean async) {  if (FIND_POTENTIAL_LEAKS) {  final Class&amp;lt;? extends Handler&amp;gt; klass = getClass();  if ((klass.isAnonymousClass() || klass.isMemberClass() || klass.</description>
-    </item>
-    
-    <item>
-      <title>Handler in Code</title>
+      <title>Handler in Details</title>
       <link>https://zacash.cn/posts/handler-in-code/</link>
       <pubDate>Sun, 12 Apr 2020 20:36:33 +0800</pubDate>
       
       <guid>https://zacash.cn/posts/handler-in-code/</guid>
-      <description>Handler 的创建  在主线程(UI Thread)中：  class MainActivity : Activity {  private val mLeakedHandler = object : Handler() {  override fun handleMessage(msg: Message) {  super.handleMessage(msg)  }  } }  在子线程中：  val thread = object : Thread() {  override fun run() {  Looper.prepare()  val handler = object : Handler() {  override fun handleMessage(msg: Message) {  super.handleMessage(msg)  }  }  Looper.loop()  } } 为什么在子线程创建 Handler 需要准备 Looper，而主线程却不用 因为 ActivityThread 中的 main() 方法已经为我们初始化了 Looper</description>
+      <description>Handler 的创建  在主线程(UI Thread)中：  class MainActivity: Activity {  private val mLeakedHandler = object: Handler(Looper.getMainLooper()) {  override fun handleMessage(msg: Message) {  super.handleMessage(msg)  }  } }  在子线程中：  val thread = object: Thread() {  override fun run() {  val looper = Looper.prepare()  val handler = object: Handler(Looper.myLooper()) {  override fun handleMessage(msg: Message) {  super.handleMessage(msg)  }  }  Looper.loop()  } } 为什么在子线程创建 Handler 需要准备 Looper，而主线程却不用 因为 ActivityThread 中的 main() 方法已经为我们初始化了 Looper</description>
     </item>
     
   </channel>

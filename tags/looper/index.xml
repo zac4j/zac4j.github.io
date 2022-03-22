@@ -22,12 +22,12 @@ public Handler(@Nullable Callback callback, boolean async) {  if (FIND_POTENTIAL
     </item>
     
     <item>
-      <title>Handler in Code</title>
+      <title>Handler in Details</title>
       <link>https://zacash.cn/posts/handler-in-code/</link>
       <pubDate>Sun, 12 Apr 2020 20:36:33 +0800</pubDate>
       
       <guid>https://zacash.cn/posts/handler-in-code/</guid>
-      <description>Handler 的创建  在主线程(UI Thread)中：  class MainActivity : Activity {  private val mLeakedHandler = object : Handler() {  override fun handleMessage(msg: Message) {  super.handleMessage(msg)  }  } }  在子线程中：  val thread = object : Thread() {  override fun run() {  Looper.prepare()  val handler = object : Handler() {  override fun handleMessage(msg: Message) {  super.handleMessage(msg)  }  }  Looper.loop()  } } 为什么在子线程创建 Handler 需要准备 Looper，而主线程却不用 因为 ActivityThread 中的 main() 方法已经为我们初始化了 Looper</description>
+      <description>Handler 的创建  在主线程(UI Thread)中：  class MainActivity: Activity {  private val mLeakedHandler = object: Handler(Looper.getMainLooper()) {  override fun handleMessage(msg: Message) {  super.handleMessage(msg)  }  } }  在子线程中：  val thread = object: Thread() {  override fun run() {  val looper = Looper.prepare()  val handler = object: Handler(Looper.myLooper()) {  override fun handleMessage(msg: Message) {  super.handleMessage(msg)  }  }  Looper.loop()  } } 为什么在子线程创建 Handler 需要准备 Looper，而主线程却不用 因为 ActivityThread 中的 main() 方法已经为我们初始化了 Looper</description>
     </item>
     
   </channel>

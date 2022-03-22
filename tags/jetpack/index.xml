@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>jetpack on Zac&#39;s blog</title>
+    <link>https://zacash.cn/tags/jetpack/</link>
+    <description>Recent content in jetpack on Zac&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>&amp;copy; Copyright © 2022, Copyright Zac
+</copyright>
+    <lastBuildDate>Sun, 23 Aug 2020 11:11:13 +0800</lastBuildDate><atom:link href="https://zacash.cn/tags/jetpack/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Intro to Navigation</title>
+      <link>https://zacash.cn/posts/intro-to-navigation/</link>
+      <pubDate>Sun, 23 Aug 2020 11:11:13 +0800</pubDate>
+      
+      <guid>https://zacash.cn/posts/intro-to-navigation/</guid>
+      <description>The Jetpack&amp;rsquo;s Navigation component helps us implement navigation feature in a single MainActivity, it contains 3 core parts: Navigation graph, NavHost, NavController.
+NavHostFragment NavHostFragment acts as a host for the fragments in the navigation graph.
+As the user moves between destination defined in the navigation graph, the NavHostFragment swaps the fragments in and out and manages the Fragment back stack.
+In the activity_main.xml layout file, the NavHostFragment is represented by a fragment element with the name android:name=&amp;quot;androidx.</description>
+    </item>
+    
+  </channel>
+</rss>

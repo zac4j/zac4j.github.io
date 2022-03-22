@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-<title>Handler in Code | Zac&#39;s blog</title>
+<title>Handler in Details | Zac&#39;s blog</title>
 
 <meta name="generator" content="Hugo Eureka 0.9.1" />
 <link rel="stylesheet" href="https://zacash.cn/css/eureka.min.6a378a23360d238dc3ef4df2f5cd718093f02c10c9c7eb2437c29701cd8d389ab6da5d9f21bdd3afa305fd56c1235017.css" integrity="sha384-ajeKIzYNI43D703y9c1xgJPwLBDJx&#43;skN8KXAc2NOJq22l2fIb3Tr6MF/VbBI1AX">
@@ -53,7 +53,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="https://zacash.cn/images/icon_huef3b68b5a9c9f864bc324bf255658730_3276_180x180_fill_box_center_3.png">
 
 <meta name="description"
-  content="Handler 消息机制的实现">
+  content="Handler 消息机制的实现原理">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -65,7 +65,7 @@
       "item":"https://zacash.cn/posts/"},{
       "@type": "ListItem",
       "position": 2 ,
-      "name":"Handler in Code",
+      "name":"Handler in Details",
       "item":"https://zacash.cn/posts/handler-in-code/"}]
 }
 </script>
@@ -80,9 +80,9 @@
         "@type": "WebPage",
         "@id": "https://zacash.cn/posts/handler-in-code/"
     },
-    "headline": "Handler in Code | Zac\u0027s blog","datePublished": "2020-04-12T20:36:33+08:00",
+    "headline": "Handler in Details | Zac\u0027s blog","datePublished": "2020-04-12T20:36:33+08:00",
     "dateModified": "2020-04-12T20:36:33+08:00",
-    "wordCount":  1000 ,
+    "wordCount":  999 ,
     "publisher": {
         "@type": "Person",
         "name": "Zac Zhu",
@@ -91,9 +91,9 @@
             "url": "https://zacash.cn/images/icon.png"
         }
         },
-    "description": "Handler 消息机制的实现"
+    "description": "Handler 消息机制的实现原理"
 }
-</script><meta property="og:title" content="Handler in Code | Zac&#39;s blog" />
+</script><meta property="og:title" content="Handler in Details | Zac&#39;s blog" />
 <meta property="og:type" content="article" />
 
 
@@ -104,7 +104,7 @@
 
 
 
-<meta property="og:description" content="Handler 消息机制的实现" />
+<meta property="og:description" content="Handler 消息机制的实现原理" />
 
 
 
@@ -220,7 +220,7 @@
       class="lg:col-start-2 bg-secondary-bg col-span-2 rounded px-6 py-8 lg:col-span-6"
     >
       <article class="prose">
-  <h1 class="mb-4">Handler in Code</h1>
+  <h1 class="mb-4">Handler in Details</h1>
 
   <div
   class="text-tertiary-text not-prose mt-2 flex flex-row flex-wrap items-center"
@@ -244,6 +244,12 @@
           >Handler</a
         >
       
+        
+          <span>, </span>
+        <a href="https://zacash.cn/categories/android/" class="hover:text-eureka"
+          >Android</a
+        >
+      
     </div>
   
 
@@ -258,8 +264,8 @@
 <ul>
 <li>在主线程(UI Thread)中：</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">class</span> <span style="color:#447fcf;text-decoration:underline">MainActivity</span> : Activity {
-</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">private</span> <span style="color:#6ab825;font-weight:bold">val</span> mLeakedHandler = <span style="color:#6ab825;font-weight:bold">object</span> <span style="color:#a61717;background-color:#e3d2d2">: </span><span style="color:#447fcf;text-decoration:underline">Handler</span>() {
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">class</span> <span style="color:#447fcf;text-decoration:underline">MainActivity</span>: Activity {
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">private</span> <span style="color:#6ab825;font-weight:bold">val</span> mLeakedHandler = <span style="color:#6ab825;font-weight:bold">object</span>: Handler(Looper.getMainLooper()) {
 </span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">override</span> <span style="color:#6ab825;font-weight:bold">fun</span> <span style="color:#447fcf">handleMessage</span>(msg: Message) {
 </span></span><span style="display:flex;"><span>            <span style="color:#6ab825;font-weight:bold">super</span>.handleMessage(msg)
 </span></span><span style="display:flex;"><span>        }
@@ -268,10 +274,10 @@
 </span></span></code></pre></div><ul>
 <li>在子线程中：</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">val</span> thread = <span style="color:#6ab825;font-weight:bold">object</span> <span style="color:#a61717;background-color:#e3d2d2">: </span><span style="color:#447fcf;text-decoration:underline">Thread</span>() {
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">val</span> thread = <span style="color:#6ab825;font-weight:bold">object</span>: Thread() {
 </span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">override</span> <span style="color:#6ab825;font-weight:bold">fun</span> <span style="color:#447fcf">run</span>() {
-</span></span><span style="display:flex;"><span>        Looper.prepare()
-</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">val</span> handler = <span style="color:#6ab825;font-weight:bold">object</span> <span style="color:#a61717;background-color:#e3d2d2">: </span><span style="color:#447fcf;text-decoration:underline">Handler</span>() {
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">val</span> looper = Looper.prepare()
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">val</span> handler = <span style="color:#6ab825;font-weight:bold">object</span>: Handler(Looper.myLooper()) {
 </span></span><span style="display:flex;"><span>            <span style="color:#6ab825;font-weight:bold">override</span> <span style="color:#6ab825;font-weight:bold">fun</span> <span style="color:#447fcf">handleMessage</span>(msg: Message) {
 </span></span><span style="display:flex;"><span>                <span style="color:#6ab825;font-weight:bold">super</span>.handleMessage(msg)
 </span></span><span style="display:flex;"><span>            }
