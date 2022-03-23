@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>touch event on Zac&#39;s blog</title>
+    <link>https://zacash.cn/tags/touch-event/</link>
+    <description>Recent content in touch event on Zac&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>Copyright Zac &amp;copy; 2022
+</copyright>
+    <lastBuildDate>Sat, 11 Jul 2020 08:37:45 +0800</lastBuildDate><atom:link href="https://zacash.cn/tags/touch-event/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>How Are Touch Events Delivered</title>
+      <link>https://zacash.cn/posts/how-are-touch-events-delivered/</link>
+      <pubDate>Sat, 11 Jul 2020 08:37:45 +0800</pubDate>
+      
+      <guid>https://zacash.cn/posts/how-are-touch-events-delivered/</guid>
+      <description>根据例子来理解 Android 的事件传递
+页面的布局结构
+&amp;lt;?xml version=&amp;#34;1.0&amp;#34; encoding=&amp;#34;utf-8&amp;#34;?&amp;gt; &amp;lt;layout xmlns:android=&amp;#34;http://schemas.android.com/apk/res/android&amp;#34;  xmlns:app=&amp;#34;http://schemas.android.com/apk/res-auto&amp;#34;&amp;gt;   &amp;lt;data&amp;gt;  &amp;lt;variable  name=&amp;#34;viewModel&amp;#34;  type=&amp;#34;com.zac4j.system.data.TouchViewModel&amp;#34; /&amp;gt;  &amp;lt;/data&amp;gt;   &amp;lt;com.zac4j.system.ui.widget.CustomLayout  android:id=&amp;#34;@id/touch_sample_container&amp;#34;  android:layout_width=&amp;#34;match_parent&amp;#34;  android:layout_height=&amp;#34;match_parent&amp;#34;&amp;gt;   &amp;lt;Button  android:id=&amp;#34;@id/touch_sample_btn&amp;#34;  style=&amp;#34;@style/Widget.AppCompat.Button.Colored&amp;#34;  android:layout_width=&amp;#34;match_parent&amp;#34;  android:layout_height=&amp;#34;wrap_content&amp;#34;  android:text=&amp;#34;Touch Me&amp;#34;  app:layout_constraintEnd_toEndOf=&amp;#34;parent&amp;#34;  app:layout_constraintStart_toStartOf=&amp;#34;parent&amp;#34;  app:layout_constraintTop_toTopOf=&amp;#34;parent&amp;#34; /&amp;gt;   &amp;lt;/com.zac4j.system.ui.widget.CustomLayout&amp;gt; &amp;lt;/layout&amp;gt; TouchEvent 的传递 我们通常对 Button 创建点击事件:
+touchSampleBtn.setOnClickListener {  Logger.i(TAG, &amp;#34;setOnClickListener&amp;#34;, &amp;#34;sampleBtn clicked&amp;#34;) } 可以先看下 View.dispatchTouchEvent() 的实现:
+public boolean dispatchTouchEvent(MotionEvent event) {  .</description>
+    </item>
+    
+  </channel>
+</rss>

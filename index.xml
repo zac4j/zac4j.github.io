@@ -6,9 +6,28 @@
     <description>Recent content on Zac&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <copyright>&amp;copy; Copyright © 2022, Copyright Zac
+    <copyright>Copyright Zac &amp;copy; 2022
 </copyright>
-    <lastBuildDate>Sat, 12 Mar 2022 20:36:33 +0800</lastBuildDate><atom:link href="https://zacash.cn/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 23 Mar 2022 08:44:28 +0800</lastBuildDate><atom:link href="https://zacash.cn/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Intro to ClassLoader</title>
+      <link>https://zacash.cn/posts/intro-to-classloader/</link>
+      <pubDate>Wed, 23 Mar 2022 08:44:28 +0800</pubDate>
+      
+      <guid>https://zacash.cn/posts/intro-to-classloader/</guid>
+      <description>类加载器（ClassLoader） 什么是类加载器 类加载器是 JRE 的一部分，负责在运行时将 Java 类动态加载到 JVM，有了类加载器，JVM 无需了解底层文件或文件系统即可运行Java程序。
+类加载器不会一次将全部类加载到内存里，而是在程序需要时加载。
+JVM 内置的类加载器类型   Bootstrap class loader
+每个 JVM 实现必须有一个 bootstrap 类加载器。它负责 JDK 内部类，通常是 rt.jar 和位于 JAVA_HOME/jre/lib 目录下的其他核心类，该路径通常被称为引导路径(bootstrap path)。该类加载器由 C/C++ 语言实现。
+  Extension class loader
+Bootstrap 的子类加载器，它加载扩展目录 JAVA_HOME/jre/lib/ext 或 java.ext.dirs 指定路径下的类。它在 sun.misc.Launcher$ExtClassLoader 类中由 Java 语言实现。
+  System/Application class loader
+Extension 的子类加载器。它负责加载 App 层级的类，它加载在 classpath 环境变量、-classpath、-cp 命令行选项中找到的文件。它在 sun.misc.Launcher$AppClassLoader 类中由 Java 语言实现。
+  自定义的类加载器 在需要从本地或网络加载类的场景，我们可能需要使用自定义类加载器。
+使用场景 自定义类加载器不仅对在运行时加载类有帮助，还包括：
+ 修改现有字节码，如织入代理 动态创建适合用户需求的类。如 JDBC 中，通过动态类加载完成不同驱动实现(driver implementations)之间的切换。 实现类版本控制机制，如为具有相同名称和包名的类加载不同的字节码（热修复）。这可以通过 URL 类加载器或自定义加载器完成。  我们可以自定义类加载器实现指定类的加载：</description>
+    </item>
+    
     <item>
       <title>What is HTTPS</title>
       <link>https://zacash.cn/posts/intro-to-https/</link>
@@ -125,12 +144,20 @@ In the activity_main.xml layout file, the NavHostFragment is represented by a fr
     </item>
     
     <item>
-      <title>JVM Architecture in A Nutshell</title>
+      <title>JVM Basic</title>
       <link>https://zacash.cn/posts/jvm-arch-in-a-nutshell/</link>
       <pubDate>Fri, 17 Jul 2020 00:00:00 +0000</pubDate>
       
       <guid>https://zacash.cn/posts/jvm-arch-in-a-nutshell/</guid>
-      <description>&lt;p&gt;跨平台的本质是因为汇编指令的不同.&lt;/p&gt;</description>
+      <description>Run-Time Data Areas The PC Register JVM 可以支持多个线程同时运行，每个线程都有自己独立的 PC 寄存器(program counter register)。在任意时间点，任一线程在执行某个方法的代码，被称作该线程的当前方法(current method)。
+ 如果该方法是 native 的，pc 寄存器的值是 undefined。 如果该方法不是 native 的，pc 寄存器包含当前正在执行指令的地址。  JVM 的 pc 寄存器容量足够在特定平台上保存 returnAddress 或 native 指针。
+JVM Stacks 对每个线程，JVM 在创建线程时都会创建一个私有的堆栈。JVM 仅对堆栈进行两种操作：推入(push)和弹出(pop)栈帧(frames)。JVM 堆栈的内存不必是连续的。
+线程执行的每个方法调用(method calls)都存储在对应的堆栈中，包括入参、局部变量、中间计算和其他数据。方法完成后，JVM 将从堆栈中删除对应的条目，完成所有的方法调用后，堆栈将变为空，并且在终止线程前，销毁该堆栈。
+存储在堆栈中的数据仅适用于对应线程，对别的线程不适用。因此，可以说局部数据是线程安全的。堆栈中每个条目都称为 堆栈帧(Stack Frame) 或 激活记录(Activation Record)。
+ 第一版的 Java 虚拟机规范 The Java® Virtual Machine Specification, JVM 堆栈(Java Virtual Machine stack) 被称为 Java 栈(Java stack)
+ JVM 规范允许Java虚拟机堆栈具有固定大小，或者根据计算要求动态伸缩。 如果Java虚拟机堆栈的大小固定，则在创建每个Java虚拟机堆栈时可以独立选择它们的大小。
+关联的异常：
+  如果线程中的计算需要比允许的 JVM 更大的堆栈，则 JVM 将抛出 StackOverflowError。</description>
     </item>
     
     <item>

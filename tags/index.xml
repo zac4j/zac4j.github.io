@@ -6,9 +6,18 @@
     <description>Recent content in Tags on Zac&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <copyright>&amp;copy; Copyright © 2022, Copyright Zac
+    <copyright>Copyright Zac &amp;copy; 2022
 </copyright>
-    <lastBuildDate>Sat, 12 Mar 2022 20:36:33 +0800</lastBuildDate><atom:link href="https://zacash.cn/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 23 Mar 2022 08:44:28 +0800</lastBuildDate><atom:link href="https://zacash.cn/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>classloader</title>
+      <link>https://zacash.cn/tags/classloader/</link>
+      <pubDate>Wed, 23 Mar 2022 08:44:28 +0800</pubDate>
+      
+      <guid>https://zacash.cn/tags/classloader/</guid>
+      <description></description>
+    </item>
+    
     <item>
       <title>https</title>
       <link>https://zacash.cn/tags/https/</link>
@@ -123,6 +132,15 @@
       <pubDate>Sun, 23 Aug 2020 11:11:13 +0800</pubDate>
       
       <guid>https://zacash.cn/tags/navigation/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>databinding</title>
+      <link>https://zacash.cn/tags/databinding/</link>
+      <pubDate>Sun, 23 Aug 2020 08:37:45 +0800</pubDate>
+      
+      <guid>https://zacash.cn/tags/databinding/</guid>
       <description></description>
     </item>
     
@@ -244,15 +262,6 @@
     </item>
     
     <item>
-      <title>classloader</title>
-      <link>https://zacash.cn/tags/classloader/</link>
-      <pubDate>Fri, 17 Jul 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://zacash.cn/tags/classloader/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>jmm</title>
       <link>https://zacash.cn/tags/jmm/</link>
       <pubDate>Fri, 17 Jul 2020 00:00:00 +0000</pubDate>
@@ -271,20 +280,29 @@
     </item>
     
     <item>
-      <title>data structure</title>
-      <link>https://zacash.cn/tags/data-structure/</link>
-      <pubDate>Wed, 15 Jul 2020 15:11:27 +0800</pubDate>
-      
-      <guid>https://zacash.cn/tags/data-structure/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>hashmap</title>
       <link>https://zacash.cn/tags/hashmap/</link>
       <pubDate>Wed, 15 Jul 2020 15:11:27 +0800</pubDate>
       
       <guid>https://zacash.cn/tags/hashmap/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>map</title>
+      <link>https://zacash.cn/tags/map/</link>
+      <pubDate>Wed, 15 Jul 2020 15:11:27 +0800</pubDate>
+      
+      <guid>https://zacash.cn/tags/map/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>touch event</title>
+      <link>https://zacash.cn/tags/touch-event/</link>
+      <pubDate>Sat, 11 Jul 2020 08:37:45 +0800</pubDate>
+      
+      <guid>https://zacash.cn/tags/touch-event/</guid>
       <description></description>
     </item>
     
@@ -307,6 +325,24 @@
     </item>
     
     <item>
+      <title>java</title>
+      <link>https://zacash.cn/tags/java/</link>
+      <pubDate>Fri, 03 Jul 2020 09:28:31 +0800</pubDate>
+      
+      <guid>https://zacash.cn/tags/java/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>design pattern</title>
+      <link>https://zacash.cn/tags/design-pattern/</link>
+      <pubDate>Sat, 20 Jun 2020 20:22:10 +0800</pubDate>
+      
+      <guid>https://zacash.cn/tags/design-pattern/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>build</title>
       <link>https://zacash.cn/tags/build/</link>
       <pubDate>Fri, 05 Jun 2020 14:49:15 +0800</pubDate>
@@ -325,7 +361,7 @@
     </item>
     
     <item>
-      <title>Fragment</title>
+      <title>fragment</title>
       <link>https://zacash.cn/tags/fragment/</link>
       <pubDate>Mon, 25 May 2020 20:55:31 +0800</pubDate>
       
@@ -343,7 +379,16 @@
     </item>
     
     <item>
-      <title>Lifecycle</title>
+      <title>git</title>
+      <link>https://zacash.cn/tags/git/</link>
+      <pubDate>Fri, 15 May 2020 15:55:52 +0800</pubDate>
+      
+      <guid>https://zacash.cn/tags/git/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>lifecycle</title>
       <link>https://zacash.cn/tags/lifecycle/</link>
       <pubDate>Thu, 07 May 2020 20:30:50 +0800</pubDate>
       
@@ -352,7 +397,7 @@
     </item>
     
     <item>
-      <title>Coroutines</title>
+      <title>coroutines</title>
       <link>https://zacash.cn/tags/coroutines/</link>
       <pubDate>Sat, 25 Apr 2020 11:40:03 +0800</pubDate>
       
@@ -379,7 +424,7 @@
     </item>
     
     <item>
-      <title>Handler</title>
+      <title>handler</title>
       <link>https://zacash.cn/tags/handler/</link>
       <pubDate>Tue, 14 Apr 2020 21:53:54 +0800</pubDate>
       
@@ -388,7 +433,7 @@
     </item>
     
     <item>
-      <title>Looper</title>
+      <title>looper</title>
       <link>https://zacash.cn/tags/looper/</link>
       <pubDate>Tue, 14 Apr 2020 21:53:54 +0800</pubDate>
       
@@ -397,11 +442,11 @@
     </item>
     
     <item>
-      <title>MessageQueue</title>
-      <link>https://zacash.cn/tags/messagequeue/</link>
+      <title>message queue</title>
+      <link>https://zacash.cn/tags/message-queue/</link>
       <pubDate>Tue, 14 Apr 2020 21:53:54 +0800</pubDate>
       
-      <guid>https://zacash.cn/tags/messagequeue/</guid>
+      <guid>https://zacash.cn/tags/message-queue/</guid>
       <description></description>
     </item>
     
@@ -424,16 +469,16 @@
     </item>
     
     <item>
-      <title>DialogFragment</title>
-      <link>https://zacash.cn/tags/dialogfragment/</link>
+      <title>dialog fragment</title>
+      <link>https://zacash.cn/tags/dialog-fragment/</link>
       <pubDate>Tue, 11 Feb 2020 16:30:26 +0800</pubDate>
       
-      <guid>https://zacash.cn/tags/dialogfragment/</guid>
+      <guid>https://zacash.cn/tags/dialog-fragment/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>State Loss</title>
+      <title>state loss</title>
       <link>https://zacash.cn/tags/state-loss/</link>
       <pubDate>Tue, 11 Feb 2020 16:30:26 +0800</pubDate>
       

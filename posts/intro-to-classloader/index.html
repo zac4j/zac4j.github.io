@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  dir="ltr"
+  
+><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<title>Intro to ClassLoader | Zac&#39;s blog</title>
+
+<meta name="generator" content="Hugo Eureka 0.9.1" />
+<link rel="stylesheet" href="https://zacash.cn/css/eureka.min.6a378a23360d238dc3ef4df2f5cd718093f02c10c9c7eb2437c29701cd8d389ab6da5d9f21bdd3afa305fd56c1235017.css" integrity="sha384-ajeKIzYNI43D703y9c1xgJPwLBDJx&#43;skN8KXAc2NOJq22l2fIb3Tr6MF/VbBI1AX">
+<script defer src="https://zacash.cn/js/eureka.min.f1639ee98d6cbd85b2b5f034d27320da962002ff83159ed4e01dbc5948c42a1ab26c2d6e74c66e93f5cec4d24dbd166d.js" integrity="sha384-8WOe6Y1svYWytfA00nMg2pYgAv&#43;DFZ7U4B28WUjEKhqybC1udMZuk/XOxNJNvRZt"></script>
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload"
+  href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Noto+Serif+SC:wght@400;600;700&display=swap"
+  as="style" onload="this.onload=null;this.rel='stylesheet'">
+
+
+
+
+<script defer type="text/javascript" src="https://zacash.cn/js/fontawesome.min.1c5a4674b042785ed214cf0818a81724c6b37442fd61b0ed039237b93de25ed5103fc8079a05770648ccc9c66c4f540a.js" integrity="sha384-HFpGdLBCeF7SFM8IGKgXJMazdEL9YbDtA5I3uT3iXtUQP8gHmgV3BkjMycZsT1QK"></script>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/katex.min.css"
+   integrity="sha384-MlJdn/WNKDGXveldHDdyRP1R4CTHr3FeuDNfhsLPYrq2t0UBkUdK2jyTnXPEK1NQ"  media="print"
+  onload="this.media='all';this.onload=null" crossorigin>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/katex.min.js" 
+  integrity="sha384-VQ8d8WVFw0yHhCk5E8I86oOhv48xLpnDZx5T9GogA/Y84DcCKWXDmSDfn13bzFZY"  crossorigin></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/contrib/auto-render.min.js"
+   integrity="sha384-&#43;XBljXPPiv&#43;OzfbB3cVmLHf4hdUFHlWNZN5spNQ7rmHTXpd7WvJum6fIACpNNfIR"  crossorigin></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    renderMathInElement(document.body, {
+      delimiters: [
+        { left: "$$", right: "$$", display: true },
+        { left: "$", right: "$", display: false },
+        { left: "\\(", right: "\\)", display: false },
+        { left: "\\[", right: "\\]", display: true }
+      ],
+    });
+  });
+</script>
+
+
+<script defer src="https://cdn.jsdelivr.net/npm/mermaid@8.14.0/dist/mermaid.min.js" 
+  integrity="sha384-atOyb0FxAgN9LyAc6PEf9BjgwLISyansgdH8/VXQH8p2o5vfrRgmGIJ2Sg22L0A0"  crossorigin></script>
+
+
+<link rel="icon" type="image/png" sizes="32x32" href="https://zacash.cn/images/icon_huef3b68b5a9c9f864bc324bf255658730_3276_32x32_fill_box_center_3.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://zacash.cn/images/icon_huef3b68b5a9c9f864bc324bf255658730_3276_180x180_fill_box_center_3.png">
+
+<meta name="description"
+  content="Introduction to ClassLoader">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+      "@type": "ListItem",
+      "position": 1 ,
+      "name":"Posts",
+      "item":"https://zacash.cn/posts/"},{
+      "@type": "ListItem",
+      "position": 2 ,
+      "name":"Intro to ClassLoader",
+      "item":"https://zacash.cn/posts/intro-to-classloader/"}]
+}
+</script>
+
+
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://zacash.cn/posts/intro-to-classloader/"
+    },
+    "headline": "Intro to ClassLoader | Zac\u0027s blog","datePublished": "2022-03-23T08:44:28+08:00",
+    "dateModified": "2022-03-23T08:44:28+08:00",
+    "wordCount":  290 ,
+    "publisher": {
+        "@type": "Person",
+        "name": "Zac Zhu",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://zacash.cn/images/icon.png"
+        }
+        },
+    "description": "Introduction to ClassLoader"
+}
+</script><meta property="og:title" content="Intro to ClassLoader | Zac&#39;s blog" />
+<meta property="og:type" content="article" />
+
+
+<meta property="og:image" content="https://zacash.cn/images/icon.png">
+
+
+<meta property="og:url" content="https://zacash.cn/posts/intro-to-classloader/" />
+
+
+
+<meta property="og:description" content="Introduction to ClassLoader" />
+
+
+
+<meta property="og:locale" content="en" />
+
+
+
+
+<meta property="og:site_name" content="Zac&#39;s blog" />
+
+
+
+
+
+
+<meta property="article:published_time" content="2022-03-23T08:44:28&#43;08:00" />
+
+
+<meta property="article:modified_time" content="2022-03-23T08:44:28&#43;08:00" />
+
+
+
+<meta property="article:section" content="posts" />
+
+
+<meta property="article:tag" content="classloader" />
+
+
+
+
+
+
+  <body class="flex min-h-screen flex-col">
+    <header
+      class="min-h-16 pl-scrollbar bg-secondary-bg fixed z-50 flex w-full items-center shadow-sm"
+    >
+      <div class="mx-auto w-full max-w-screen-xl"><script>
+    let storageColorScheme = localStorage.getItem("lightDarkMode")
+    if (((storageColorScheme == 'Auto' || storageColorScheme == null) && window.matchMedia("(prefers-color-scheme: dark)").matches) || storageColorScheme == "Dark") {
+        document.getElementsByTagName('html')[0].classList.add('dark')
+    }
+</script>
+<nav class="flex items-center justify-between flex-wrap px-4 py-4 md:py-0">
+    <a href="/" class="me-6 text-primary-text text-xl font-bold">Zac&#39;s blog</a>
+    <button id="navbar-btn" class="md:hidden flex items-center px-3 py-2" aria-label="Open Navbar">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <div id="target"
+        class="hidden block md:flex md:grow md:justify-between md:items-center w-full md:w-auto text-primary-text z-20">
+        <div class="md:flex md:h-16 text-sm md:grow pb-4 md:pb-0 border-b md:border-b-0">
+            <a href="/posts/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  selected-menu-item  me-4">Posts</a>
+            <a href="/tags/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  me-4">Tags</a>
+            <a href="/categories/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  me-4">Categories</a>
+            <a href="/#about" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  me-4">About</a>
+        </div>
+
+        <div class="flex">
+            <div class="relative pt-4 md:pt-0">
+                <div class="cursor-pointer hover:text-eureka" id="lightDarkMode">
+                    <i class="fas fa-adjust"></i>
+                </div>
+                <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-30" id="is-open">
+                </div>
+                <div class="absolute flex flex-col start-0 md:start-auto end-auto md:end-0 hidden bg-secondary-bg w-48 rounded py-2 border border-tertiary-bg cursor-pointer z-40"
+                    id='lightDarkOptions'>
+                    <span class="px-4 py-1 hover:text-eureka" name="Light">Light</span>
+                    <span class="px-4 py-1 hover:text-eureka" name="Dark">Dark</span>
+                    <span class="px-4 py-1 hover:text-eureka" name="Auto">Auto</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-0" id="is-open-mobile">
+    </div>
+
+</nav>
+<script>
+    
+    let element = document.getElementById('lightDarkMode')
+    if (storageColorScheme == null || storageColorScheme == 'Auto') {
+        document.addEventListener('DOMContentLoaded', () => {
+            window.matchMedia("(prefers-color-scheme: dark)").addEventListener('change', switchDarkMode)
+        })
+    } else if (storageColorScheme == "Light") {
+        element.firstElementChild.classList.remove('fa-adjust')
+        element.firstElementChild.setAttribute("data-icon", 'sun')
+        element.firstElementChild.classList.add('fa-sun')
+    } else if (storageColorScheme == "Dark") {
+        element.firstElementChild.classList.remove('fa-adjust')
+        element.firstElementChild.setAttribute("data-icon", 'moon')
+        element.firstElementChild.classList.add('fa-moon')
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        getcolorscheme();
+        switchBurger();
+    });
+</script>
+</div>
+    </header>
+    <main class="grow pt-16">
+        <div class="pl-scrollbar">
+          <div class="mx-auto w-full max-w-screen-xl lg:px-4 xl:px-8">
+  
+  
+  <div class="grid grid-cols-2 gap-4 lg:grid-cols-8 lg:pt-12">
+    <div
+      class="lg:col-start-2 bg-secondary-bg col-span-2 rounded px-6 py-8 lg:col-span-6"
+    >
+      <article class="prose">
+  <h1 class="mb-4">Intro to ClassLoader</h1>
+
+  <div
+  class="text-tertiary-text not-prose mt-2 flex flex-row flex-wrap items-center"
+>
+  <div class="me-6 my-2">
+    <i class="fas fa-calendar me-1"></i>
+    <span
+      >2022-03-23</span
+    >
+  </div>
+  <div class="me-6 my-2">
+    <i class="fas fa-clock me-1"></i>
+    <span>2 min read</span>
+  </div>
+
+  
+    <div class="me-6 my-2">
+      <i class="fas fa-folder me-1"></i>
+      
+        <a href="https://zacash.cn/categories/java/" class="hover:text-eureka"
+          >java</a
+        >
+      
+    </div>
+  
+
+  
+</div>
+
+
+  
+  
+
+  <h2 id="类加载器classloader">类加载器（ClassLoader）</h2>
+<h3 id="什么是类加载器">什么是类加载器</h3>
+<p>类加载器是 JRE 的一部分，负责在运行时将 Java 类动态加载到 JVM，有了类加载器，JVM 无需了解底层文件或文件系统即可运行Java程序。</p>
+<p>类加载器不会一次将全部类加载到内存里，而是在程序需要时加载。</p>
+<h3 id="jvm-内置的类加载器类型">JVM 内置的类加载器类型</h3>
+<ul>
+<li>
+<p>Bootstrap class loader</p>
+<p>每个 JVM 实现必须有一个 bootstrap 类加载器。它负责 JDK 内部类，通常是 <em>rt.jar</em> 和位于 <em>JAVA_HOME/jre/lib</em> 目录下的其他核心类，该路径通常被称为引导路径(bootstrap path)。该类加载器由 C/C++ 语言实现。</p>
+</li>
+<li>
+<p>Extension class loader</p>
+<p>Bootstrap 的子类加载器，它加载扩展目录 <em>JAVA_HOME/jre/lib/ext</em> 或 <strong>java.ext.dirs</strong> 指定路径下的类。它在 <code>sun.misc.Launcher$ExtClassLoader</code> 类中由 Java 语言实现。</p>
+</li>
+<li>
+<p>System/Application class loader</p>
+<p>Extension 的子类加载器。它负责加载 App 层级的类，它加载在 <em>classpath</em> 环境变量、<em>-classpath</em>、-cp 命令行选项中找到的文件。它在 <code>sun.misc.Launcher$AppClassLoader</code> 类中由 Java 语言实现。</p>
+</li>
+</ul>
+<h3 id="自定义的类加载器">自定义的类加载器</h3>
+<p>在需要从本地或网络加载类的场景，我们可能需要使用自定义类加载器。</p>
+<h4 id="使用场景">使用场景</h4>
+<p>自定义类加载器不仅对在运行时加载类有帮助，还包括：</p>
+<ul>
+<li>修改现有字节码，如织入代理</li>
+<li>动态创建适合用户需求的类。如 JDBC 中，通过动态类加载完成不同驱动实现(driver implementations)之间的切换。</li>
+<li>实现类版本控制机制，如为具有相同名称和包名的类加载不同的字节码（热修复）。这可以通过 URL 类加载器或自定义加载器完成。</li>
+</ul>
+<p>我们可以自定义类加载器实现指定类的加载：</p>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">package</span> <span style="color:#447fcf;text-decoration:underline">com.zac4j.system.util</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">import</span> <span style="color:#447fcf;text-decoration:underline">java.io.ByteArrayOutputStream</span>
+</span></span><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">import</span> <span style="color:#447fcf;text-decoration:underline">java.io.File</span>
+</span></span><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">import</span> <span style="color:#447fcf;text-decoration:underline">java.io.IOException</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"> * Custom ClassLoader sample
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"> *
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"> * @author: zac
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"> * @date: 2020/7/19
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"> */</span>
+</span></span><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">internal</span> <span style="color:#6ab825;font-weight:bold">object</span> <span style="color:#447fcf;text-decoration:underline">Test</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#ffa500">@JvmStatic</span> <span style="color:#6ab825;font-weight:bold">fun</span> <span style="color:#447fcf">main</span>(args: Array&lt;String&gt;) {
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">val</span> classLoader = CustomClassLoader()
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">val</span> clazz = classLoader.loadClass(<span style="color:#ed9d13">&#34;com.zac4j.system.util.Utils&#34;</span>)
+</span></span><span style="display:flex;"><span>    println(<span style="color:#ed9d13">&#34;custom classloader:</span><span style="color:#ed9d13">${clazz.canonicalName}</span><span style="color:#ed9d13">&#34;</span>)
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"> * 自定义 ClassLoader，加载指定类文件。
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"> */</span>
+</span></span><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">class</span> <span style="color:#447fcf;text-decoration:underline">CustomClassLoader</span> : ClassLoader() {
+</span></span><span style="display:flex;"><span>  <span style="color:#6ab825;font-weight:bold">override</span> <span style="color:#6ab825;font-weight:bold">fun</span> <span style="color:#447fcf">findClass</span>(name: String): Class&lt;*&gt; {
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">val</span> b = loadClassFromFile(name)
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">return</span> defineClass(name, b, <span style="color:#3677a9">0</span>, b.size)
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#999;font-style:italic">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic">   * 根据类名加载类文件
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic">   */</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#6ab825;font-weight:bold">private</span> <span style="color:#6ab825;font-weight:bold">fun</span> <span style="color:#447fcf">loadClassFromFile</span>(filename: String): ByteArray {
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">val</span> inStream = javaClass.classLoader?.getResourceAsStream(
+</span></span><span style="display:flex;"><span>        filename.replace(<span style="color:#ed9d13">&#39;.&#39;</span>, File.separatorChar) + <span style="color:#ed9d13">&#34;.class&#34;</span>
+</span></span><span style="display:flex;"><span>    ) ?: <span style="color:#6ab825;font-weight:bold">return</span> byteArrayOf()
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">val</span> outStream = ByteArrayOutputStream()
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">try</span> {
+</span></span><span style="display:flex;"><span>      <span style="color:#6ab825;font-weight:bold">while</span> (inStream.read() != -<span style="color:#3677a9">1</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">val</span> nextVal = inStream.read()
+</span></span><span style="display:flex;"><span>        outStream.write(nextVal)
+</span></span><span style="display:flex;"><span>      }
+</span></span><span style="display:flex;"><span>    } <span style="color:#6ab825;font-weight:bold">catch</span> (e: IOException) {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">return</span> outStream.toByteArray()
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h3 id="classloader-是如何工作的">ClassLoader 是如何工作的</h3>
+<p>类加载器是 JRE 的一部分。当 JVM 需要一个类时，类加载器尝试定位该类，并使用 <strong>完全限定的类名</strong> <em>(fully qualified class name)</em> 将 <strong>类定义</strong>(<em>class definition</em>) 加载到 Runtime 中。</p>
+<p><code>java.lang.ClassLoader.loadClass()</code> 方法负责将 <em>class definition</em> 加载到 Runtime 中。如果请求的类尚未加载，则它将请求委派给父类加载器，此过程递归进行。如果父类加载器找不到该类，则子类加载器调用 <code>java.net.URLClassLoader.findClass()</code> 方法在文件系统中查找类。最终，如果子类加载器未找到该类，则它将抛出 <code>java.lang.NoClassDefFoundError</code> 或 <code>java.lang.ClassNotFoundException</code>。</p>
+<h4 id="使用代理模型">使用代理模型</h4>
+<p>类加载器遵循代理模型，在该模型中，类加载器会根据请求查找的类，将搜索类的工作委托给父加载器处理。仅当 bootstrap class loader 和 extension class loader 都未能加载该类时，system class loader 才会尝试自己加载该类。</p>
+<h3 id="类加载器的功能">类加载器的功能</h3>
+<p>类加载器系统主要有<a href="https://docs.oracle.com/javase/specs/jvms/se6/html/ConstantPool.doc.html#67960">3种功能</a>：</p>
+<ul>
+<li>
+<p><strong>加载（Loading）</strong></p>
+<p>类加载器读取 <em>.class</em> 文件，生成对应的二进制数据并保存到 JVM 方法区。对每个 <em>.class</em> 文件，JVM 在方法区保存这些信息：</p>
+<ul>
+<li>已加载类和其父类的完全限定名</li>
+<li><em>.class</em> 文件是否与 Class 或 Interface 或 Enum 相关</li>
+<li>修饰符（Modifier）、变量和方法信息等。</li>
+</ul>
+<p>加载 <em>.class</em> 文件后，JVM 在堆中创建该文件对应的 Class 类型对象。可以使用此 Class 对象来获取类级别（class level）的信息，如类名、父类名、方法（<code>Class.getdeclaredMethods()</code>）和变量信息（<code>Class.getDeclaredFields()</code>）等。</p>
+</li>
+<li>
+<p><strong>连接（Linking）</strong></p>
+<p>执行 Verification、Preparation 和 Resolution。</p>
+<ul>
+<li>Verification：通过检查 <em>.class</em> 文件是否正确的格式化和是否由有效的编译器生成，确保该文件的正确性。如果验证失败，将抛出运行时异常：<em>java.lang.VerifyError</em>。</li>
+<li>Preparation：JVM 为类变量分配内存，并将内存初始化为默认值。</li>
+<li>Resolution：这是用直接引用(direct references)替换类型中的符号引用(symbolic references)的过程。通过搜索方法区域以找到引用的实体来完成此操作。</li>
+</ul>
+</li>
+<li>
+<p><strong>初始化（Initialization）</strong></p>
+<p>这个阶段将为所有静态变量分配在代码或静态代码块中定义的值。在类中从顶至底（from top to bottom）执行，在类层级中从父类到子类（from parent to child）执行。类加载器的初始化：Bootstrap class loader -&gt; Extension class loader -&gt; App class loader.</p>
+</li>
+</ul>
+
+</article>
+
+
+      
+        <div class="my-4">
+    
+    <a href="https://zacash.cn/tags/classloader/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 me-2 hover:text-eureka">#classloader</a>
+    
+</div>
+      
+
+      
+
+
+
+      
+
+      
+  <div
+    class="-mx-2 mt-4 flex flex-col border-t px-2 pt-4 md:flex-row md:justify-between"
+  >
+    <div>
+      
+    </div>
+    <div class="mt-4 md:mt-0 md:text-right">
+      
+        <span class="text-primary-text block font-bold">Next</span>
+        <a href="https://zacash.cn/posts/intro-to-https/" class="block">What is HTTPS</a>
+      
+    </div>
+  </div>
+
+
+      
+
+
+
+    </div>
+    
+
+    
+    
+  </div>
+
+  
+
+          </div>
+        </div>
+      
+    </main>
+    <footer class="pl-scrollbar">
+      <div class="mx-auto w-full max-w-screen-xl"><div class="text-center p-6 pin-b">
+    <p class="text-sm text-tertiary-text">Copyright Zac &copy; 2022
+ &middot;  Powered by the <a href="https://github.com/wangchucheng/hugo-eureka" class="hover:text-eureka">Eureka</a> theme for <a href="https://gohugo.io" class="hover:text-eureka">Hugo</a></p>
+</div></div>
+    </footer>
+  </body>
+</html>

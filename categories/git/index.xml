@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>git on Zac&#39;s blog</title>
+    <link>https://zacash.cn/categories/git/</link>
+    <description>Recent content in git on Zac&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>Copyright Zac &amp;copy; 2022
+</copyright>
+    <lastBuildDate>Fri, 15 May 2020 15:55:52 +0800</lastBuildDate><atom:link href="https://zacash.cn/categories/git/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Git Basic</title>
+      <link>https://zacash.cn/posts/git-basic/</link>
+      <pubDate>Fri, 15 May 2020 15:55:52 +0800</pubDate>
+      
+      <guid>https://zacash.cn/posts/git-basic/</guid>
+      <description>Problem Solving Authentication   Clear saved account &amp;amp; password
+Error: fatal:Authentication failed for &#39;remote-url&#39;
+git config --system --unset credential.helper
+  Save account &amp;amp; password
+git config --global credential.helper store
+  Remote   Check remote url
+git remote -v
+  Update remote url
+git remote set-url origin newRepoUrl
+  </description>
+    </item>
+    
+  </channel>
+</rss>

@@ -53,11 +53,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="https://zacash.cn/images/icon_huef3b68b5a9c9f864bc324bf255658730_3276_180x180_fill_box_center_3.png">
 
 <meta name="description"
-  content="根据例子来理解 Android 的事件传递
-页面的布局结构
-&lt;?xml version=&#34;1.0&#34; encoding=&#34;utf-8&#34;?&gt; &lt;layout xmlns:android=&#34;http://schemas.android.com/apk/res/android&#34;  xmlns:app=&#34;http://schemas.android.com/apk/res-auto&#34;&gt;   &lt;data&gt;  &lt;variable  name=&#34;viewModel&#34;  type=&#34;com.zac4j.system.data.TouchViewModel&#34; /&gt;  &lt;/data&gt;   &lt;com.zac4j.system.ui.widget.CustomLayout  android:id=&#34;@id/touch_sample_container&#34;  android:layout_width=&#34;match_parent&#34;  android:layout_height=&#34;match_parent&#34;&gt;   &lt;Button  android:id=&#34;@id/touch_sample_btn&#34;  style=&#34;@style/Widget.AppCompat.Button.Colored&#34;  android:layout_width=&#34;match_parent&#34;  android:layout_height=&#34;wrap_content&#34;  android:text=&#34;Touch Me&#34;  app:layout_constraintEnd_toEndOf=&#34;parent&#34;  app:layout_constraintStart_toStartOf=&#34;parent&#34;  app:layout_constraintTop_toTopOf=&#34;parent&#34; /&gt;   &lt;/com.zac4j.system.ui.widget.CustomLayout&gt; &lt;/layout&gt; TouchEvent 的传递 我们通常对 Button 创建点击事件:
-touchSampleBtn.setOnClickListener {  Logger.i(TAG, &#34;setOnClickListener&#34;, &#34;sampleBtn clicked&#34;) } 可以先看下 View.dispatchTouchEvent() 的实现:
-public boolean dispatchTouchEvent(MotionEvent event) {  .">
+  content="Touch event delivery">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -95,7 +91,7 @@ public boolean dispatchTouchEvent(MotionEvent event) {  .">
             "url": "https://zacash.cn/images/icon.png"
         }
         },
-    "description": "根据例子来理解 Android 的事件传递\n页面的布局结构\n\u0026lt;?xml version=\u0026#34;1.0\u0026#34; encoding=\u0026#34;utf-8\u0026#34;?\u0026gt; \u0026lt;layout xmlns:android=\u0026#34;http:\/\/schemas.android.com\/apk\/res\/android\u0026#34;  xmlns:app=\u0026#34;http:\/\/schemas.android.com\/apk\/res-auto\u0026#34;\u0026gt;   \u0026lt;data\u0026gt;  \u0026lt;variable  name=\u0026#34;viewModel\u0026#34;  type=\u0026#34;com.zac4j.system.data.TouchViewModel\u0026#34; \/\u0026gt;  \u0026lt;\/data\u0026gt;   \u0026lt;com.zac4j.system.ui.widget.CustomLayout  android:id=\u0026#34;@id\/touch_sample_container\u0026#34;  android:layout_width=\u0026#34;match_parent\u0026#34;  android:layout_height=\u0026#34;match_parent\u0026#34;\u0026gt;   \u0026lt;Button  android:id=\u0026#34;@id\/touch_sample_btn\u0026#34;  style=\u0026#34;@style\/Widget.AppCompat.Button.Colored\u0026#34;  android:layout_width=\u0026#34;match_parent\u0026#34;  android:layout_height=\u0026#34;wrap_content\u0026#34;  android:text=\u0026#34;Touch Me\u0026#34;  app:layout_constraintEnd_toEndOf=\u0026#34;parent\u0026#34;  app:layout_constraintStart_toStartOf=\u0026#34;parent\u0026#34;  app:layout_constraintTop_toTopOf=\u0026#34;parent\u0026#34; \/\u0026gt;   \u0026lt;\/com.zac4j.system.ui.widget.CustomLayout\u0026gt; \u0026lt;\/layout\u0026gt; TouchEvent 的传递 我们通常对 Button 创建点击事件:\ntouchSampleBtn.setOnClickListener {  Logger.i(TAG, \u0026#34;setOnClickListener\u0026#34;, \u0026#34;sampleBtn clicked\u0026#34;) } 可以先看下 View.dispatchTouchEvent() 的实现:\npublic boolean dispatchTouchEvent(MotionEvent event) {  ."
+    "description": "Touch event delivery"
 }
 </script><meta property="og:title" content="How Are Touch Events Delivered | Zac&#39;s blog" />
 <meta property="og:type" content="article" />
@@ -108,13 +104,7 @@ public boolean dispatchTouchEvent(MotionEvent event) {  .">
 
 
 
-
-<meta property="og:description" content="根据例子来理解 Android 的事件传递
-页面的布局结构
-&lt;?xml version=&#34;1.0&#34; encoding=&#34;utf-8&#34;?&gt; &lt;layout xmlns:android=&#34;http://schemas.android.com/apk/res/android&#34;  xmlns:app=&#34;http://schemas.android.com/apk/res-auto&#34;&gt;   &lt;data&gt;  &lt;variable  name=&#34;viewModel&#34;  type=&#34;com.zac4j.system.data.TouchViewModel&#34; /&gt;  &lt;/data&gt;   &lt;com.zac4j.system.ui.widget.CustomLayout  android:id=&#34;@id/touch_sample_container&#34;  android:layout_width=&#34;match_parent&#34;  android:layout_height=&#34;match_parent&#34;&gt;   &lt;Button  android:id=&#34;@id/touch_sample_btn&#34;  style=&#34;@style/Widget.AppCompat.Button.Colored&#34;  android:layout_width=&#34;match_parent&#34;  android:layout_height=&#34;wrap_content&#34;  android:text=&#34;Touch Me&#34;  app:layout_constraintEnd_toEndOf=&#34;parent&#34;  app:layout_constraintStart_toStartOf=&#34;parent&#34;  app:layout_constraintTop_toTopOf=&#34;parent&#34; /&gt;   &lt;/com.zac4j.system.ui.widget.CustomLayout&gt; &lt;/layout&gt; TouchEvent 的传递 我们通常对 Button 创建点击事件:
-touchSampleBtn.setOnClickListener {  Logger.i(TAG, &#34;setOnClickListener&#34;, &#34;sampleBtn clicked&#34;) } 可以先看下 View.dispatchTouchEvent() 的实现:
-public boolean dispatchTouchEvent(MotionEvent event) {  ." />
-
+<meta property="og:description" content="Touch event delivery" />
 
 
 
@@ -138,6 +128,10 @@ public boolean dispatchTouchEvent(MotionEvent event) {  ." />
 
 
 <meta property="article:section" content="posts" />
+
+
+<meta property="article:tag" content="touch event" />
+
 
 
 
@@ -164,6 +158,7 @@ public boolean dispatchTouchEvent(MotionEvent event) {  ." />
         <div class="md:flex md:h-16 text-sm md:grow pb-4 md:pb-0 border-b md:border-b-0">
             <a href="/posts/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  selected-menu-item  me-4">Posts</a>
             <a href="/tags/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  me-4">Tags</a>
+            <a href="/categories/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  me-4">Categories</a>
             <a href="/#about" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  me-4">About</a>
         </div>
 
@@ -238,6 +233,15 @@ public boolean dispatchTouchEvent(MotionEvent event) {  ." />
     <span>6 min read</span>
   </div>
 
+  
+    <div class="me-6 my-2">
+      <i class="fas fa-folder me-1"></i>
+      
+        <a href="https://zacash.cn/categories/android/" class="hover:text-eureka"
+          >android</a
+        >
+      
+    </div>
   
 
   
@@ -546,6 +550,12 @@ I/ZacLog: Page -&gt; TouchFragment, View -&gt; touchSampleContainer::CustomLayou
 
 
       
+        <div class="my-4">
+    
+    <a href="https://zacash.cn/tags/touch-event/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 me-2 hover:text-eureka">#touch event</a>
+    
+</div>
+      
 
       
 
@@ -593,7 +603,7 @@ I/ZacLog: Page -&gt; TouchFragment, View -&gt; touchSampleContainer::CustomLayou
     </main>
     <footer class="pl-scrollbar">
       <div class="mx-auto w-full max-w-screen-xl"><div class="text-center p-6 pin-b">
-    <p class="text-sm text-tertiary-text">&copy; Copyright © 2022, Copyright Zac
+    <p class="text-sm text-tertiary-text">Copyright Zac &copy; 2022
  &middot;  Powered by the <a href="https://github.com/wangchucheng/hugo-eureka" class="hover:text-eureka">Eureka</a> theme for <a href="https://gohugo.io" class="hover:text-eureka">Hugo</a></p>
 </div></div>
     </footer>

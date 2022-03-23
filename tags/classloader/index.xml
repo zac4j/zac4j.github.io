@@ -6,16 +6,26 @@
     <description>Recent content in classloader on Zac&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <copyright>&amp;copy; Copyright © 2022, Copyright Zac
+    <copyright>Copyright Zac &amp;copy; 2022
 </copyright>
-    <lastBuildDate>Fri, 17 Jul 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://zacash.cn/tags/classloader/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 23 Mar 2022 08:44:28 +0800</lastBuildDate><atom:link href="https://zacash.cn/tags/classloader/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>JVM Architecture in A Nutshell</title>
-      <link>https://zacash.cn/posts/jvm-arch-in-a-nutshell/</link>
-      <pubDate>Fri, 17 Jul 2020 00:00:00 +0000</pubDate>
+      <title>Intro to ClassLoader</title>
+      <link>https://zacash.cn/posts/intro-to-classloader/</link>
+      <pubDate>Wed, 23 Mar 2022 08:44:28 +0800</pubDate>
       
-      <guid>https://zacash.cn/posts/jvm-arch-in-a-nutshell/</guid>
-      <description>&lt;p&gt;跨平台的本质是因为汇编指令的不同.&lt;/p&gt;</description>
+      <guid>https://zacash.cn/posts/intro-to-classloader/</guid>
+      <description>类加载器（ClassLoader） 什么是类加载器 类加载器是 JRE 的一部分，负责在运行时将 Java 类动态加载到 JVM，有了类加载器，JVM 无需了解底层文件或文件系统即可运行Java程序。
+类加载器不会一次将全部类加载到内存里，而是在程序需要时加载。
+JVM 内置的类加载器类型   Bootstrap class loader
+每个 JVM 实现必须有一个 bootstrap 类加载器。它负责 JDK 内部类，通常是 rt.jar 和位于 JAVA_HOME/jre/lib 目录下的其他核心类，该路径通常被称为引导路径(bootstrap path)。该类加载器由 C/C++ 语言实现。
+  Extension class loader
+Bootstrap 的子类加载器，它加载扩展目录 JAVA_HOME/jre/lib/ext 或 java.ext.dirs 指定路径下的类。它在 sun.misc.Launcher$ExtClassLoader 类中由 Java 语言实现。
+  System/Application class loader
+Extension 的子类加载器。它负责加载 App 层级的类，它加载在 classpath 环境变量、-classpath、-cp 命令行选项中找到的文件。它在 sun.misc.Launcher$AppClassLoader 类中由 Java 语言实现。
+  自定义的类加载器 在需要从本地或网络加载类的场景，我们可能需要使用自定义类加载器。
+使用场景 自定义类加载器不仅对在运行时加载类有帮助，还包括：
+ 修改现有字节码，如织入代理 动态创建适合用户需求的类。如 JDBC 中，通过动态类加载完成不同驱动实现(driver implementations)之间的切换。 实现类版本控制机制，如为具有相同名称和包名的类加载不同的字节码（热修复）。这可以通过 URL 类加载器或自定义加载器完成。  我们可以自定义类加载器实现指定类的加载：</description>
     </item>
     
   </channel>

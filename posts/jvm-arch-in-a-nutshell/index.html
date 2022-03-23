@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-<title>JVM Architecture in A Nutshell | Zac&#39;s blog</title>
+<title>JVM Basic | Zac&#39;s blog</title>
 
 <meta name="generator" content="Hugo Eureka 0.9.1" />
 <link rel="stylesheet" href="https://zacash.cn/css/eureka.min.6a378a23360d238dc3ef4df2f5cd718093f02c10c9c7eb2437c29701cd8d389ab6da5d9f21bdd3afa305fd56c1235017.css" integrity="sha384-ajeKIzYNI43D703y9c1xgJPwLBDJx&#43;skN8KXAc2NOJq22l2fIb3Tr6MF/VbBI1AX">
@@ -65,7 +65,7 @@
       "item":"https://zacash.cn/posts/"},{
       "@type": "ListItem",
       "position": 2 ,
-      "name":"JVM Architecture in A Nutshell",
+      "name":"JVM Basic",
       "item":"https://zacash.cn/posts/jvm-arch-in-a-nutshell/"}]
 }
 </script>
@@ -80,9 +80,9 @@
         "@type": "WebPage",
         "@id": "https://zacash.cn/posts/jvm-arch-in-a-nutshell/"
     },
-    "headline": "JVM Architecture in A Nutshell | Zac\u0027s blog","datePublished": "2020-07-17T00:00:00+00:00",
+    "headline": "JVM Basic | Zac\u0027s blog","datePublished": "2020-07-17T00:00:00+00:00",
     "dateModified": "2020-07-17T00:00:00+00:00",
-    "wordCount":  516 ,
+    "wordCount":  215 ,
     "publisher": {
         "@type": "Person",
         "name": "Zac Zhu",
@@ -93,7 +93,7 @@
         },
     "description": "Java Virtual Machine Architecture"
 }
-</script><meta property="og:title" content="JVM Architecture in A Nutshell | Zac&#39;s blog" />
+</script><meta property="og:title" content="JVM Basic | Zac&#39;s blog" />
 <meta property="og:type" content="article" />
 
 
@@ -132,8 +132,6 @@
 
 <meta property="article:tag" content="jvm" />
 
-<meta property="article:tag" content="classloader" />
-
 <meta property="article:tag" content="jmm" />
 
 
@@ -166,6 +164,7 @@
         <div class="md:flex md:h-16 text-sm md:grow pb-4 md:pb-0 border-b md:border-b-0">
             <a href="/posts/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  selected-menu-item  me-4">Posts</a>
             <a href="/tags/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  me-4">Tags</a>
+            <a href="/categories/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  me-4">Categories</a>
             <a href="/#about" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  me-4">About</a>
         </div>
 
@@ -224,7 +223,7 @@
       class="lg:col-start-2 bg-secondary-bg col-span-2 rounded px-6 py-8 lg:col-span-6"
     >
       <article class="prose">
-  <h1 class="mb-4">JVM Architecture in A Nutshell</h1>
+  <h1 class="mb-4">JVM Basic</h1>
 
   <div
   class="text-tertiary-text not-prose mt-2 flex flex-row flex-wrap items-center"
@@ -237,27 +236,15 @@
   </div>
   <div class="me-6 my-2">
     <i class="fas fa-clock me-1"></i>
-    <span>3 min read</span>
+    <span>2 min read</span>
   </div>
 
   
     <div class="me-6 my-2">
       <i class="fas fa-folder me-1"></i>
       
-        <a href="https://zacash.cn/categories/jvm/" class="hover:text-eureka"
-          >jvm</a
-        >
-      
-        
-          <span>, </span>
-        <a href="https://zacash.cn/categories/classloader/" class="hover:text-eureka"
-          >classloader</a
-        >
-      
-        
-          <span>, </span>
-        <a href="https://zacash.cn/categories/jmm/" class="hover:text-eureka"
-          >jmm</a
+        <a href="https://zacash.cn/categories/java/" class="hover:text-eureka"
+          >java</a
         >
       
     </div>
@@ -270,121 +257,9 @@
   
   
 
-  <p>跨平台的本质是因为汇编指令的不同.</p>
-<h2 id="classloader">ClassLoader</h2>
-<h3 id="what-is-it">What is it</h3>
-<p>类加载器负责在运行时将 Java 类动态加载到 JVM，是 JRE 的一部分，由于有了类加载器，JVM 无需了解底层文件或文件系统即可运行Java程序。</p>
-<p>类加载器不会一次将全部类加载到内存里，而是在程序需要时加载。</p>
-<h3 id="built-in-class-loaders-types">Built-in class loaders types</h3>
-<ul>
-<li>
-<p>Bootstrap class loader</p>
-<p>每个 JVM 实现必须有一个 bootstrap 类加载器。它加载 <em>JAVA_HOME/jre/lib</em> 目录下的核心 Java API 类，该路径通常被称为引导路径(bootstrap path)。该类加载器由 C/C++ 语言实现。</p>
-</li>
-<li>
-<p>Extension class loader</p>
-<p>Bootstrap 的子类加载器，它加载扩展目录 <em>JAVA_HOME/jre/lib/ext</em> 或 <strong>java.ext.dirs</strong> 指定路径下的类。它由 Java 在 <code>sun.misc.Launcher$ExtClassLoader</code> 类中实现。</p>
-</li>
-<li>
-<p>System/Application class loader</p>
-<p>Extension 的子类加载器。它负责从 app 路径加载类，它加载在 <em>classpath</em> 环境变量、<em>-classpath</em>、-cp 命令行选项中找到的文件。它同样由 Java 在 <code>sun.misc.Launcher$AppClassLoader</code> 类中实现。</p>
-</li>
-</ul>
-<h3 id="how-it-works">How it works</h3>
-<p>类加载器是 JRE 的一部分。当 JVM 请求一个类时，类加载器尝试定位该类，并使用<em>完全限定的类名(fully qualified class name)</em> 将<em>类定义(class definition)</em> 加载到运行时环境中。</p>
-<p><code>java.lang.ClassLoader.loadClass()</code> 方法负责将类定义加载到运行时环境中。如果请求的类尚未加载，则它将请求委派给父类加载器，此过程递归进行。如果父类加载器找不到该类，则子类加载器调用 <code>java.net.URLClassLoader.findClass()</code> 方法在文件系统中查找类。最终，如果子类加载器未找到该类，则它将抛出 <code>java.lang.NoClassDefFoundError</code> 或 <code>java.lang.ClassNotFoundException</code>。</p>
-<h3 id="class-loader-features">Class loader features</h3>
-<h4 id="代理模型delegation-model">代理模型（Delegation Model）</h4>
-<p>类加载器遵循代理模型，在该模型中，ClassLoader 会根据请求查找的类或资源，将搜索类或资源的工作委托给父加载器处理。仅当 bootstrap class loader 和 extension class loader 都未能加载该类时，system class loader 才会尝试自己加载该类。</p>
-<h4 id="唯一类unique-classes">唯一类（Unique classes）</h4>
-<p>作为代理模型的结果，很容易确保唯一的类，因为我们始终向上委托。</p>
-<h4 id="可见性visibility">可见性（Visibility）</h4>
-<p>子类加载器对其父类加载器加载的类完全可见，父类加载器则对子类加载器加载的类不可见。</p>
-<h3 id="custom-classloader">Custom ClassLoader</h3>
-<p>在需要从本地或网络加载类的场景，我们可能需要使用自定义类加载器。</p>
-<h4 id="使用场景">使用场景</h4>
-<p>自定义类加载器不仅对在运行时加载类有帮助，还包括：</p>
-<ul>
-<li>修改现有字节码，如织入代理</li>
-<li>动态创建适合用户需求的类。如 JDBC 中，通过动态类加载完成不同驱动实现(driver implementations)之间的切换。</li>
-<li>实现类版本控制机制，如为具有相同名称和包名的类加载不同的字节码（热修复）。这可以通过 URL 类加载器或自定义加载器完成。</li>
-</ul>
-<p>我们可以自定义类加载器实现指定类的加载：</p>
-<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">package</span> <span style="color:#447fcf;text-decoration:underline">com.zac4j.system.util</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">import</span> <span style="color:#447fcf;text-decoration:underline">java.io.ByteArrayOutputStream</span>
-</span></span><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">import</span> <span style="color:#447fcf;text-decoration:underline">java.io.File</span>
-</span></span><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">import</span> <span style="color:#447fcf;text-decoration:underline">java.io.IOException</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic">/**
-</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"> * Custom ClassLoader sample
-</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"> *
-</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"> * @author: zac
-</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"> * @date: 2020/7/19
-</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"> */</span>
-</span></span><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">internal</span> <span style="color:#6ab825;font-weight:bold">object</span> <span style="color:#447fcf;text-decoration:underline">Test</span> {
-</span></span><span style="display:flex;"><span>  <span style="color:#ffa500">@JvmStatic</span> <span style="color:#6ab825;font-weight:bold">fun</span> <span style="color:#447fcf">main</span>(args: Array&lt;String&gt;) {
-</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">val</span> classLoader = CustomClassLoader()
-</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">val</span> clazz = classLoader.loadClass(<span style="color:#ed9d13">&#34;com.zac4j.system.util.Utils&#34;</span>)
-</span></span><span style="display:flex;"><span>    println(<span style="color:#ed9d13">&#34;custom classloader:</span><span style="color:#ed9d13">${clazz.canonicalName}</span><span style="color:#ed9d13">&#34;</span>)
-</span></span><span style="display:flex;"><span>  }
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic">/**
-</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"> * 自定义 ClassLoader，加载指定类文件。
-</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"> */</span>
-</span></span><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">class</span> <span style="color:#447fcf;text-decoration:underline">CustomClassLoader</span> : ClassLoader() {
-</span></span><span style="display:flex;"><span>  <span style="color:#6ab825;font-weight:bold">override</span> <span style="color:#6ab825;font-weight:bold">fun</span> <span style="color:#447fcf">findClass</span>(name: String): Class&lt;*&gt; {
-</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">val</span> b = loadClassFromFile(name)
-</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">return</span> defineClass(name, b, <span style="color:#3677a9">0</span>, b.size)
-</span></span><span style="display:flex;"><span>  }
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>  <span style="color:#999;font-style:italic">/**
-</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic">   * 根据类名加载类文件
-</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic">   */</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#6ab825;font-weight:bold">private</span> <span style="color:#6ab825;font-weight:bold">fun</span> <span style="color:#447fcf">loadClassFromFile</span>(filename: String): ByteArray {
-</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">val</span> inStream = javaClass.classLoader?.getResourceAsStream(
-</span></span><span style="display:flex;"><span>        filename.replace(<span style="color:#ed9d13">&#39;.&#39;</span>, File.separatorChar) + <span style="color:#ed9d13">&#34;.class&#34;</span>
-</span></span><span style="display:flex;"><span>    ) ?: <span style="color:#6ab825;font-weight:bold">return</span> byteArrayOf()
-</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">val</span> outStream = ByteArrayOutputStream()
-</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">try</span> {
-</span></span><span style="display:flex;"><span>      <span style="color:#6ab825;font-weight:bold">while</span> (inStream.read() != -<span style="color:#3677a9">1</span>) {
-</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">val</span> nextVal = inStream.read()
-</span></span><span style="display:flex;"><span>        outStream.write(nextVal)
-</span></span><span style="display:flex;"><span>      }
-</span></span><span style="display:flex;"><span>    } <span style="color:#6ab825;font-weight:bold">catch</span> (e: IOException) {
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">return</span> outStream.toByteArray()
-</span></span><span style="display:flex;"><span>  }
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><h3 id="responsibility">Responsibility</h3>
-<p>Class Loader 系统主要有<a href="https://docs.oracle.com/javase/specs/jvms/se6/html/ConstantPool.doc.html#67960">3种功能</a>：</p>
-<ul>
-<li>Loading</li>
-<li>Linking</li>
-<li>Initialization</li>
-</ul>
-<h4 id="loading">Loading</h4>
-<p>类加载器读取 <em>.class</em> 文件，生成对应的二进制数据并保存到 JVM 方法区。对每个 <em>.class</em> 文件，方法区保存这些信息：</p>
-<ul>
-<li>完全限定名称的加载类和其直属父类</li>
-<li><em>.class</em> 文件是否与 Class 或 Interface 或 Enum 有关</li>
-<li>修饰符（Modifier）、变量和方法信息等。</li>
-</ul>
-<p>加载 <em>.class</em> 文件后，JVM 在堆中创建该文件对应的 Class 类型对象。开发者可以使用此 Class 对象来获取类级别（class level）的信息，如类名、父类名、方法（<code>Class.getdeclaredMethods()</code>）和变量信息（<code>Class.getDeclaredFields()</code>）等。</p>
-<h4 id="linking">Linking</h4>
-<p>执行 Verification、Preparation 和 Resolution。</p>
-<ul>
-<li>Verification：通过检查 <em>.class</em> 文件是否正确的格式化和是否由有效的编译器生成，确保该文件的正确性。如果验证失败，将抛出运行时异常：<em>java.lang.VerifyError</em>。</li>
-<li>Preparation：JVM 为类变量分配内存，并将内存初始化为默认值。</li>
-<li>Resolution：这是用直接引用(direct references)替换类型中的符号引用(symbolic references)的过程。通过搜索方法区域以找到引用的实体来完成此操作。</li>
-</ul>
-<h4 id="initialization">Initialization</h4>
-<p>这个阶段将为所有静态变量分配在代码或静态代码块中定义的值。在类中从顶至底（from top to bottom）执行，在类层级中从父类到子类（from parent to child）执行。类加载器的初始化：Bootstrap class loader -&gt; Extension class loader -&gt; App class loader.</p>
-<h2 id="run-time-data-areas">Run-Time Data Areas</h2>
-<p>基本结构.jpg</p>
-<h3 id="the-pc-register">The pc Register</h3>
+  <h2 id="run-time-data-areas">Run-Time Data Areas</h2>
+<p><img src="/img/jvm-arch.png" alt="jvm-arch"></p>
+<h3 id="the-pc-register">The PC Register</h3>
 <p>JVM 可以支持多个线程同时运行，每个线程都有自己独立的 PC 寄存器(program counter register)。在任意时间点，任一线程在执行某个方法的代码，被称作该线程的<a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-2.html#jvms-2.6">当前方法(current method)</a>。</p>
 <ul>
 <li>如果该方法是 <em>native</em> 的，pc 寄存器的值是 <em>undefined</em>。</li>
@@ -459,6 +334,7 @@
 <p>JVM Run-Time Data Areas: <a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-2.html#jvms-2.5.4">https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-2.html#jvms-2.5.4</a>
 JVM architecture: <a href="https://www.geeksforgeeks.org/jvm-works-jvm-architecture/">https://www.geeksforgeeks.org/jvm-works-jvm-architecture/</a>
 Class Loader: <a href="https://www.baeldung.com/java-classloaders">https://www.baeldung.com/java-classloaders</a></p>
+
 </article>
 
 
@@ -466,8 +342,6 @@ Class Loader: <a href="https://www.baeldung.com/java-classloaders">https://www.b
         <div class="my-4">
     
     <a href="https://zacash.cn/tags/jvm/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 me-2 hover:text-eureka">#jvm</a>
-    
-    <a href="https://zacash.cn/tags/classloader/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 me-2 hover:text-eureka">#classloader</a>
     
     <a href="https://zacash.cn/tags/jmm/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 me-2 hover:text-eureka">#jmm</a>
     
@@ -530,7 +404,7 @@ Class Loader: <a href="https://www.baeldung.com/java-classloaders">https://www.b
     </main>
     <footer class="pl-scrollbar">
       <div class="mx-auto w-full max-w-screen-xl"><div class="text-center p-6 pin-b">
-    <p class="text-sm text-tertiary-text">&copy; Copyright © 2022, Copyright Zac
+    <p class="text-sm text-tertiary-text">Copyright Zac &copy; 2022
  &middot;  Powered by the <a href="https://github.com/wangchucheng/hugo-eureka" class="hover:text-eureka">Eureka</a> theme for <a href="https://gohugo.io" class="hover:text-eureka">Hugo</a></p>
 </div></div>
     </footer>

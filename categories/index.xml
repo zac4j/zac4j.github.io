@@ -6,9 +6,18 @@
     <description>Recent content in Categories on Zac&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <copyright>&amp;copy; Copyright © 2022, Copyright Zac
+    <copyright>Copyright Zac &amp;copy; 2022
 </copyright>
-    <lastBuildDate>Sat, 12 Mar 2022 20:36:33 +0800</lastBuildDate><atom:link href="https://zacash.cn/categories/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 23 Mar 2022 08:44:28 +0800</lastBuildDate><atom:link href="https://zacash.cn/categories/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>java</title>
+      <link>https://zacash.cn/categories/java/</link>
+      <pubDate>Wed, 23 Mar 2022 08:44:28 +0800</pubDate>
+      
+      <guid>https://zacash.cn/categories/java/</guid>
+      <description></description>
+    </item>
+    
     <item>
       <title>network</title>
       <link>https://zacash.cn/categories/network/</link>
@@ -37,15 +46,6 @@
     </item>
     
     <item>
-      <title>dagger</title>
-      <link>https://zacash.cn/categories/dagger/</link>
-      <pubDate>Fri, 06 Nov 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://zacash.cn/categories/dagger/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>di</title>
       <link>https://zacash.cn/categories/di/</link>
       <pubDate>Fri, 06 Nov 2020 00:00:00 +0000</pubDate>
@@ -55,29 +55,20 @@
     </item>
     
     <item>
-      <title>hilt</title>
-      <link>https://zacash.cn/categories/hilt/</link>
-      <pubDate>Fri, 06 Nov 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://zacash.cn/categories/hilt/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Custom View</title>
-      <link>https://zacash.cn/categories/custom-view/</link>
+      <title>android</title>
+      <link>https://zacash.cn/categories/android/</link>
       <pubDate>Sun, 06 Sep 2020 11:11:13 +0800</pubDate>
       
-      <guid>https://zacash.cn/categories/custom-view/</guid>
+      <guid>https://zacash.cn/categories/android/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>Android</title>
-      <link>https://zacash.cn/categories/android/</link>
-      <pubDate>Sun, 23 Aug 2020 11:11:13 +0800</pubDate>
+      <title>kotlin</title>
+      <link>https://zacash.cn/categories/kotlin/</link>
+      <pubDate>Fri, 14 Aug 2020 07:27:09 +0800</pubDate>
       
-      <guid>https://zacash.cn/categories/android/</guid>
+      <guid>https://zacash.cn/categories/kotlin/</guid>
       <description></description>
     </item>
     
@@ -91,47 +82,11 @@
     </item>
     
     <item>
-      <title>lock</title>
-      <link>https://zacash.cn/categories/lock/</link>
-      <pubDate>Mon, 27 Jul 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://zacash.cn/categories/lock/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>thread</title>
       <link>https://zacash.cn/categories/thread/</link>
       <pubDate>Mon, 27 Jul 2020 00:00:00 +0000</pubDate>
       
       <guid>https://zacash.cn/categories/thread/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>websocket</title>
-      <link>https://zacash.cn/categories/websocket/</link>
-      <pubDate>Tue, 21 Jul 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://zacash.cn/categories/websocket/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>classloader</title>
-      <link>https://zacash.cn/categories/classloader/</link>
-      <pubDate>Fri, 17 Jul 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://zacash.cn/categories/classloader/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>jmm</title>
-      <link>https://zacash.cn/categories/jmm/</link>
-      <pubDate>Fri, 17 Jul 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://zacash.cn/categories/jmm/</guid>
       <description></description>
     </item>
     
@@ -154,29 +109,20 @@
     </item>
     
     <item>
-      <title>hashmap</title>
-      <link>https://zacash.cn/categories/hashmap/</link>
-      <pubDate>Wed, 15 Jul 2020 15:11:27 +0800</pubDate>
+      <title>basic</title>
+      <link>https://zacash.cn/categories/basic/</link>
+      <pubDate>Fri, 03 Jul 2020 09:28:31 +0800</pubDate>
       
-      <guid>https://zacash.cn/categories/hashmap/</guid>
+      <guid>https://zacash.cn/categories/basic/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>map</title>
-      <link>https://zacash.cn/categories/map/</link>
-      <pubDate>Wed, 15 Jul 2020 15:11:27 +0800</pubDate>
+      <title>design pattern</title>
+      <link>https://zacash.cn/categories/design-pattern/</link>
+      <pubDate>Sat, 20 Jun 2020 20:22:10 +0800</pubDate>
       
-      <guid>https://zacash.cn/categories/map/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>kotlin</title>
-      <link>https://zacash.cn/categories/kotlin/</link>
-      <pubDate>Fri, 19 Jun 2020 22:03:29 +0800</pubDate>
-      
-      <guid>https://zacash.cn/categories/kotlin/</guid>
+      <guid>https://zacash.cn/categories/design-pattern/</guid>
       <description></description>
     </item>
     
@@ -190,38 +136,11 @@
     </item>
     
     <item>
-      <title>Fragment</title>
-      <link>https://zacash.cn/categories/fragment/</link>
-      <pubDate>Mon, 25 May 2020 20:55:31 +0800</pubDate>
+      <title>git</title>
+      <link>https://zacash.cn/categories/git/</link>
+      <pubDate>Fri, 15 May 2020 15:55:52 +0800</pubDate>
       
-      <guid>https://zacash.cn/categories/fragment/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Coroutines</title>
-      <link>https://zacash.cn/categories/coroutines/</link>
-      <pubDate>Sat, 25 Apr 2020 11:40:03 +0800</pubDate>
-      
-      <guid>https://zacash.cn/categories/coroutines/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>activity</title>
-      <link>https://zacash.cn/categories/activity/</link>
-      <pubDate>Wed, 22 Apr 2020 08:10:27 +0800</pubDate>
-      
-      <guid>https://zacash.cn/categories/activity/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Handler</title>
-      <link>https://zacash.cn/categories/handler/</link>
-      <pubDate>Sun, 12 Apr 2020 20:36:33 +0800</pubDate>
-      
-      <guid>https://zacash.cn/categories/handler/</guid>
+      <guid>https://zacash.cn/categories/git/</guid>
       <description></description>
     </item>
     

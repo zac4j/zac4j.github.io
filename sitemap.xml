@@ -3,7 +3,25 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://zacash.cn/categories/</loc>
-    <lastmod>2022-03-12T20:36:33+08:00</lastmod>
+    <lastmod>2022-03-23T08:44:28+08:00</lastmod>
+  </url><url>
+    <loc>https://zacash.cn/tags/classloader/</loc>
+    <lastmod>2022-03-23T08:44:28+08:00</lastmod>
+  </url><url>
+    <loc>https://zacash.cn/posts/intro-to-classloader/</loc>
+    <lastmod>2022-03-23T08:44:28+08:00</lastmod>
+  </url><url>
+    <loc>https://zacash.cn/categories/java/</loc>
+    <lastmod>2022-03-23T08:44:28+08:00</lastmod>
+  </url><url>
+    <loc>https://zacash.cn/posts/</loc>
+    <lastmod>2022-03-23T08:44:28+08:00</lastmod>
+  </url><url>
+    <loc>https://zacash.cn/tags/</loc>
+    <lastmod>2022-03-23T08:44:28+08:00</lastmod>
+  </url><url>
+    <loc>https://zacash.cn/</loc>
+    <lastmod>2022-03-23T08:44:28+08:00</lastmod>
   </url><url>
     <loc>https://zacash.cn/tags/https/</loc>
     <lastmod>2022-03-12T20:36:33+08:00</lastmod>
@@ -11,22 +29,13 @@
     <loc>https://zacash.cn/categories/network/</loc>
     <lastmod>2022-03-12T20:36:33+08:00</lastmod>
   </url><url>
-    <loc>https://zacash.cn/posts/</loc>
-    <lastmod>2022-03-12T20:36:33+08:00</lastmod>
-  </url><url>
     <loc>https://zacash.cn/tags/ssl/</loc>
-    <lastmod>2022-03-12T20:36:33+08:00</lastmod>
-  </url><url>
-    <loc>https://zacash.cn/tags/</loc>
     <lastmod>2022-03-12T20:36:33+08:00</lastmod>
   </url><url>
     <loc>https://zacash.cn/tags/tls/</loc>
     <lastmod>2022-03-12T20:36:33+08:00</lastmod>
   </url><url>
     <loc>https://zacash.cn/posts/intro-to-https/</loc>
-    <lastmod>2022-03-12T20:36:33+08:00</lastmod>
-  </url><url>
-    <loc>https://zacash.cn/</loc>
     <lastmod>2022-03-12T20:36:33+08:00</lastmod>
   </url><url>
     <loc>https://zacash.cn/posts/how-to-learn-math/</loc>
@@ -53,9 +62,6 @@
     <loc>https://zacash.cn/tags/dagger/</loc>
     <lastmod>2020-11-06T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://zacash.cn/categories/dagger/</loc>
-    <lastmod>2020-11-06T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>https://zacash.cn/tags/di/</loc>
     <lastmod>2020-11-06T00:00:00+00:00</lastmod>
   </url><url>
@@ -65,13 +71,10 @@
     <loc>https://zacash.cn/tags/hilt/</loc>
     <lastmod>2020-11-06T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://zacash.cn/categories/hilt/</loc>
-    <lastmod>2020-11-06T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>https://zacash.cn/posts/use-hilt-in-android/</loc>
     <lastmod>2020-11-06T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://zacash.cn/categories/custom-view/</loc>
+    <loc>https://zacash.cn/categories/android/</loc>
     <lastmod>2020-09-06T11:11:13+08:00</lastmod>
   </url><url>
     <loc>https://zacash.cn/tags/custom-view/</loc>
@@ -79,9 +82,6 @@
   </url><url>
     <loc>https://zacash.cn/posts/custom-view-introduction/</loc>
     <lastmod>2020-09-06T11:11:13+08:00</lastmod>
-  </url><url>
-    <loc>https://zacash.cn/categories/android/</loc>
-    <lastmod>2020-08-23T11:11:13+08:00</lastmod>
   </url><url>
     <loc>https://zacash.cn/posts/intro-to-navigation/</loc>
     <lastmod>2020-08-23T11:11:13+08:00</lastmod>
@@ -95,6 +95,9 @@
     <loc>https://zacash.cn/posts/databinding-in-android/</loc>
     <lastmod>2020-08-23T08:37:45+08:00</lastmod>
   </url><url>
+    <loc>https://zacash.cn/tags/databinding/</loc>
+    <lastmod>2020-08-23T08:37:45+08:00</lastmod>
+  </url><url>
     <loc>https://zacash.cn/tags/generic/</loc>
     <lastmod>2020-08-14T07:27:09+08:00</lastmod>
   </url><url>
@@ -102,6 +105,9 @@
     <lastmod>2020-08-14T07:27:09+08:00</lastmod>
   </url><url>
     <loc>https://zacash.cn/tags/kotlin/</loc>
+    <lastmod>2020-08-14T07:27:09+08:00</lastmod>
+  </url><url>
+    <loc>https://zacash.cn/categories/kotlin/</loc>
     <lastmod>2020-08-14T07:27:09+08:00</lastmod>
   </url><url>
     <loc>https://zacash.cn/tags/delegation/</loc>
@@ -137,9 +143,6 @@
     <loc>https://zacash.cn/tags/lock/</loc>
     <lastmod>2020-07-27T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://zacash.cn/categories/lock/</loc>
-    <lastmod>2020-07-27T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>https://zacash.cn/tags/thread/</loc>
     <lastmod>2020-07-27T00:00:00+00:00</lastmod>
   </url><url>
@@ -158,22 +161,10 @@
     <loc>https://zacash.cn/tags/websocket/</loc>
     <lastmod>2020-07-21T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://zacash.cn/categories/websocket/</loc>
-    <lastmod>2020-07-21T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>https://zacash.cn/posts/websocket-and-long-polling/</loc>
     <lastmod>2020-07-21T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://zacash.cn/tags/classloader/</loc>
-    <lastmod>2020-07-17T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://zacash.cn/categories/classloader/</loc>
-    <lastmod>2020-07-17T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>https://zacash.cn/tags/jmm/</loc>
-    <lastmod>2020-07-17T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://zacash.cn/categories/jmm/</loc>
     <lastmod>2020-07-17T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://zacash.cn/tags/jvm/</loc>
@@ -188,25 +179,22 @@
     <loc>https://zacash.cn/posts/jvm-mechanics/</loc>
     <lastmod>2020-07-17T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://zacash.cn/tags/data-structure/</loc>
-    <lastmod>2020-07-15T15:11:27+08:00</lastmod>
-  </url><url>
     <loc>https://zacash.cn/categories/data-structure/</loc>
     <lastmod>2020-07-15T15:11:27+08:00</lastmod>
   </url><url>
     <loc>https://zacash.cn/tags/hashmap/</loc>
     <lastmod>2020-07-15T15:11:27+08:00</lastmod>
   </url><url>
-    <loc>https://zacash.cn/categories/hashmap/</loc>
-    <lastmod>2020-07-15T15:11:27+08:00</lastmod>
-  </url><url>
     <loc>https://zacash.cn/posts/intro-to-hashmap/</loc>
     <lastmod>2020-07-15T15:11:27+08:00</lastmod>
   </url><url>
-    <loc>https://zacash.cn/categories/map/</loc>
+    <loc>https://zacash.cn/tags/map/</loc>
     <lastmod>2020-07-15T15:11:27+08:00</lastmod>
   </url><url>
     <loc>https://zacash.cn/posts/how-are-touch-events-delivered/</loc>
+    <lastmod>2020-07-11T08:37:45+08:00</lastmod>
+  </url><url>
+    <loc>https://zacash.cn/tags/touch-event/</loc>
     <lastmod>2020-07-11T08:37:45+08:00</lastmod>
   </url><url>
     <loc>https://zacash.cn/tags/hybrid/</loc>
@@ -221,14 +209,23 @@
     <loc>https://zacash.cn/tags/service/</loc>
     <lastmod>2020-07-04T11:08:11+08:00</lastmod>
   </url><url>
+    <loc>https://zacash.cn/categories/basic/</loc>
+    <lastmod>2020-07-03T09:28:31+08:00</lastmod>
+  </url><url>
+    <loc>https://zacash.cn/tags/java/</loc>
+    <lastmod>2020-07-03T09:28:31+08:00</lastmod>
+  </url><url>
     <loc>https://zacash.cn/posts/java-basic/</loc>
     <lastmod>2020-07-03T09:28:31+08:00</lastmod>
   </url><url>
-    <loc>https://zacash.cn/posts/design-pattern-in-android/</loc>
+    <loc>https://zacash.cn/tags/design-pattern/</loc>
     <lastmod>2020-06-20T20:22:10+08:00</lastmod>
   </url><url>
-    <loc>https://zacash.cn/categories/kotlin/</loc>
-    <lastmod>2020-06-19T22:03:29+08:00</lastmod>
+    <loc>https://zacash.cn/categories/design-pattern/</loc>
+    <lastmod>2020-06-20T20:22:10+08:00</lastmod>
+  </url><url>
+    <loc>https://zacash.cn/posts/design-pattern-in-android/</loc>
+    <lastmod>2020-06-20T20:22:10+08:00</lastmod>
   </url><url>
     <loc>https://zacash.cn/posts/top-10-kotlin-questions/</loc>
     <lastmod>2020-06-19T22:03:29+08:00</lastmod>
@@ -248,14 +245,17 @@
     <loc>https://zacash.cn/tags/fragment/</loc>
     <lastmod>2020-05-25T20:55:31+08:00</lastmod>
   </url><url>
-    <loc>https://zacash.cn/categories/fragment/</loc>
-    <lastmod>2020-05-25T20:55:31+08:00</lastmod>
-  </url><url>
     <loc>https://zacash.cn/posts/fragment-in-viewpager/</loc>
     <lastmod>2020-05-25T20:55:31+08:00</lastmod>
   </url><url>
     <loc>https://zacash.cn/tags/viewpager/</loc>
     <lastmod>2020-05-25T20:55:31+08:00</lastmod>
+  </url><url>
+    <loc>https://zacash.cn/tags/git/</loc>
+    <lastmod>2020-05-15T15:55:52+08:00</lastmod>
+  </url><url>
+    <loc>https://zacash.cn/categories/git/</loc>
+    <lastmod>2020-05-15T15:55:52+08:00</lastmod>
   </url><url>
     <loc>https://zacash.cn/posts/git-basic/</loc>
     <lastmod>2020-05-15T15:55:52+08:00</lastmod>
@@ -269,16 +269,10 @@
     <loc>https://zacash.cn/tags/coroutines/</loc>
     <lastmod>2020-04-25T11:40:03+08:00</lastmod>
   </url><url>
-    <loc>https://zacash.cn/categories/coroutines/</loc>
-    <lastmod>2020-04-25T11:40:03+08:00</lastmod>
-  </url><url>
     <loc>https://zacash.cn/posts/coroutines-introduction/</loc>
     <lastmod>2020-04-25T11:40:03+08:00</lastmod>
   </url><url>
     <loc>https://zacash.cn/tags/activity/</loc>
-    <lastmod>2020-04-22T08:10:27+08:00</lastmod>
-  </url><url>
-    <loc>https://zacash.cn/categories/activity/</loc>
     <lastmod>2020-04-22T08:10:27+08:00</lastmod>
   </url><url>
     <loc>https://zacash.cn/posts/activity-launch/</loc>
@@ -296,11 +290,8 @@
     <loc>https://zacash.cn/tags/looper/</loc>
     <lastmod>2020-04-14T21:53:54+08:00</lastmod>
   </url><url>
-    <loc>https://zacash.cn/tags/messagequeue/</loc>
+    <loc>https://zacash.cn/tags/message-queue/</loc>
     <lastmod>2020-04-14T21:53:54+08:00</lastmod>
-  </url><url>
-    <loc>https://zacash.cn/categories/handler/</loc>
-    <lastmod>2020-04-12T20:36:33+08:00</lastmod>
   </url><url>
     <loc>https://zacash.cn/posts/handler-in-code/</loc>
     <lastmod>2020-04-12T20:36:33+08:00</lastmod>
@@ -320,7 +311,7 @@
     <loc>https://zacash.cn/posts/check-state-loss/</loc>
     <lastmod>2020-02-11T16:30:26+08:00</lastmod>
   </url><url>
-    <loc>https://zacash.cn/tags/dialogfragment/</loc>
+    <loc>https://zacash.cn/tags/dialog-fragment/</loc>
     <lastmod>2020-02-11T16:30:26+08:00</lastmod>
   </url><url>
     <loc>https://zacash.cn/tags/state-loss/</loc>

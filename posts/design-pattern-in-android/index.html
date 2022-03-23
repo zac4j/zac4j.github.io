@@ -53,16 +53,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="https://zacash.cn/images/icon_huef3b68b5a9c9f864bc324bf255658730_3276_180x180_fill_box_center_3.png">
 
 <meta name="description"
-  content="什么是设计模式 设计模式的经典解释：软件工程中，设计模式是针对软件设计中给定上下文的常见问题的通用、可复用的解决方案。设计模式并非可以直接转换为源码或机器码的最终设计。相反，它是可以在不同场景下使用的解决问题的描述或模版。设计模式是程序员在设计 App 或系统时解决常见问题的最佳实践。
-面向对象的设计模式通常展示了类和对象之间的关系和交互，而不是指定 App 的类或对象。
-设计模式可以看作是一种编程的结构化方法，介于编程范式和具体算法之间。
-设计模式根据其解决的问题分为三个类别：
- 创造型模式（Creational Patterns）：提供创建类，对象的方法（Singleton, Dependency Inject, Builder等）。 结构型模式（Structural Patterns）：提供对象和类之间组合的方法（Composite, Bridge, Adapter 等）。 行为型模式（Bahavioral Patterns）：提供对象和类之间相互交流的方法（Command, Observer, Strategy 等）。  创造型模式 当我们用最基本的形式创建创建对象可能导致设计问题，或增加设计的复杂性。创造型设计模式通过控制对象的创建方式来解决这种问题。
-Android 常用的创造型模式：
-Builder Builder 模式主要解决创建复杂对象过程中遇到的问题：
- 类如何创建复杂对象不同的表现形式(different presentations) 如何简化包含创建复杂对象的类  Builder 模式在 Android 中常见的应用是 AlertDialog 的创建过程：
-AlertDialog.Builder(context)  .setTitle(&#34;Builder Sample&#34;)  .setMessage(&#34;Builder Nessage&#34;)  .setNegativeButton(&#34;Cancel&#34;, {_,_ -&gt; })  .setPositiveButton(&#34;OK&#34;, {_, _ -&gt; })  .show() Builder 模式通过这种方式解决问题：
- 将复杂对象的各个部分的创建(creating)和组装(assembling)封装在一个独立的 Builder 对象中。 类将对象的创建委托给 Builder 对象，而不是直接创建。  Dependency injection 依赖注入（Dependency injection, 简称 Di）通常表示某个对象接收(receives)它依赖的对象(objects)的技术，这些依赖的对象称为依赖项(dependencies)。在典型的使用关系中，接收者被称为客户端（client），传递的对象被称为服务（service）。将服务传递给客户端的代码可能有很多种，被称为注入器（injector）, 注入器提供给客户端需要使用哪些服务。注入(injection)是指将依赖项（服务）传递给使用依赖项的对象（客户端）。">
+  content="Design pattern in Android">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -100,7 +91,7 @@ AlertDialog.Builder(context)  .setTitle(&#34;Builder Sample&#34;)  .setMessage(&
             "url": "https://zacash.cn/images/icon.png"
         }
         },
-    "description": "什么是设计模式 设计模式的经典解释：软件工程中，设计模式是针对软件设计中给定上下文的常见问题的通用、可复用的解决方案。设计模式并非可以直接转换为源码或机器码的最终设计。相反，它是可以在不同场景下使用的解决问题的描述或模版。设计模式是程序员在设计 App 或系统时解决常见问题的最佳实践。\n面向对象的设计模式通常展示了类和对象之间的关系和交互，而不是指定 App 的类或对象。\n设计模式可以看作是一种编程的结构化方法，介于编程范式和具体算法之间。\n设计模式根据其解决的问题分为三个类别：\n 创造型模式（Creational Patterns）：提供创建类，对象的方法（Singleton, Dependency Inject, Builder等）。 结构型模式（Structural Patterns）：提供对象和类之间组合的方法（Composite, Bridge, Adapter 等）。 行为型模式（Bahavioral Patterns）：提供对象和类之间相互交流的方法（Command, Observer, Strategy 等）。  创造型模式 当我们用最基本的形式创建创建对象可能导致设计问题，或增加设计的复杂性。创造型设计模式通过控制对象的创建方式来解决这种问题。\nAndroid 常用的创造型模式：\nBuilder Builder 模式主要解决创建复杂对象过程中遇到的问题：\n 类如何创建复杂对象不同的表现形式(different presentations) 如何简化包含创建复杂对象的类  Builder 模式在 Android 中常见的应用是 AlertDialog 的创建过程：\nAlertDialog.Builder(context)  .setTitle(\u0026#34;Builder Sample\u0026#34;)  .setMessage(\u0026#34;Builder Nessage\u0026#34;)  .setNegativeButton(\u0026#34;Cancel\u0026#34;, {_,_ -\u0026gt; })  .setPositiveButton(\u0026#34;OK\u0026#34;, {_, _ -\u0026gt; })  .show() Builder 模式通过这种方式解决问题：\n 将复杂对象的各个部分的创建(creating)和组装(assembling)封装在一个独立的 Builder 对象中。 类将对象的创建委托给 Builder 对象，而不是直接创建。  Dependency injection 依赖注入（Dependency injection, 简称 Di）通常表示某个对象接收(receives)它依赖的对象(objects)的技术，这些依赖的对象称为依赖项(dependencies)。在典型的使用关系中，接收者被称为客户端（client），传递的对象被称为服务（service）。将服务传递给客户端的代码可能有很多种，被称为注入器（injector）, 注入器提供给客户端需要使用哪些服务。注入(injection)是指将依赖项（服务）传递给使用依赖项的对象（客户端）。"
+    "description": "Design pattern in Android"
 }
 </script><meta property="og:title" content="Essential Design Pattern in Android | Zac&#39;s blog" />
 <meta property="og:type" content="article" />
@@ -113,18 +104,7 @@ AlertDialog.Builder(context)  .setTitle(&#34;Builder Sample&#34;)  .setMessage(&
 
 
 
-
-<meta property="og:description" content="什么是设计模式 设计模式的经典解释：软件工程中，设计模式是针对软件设计中给定上下文的常见问题的通用、可复用的解决方案。设计模式并非可以直接转换为源码或机器码的最终设计。相反，它是可以在不同场景下使用的解决问题的描述或模版。设计模式是程序员在设计 App 或系统时解决常见问题的最佳实践。
-面向对象的设计模式通常展示了类和对象之间的关系和交互，而不是指定 App 的类或对象。
-设计模式可以看作是一种编程的结构化方法，介于编程范式和具体算法之间。
-设计模式根据其解决的问题分为三个类别：
- 创造型模式（Creational Patterns）：提供创建类，对象的方法（Singleton, Dependency Inject, Builder等）。 结构型模式（Structural Patterns）：提供对象和类之间组合的方法（Composite, Bridge, Adapter 等）。 行为型模式（Bahavioral Patterns）：提供对象和类之间相互交流的方法（Command, Observer, Strategy 等）。  创造型模式 当我们用最基本的形式创建创建对象可能导致设计问题，或增加设计的复杂性。创造型设计模式通过控制对象的创建方式来解决这种问题。
-Android 常用的创造型模式：
-Builder Builder 模式主要解决创建复杂对象过程中遇到的问题：
- 类如何创建复杂对象不同的表现形式(different presentations) 如何简化包含创建复杂对象的类  Builder 模式在 Android 中常见的应用是 AlertDialog 的创建过程：
-AlertDialog.Builder(context)  .setTitle(&#34;Builder Sample&#34;)  .setMessage(&#34;Builder Nessage&#34;)  .setNegativeButton(&#34;Cancel&#34;, {_,_ -&gt; })  .setPositiveButton(&#34;OK&#34;, {_, _ -&gt; })  .show() Builder 模式通过这种方式解决问题：
- 将复杂对象的各个部分的创建(creating)和组装(assembling)封装在一个独立的 Builder 对象中。 类将对象的创建委托给 Builder 对象，而不是直接创建。  Dependency injection 依赖注入（Dependency injection, 简称 Di）通常表示某个对象接收(receives)它依赖的对象(objects)的技术，这些依赖的对象称为依赖项(dependencies)。在典型的使用关系中，接收者被称为客户端（client），传递的对象被称为服务（service）。将服务传递给客户端的代码可能有很多种，被称为注入器（injector）, 注入器提供给客户端需要使用哪些服务。注入(injection)是指将依赖项（服务）传递给使用依赖项的对象（客户端）。" />
-
+<meta property="og:description" content="Design pattern in Android" />
 
 
 
@@ -148,6 +128,10 @@ AlertDialog.Builder(context)  .setTitle(&#34;Builder Sample&#34;)  .setMessage(&
 
 
 <meta property="article:section" content="posts" />
+
+
+<meta property="article:tag" content="design pattern" />
+
 
 
 
@@ -174,6 +158,7 @@ AlertDialog.Builder(context)  .setTitle(&#34;Builder Sample&#34;)  .setMessage(&
         <div class="md:flex md:h-16 text-sm md:grow pb-4 md:pb-0 border-b md:border-b-0">
             <a href="/posts/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  selected-menu-item  me-4">Posts</a>
             <a href="/tags/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  me-4">Tags</a>
+            <a href="/categories/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  me-4">Categories</a>
             <a href="/#about" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  me-4">About</a>
         </div>
 
@@ -249,6 +234,21 @@ AlertDialog.Builder(context)  .setTitle(&#34;Builder Sample&#34;)  .setMessage(&
   </div>
 
   
+    <div class="me-6 my-2">
+      <i class="fas fa-folder me-1"></i>
+      
+        <a href="https://zacash.cn/categories/android/" class="hover:text-eureka"
+          >android</a
+        >
+      
+        
+          <span>, </span>
+        <a href="https://zacash.cn/categories/design-pattern/" class="hover:text-eureka"
+          >design pattern</a
+        >
+      
+    </div>
+  
 
   
 </div>
@@ -297,6 +297,12 @@ AlertDialog.Builder(context)  .setTitle(&#34;Builder Sample&#34;)  .setMessage(&
 
 
       
+        <div class="my-4">
+    
+    <a href="https://zacash.cn/tags/design-pattern/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 me-2 hover:text-eureka">#design pattern</a>
+    
+</div>
+      
 
       
 
@@ -344,7 +350,7 @@ AlertDialog.Builder(context)  .setTitle(&#34;Builder Sample&#34;)  .setMessage(&
     </main>
     <footer class="pl-scrollbar">
       <div class="mx-auto w-full max-w-screen-xl"><div class="text-center p-6 pin-b">
-    <p class="text-sm text-tertiary-text">&copy; Copyright © 2022, Copyright Zac
+    <p class="text-sm text-tertiary-text">Copyright Zac &copy; 2022
  &middot;  Powered by the <a href="https://github.com/wangchucheng/hugo-eureka" class="hover:text-eureka">Eureka</a> theme for <a href="https://gohugo.io" class="hover:text-eureka">Hugo</a></p>
 </div></div>
     </footer>

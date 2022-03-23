@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>basic on Zac&#39;s blog</title>
+    <link>https://zacash.cn/categories/basic/</link>
+    <description>Recent content in basic on Zac&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>Copyright Zac &amp;copy; 2022
+</copyright>
+    <lastBuildDate>Fri, 03 Jul 2020 09:28:31 +0800</lastBuildDate><atom:link href="https://zacash.cn/categories/basic/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Java Basic</title>
+      <link>https://zacash.cn/posts/java-basic/</link>
+      <pubDate>Fri, 03 Jul 2020 09:28:31 +0800</pubDate>
+      
+      <guid>https://zacash.cn/posts/java-basic/</guid>
+      <description>🌟答案的组织策略：知道是什么，知道为什么，知道怎么用
+0.JDK 和 JRE 有什么区别？  JDK 包含 JRE，同时还包含编译 Java 源码的编译器 javac，还包含了很多 Java 程序调试和分析的工具。 加分项：除了 javac 还了解哪些命令行工具，它们的用途是什么？  jcmd：综合工具 jps：虚拟机进程状况工具 jinfo：虚拟机配置信息工具 jstat：虚拟机统计信息监视工具 jmap：Java 内存映像工具 jhat：虚拟机堆转储快照分析工具 jstack：Java 堆栈追踪工具   加分项jstat 用过吗，有哪些参数？  -class：监视类装载、卸载数量、总空间和类装载所耗费的时间 -gc：监视 Java 堆的状况，包括 Eden 区，两个 survior 区，老年代、永久代等的容量，已用空间、GC 时间合计等统计    1.equals 和 == 的差别？ 两者都是判断等价性，区别要从入参类型来看：
+  对于基本类型，他们是比较值是否相等
+  对于引用类型，他们是判断引用的是否为同一对象
+  考察点：equals 的概念
+  🌟实际要求：平时对源码的深挖意识即技术钻研和批判性思维
+  考察目的：
+ 基础知识的扎实程度 候选人对技术的热情    2.Java 中操作字符串有那些类？它们之间有什么区别？  主要有：String，StringBuilder，StringBuffer 区别：StringBuffer 和 StringBuilder 都继承自 AbstractStringBuilder，StringBuffer 具备线程安全性  加分项：String 源码分析  String 是 final 关键字修饰 -&amp;gt; 对象的值不可变 -&amp;gt; 每次操作都会生成新的对象 StringBuffer 和 StringBuilder 对象的值可变，但拼接字符串开销比较小   加分项：StringBuffer 线程安全性分析（查源码、找 synchronized、线程锁）   使用场景：并发必选 StringBuffer，迭代必选 StringBuilder，普通场景选 String，避免中途不必要的类型转换开销  3.</description>
+    </item>
+    
+    <item>
+      <title>Git Basic</title>
+      <link>https://zacash.cn/posts/git-basic/</link>
+      <pubDate>Fri, 15 May 2020 15:55:52 +0800</pubDate>
+      
+      <guid>https://zacash.cn/posts/git-basic/</guid>
+      <description>Problem Solving Authentication   Clear saved account &amp;amp; password
+Error: fatal:Authentication failed for &#39;remote-url&#39;
+git config --system --unset credential.helper
+  Save account &amp;amp; password
+git config --global credential.helper store
+  Remote   Check remote url
+git remote -v
+  Update remote url
+git remote set-url origin newRepoUrl
+  </description>
+    </item>
+    
+    <item>
+      <title>Hugo Basic</title>
+      <link>https://zacash.cn/posts/hugo-basic/</link>
+      <pubDate>Sat, 04 Apr 2020 09:25:04 +0800</pubDate>
+      
+      <guid>https://zacash.cn/posts/hugo-basic/</guid>
+      <description>Add new content hugo new posts/article-name.md
+Article meta info --- title: &amp;#34;New Article&amp;#34; date: 2020-04-04T09:25:04+08:00 description: &amp;#34;Hugo 的简单用法&amp;#34; tags: [&amp;#34;hugo&amp;#34;, &amp;#34;pages&amp;#34;] categories: [&amp;#34;hugo&amp;#34;] draft: true --- Start server with drafts enabled hugo server -D
+Customize the theme Open up config.toml in a text editor:
+baseURL = &amp;#34;https://example.org/&amp;#34;languageCode = &amp;#34;en-us&amp;#34;title = &amp;#34;My New Hugo Site&amp;#34;theme = &amp;#34;ananke&amp;#34;Build static pages hugo -D output will be in ./public/ directory by default (-d/--destination flag to change it, or set publishdir in the config file)</description>
+    </item>
+    
+  </channel>
+</rss>

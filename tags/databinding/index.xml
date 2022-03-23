@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>databinding on Zac&#39;s blog</title>
+    <link>https://zacash.cn/tags/databinding/</link>
+    <description>Recent content in databinding on Zac&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>Copyright Zac &amp;copy; 2022
+</copyright>
+    <lastBuildDate>Sun, 23 Aug 2020 08:37:45 +0800</lastBuildDate><atom:link href="https://zacash.cn/tags/databinding/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Data Binding in Android</title>
+      <link>https://zacash.cn/posts/databinding-in-android/</link>
+      <pubDate>Sun, 23 Aug 2020 08:37:45 +0800</pubDate>
+      
+      <guid>https://zacash.cn/posts/databinding-in-android/</guid>
+      <description>&lt;p&gt;每次在 view 发生创建或重建，我们使用 &lt;code&gt;findViewById()&lt;/code&gt; 来获取 view 的引用时，Android 系统在运行时会遍历整个视图层级结构（view hierarchy）来查找它。在我们 app 的视图结构比较简单时没有问题，但是生产上的 app 一个 layout 可能有几十个 views，即使是最佳设计，也会存在嵌套的 views.&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>
