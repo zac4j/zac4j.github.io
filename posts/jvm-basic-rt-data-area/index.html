@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  dir="ltr"
+  
+><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<title>JVM Basic - Rumtime Data Area | Zac&#39;s blog</title>
+
+<meta name="generator" content="Hugo Eureka 0.9.1" />
+<link rel="stylesheet" href="https://zacash.cn/css/eureka.min.6a378a23360d238dc3ef4df2f5cd718093f02c10c9c7eb2437c29701cd8d389ab6da5d9f21bdd3afa305fd56c1235017.css" integrity="sha384-ajeKIzYNI43D703y9c1xgJPwLBDJx&#43;skN8KXAc2NOJq22l2fIb3Tr6MF/VbBI1AX">
+<script defer src="https://zacash.cn/js/eureka.min.f1639ee98d6cbd85b2b5f034d27320da962002ff83159ed4e01dbc5948c42a1ab26c2d6e74c66e93f5cec4d24dbd166d.js" integrity="sha384-8WOe6Y1svYWytfA00nMg2pYgAv&#43;DFZ7U4B28WUjEKhqybC1udMZuk/XOxNJNvRZt"></script>
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload"
+  href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Noto+Serif+SC:wght@400;600;700&display=swap"
+  as="style" onload="this.onload=null;this.rel='stylesheet'">
+
+
+
+
+<script defer type="text/javascript" src="https://zacash.cn/js/fontawesome.min.1c5a4674b042785ed214cf0818a81724c6b37442fd61b0ed039237b93de25ed5103fc8079a05770648ccc9c66c4f540a.js" integrity="sha384-HFpGdLBCeF7SFM8IGKgXJMazdEL9YbDtA5I3uT3iXtUQP8gHmgV3BkjMycZsT1QK"></script>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/katex.min.css"
+   integrity="sha384-MlJdn/WNKDGXveldHDdyRP1R4CTHr3FeuDNfhsLPYrq2t0UBkUdK2jyTnXPEK1NQ"  media="print"
+  onload="this.media='all';this.onload=null" crossorigin>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/katex.min.js" 
+  integrity="sha384-VQ8d8WVFw0yHhCk5E8I86oOhv48xLpnDZx5T9GogA/Y84DcCKWXDmSDfn13bzFZY"  crossorigin></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/contrib/auto-render.min.js"
+   integrity="sha384-&#43;XBljXPPiv&#43;OzfbB3cVmLHf4hdUFHlWNZN5spNQ7rmHTXpd7WvJum6fIACpNNfIR"  crossorigin></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    renderMathInElement(document.body, {
+      delimiters: [
+        { left: "$$", right: "$$", display: true },
+        { left: "$", right: "$", display: false },
+        { left: "\\(", right: "\\)", display: false },
+        { left: "\\[", right: "\\]", display: true }
+      ],
+    });
+  });
+</script>
+
+
+<script defer src="https://cdn.jsdelivr.net/npm/mermaid@8.14.0/dist/mermaid.min.js" 
+  integrity="sha384-atOyb0FxAgN9LyAc6PEf9BjgwLISyansgdH8/VXQH8p2o5vfrRgmGIJ2Sg22L0A0"  crossorigin></script>
+
+
+<link rel="icon" type="image/png" sizes="32x32" href="https://zacash.cn/images/icon_huef3b68b5a9c9f864bc324bf255658730_3276_32x32_fill_box_center_3.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://zacash.cn/images/icon_huef3b68b5a9c9f864bc324bf255658730_3276_180x180_fill_box_center_3.png">
+
+<meta name="description"
+  content="Intro to JVM&#39;s Rumtime Data Area">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+      "@type": "ListItem",
+      "position": 1 ,
+      "name":"Posts",
+      "item":"https://zacash.cn/posts/"},{
+      "@type": "ListItem",
+      "position": 2 ,
+      "name":"JVM Basic - Rumtime Data Area",
+      "item":"https://zacash.cn/posts/jvm-basic-rt-data-area/"}]
+}
+</script>
+
+
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://zacash.cn/posts/jvm-basic-rt-data-area/"
+    },
+    "headline": "JVM Basic - Rumtime Data Area | Zac\u0027s blog","datePublished": "2022-03-24T08:44:28+08:00",
+    "dateModified": "2022-03-24T08:44:28+08:00",
+    "wordCount":  224 ,
+    "publisher": {
+        "@type": "Person",
+        "name": "Zac Zhu",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://zacash.cn/images/icon.png"
+        }
+        },
+    "description": "Intro to JVM\u0027s Rumtime Data Area"
+}
+</script><meta property="og:title" content="JVM Basic - Rumtime Data Area | Zac&#39;s blog" />
+<meta property="og:type" content="article" />
+
+
+<meta property="og:image" content="https://zacash.cn/images/icon.png">
+
+
+<meta property="og:url" content="https://zacash.cn/posts/jvm-basic-rt-data-area/" />
+
+
+
+<meta property="og:description" content="Intro to JVM&#39;s Rumtime Data Area" />
+
+
+
+<meta property="og:locale" content="en" />
+
+
+
+
+<meta property="og:site_name" content="Zac&#39;s blog" />
+
+
+
+
+
+
+<meta property="article:published_time" content="2022-03-24T08:44:28&#43;08:00" />
+
+
+<meta property="article:modified_time" content="2022-03-24T08:44:28&#43;08:00" />
+
+
+
+<meta property="article:section" content="posts" />
+
+
+<meta property="article:tag" content="jvm" />
+
+<meta property="article:tag" content="rumtime data area" />
+
+
+
+
+
+<meta property="og:see_also" content="https://zacash.cn/posts/jvm-basic-classloader/" />
+
+<meta property="og:see_also" content="https://zacash.cn/posts/jvm-mechanics/" />
+
+
+
+
+  <body class="flex min-h-screen flex-col">
+    <header
+      class="min-h-16 pl-scrollbar bg-secondary-bg fixed z-50 flex w-full items-center shadow-sm"
+    >
+      <div class="mx-auto w-full max-w-screen-xl"><script>
+    let storageColorScheme = localStorage.getItem("lightDarkMode")
+    if (((storageColorScheme == 'Auto' || storageColorScheme == null) && window.matchMedia("(prefers-color-scheme: dark)").matches) || storageColorScheme == "Dark") {
+        document.getElementsByTagName('html')[0].classList.add('dark')
+    }
+</script>
+<nav class="flex items-center justify-between flex-wrap px-4 py-4 md:py-0">
+    <a href="/" class="me-6 text-primary-text text-xl font-bold">Zac&#39;s blog</a>
+    <button id="navbar-btn" class="md:hidden flex items-center px-3 py-2" aria-label="Open Navbar">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <div id="target"
+        class="hidden block md:flex md:grow md:justify-between md:items-center w-full md:w-auto text-primary-text z-20">
+        <div class="md:flex md:h-16 text-sm md:grow pb-4 md:pb-0 border-b md:border-b-0">
+            <a href="/posts/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  selected-menu-item  me-4">Posts</a>
+            <a href="/tags/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  me-4">Tags</a>
+            <a href="/categories/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  me-4">Categories</a>
+            <a href="/#about" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  me-4">About</a>
+        </div>
+
+        <div class="flex">
+            <div class="relative pt-4 md:pt-0">
+                <div class="cursor-pointer hover:text-eureka" id="lightDarkMode">
+                    <i class="fas fa-adjust"></i>
+                </div>
+                <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-30" id="is-open">
+                </div>
+                <div class="absolute flex flex-col start-0 md:start-auto end-auto md:end-0 hidden bg-secondary-bg w-48 rounded py-2 border border-tertiary-bg cursor-pointer z-40"
+                    id='lightDarkOptions'>
+                    <span class="px-4 py-1 hover:text-eureka" name="Light">Light</span>
+                    <span class="px-4 py-1 hover:text-eureka" name="Dark">Dark</span>
+                    <span class="px-4 py-1 hover:text-eureka" name="Auto">Auto</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-0" id="is-open-mobile">
+    </div>
+
+</nav>
+<script>
+    
+    let element = document.getElementById('lightDarkMode')
+    if (storageColorScheme == null || storageColorScheme == 'Auto') {
+        document.addEventListener('DOMContentLoaded', () => {
+            window.matchMedia("(prefers-color-scheme: dark)").addEventListener('change', switchDarkMode)
+        })
+    } else if (storageColorScheme == "Light") {
+        element.firstElementChild.classList.remove('fa-adjust')
+        element.firstElementChild.setAttribute("data-icon", 'sun')
+        element.firstElementChild.classList.add('fa-sun')
+    } else if (storageColorScheme == "Dark") {
+        element.firstElementChild.classList.remove('fa-adjust')
+        element.firstElementChild.setAttribute("data-icon", 'moon')
+        element.firstElementChild.classList.add('fa-moon')
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        getcolorscheme();
+        switchBurger();
+    });
+</script>
+</div>
+    </header>
+    <main class="grow pt-16">
+        <div class="pl-scrollbar">
+          <div class="mx-auto w-full max-w-screen-xl lg:px-4 xl:px-8">
+  
+  
+  <div class="grid grid-cols-2 gap-4 lg:grid-cols-8 lg:pt-12">
+    <div
+      class="lg:col-start-2 bg-secondary-bg col-span-2 rounded px-6 py-8 lg:col-span-6"
+    >
+      <article class="prose">
+  <h1 class="mb-4">JVM Basic - Rumtime Data Area</h1>
+
+  <div
+  class="text-tertiary-text not-prose mt-2 flex flex-row flex-wrap items-center"
+>
+  <div class="me-6 my-2">
+    <i class="fas fa-calendar me-1"></i>
+    <span
+      >2022-03-24</span
+    >
+  </div>
+  <div class="me-6 my-2">
+    <i class="fas fa-clock me-1"></i>
+    <span>2 min read</span>
+  </div>
+
+  
+    <div class="me-6 my-2">
+      <i class="fas fa-folder me-1"></i>
+      
+        <a href="https://zacash.cn/categories/java/" class="hover:text-eureka"
+          >java</a
+        >
+      
+    </div>
+  
+
+  
+</div>
+
+
+  
+  
+
+  <p>前面说了<a href="https://zacash.cn/posts/jvm-basic-classloader/">类加载器</a>，我们接下来看看<strong>运行时数据区(Run-Time Data Areas)</strong></p>
+<h2 id="run-time-data-areas">Run-Time Data Areas</h2>
+<p><img src="/img/jvm-arch.png" alt="jvm-arch"></p>
+<h3 id="the-pc-register">The pc Register</h3>
+<p>JVM 可以支持多个线程同时运行，每个线程都有自己的 <em>pc</em> 寄存器(program counter register)。在任意时间点，任一线程在执行某个方法的代码，即该线程的<a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-2.html#jvms-2.6">当前方法(current method)</a>。</p>
+<ul>
+<li>如果该方法是 <em>native</em> 的，<em>pc</em> 寄存器的值是 <em>undefined</em>。</li>
+<li>如果该方法不是 <em>native</em> 的，<em>pc</em> 寄存器包含当前正在执行指令的地址。</li>
+</ul>
+<p>JVM 的 <em>pc</em> 寄存器容量足够在特定平台上保存 <em>returnAddress</em> (returnAddress 保存着指向JVM操作码指令的指针) 或 <em>native</em> 指针。</p>
+<h3 id="jvm-栈-stacks">JVM 栈 (Stacks)</h3>
+<p>每个线程都有一个私有的 JVM 栈，与线程同时创建。JVM 栈存储 <em>栈帧(frames)</em> 对于栈帧仅有两种操作：push 和 pop。JVM 栈的内存<strong>不必是连续的</strong>。</p>
+<p>线程执行的每个 method calls 都存储在对应的栈中，包括入参、局部变量、中间计算和其他数据。方法完成后，JVM 将从栈中删除对应的条目，完成所有的方法调用后，栈将变为空，并且在终止线程前，销毁该栈。</p>
+<p>存储在栈中的数据仅适用于对应线程，对别的线程不适用。因此，可以说局部数据是线程安全的。</p>
+<blockquote>
+<p>第一版的 Java 虚拟机规范 <em>The Java® Virtual Machine Specification</em>, <em>JVM 栈</em> 被称为 <em>Java 栈 (Java stack)</em></p>
+</blockquote>
+<p>JVM 规范允许Java虚拟机栈具有固定大小，或者根据计算要求动态伸缩。 如果Java虚拟机栈的大小固定，则在创建每个Java虚拟机栈时可以独立选择它们的大小。</p>
+<p>关联的异常：</p>
+<ul>
+<li>
+<p>如果线程中的计算需要比允许的 JVM 更大的栈，则 JVM 将抛出 <strong>StackOverflowError</strong>。</p>
+</li>
+<li>
+<p>如果可以动态扩展 JVM 栈容量，并且尝试进行动态扩展，但外部环境无法提供足够的内存资源，或没有足够的内存资源为新线程创建 JVM 栈，则 JVM 会抛出 <strong>OutOfMemoryError</strong>。</p>
+</li>
+</ul>
+<h3 id="堆-heap">堆 (Heap)</h3>
+<p>堆是运行时为所有类实例和数组分配内存的区域，对所有线程共享。</p>
+<p>堆在虚拟机启动时创建，<em>垃圾回收器(garbage collector)</em> 可以回收对象的堆存储，对象永远不会被显式释放内存 (deallocated)。堆的大小同样可以是固定的，或者根据计算要求动态伸缩。堆内存<strong>不必是连续的</strong>。</p>
+<p>用户可以控制堆固定初始大小，或动态伸缩场景控制堆的最大/最小值。</p>
+<p>关联的异常：</p>
+<ul>
+<li>计算需要的堆内存多于系统可以提供的内存资源， JVM 会抛出 <strong>OutOfMemoryError</strong>。</li>
+</ul>
+<h3 id="方法区-method-area">方法区 (Method Area)</h3>
+<p>方法区存储每个类的结构，如<em>运行时常量池(run-time constant pool)</em>，<em>字段(field)</em>，和<em>方法数据(method data)</em>，以及方法和构造函数的代码，对所有线程共享。</p>
+<p>方法区同样在虚拟机启动时创建。尽管方法区在<strong>逻辑上是堆的一部分</strong>，但一些简单的 JVM 实现可以选择不对其进行垃圾回收或压缩。</p>
+<p>方法区可以是固定大小，或根据计算需求进行动态伸缩。方法区内存同样<strong>不必是连续的</strong>。</p>
+<p>关联的异常：</p>
+<ul>
+<li>方法区需要分配的内存多于系统可提供的内存资源，JVM 会抛出 <strong>OutOfMemoryError</strong>。</li>
+</ul>
+<h4 id="运行时长量池-rum-time-constant-pool">运行时长量池 (Rum-Time Constant Pool)</h4>
+<p>运行时常量池是每个类或接口的 <em>class</em> 文件中 <em>constant_pool</em> table 的运行时的表现形式。它主要包含：</p>
+<ul>
+<li>编译时数字文字</li>
+<li>运行时方法和字段引用</li>
+</ul>
+<p>运行时常量池功能类似于常规编程语言的符号表。尽管它包含的数据范围比典型的符号表更大。</p>
+<p>每个运行时常量池都是从 JVM 方法去分配的，当 JVM 创建类或接口时，将为该类或结构构造运行时常量池。</p>
+<p>运行时常量池会关联如下异常：</p>
+<ul>
+<li>创建类或缄口时，如果运行时常量池构造所需的内存超过 JVM 方法区的可用内存，则 JVM 会抛出 <strong>OutOfMemoryError</strong>.</li>
+</ul>
+<h3 id="native-method-stacks">Native Method Stacks</h3>
+<p>JVM 可以使用传统的堆栈，俗称 “C 栈”，来支持 <em>native</em> 方法。<em>native</em> 方法栈可以用于 JVM C语言指令集的解释器。JVM 不能加载 <em>native</em> 方法，并且它本身不依赖于传统堆栈，不需要提供 <em>native</em> 方法栈。如果提供，通常在创建线程时为每个线程提供 <em>native</em> 方法栈。</p>
+<p>JVM 规范允许 <em>native</em> 方法堆栈具有固定大小，或者根据计算要求动态扩展和收缩。如果本机方法堆栈的大小固定，则在创建每个 <em>native</em> 方法栈的大小时可以独立选择。</p>
+<p><em>native</em> 方法栈关联的异常：</p>
+<ul>
+<li>如果线程中的计算所需的 <em>native</em> 方法栈容量超出允许的范围，则 JVM 会抛出 <strong>StackOverflowError</strong>.</li>
+<li>如果 <em>native</em> 方法栈容量尝试动态扩展，但外部环境无法提供足够的内存资源，或没有足够的内存资源为新线程创建 <em>native</em> 方法栈，则 JVM 会抛出 <strong>OutOfMemoryError</strong>.</li>
+</ul>
+<h2 id="execution-engine">Execution Engine</h2>
+<p>执行引擎执行 <em>.class(bytecode)</em>.它逐行读取字节码，使用各个存储区的数据和信息并执行指令，它可以分成三部分：</p>
+<ul>
+<li>Interpreter：逐行解释字节码然后执行。缺点是当多处调用一个方法时，每次都需要解释步骤。</li>
+<li>Just-in-Time Compiler(HotSpot)：用于提高解释器的效率，它编译整个字节码并将其转换为 <em>native</em> 代码，每当解释器遇见重复的方法调用时，JIT 都会为该部分提供 <em>native</em> 代码，因此不用解释器重复解释，从而提高了效率。</li>
+<li>Garbage Collector：销毁未引用的对象，回收内存。</li>
+</ul>
+<h2 id="java-native-interfacejni">Java Native Interface（JNI）</h2>
+<p>JNI 是与 <em>native</em> 方法库交互的接口，它使 JVM 可以调用 C/C ++ 库。</p>
+<h2 id="native-method-libraries">Native Method Libraries</h2>
+<p>供执行引擎需要的 <em>native</em> 代码库。</p>
+<h2 id="reference">Reference</h2>
+<ul>
+<li>JVM Run-Time Data Areas: <a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-2.html#jvms-2.5.4">https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-2.html#jvms-2.5.4</a></li>
+<li>JVM architecture: <a href="https://www.geeksforgeeks.org/jvm-works-jvm-architecture/">https://www.geeksforgeeks.org/jvm-works-jvm-architecture/</a></li>
+<li>Class Loader: <a href="https://www.baeldung.com/java-classloaders">https://www.baeldung.com/java-classloaders</a></li>
+</ul>
+
+</article>
+
+
+      
+        <div class="my-4">
+    
+    <a href="https://zacash.cn/tags/jvm/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 me-2 hover:text-eureka">#jvm</a>
+    
+    <a href="https://zacash.cn/tags/rumtime-data-area/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 me-2 hover:text-eureka">#rumtime data area</a>
+    
+</div>
+      
+
+      
+
+
+
+      
+
+      
+  <div
+    class="-mx-2 mt-4 flex flex-col border-t px-2 pt-4 md:flex-row md:justify-between"
+  >
+    <div>
+      
+    </div>
+    <div class="mt-4 md:mt-0 md:text-right">
+      
+        <span class="text-primary-text block font-bold">Next</span>
+        <a href="https://zacash.cn/posts/jvm-basic-classloader/" class="block">JVM Basic - ClassLoader</a>
+      
+    </div>
+  </div>
+
+
+      
+
+
+
+    </div>
+    
+
+    
+    
+      <div
+        class="lg:col-start-2 bg-secondary-bg prose col-span-2 rounded p-6 lg:col-span-6"
+      >
+        <h3>See Also</h3>
+        
+          <a href="https://zacash.cn/posts/jvm-basic-classloader/" class="no-underline">JVM Basic - ClassLoader</a>
+          <br />
+        
+          <a href="https://zacash.cn/posts/jvm-mechanics/" class="no-underline">JVM Mechanics</a>
+          <br />
+        
+      </div>
+    
+  </div>
+
+  
+
+          </div>
+        </div>
+      
+    </main>
+    <footer class="pl-scrollbar">
+      <div class="mx-auto w-full max-w-screen-xl"><div class="text-center p-6 pin-b">
+    <p class="text-sm text-tertiary-text">Copyright Zac &copy; 2022
+ &middot;  Powered by the <a href="https://github.com/wangchucheng/hugo-eureka" class="hover:text-eureka">Eureka</a> theme for <a href="https://gohugo.io" class="hover:text-eureka">Hugo</a></p>
+</div></div>
+    </footer>
+  </body>
+</html>

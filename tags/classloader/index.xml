@@ -10,11 +10,11 @@
 </copyright>
     <lastBuildDate>Wed, 23 Mar 2022 08:44:28 +0800</lastBuildDate><atom:link href="https://zacash.cn/tags/classloader/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Intro to ClassLoader</title>
-      <link>https://zacash.cn/posts/intro-to-classloader/</link>
+      <title>JVM Basic - ClassLoader</title>
+      <link>https://zacash.cn/posts/jvm-basic-classloader/</link>
       <pubDate>Wed, 23 Mar 2022 08:44:28 +0800</pubDate>
       
-      <guid>https://zacash.cn/posts/intro-to-classloader/</guid>
+      <guid>https://zacash.cn/posts/jvm-basic-classloader/</guid>
       <description>类加载器（ClassLoader） 什么是类加载器 类加载器是 JRE 的一部分，负责在运行时将 Java 类动态加载到 JVM，有了类加载器，JVM 无需了解底层文件或文件系统即可运行Java程序。
 类加载器不会一次将全部类加载到内存里，而是在程序需要时加载。
 JVM 内置的类加载器类型   Bootstrap class loader
