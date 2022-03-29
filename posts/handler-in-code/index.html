@@ -82,7 +82,7 @@
     },
     "headline": "Handler in Details | Zac\u0027s blog","datePublished": "2020-04-12T20:36:33+08:00",
     "dateModified": "2020-04-12T20:36:33+08:00",
-    "wordCount":  999 ,
+    "wordCount":  1012 ,
     "publisher": {
         "@type": "Person",
         "name": "Zac Zhu",
@@ -131,10 +131,6 @@
 
 
 <meta property="article:tag" content="handler" />
-
-<meta property="article:tag" content="message queue" />
-
-<meta property="article:tag" content="looper" />
 
 
 
@@ -324,11 +320,13 @@
 </span></span><span style="display:flex;"><span>    mAsynchronous = async;
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p><code>Looper.myLooper()</code> 的实现则是：</p>
-<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">public</span> <span style="color:#6ab825;font-weight:bold">static</span> <span style="color:#ffa500">@Nullable</span> Looper <span style="color:#447fcf">myLooper</span>() {
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#999;font-style:italic">// android/os/Looper.java
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span><span style="color:#6ab825;font-weight:bold">public</span> <span style="color:#6ab825;font-weight:bold">static</span> <span style="color:#ffa500">@Nullable</span> Looper <span style="color:#447fcf">myLooper</span>() {
 </span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">return</span> sThreadLocal.<span style="color:#bbb">get</span>();
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>那么 sThreadLocal 在哪里 set 的呢？答案是 <code>Looper.prepare()</code> 方法:</p>
-<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">private</span> <span style="color:#6ab825;font-weight:bold">static</span> <span style="color:#6ab825;font-weight:bold">void</span> <span style="color:#447fcf">prepare</span>(<span style="color:#6ab825;font-weight:bold">boolean</span> quitAllowed) {
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#999;font-style:italic">// android/os/Looper.java
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span><span style="color:#6ab825;font-weight:bold">private</span> <span style="color:#6ab825;font-weight:bold">static</span> <span style="color:#6ab825;font-weight:bold">void</span> <span style="color:#447fcf">prepare</span>(<span style="color:#6ab825;font-weight:bold">boolean</span> quitAllowed) {
 </span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">if</span> (sThreadLocal.<span style="color:#bbb">get</span>() != <span style="color:#6ab825;font-weight:bold">null</span>) {
 </span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">throw</span> <span style="color:#6ab825;font-weight:bold">new</span> RuntimeException(<span style="color:#ed9d13">&#34;Only one Looper may be created per thread&#34;</span>);
 </span></span><span style="display:flex;"><span>    }
@@ -344,8 +342,9 @@ Schedule Message 和 Runnable 比较容易理解，Handler 提供了如 <code>se
 在别的线程执行任务，我们通常的应用就是在子线程处理耗时任务后，我们可以通过 <code>Handler(getMainLooper())</code> 来执行更新 UI 的操作。</li>
 </ul>
 <h3 id="handler-和-messagequeue">Handler 和 MessageQueue</h3>
-<p>观察源码可以发现 handler 的 <code>sendMessage(msg)</code>、<code>sendMessageDelayed(msg, timeMillis)</code>、<code>post(runnable)</code> 方法最后都是通过调用 <code>sendMessageAtTime(msg, uptimeMillis)</code> 实现：</p>
-<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">public</span> <span style="color:#6ab825;font-weight:bold">boolean</span> <span style="color:#447fcf">sendMessageAtTime</span>(<span style="color:#ffa500">@NonNull</span> Message msg, <span style="color:#6ab825;font-weight:bold">long</span> uptimeMillis) {
+<p>观察 Handler 的实现可以发现 <code>sendMessage(msg)</code>、<code>sendMessageDelayed(msg, timeMillis)</code>、<code>post(runnable)</code> 方法最后都是通过调用 <code>sendMessageAtTime(msg, uptimeMillis)</code> 实现：</p>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#999;font-style:italic">// android/os/Handler.java
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span><span style="color:#6ab825;font-weight:bold">public</span> <span style="color:#6ab825;font-weight:bold">boolean</span> <span style="color:#447fcf">sendMessageAtTime</span>(<span style="color:#ffa500">@NonNull</span> Message msg, <span style="color:#6ab825;font-weight:bold">long</span> uptimeMillis) {
 </span></span><span style="display:flex;"><span>    MessageQueue queue = mQueue;
 </span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">if</span> (queue == <span style="color:#6ab825;font-weight:bold">null</span>) {
 </span></span><span style="display:flex;"><span>        RuntimeException e = <span style="color:#6ab825;font-weight:bold">new</span> RuntimeException(
@@ -374,10 +373,11 @@ Schedule Message 和 Runnable 比较容易理解，Handler 提供了如 <code>se
 </span></span><span style="display:flex;"><span>    mQueue = <span style="color:#6ab825;font-weight:bold">new</span> MessageQueue(quitAllowed);
 </span></span><span style="display:flex;"><span>    mThread = Thread.<span style="color:#bbb">currentThread</span>();
 </span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>可以看到像官方文档描述的那样，每个 Handler 实例都关联着一条线程以及这条线程的消息队列(Each Handler instance is associated with a single thread and that thread&rsquo;s message queue)。</p>
+</span></span></code></pre></div><p>可以看到像官方文档描述的那样，每个 Handler 实例都关联着一条线程以及这条线程的消息队列(<em>Each Handler instance is associated with a single thread and that thread&rsquo;s message queue</em>)。</p>
 <h4 id="消息如何入列">消息如何入列</h4>
 <p>在 <code>sendMessageAtTime()</code> 方法最后返回了 <code>Handler.enqueueMessage()</code> 的值：</p>
-<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">private</span> <span style="color:#6ab825;font-weight:bold">boolean</span> <span style="color:#447fcf">enqueueMessage</span>(<span style="color:#ffa500">@NonNull</span> MessageQueue queue, <span style="color:#ffa500">@NonNull</span> Message msg, <span style="color:#6ab825;font-weight:bold">long</span> uptimeMillis) {
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#999;font-style:italic">// android/os/Handler.java
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span><span style="color:#6ab825;font-weight:bold">private</span> <span style="color:#6ab825;font-weight:bold">boolean</span> <span style="color:#447fcf">enqueueMessage</span>(<span style="color:#ffa500">@NonNull</span> MessageQueue queue, <span style="color:#ffa500">@NonNull</span> Message msg, <span style="color:#6ab825;font-weight:bold">long</span> uptimeMillis) {
 </span></span><span style="display:flex;"><span>    msg.<span style="color:#bbb">target</span> = <span style="color:#6ab825;font-weight:bold">this</span>;
 </span></span><span style="display:flex;"><span>    msg.<span style="color:#bbb">workSourceUid</span> = ThreadLocalWorkSource.<span style="color:#bbb">getUid</span>();
 </span></span><span style="display:flex;"><span>
@@ -387,15 +387,17 @@ Schedule Message 和 Runnable 比较容易理解，Handler 提供了如 <code>se
 </span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">return</span> queue.<span style="color:#bbb">enqueueMessage</span>(msg, uptimeMillis);
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p><code>Handler.enqueueMessage()</code> 调用的 <code>MessageQueue.enqueueMessage()</code> 实现如下：</p>
-<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">boolean</span> <span style="color:#447fcf">enqueueMessage</span>(Message msg, <span style="color:#6ab825;font-weight:bold">long</span> when) {
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#999;font-style:italic">// android/os/MessageQueue.java
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span><span style="color:#6ab825;font-weight:bold">boolean</span> <span style="color:#447fcf">enqueueMessage</span>(Message msg, <span style="color:#6ab825;font-weight:bold">long</span> when) {
 </span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">if</span> (msg.<span style="color:#bbb">target</span> == <span style="color:#6ab825;font-weight:bold">null</span>) {
 </span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">throw</span> <span style="color:#6ab825;font-weight:bold">new</span> IllegalArgumentException(<span style="color:#ed9d13">&#34;Message must have a target.&#34;</span>);
 </span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">if</span> (msg.<span style="color:#bbb">isInUse</span>()) {
-</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">throw</span> <span style="color:#6ab825;font-weight:bold">new</span> IllegalStateException(msg + <span style="color:#ed9d13">&#34; This message is already in use.&#34;</span>);
-</span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">synchronized</span> (<span style="color:#6ab825;font-weight:bold">this</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">if</span> (msg.<span style="color:#bbb">isInUse</span>()) {
+</span></span><span style="display:flex;"><span>            <span style="color:#6ab825;font-weight:bold">throw</span> <span style="color:#6ab825;font-weight:bold">new</span> IllegalStateException(msg + <span style="color:#ed9d13">&#34; This message is already in use.&#34;</span>);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">if</span> (mQuitting) {
 </span></span><span style="display:flex;"><span>            IllegalStateException e = <span style="color:#6ab825;font-weight:bold">new</span> IllegalStateException(
 </span></span><span style="display:flex;"><span>                    msg.<span style="color:#bbb">target</span> + <span style="color:#ed9d13">&#34; sending message to a Handler on a dead thread&#34;</span>);
@@ -440,7 +442,7 @@ Schedule Message 和 Runnable 比较容易理解，Handler 提供了如 <code>se
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">return</span> <span style="color:#6ab825;font-weight:bold">true</span>;
 </span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>我们分开来看，这里 <code>msg.target</code> 即消息对应的 handler, 在 <code>Handler.enqueueMessage()</code> 方法有赋值。</p>
+</span></span></code></pre></div><p>我们分开来看，这里 <code>msg.target</code> 即 Message 对应的 Handler 实例, 在 <code>Handler.enqueueMessage()</code> 里有赋值。</p>
 <p>MessageQueue 并没有队列的数据结构，而是以单链表的形式存储 msg，<code>mMessages</code> 为当前链表头部的消息，我们称为 head_msg，当前传入的消息称为 current_msg，</p>
 <div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">if</span> (p == <span style="color:#6ab825;font-weight:bold">null</span> || when == 0 || when &lt; p.<span style="color:#bbb">when</span>) {
 </span></span><span style="display:flex;"><span>    <span style="color:#999;font-style:italic">// New head, wake up the event queue if blocked.
@@ -450,9 +452,9 @@ Schedule Message 和 Runnable 比较容易理解，Handler 提供了如 <code>se
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p><code>if</code> 的判断是，如果:</p>
 <ul>
-<li>1).当前队列没有 head_msg</li>
-<li>2).current_msg 是需要立即执行</li>
-<li>3).current_msg 的执行时间在 head_msg 执行时间之前</li>
+<li>当前队列没有 head_msg</li>
+<li>current_msg 是需要立即执行</li>
+<li>current_msg 的执行时间在 head_msg 执行时间之前</li>
 </ul>
 <p>则将 head_msg 标记为 current_msg 的下一条消息，current_msg 标记为头部消息，并且唤醒当前阻塞的队列。</p>
 <div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>...
@@ -519,10 +521,10 @@ Schedule Message 和 Runnable 比较容易理解，Handler 提供了如 <code>se
 </span></span><span style="display:flex;"><span>        handleMessage(msg);
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p><code>msg.callback</code> 对应的是 <code>Handler.post(runnable)</code> 传递的 Runnable 对象，而 <code>mCallback.handleMessage(msg)</code> 或 <code>handleMessage(msg)</code> 则是实例话 Handler 对象时复写的方法。</p>
+</span></span></code></pre></div><p><code>msg.callback</code> 对应的是 <code>Handler.post(runnable)</code> 传递的 Runnable 对象，而 <code>mCallback.handleMessage(msg)</code> 或 <code>handleMessage(msg)</code> 则是实例化 Handler 对象时复写的方法。</p>
 <h3 id="总结">总结</h3>
-<p>Handler 帮助我们处理 Message 和 Runnable 对象，每个 Handler 实例都关联着一个线程以及这个线程的 MessageQueue。当你创建一个新的 Handler 对象时，它将与当前所在的线程(UI/Work Thread)和 MessageQueue 绑定在一起，通过 Handler 发出的 Message 或者 Runnable(msg.callback) 会根据执行时间插入 MessageQueue，Looper 会持续不断的从 MessageQueue 取出可执行的 Message 通过 Handler.handleMessage(msg) 处理。</p>
-<p>如下图所示：<img src="https://i1.wp.com/tutorial.eyehunts.com/wp-content/uploads/2018/08/Android-Handler-Background-Thread-Communicate-with-UI-thread-1.png?resize=1024%2C621&amp;ssl=1" alt="handler"></p>
+<p>Handler 帮助我们处理 Message 和 Runnable 对象，每个 Handler 实例都关联着一个线程以及这个线程的 MessageQueue。当我们创建一个新的 Handler 对象时，它将与当前所在的线程(UI/Work Thread)和 MessageQueue 绑定在一起，通过 Handler 发出的 Message 或者 Runnable(msg.callback) 会根据执行时间插入 MessageQueue，Looper 会持续不断的从 MessageQueue 取出可执行的 Message 通过 Handler.handleMessage(msg) 处理。</p>
+<p>如下图所示：<img src="/img/handler_looper_messagequeue.jpeg" alt="handler"></p>
 
 </article>
 
@@ -531,10 +533,6 @@ Schedule Message 和 Runnable 比较容易理解，Handler 提供了如 <code>se
         <div class="my-4">
     
     <a href="https://zacash.cn/tags/handler/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 me-2 hover:text-eureka">#handler</a>
-    
-    <a href="https://zacash.cn/tags/message-queue/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 me-2 hover:text-eureka">#message queue</a>
-    
-    <a href="https://zacash.cn/tags/looper/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 me-2 hover:text-eureka">#looper</a>
     
 </div>
       

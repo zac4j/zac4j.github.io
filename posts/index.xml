@@ -346,9 +346,10 @@ Activity 的四种启动模式 (launchMode) 如通过 startActivity(Intent) 启�
       <pubDate>Tue, 14 Apr 2020 21:53:54 +0800</pubDate>
       
       <guid>https://zacash.cn/posts/handler-in-action/</guid>
-      <description>Memory Leaks 1.1 背景 1.Handler 在使用下面这种实现方式处理消息时:
-class MainActivity : Activity() {   private val mLeakedHandler = object : Handler() {  override fun handleMessage(msg: Message) {  super.handleMessage(msg)  }  } Android Lint 会发出这样的警告: This Handler class should be static or leaks might occur(anonymous android.os.Handler)
-2.我们在 Handler 构造方法里同样可以看到：
+      <description>Handler 在使用时常见的问题
+1.Memory Leaks 1.1 背景 Handler 在使用下面这种实现方式处理消息时:
+class MainActivity: Activity() {   private val mLeakedHandler = object: Handler() {  override fun handleMessage(msg: Message) {  super.handleMessage(msg)  }  } Android Lint 会发出这样的警告: This Handler class should be static or leaks might occur(anonymous android.os.Handler)
+我们在 Handler 构造方法里可以看到：
 public Handler(@Nullable Callback callback, boolean async) {  if (FIND_POTENTIAL_LEAKS) {  final Class&amp;lt;? extends Handler&amp;gt; klass = getClass();  if ((klass.isAnonymousClass() || klass.isMemberClass() || klass.</description>
     </item>
     
