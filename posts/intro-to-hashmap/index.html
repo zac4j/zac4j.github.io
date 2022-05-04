@@ -82,7 +82,7 @@
     },
     "headline": "Intro to HashMap | Zac\u0027s blog","datePublished": "2020-07-15T15:11:27+08:00",
     "dateModified": "2020-07-15T15:11:27+08:00",
-    "wordCount":  807 ,
+    "wordCount":  1049 ,
     "publisher": {
         "@type": "Person",
         "name": "Zac Zhu",
@@ -135,6 +135,10 @@
 <meta property="article:tag" content="map" />
 
 
+
+
+
+<meta property="og:see_also" content="https://zacash.cn/posts/intro-to-concurrenthashmap/" />
 
 
 
@@ -232,7 +236,7 @@
   </div>
   <div class="me-6 my-2">
     <i class="fas fa-clock me-1"></i>
-    <span>4 min read</span>
+    <span>5 min read</span>
   </div>
 
   
@@ -254,7 +258,7 @@
   
 
   <p>Hash table based implementation of the Map interface.  This implementation provides all of the optional map operations, and permits null values and the null key.</p>
-<h2 id="hashmap-介绍">HashMap 介绍</h2>
+<h2 id="hashmap-brief-intro">HashMap Brief Intro</h2>
 <p>The HashMap class is roughly equivalent to Hashtable, except that it is unsynchronized and permits nulls. This class makes no guarantees as to the order of the map; in particular, it does not guarantee that the order will remain constant over time.</p>
 <p>HashMap 和 HashTable 大致等效，除了 HashMap 是非同步的，以及允许空值。无法保证顺序随着时间的推移保持不变。</p>
 <p>This implementation provides <strong>constant-time</strong> performance for the basic operations (get and put),assuming the hash function disperses the elements properly among the buckets.</p>
@@ -302,7 +306,7 @@
 <p>Iteration over collection views requires time proportional to the &ldquo;capacity&rdquo; of the HashMap instance (the number of buckets) plus its size (the number of key-value mappings).</p>
 <p>从集合视角看，迭代所需的时间与 HashMap 实例的“容量”（ bucket 数量 ）及其大小（键-值映射数）成正比。</p>
 <p>Thus, it&rsquo;s very important not to set the initial capacity too high (or the load factor too low) if iteration performance is important.</p>
-<p>因此，如果迭代性能很重要，那么不要将初识容量设置过高（或负载因子设置过低），这很关键。</p>
+<p>因此，如果迭代性能很重要，那么不要将初始容量设置过高（或负载因子设置过低），这很关键。</p>
 <p>An instance of HashMap has two parameters that affect its performance：</p>
 <p>有两个参数会影响 HashMap 实例的性能：</p>
 <ul>
@@ -322,7 +326,7 @@
 <p>If many mappings are to be stored in a HashMap instance, creating it with a sufficiently large capacity will allow the mappings to be stored more efficiently than letting it perform automatic rehashing as needed to grow the table.</p>
 <p>如果将许多映射关系存储在 HashMap 实例中，创建足够大容量的 map 将比让其按需自动增长哈希表重新映射，更有效的存储映射。</p>
 <p>Note that using many keys with the same {@code hashCode()} is a sure way to slow down performance of any hash table. To ameliorate impact, when keys are {@link Comparable}, this class may use comparison order among keys to help break ties.</p>
-<p>注意，使用许多具有相同 hashCode 的键是降低任何哈希表性能的方法。为了改善影响，当键是可比较时(Comparable)时，此类可以使用键之间的比较顺序来帮助打破平衡。</p>
+<p>注意，使用许多具有相同 hashCode 的键是降低任何哈希表性能的方法。为了改善影响，当键是 <em>Comparable</em> 时，此类可以使用键之间的比较顺序来帮助打破平衡。</p>
 <p>Note that this implementation is not synchronized. If multiple threads access a hash map concurrently, and at least one of the threads modifies the map structurally, it must be synchronized externally. (A structural modification is any operation that adds or deletes one or more mappings; merely changing the value associated with a key that an instance already contains is not a structural modification.) This is typically accomplished by synchronizing on some object that naturally encapsulates the map.</p>
 <p>注意，这个实现并不是同步的。如果多线程同时访问 hash map，并且至少有一个线程在结构上修改了 map，则必须在外部进行同步。（结构型修改是指增删一个或多个映射关系，更新某个 key 对应的值并不是结构型修改）。通常是对封装 map 的某个对象加同步来实现。</p>
 <p>If no such object exists, the map should be &ldquo;wrapped&rdquo; using the {@link Collections#synchronizedMap Collections.synchronizedMap} method.  This is best done at creation time, to prevent accidental unsynchronized access to the map: Map m = Collections.synchronizedMap(new HashMap(&hellip;));</p>
@@ -332,7 +336,66 @@
 <h3 id="何为-fast-fail">何为 fast fail</h3>
 <p>Note that the fail-fast behavior of an iterator cannot be guaranteed as it is, generally speaking, impossible to make any hard guarantees in the presence of unsynchronized concurrent modification.  Fail-fast iterators throw ConcurrentModificationException on a best-effort basis. Therefore, it would be wrong to write a program that depended on this exception for its correctness: the fail-fast behavior of iterators should be used only to detect bugs.</p>
 <p>注意不能保证迭代器的 fast fail 行为，一般来说，在存在不同步的并发修改情况下，不可能作出任何严格的保证。因此，编写依赖于此异常的程序的正确性是错误的：迭代器的 fast fail 行为仅用于错误检测。</p>
-<p>This class is a member of the Java Collections Framework<a href="https://docs.oracle.com/javase/8/docs/technotes/guides/collections/index.html">jcf</a></p>
+<p>This class is a member of the <a href="https://docs.oracle.com/javase/8/docs/technotes/guides/collections/index.html">Java Collections Framework</a></p>
+<h2 id="hashmap-code-implementation">HashMap code implementation</h2>
+<p>主要围绕几个问题来进行</p>
+<p>HashMap 的底层实现
+HashMap 在 JDK1.7 和 JDK1.8 的底层实现是不一样的，在 JDK1.7 中，HashMap 使用的是数组 + 链表实现的，JDK1.8 中使用的是数组+链表或红黑树实现。</p>
+<p>JDK 7 中的实现如图：
+<img src="/img/HashMapStructure.webp" alt="jdk7"></p>
+<p>每个 Node 包含的内容为:</p>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">static</span> <span style="color:#6ab825;font-weight:bold">class</span> <span style="color:#447fcf;text-decoration:underline">Node</span>&lt;K,V&gt; <span style="color:#6ab825;font-weight:bold">implements</span> Map.<span style="color:#bbb">Entry</span>&lt;K,V&gt; {
+</span></span><span style="display:flex;"><span>    <span style="color:#999;font-style:italic">// hashcode of key
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>    <span style="color:#6ab825;font-weight:bold">final</span> <span style="color:#6ab825;font-weight:bold">int</span> hash;
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">final</span> K key;
+</span></span><span style="display:flex;"><span>    V value;
+</span></span><span style="display:flex;"><span>    <span style="color:#999;font-style:italic">// next node
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>    Node&lt;K,V&gt; next;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h3 id="hashmap-插入流程">HashMap 插入流程</h3>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">final</span> V <span style="color:#447fcf">putVal</span>(<span style="color:#6ab825;font-weight:bold">int</span> hash, K key, V value, <span style="color:#6ab825;font-weight:bold">boolean</span> onlyIfAbsent,
+</span></span><span style="display:flex;"><span>                   <span style="color:#6ab825;font-weight:bold">boolean</span> evict) {
+</span></span><span style="display:flex;"><span>    Node&lt;K,V&gt;[] tab; Node&lt;K,V&gt; p; <span style="color:#6ab825;font-weight:bold">int</span> n, i;
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">if</span> ((tab = table) == <span style="color:#6ab825;font-weight:bold">null</span> || (n = tab.<span style="color:#bbb">length</span>) == 0)
+</span></span><span style="display:flex;"><span>        n = (tab = resize()).<span style="color:#bbb">length</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">if</span> ((p = tab[i = (n - 1) &amp; hash]) == <span style="color:#6ab825;font-weight:bold">null</span>)
+</span></span><span style="display:flex;"><span>        tab[i] = newNode(hash, key, value, <span style="color:#6ab825;font-weight:bold">null</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">else</span> {
+</span></span><span style="display:flex;"><span>        Node&lt;K,V&gt; e; K k;
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">if</span> (p.<span style="color:#bbb">hash</span> == hash &amp;&amp;
+</span></span><span style="display:flex;"><span>            ((k = p.<span style="color:#bbb">key</span>) == key || (key != <span style="color:#6ab825;font-weight:bold">null</span> &amp;&amp; key.<span style="color:#bbb">equals</span>(k))))
+</span></span><span style="display:flex;"><span>            e = p;
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">else</span> <span style="color:#6ab825;font-weight:bold">if</span> (p <span style="color:#6ab825;font-weight:bold">instanceof</span> TreeNode)
+</span></span><span style="display:flex;"><span>            e = ((TreeNode&lt;K,V&gt;)p).<span style="color:#bbb">putTreeVal</span>(<span style="color:#6ab825;font-weight:bold">this</span>, tab, hash, key, value);
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">else</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#6ab825;font-weight:bold">for</span> (<span style="color:#6ab825;font-weight:bold">int</span> binCount = 0; ; ++binCount) {
+</span></span><span style="display:flex;"><span>                <span style="color:#6ab825;font-weight:bold">if</span> ((e = p.<span style="color:#bbb">next</span>) == <span style="color:#6ab825;font-weight:bold">null</span>) {
+</span></span><span style="display:flex;"><span>                    p.<span style="color:#bbb">next</span> = newNode(hash, key, value, <span style="color:#6ab825;font-weight:bold">null</span>);
+</span></span><span style="display:flex;"><span>                    <span style="color:#6ab825;font-weight:bold">if</span> (binCount &gt;= TREEIFY_THRESHOLD - 1) <span style="color:#999;font-style:italic">// -1 for 1st
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>                        treeifyBin(tab, hash);
+</span></span><span style="display:flex;"><span>                    <span style="color:#6ab825;font-weight:bold">break</span>;
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>                <span style="color:#6ab825;font-weight:bold">if</span> (e.<span style="color:#bbb">hash</span> == hash &amp;&amp;
+</span></span><span style="display:flex;"><span>                    ((k = e.<span style="color:#bbb">key</span>) == key || (key != <span style="color:#6ab825;font-weight:bold">null</span> &amp;&amp; key.<span style="color:#bbb">equals</span>(k))))
+</span></span><span style="display:flex;"><span>                    <span style="color:#6ab825;font-weight:bold">break</span>;
+</span></span><span style="display:flex;"><span>                p = e;
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">if</span> (e != <span style="color:#6ab825;font-weight:bold">null</span>) { <span style="color:#999;font-style:italic">// existing mapping for key
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>            V oldValue = e.<span style="color:#bbb">value</span>;
+</span></span><span style="display:flex;"><span>            <span style="color:#6ab825;font-weight:bold">if</span> (!onlyIfAbsent || oldValue == <span style="color:#6ab825;font-weight:bold">null</span>)
+</span></span><span style="display:flex;"><span>                e.<span style="color:#bbb">value</span> = value;
+</span></span><span style="display:flex;"><span>            afterNodeAccess(e);
+</span></span><span style="display:flex;"><span>            <span style="color:#6ab825;font-weight:bold">return</span> oldValue;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    ++modCount;
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">if</span> (++size &gt; threshold)
+</span></span><span style="display:flex;"><span>        resize();
+</span></span><span style="display:flex;"><span>    afterNodeInsertion(evict);
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">return</span> <span style="color:#6ab825;font-weight:bold">null</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div>
 </article>
 
 
@@ -361,7 +424,7 @@
         <span class="text-primary-text block font-bold"
           >Previous</span
         >
-        <a href="https://zacash.cn/posts/jvm-mechanics/" class="block">JVM Mechanics</a>
+        <a href="https://zacash.cn/posts/intro-to-concurrenthashmap/" class="block">Intro to ConcurrentHashMap</a>
       
     </div>
     <div class="mt-4 md:mt-0 md:text-right">
@@ -381,6 +444,16 @@
     
 
     
+    
+      <div
+        class="lg:col-start-2 bg-secondary-bg prose col-span-2 rounded p-6 lg:col-span-6"
+      >
+        <h3>See Also</h3>
+        
+          <a href="https://zacash.cn/posts/intro-to-concurrenthashmap/" class="no-underline">Intro to ConcurrentHashMap</a>
+          <br />
+        
+      </div>
     
   </div>
 

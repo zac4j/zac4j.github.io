@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>resume on Zac&#39;s blog</title>
+    <link>https://zacash.cn/tags/resume/</link>
+    <description>Recent content in resume on Zac&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>Copyright Zac &amp;copy; 2022
+</copyright>
+    <lastBuildDate>Wed, 04 May 2022 21:01:59 +0800</lastBuildDate><atom:link href="https://zacash.cn/tags/resume/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>How to Write A Better Resume</title>
+      <link>https://zacash.cn/posts/how-to-write-better-resume/</link>
+      <pubDate>Wed, 04 May 2022 21:01:59 +0800</pubDate>
+      
+      <guid>https://zacash.cn/posts/how-to-write-better-resume/</guid>
+      <description>作者：Windson Yang 链接：https://zhuanlan.zhihu.com/p/38431524 来源：知乎 著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 概述 从零开始写简历是一件痛苦的事，大多数求职者没有阅读过其他求职者的简历，所以无法从优秀的简历中学习如何改进自己的简历。我遇过不少求职者写完简历后连自己都不忍心看，错别字连篇，排版混乱就投出去，这也不难怪没有获得面试的机会。加上程序员工资中位数较高，有大量人才从其他专业转来，竞争非常激烈。这篇文章分成两部分，简历中的常见错误以及如何写一份出色的简历，通过分享我们的经验以及技巧，帮助你从众多简历中脱颖而出。
+简历中常见的错误 1.信息过多，缺乏重点 信息过多的常见表现是几十行的技能列表，举个例子：
+20 行的技能列表，这位求职者开始就把自己了解的所有工具都列出来，希望能够突显自己的经验和学习能力，但是却适得其反。我们首先要了解 HR 是如何筛选简历的，例如要招前端工程师，HR 会先找简历是否有简介这类总结性的板块，看求职者是否符合基本的岗位要求。接下来会在技能列表中搜索 Vue，React，jQuery 等关键字。如果也符合要求，才会认真阅读整份简历的其他部分。平均来说，给每份简历的时间只有不到十秒钟。所以越简洁清晰的简历，HR 反而越有可能认真看。
+这里还有个小技巧，投简历不要扎堆在周末投，而应该在平日投。因为周一堆积了周五未处理完的简历以及周末的简历，是最多简历需要处理的时候，HR 花费在每份简历上的平均时间会相对较少。另外，HR 会倾向于把同一天的求职者当成竞争对手，从中挑选合适的，所以那么简历越多竞争也越激烈。
+大段的技能列表还有另外一个问题，当 HR 发现里面有几行是一些非常基础的技能时，反而会开始怀疑求职者的技术能力。想象下，当你上网搜索到一个 20部最佳喜剧电影榜单。却发现其中好几部都是之前看过的烂片，一点都不好笑。这个情况下，你就会开始怀疑这个喜剧电影排行榜有问题。技能列表也是一样的，基础的技能点越多，被怀疑的可能性也越高。 那么技能列表应该这么写呢？因为 HR 既可能是工程师，也可能是非技术员工，所以技能列表也应该简短而排版清晰，让外行人也能快速定位技能。我建议参考这种方式（熟练度从高到低进行排列，但不要强调熟练度）：
+ 后端框架：Django, Flask, Tornado 前端框架：Vue, React, jQuery 数据库：Redis, MySQL 工具：Docker, Jenkins, Git 其他：HTTP, TCP/IP, WebSocket 外语：大学英语四级，能流畅阅读英文文档  就是如此简短，让 HR 能快速定位到求职者的技能，做出是否看下去的判断。可能有读者会疑问了，这样好像太简单，无法突显我对工具的熟悉程度以及技术能力，这个问题，可以参考下文的简介部分来找到解答。
+2.无意义描述 第二个常见错误就是叙述项目经验时进行无意义的描述：
+ XXX平台 根据项目任务要求完成规划工作和按时完成软件开发。 完成爬虫模块，展示模块。 开发后台管理系统，实现自定义分页，第三方登录。 完成数据整理与入库功能。
+ HR 无法从这样的描述中得到有效的信息，也无法判断求职者的技术能力。项目经验是最能够突显技术能力的地方，应该按照
+ 使用什么工具： 使用 Scrapy 开发异步爬虫系统 实现什么功能： 构建 IP 代理池，优化爬虫策略和防屏蔽规则 结果怎么样： 提升 200% 网页抓取速度  三个点来修改，这里的 200% 量化数据是画龙点睛之处。就算没做太多统计和优化，也可以展示 CPU 或者内存负载数据。</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  dir="ltr"
+  
+><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<title>Handler in Depth | Zac&#39;s blog</title>
+
+<meta name="generator" content="Hugo Eureka 0.9.1" />
+<link rel="stylesheet" href="https://zacash.cn/css/eureka.min.6a378a23360d238dc3ef4df2f5cd718093f02c10c9c7eb2437c29701cd8d389ab6da5d9f21bdd3afa305fd56c1235017.css" integrity="sha384-ajeKIzYNI43D703y9c1xgJPwLBDJx&#43;skN8KXAc2NOJq22l2fIb3Tr6MF/VbBI1AX">
+<script defer src="https://zacash.cn/js/eureka.min.f1639ee98d6cbd85b2b5f034d27320da962002ff83159ed4e01dbc5948c42a1ab26c2d6e74c66e93f5cec4d24dbd166d.js" integrity="sha384-8WOe6Y1svYWytfA00nMg2pYgAv&#43;DFZ7U4B28WUjEKhqybC1udMZuk/XOxNJNvRZt"></script>
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload"
+  href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Noto+Serif+SC:wght@400;600;700&display=swap"
+  as="style" onload="this.onload=null;this.rel='stylesheet'">
+
+
+
+
+<script defer type="text/javascript" src="https://zacash.cn/js/fontawesome.min.1c5a4674b042785ed214cf0818a81724c6b37442fd61b0ed039237b93de25ed5103fc8079a05770648ccc9c66c4f540a.js" integrity="sha384-HFpGdLBCeF7SFM8IGKgXJMazdEL9YbDtA5I3uT3iXtUQP8gHmgV3BkjMycZsT1QK"></script>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/katex.min.css"
+   integrity="sha384-MlJdn/WNKDGXveldHDdyRP1R4CTHr3FeuDNfhsLPYrq2t0UBkUdK2jyTnXPEK1NQ"  media="print"
+  onload="this.media='all';this.onload=null" crossorigin>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/katex.min.js" 
+  integrity="sha384-VQ8d8WVFw0yHhCk5E8I86oOhv48xLpnDZx5T9GogA/Y84DcCKWXDmSDfn13bzFZY"  crossorigin></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/contrib/auto-render.min.js"
+   integrity="sha384-&#43;XBljXPPiv&#43;OzfbB3cVmLHf4hdUFHlWNZN5spNQ7rmHTXpd7WvJum6fIACpNNfIR"  crossorigin></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    renderMathInElement(document.body, {
+      delimiters: [
+        { left: "$$", right: "$$", display: true },
+        { left: "$", right: "$", display: false },
+        { left: "\\(", right: "\\)", display: false },
+        { left: "\\[", right: "\\]", display: true }
+      ],
+    });
+  });
+</script>
+
+
+<script defer src="https://cdn.jsdelivr.net/npm/mermaid@8.14.0/dist/mermaid.min.js" 
+  integrity="sha384-atOyb0FxAgN9LyAc6PEf9BjgwLISyansgdH8/VXQH8p2o5vfrRgmGIJ2Sg22L0A0"  crossorigin></script>
+
+
+<link rel="icon" type="image/png" sizes="32x32" href="https://zacash.cn/images/icon_huef3b68b5a9c9f864bc324bf255658730_3276_32x32_fill_box_center_3.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://zacash.cn/images/icon_huef3b68b5a9c9f864bc324bf255658730_3276_180x180_fill_box_center_3.png">
+
+<meta name="description"
+  content="Handler 的应用和原理">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+      "@type": "ListItem",
+      "position": 1 ,
+      "name":"Posts",
+      "item":"https://zacash.cn/posts/"},{
+      "@type": "ListItem",
+      "position": 2 ,
+      "name":"Handler in Depth",
+      "item":"https://zacash.cn/posts/handler-in-depth/"}]
+}
+</script>
+
+
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://zacash.cn/posts/handler-in-depth/"
+    },
+    "headline": "Handler in Depth | Zac\u0027s blog","datePublished": "2020-04-14T21:53:54+08:00",
+    "dateModified": "2020-04-14T21:53:54+08:00",
+    "wordCount":  1419 ,
+    "publisher": {
+        "@type": "Person",
+        "name": "Zac Zhu",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://zacash.cn/images/icon.png"
+        }
+        },
+    "description": "Handler 的应用和原理"
+}
+</script><meta property="og:title" content="Handler in Depth | Zac&#39;s blog" />
+<meta property="og:type" content="article" />
+
+
+<meta property="og:image" content="https://zacash.cn/images/icon.png">
+
+
+<meta property="og:url" content="https://zacash.cn/posts/handler-in-depth/" />
+
+
+
+<meta property="og:description" content="Handler 的应用和原理" />
+
+
+
+<meta property="og:locale" content="en" />
+
+
+
+
+<meta property="og:site_name" content="Zac&#39;s blog" />
+
+
+
+
+
+
+<meta property="article:published_time" content="2020-04-14T21:53:54&#43;08:00" />
+
+
+<meta property="article:modified_time" content="2020-04-14T21:53:54&#43;08:00" />
+
+
+
+<meta property="article:section" content="posts" />
+
+
+<meta property="article:tag" content="handler" />
+
+
+
+
+
+<meta property="og:see_also" content="https://zacash.cn/posts/handler-in-code/" />
+
+
+
+
+  <body class="flex min-h-screen flex-col">
+    <header
+      class="min-h-16 pl-scrollbar bg-secondary-bg fixed z-50 flex w-full items-center shadow-sm"
+    >
+      <div class="mx-auto w-full max-w-screen-xl"><script>
+    let storageColorScheme = localStorage.getItem("lightDarkMode")
+    if (((storageColorScheme == 'Auto' || storageColorScheme == null) && window.matchMedia("(prefers-color-scheme: dark)").matches) || storageColorScheme == "Dark") {
+        document.getElementsByTagName('html')[0].classList.add('dark')
+    }
+</script>
+<nav class="flex items-center justify-between flex-wrap px-4 py-4 md:py-0">
+    <a href="/" class="me-6 text-primary-text text-xl font-bold">Zac&#39;s blog</a>
+    <button id="navbar-btn" class="md:hidden flex items-center px-3 py-2" aria-label="Open Navbar">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <div id="target"
+        class="hidden block md:flex md:grow md:justify-between md:items-center w-full md:w-auto text-primary-text z-20">
+        <div class="md:flex md:h-16 text-sm md:grow pb-4 md:pb-0 border-b md:border-b-0">
+            <a href="/posts/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  selected-menu-item  me-4">Posts</a>
+            <a href="/tags/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  me-4">Tags</a>
+            <a href="/categories/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  me-4">Categories</a>
+            <a href="/#about" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  me-4">About</a>
+        </div>
+
+        <div class="flex">
+            <div class="relative pt-4 md:pt-0">
+                <div class="cursor-pointer hover:text-eureka" id="lightDarkMode">
+                    <i class="fas fa-adjust"></i>
+                </div>
+                <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-30" id="is-open">
+                </div>
+                <div class="absolute flex flex-col start-0 md:start-auto end-auto md:end-0 hidden bg-secondary-bg w-48 rounded py-2 border border-tertiary-bg cursor-pointer z-40"
+                    id='lightDarkOptions'>
+                    <span class="px-4 py-1 hover:text-eureka" name="Light">Light</span>
+                    <span class="px-4 py-1 hover:text-eureka" name="Dark">Dark</span>
+                    <span class="px-4 py-1 hover:text-eureka" name="Auto">Auto</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-0" id="is-open-mobile">
+    </div>
+
+</nav>
+<script>
+    
+    let element = document.getElementById('lightDarkMode')
+    if (storageColorScheme == null || storageColorScheme == 'Auto') {
+        document.addEventListener('DOMContentLoaded', () => {
+            window.matchMedia("(prefers-color-scheme: dark)").addEventListener('change', switchDarkMode)
+        })
+    } else if (storageColorScheme == "Light") {
+        element.firstElementChild.classList.remove('fa-adjust')
+        element.firstElementChild.setAttribute("data-icon", 'sun')
+        element.firstElementChild.classList.add('fa-sun')
+    } else if (storageColorScheme == "Dark") {
+        element.firstElementChild.classList.remove('fa-adjust')
+        element.firstElementChild.setAttribute("data-icon", 'moon')
+        element.firstElementChild.classList.add('fa-moon')
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        getcolorscheme();
+        switchBurger();
+    });
+</script>
+</div>
+    </header>
+    <main class="grow pt-16">
+        <div class="pl-scrollbar">
+          <div class="mx-auto w-full max-w-screen-xl lg:px-4 xl:px-8">
+  
+  
+  <div class="grid grid-cols-2 gap-4 lg:grid-cols-8 lg:pt-12">
+    <div
+      class="lg:col-start-2 bg-secondary-bg col-span-2 rounded px-6 py-8 lg:col-span-6"
+    >
+      <article class="prose">
+  <h1 class="mb-4">Handler in Depth</h1>
+
+  <div
+  class="text-tertiary-text not-prose mt-2 flex flex-row flex-wrap items-center"
+>
+  <div class="me-6 my-2">
+    <i class="fas fa-calendar me-1"></i>
+    <span
+      >2020-04-14</span
+    >
+  </div>
+  <div class="me-6 my-2">
+    <i class="fas fa-clock me-1"></i>
+    <span>7 min read</span>
+  </div>
+
+  
+    <div class="me-6 my-2">
+      <i class="fas fa-folder me-1"></i>
+      
+        <a href="https://zacash.cn/categories/android/" class="hover:text-eureka"
+          >android</a
+        >
+      
+    </div>
+  
+
+  
+</div>
+
+
+  
+  
+
+  <p>Handler 在使用时常见的问题</p>
+<!-- more -->
+<h2 id="1memory-leaks">1.Memory Leaks</h2>
+<h3 id="11-背景">1.1 背景</h3>
+<p>Handler 在使用下面这种实现方式处理消息时:</p>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">class</span> <span style="color:#447fcf;text-decoration:underline">MainActivity</span>: Activity() {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">private</span> <span style="color:#6ab825;font-weight:bold">val</span> mLeakedHandler = <span style="color:#6ab825;font-weight:bold">object</span>: Handler() {
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">override</span> <span style="color:#6ab825;font-weight:bold">fun</span> <span style="color:#447fcf">handleMessage</span>(msg: Message) {
+</span></span><span style="display:flex;"><span>            <span style="color:#6ab825;font-weight:bold">super</span>.handleMessage(msg)
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span></code></pre></div><p><a href="https://tools.android.com/tips/lint-checks">Android Lint</a> 会发出这样的警告: <code>This Handler class should be static or leaks might occur(anonymous android.os.Handler)</code></p>
+<p>我们在 Handler 构造方法里可以看到：</p>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">public</span> <span style="color:#447fcf">Handler</span>(<span style="color:#ffa500">@Nullable</span> Callback callback, <span style="color:#6ab825;font-weight:bold">boolean</span> async) {
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">if</span> (FIND_POTENTIAL_LEAKS) {
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">final</span> Class&lt;? <span style="color:#6ab825;font-weight:bold">extends</span> Handler&gt; klass = getClass();
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">if</span> ((klass.<span style="color:#bbb">isAnonymousClass</span>() || klass.<span style="color:#bbb">isMemberClass</span>() || klass.<span style="color:#bbb">isLocalClass</span>()) &amp;&amp;
+</span></span><span style="display:flex;"><span>                (klass.<span style="color:#bbb">getModifiers</span>() &amp; Modifier.<span style="color:#bbb">STATIC</span>) == 0) {
+</span></span><span style="display:flex;"><span>            Log.<span style="color:#bbb">w</span>(TAG, <span style="color:#ed9d13">&#34;The following Handler class should be static or leaks might occur: &#34;</span> +
+</span></span><span style="display:flex;"><span>                klass.<span style="color:#bbb">getCanonicalName</span>());
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    ...
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>这里会检测 Handler 的实现类是否为匿名类/成员类/局部类之一，以及是否使用 <code>static</code> 关键字修饰，未使用的话便会有内存泄漏的警告。</p>
+<p>那么内存泄漏是如何产生的呢，为何加 static 就可以解决泄漏问题，我们接着看。</p>
+<h3 id="12-内存泄漏是如何产生">1.2 内存泄漏是如何产生</h3>
+<p>在继续讨论之前我们先达成如下共识：</p>
+<ul>
+<li>进入 MessageQueue 队列的 msg 对象，其 msg.target 便是对应的 Handler 对象，当 Looper 执行到该 msg 时，会调用 <code>Handler.handleMessage(Message)</code> 处理消息。</li>
+<li>在 Java 语言中，非静态（Non-Static）内部类（InnerClass）或匿名类（AnonymousClass）会隐式的持有外部类的引用，同理，静态内部类就不会。</li>
+<li>我们在堆中创建内存而忘记删除它，就会导致了<a href="https://www.geeksforgeeks.org/what-is-memory-leak-how-can-we-avoid/">内存泄漏</a>。</li>
+</ul>
+<p>可以看如下的实现：</p>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">class</span> <span style="color:#447fcf;text-decoration:underline">MainActivity</span> : AppCompatActivity() {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">private</span> <span style="color:#6ab825;font-weight:bold">val</span> mHandler = <span style="color:#6ab825;font-weight:bold">object</span>: Handler() {
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">override</span> <span style="color:#6ab825;font-weight:bold">fun</span> <span style="color:#447fcf">handleMessage</span>(msg: Message) {
+</span></span><span style="display:flex;"><span>            <span style="color:#6ab825;font-weight:bold">super</span>.handleMessage(msg)
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">private</span> <span style="color:#6ab825;font-weight:bold">val</span> mTask = Runnable { <span style="color:#999;font-style:italic">/*do something*/</span> }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">override</span> <span style="color:#6ab825;font-weight:bold">fun</span> <span style="color:#447fcf">onCreate</span>(savedInstanceState: Bundle?) {
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">super</span>.onCreate(savedInstanceState)
+</span></span><span style="display:flex;"><span>        setContentView(R.layout.activity_main)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        mHandler.postDelayed(mTask, <span style="color:#3677a9">5</span> * <span style="color:#3677a9">60</span> * <span style="color:#3677a9">1000L</span>)
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>        finish()
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>上面的代码中，MainActivity 在 mHandler.postDelay 任务后便立即销毁，此时主线程中的 mHandler 仍然隐式的持有外部 MainActivity 的引用，该引用会直到 <code>Handler.handleMessage(Message)</code> 在 5min 后执行后消失，也就是 MainActivity 销毁后并不会被及时的回收，MainActivity 内的资源得不到释放，从而导致内存泄露。</p>
+<h3 id="13-如何避免内存泄露">1.3 如何避免内存泄露</h3>
+<p>为了避免内存泄露我们可以使用弱引用：</p>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">class</span> <span style="color:#447fcf;text-decoration:underline">MainActivity</span> : AppCompatActivity() {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">private</span> <span style="color:#6ab825;font-weight:bold">class</span> <span style="color:#447fcf;text-decoration:underline">OkHandler</span>(activity: Activity) : Handler() {
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">private</span> <span style="color:#6ab825;font-weight:bold">val</span> mActivity: WeakReference&lt;Activity&gt; = WeakReference(activity)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">override</span> <span style="color:#6ab825;font-weight:bold">fun</span> <span style="color:#447fcf">handleMessage</span>(msg: Message) {
+</span></span><span style="display:flex;"><span>            <span style="color:#6ab825;font-weight:bold">val</span> activity = mActivity.<span style="color:#6ab825;font-weight:bold">get</span>()
+</span></span><span style="display:flex;"><span>            <span style="color:#6ab825;font-weight:bold">if</span> (activity != <span style="color:#6ab825;font-weight:bold">null</span> &amp;&amp; !activity.isFinishing) {
+</span></span><span style="display:flex;"><span>                <span style="color:#999;font-style:italic">// execute task
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>            }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">private</span> <span style="color:#6ab825;font-weight:bold">val</span> mTask = Runnable { <span style="color:#999;font-style:italic">/*do something*/</span> }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">private</span> <span style="color:#6ab825;font-weight:bold">val</span> mHandler = OkHandler(<span style="color:#6ab825;font-weight:bold">this</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">override</span> <span style="color:#6ab825;font-weight:bold">fun</span> <span style="color:#447fcf">onCreate</span>(savedInstanceState: Bundle?) {
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">super</span>.onCreate(savedInstanceState)
+</span></span><span style="display:flex;"><span>        setContentView(R.layout.activity_main)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        mHandler.postDelayed(mTask, <span style="color:#3677a9">5</span> * <span style="color:#3677a9">60</span> * <span style="color:#3677a9">1000L</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        finish()
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h2 id="2async-handler">2.async Handler</h2>
+<p>我们先看一下 HandlerCompat 的 createAsync(looper) 方法：</p>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#999;font-style:italic">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"> * Create a new Handler whose posted messages and runnables are not 
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"> * subject to synchronization barriers such as display vsync.
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"> */</span>
+</span></span><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">public</span> <span style="color:#6ab825;font-weight:bold">static</span> Handler <span style="color:#447fcf">createAsync</span>(<span style="color:#ffa500">@NonNull</span> Looper looper) {
+</span></span><span style="display:flex;"><span>    Exception wrappedException;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">if</span> (Build.<span style="color:#bbb">VERSION</span>.<span style="color:#bbb">SDK_INT</span> &gt;= 28) {
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">return</span> Api28Impl.<span style="color:#bbb">createAsync</span>(looper);
+</span></span><span style="display:flex;"><span>    } <span style="color:#6ab825;font-weight:bold">else</span> <span style="color:#6ab825;font-weight:bold">if</span> (Build.<span style="color:#bbb">VERSION</span>.<span style="color:#bbb">SDK_INT</span> &gt;= 17) {
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">try</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#999;font-style:italic">// This constructor was added as private in JB MR1:
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>            <span style="color:#999;font-style:italic">// https://android.googlesource.com/platform/frameworks/base/+/refs/heads/jb-mr1-release/core/java/android/os/Handler.java
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>            <span style="color:#6ab825;font-weight:bold">return</span> Handler.<span style="color:#bbb">class</span>.<span style="color:#bbb">getDeclaredConstructor</span>(Looper.<span style="color:#bbb">class</span>, Handler.<span style="color:#bbb">Callback</span>.<span style="color:#bbb">class</span>,
+</span></span><span style="display:flex;"><span>                    <span style="color:#6ab825;font-weight:bold">boolean</span>.<span style="color:#bbb">class</span>)
+</span></span><span style="display:flex;"><span>                    .<span style="color:#bbb">newInstance</span>(looper, <span style="color:#6ab825;font-weight:bold">null</span>, <span style="color:#6ab825;font-weight:bold">true</span>);
+</span></span><span style="display:flex;"><span>        } <span style="color:#6ab825;font-weight:bold">catch</span> (Exception e) {
+</span></span><span style="display:flex;"><span>            <span style="color:#6ab825;font-weight:bold">throw</span> ...
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#999;font-style:italic">// This is a non-fatal failure, but it affects behavior and may be relevant when
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>        <span style="color:#999;font-style:italic">// investigating issue reports.
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>        Log.<span style="color:#bbb">w</span>(TAG, <span style="color:#ed9d13">&#34;Unable to invoke Handler(Looper, Callback, boolean) constructor&#34;</span>,
+</span></span><span style="display:flex;"><span>                wrappedException);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">return</span> <span style="color:#6ab825;font-weight:bold">new</span> Handler(looper);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>通过方法的注释我们可知, async Handler 发出的 message 或 runnable 可以无视 <strong>同步屏障 (synchronization barriers)</strong>, 展示 VSYNC 是一种同步屏障。</p>
+<p>那么什么是同步屏障呢，我们可以在 MessageQueue.postSyncBarrier() 看到：</p>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#999;font-style:italic">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"> * When the barrier is encountered, later synchronous messages in the queue are 
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"> * stalled (prevented from being executed) until the barrier is released by 
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"> * calling {@link #removeSyncBarrier} and specifying the token that identifies
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"> * the synchronization barrier.
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"> * @hide
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"> */</span>
+</span></span><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">public</span> <span style="color:#6ab825;font-weight:bold">int</span> <span style="color:#447fcf">postSyncBarrier</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">return</span> postSyncBarrier(SystemClock.<span style="color:#bbb">uptimeMillis</span>());
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">private</span> <span style="color:#6ab825;font-weight:bold">int</span> <span style="color:#447fcf">postSyncBarrier</span>(<span style="color:#6ab825;font-weight:bold">long</span> when) {
+</span></span><span style="display:flex;"><span>    <span style="color:#999;font-style:italic">// Enqueue a new sync barrier token.
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>    <span style="color:#999;font-style:italic">// We don&#39;t need to wake the queue because the purpose of a barrier is to stall it.
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>    <span style="color:#6ab825;font-weight:bold">synchronized</span> (<span style="color:#6ab825;font-weight:bold">this</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">final</span> <span style="color:#6ab825;font-weight:bold">int</span> token = mNextBarrierToken++;
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">final</span> Message msg = Message.<span style="color:#bbb">obtain</span>();
+</span></span><span style="display:flex;"><span>        msg.<span style="color:#bbb">markInUse</span>();
+</span></span><span style="display:flex;"><span>        msg.<span style="color:#bbb">when</span> = when;
+</span></span><span style="display:flex;"><span>        msg.<span style="color:#bbb">arg1</span> = token;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        Message prev = <span style="color:#6ab825;font-weight:bold">null</span>;
+</span></span><span style="display:flex;"><span>        Message p = mMessages;
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">if</span> (when != 0) {
+</span></span><span style="display:flex;"><span>            <span style="color:#6ab825;font-weight:bold">while</span> (p != <span style="color:#6ab825;font-weight:bold">null</span> &amp;&amp; p.<span style="color:#bbb">when</span> &lt;= when) {
+</span></span><span style="display:flex;"><span>                prev = p;
+</span></span><span style="display:flex;"><span>                p = p.<span style="color:#bbb">next</span>;
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">if</span> (prev != <span style="color:#6ab825;font-weight:bold">null</span>) { <span style="color:#999;font-style:italic">// invariant: p == prev.next
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>            msg.<span style="color:#bbb">next</span> = p;
+</span></span><span style="display:flex;"><span>            prev.<span style="color:#bbb">next</span> = msg;
+</span></span><span style="display:flex;"><span>        } <span style="color:#6ab825;font-weight:bold">else</span> {
+</span></span><span style="display:flex;"><span>            msg.<span style="color:#bbb">next</span> = p;
+</span></span><span style="display:flex;"><span>            mMessages = msg;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">return</span> token;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"> * Removes a synchronization barrier.
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"> *
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"> * @param token The synchronization barrier token that was returned by
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"> * {@link #postSyncBarrier}.
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"> *
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"> * @throws IllegalStateException if the barrier was not found.
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"> *
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"> * @hide
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"> */</span>
+</span></span><span style="display:flex;"><span><span style="color:#ffa500">@UnsupportedAppUsage</span>
+</span></span><span style="display:flex;"><span><span style="color:#ffa500">@TestApi</span>
+</span></span><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">public</span> <span style="color:#6ab825;font-weight:bold">void</span> <span style="color:#447fcf">removeSyncBarrier</span>(<span style="color:#6ab825;font-weight:bold">int</span> token) {
+</span></span><span style="display:flex;"><span>    <span style="color:#999;font-style:italic">// Remove a sync barrier token from the queue.
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>    <span style="color:#999;font-style:italic">// If the queue is no longer stalled by a barrier then wake it.
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>    <span style="color:#6ab825;font-weight:bold">synchronized</span> (<span style="color:#6ab825;font-weight:bold">this</span>) {
+</span></span><span style="display:flex;"><span>        Message prev = <span style="color:#6ab825;font-weight:bold">null</span>;
+</span></span><span style="display:flex;"><span>        Message p = mMessages;
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">while</span> (p != <span style="color:#6ab825;font-weight:bold">null</span> &amp;&amp; (p.<span style="color:#bbb">target</span> != <span style="color:#6ab825;font-weight:bold">null</span> || p.<span style="color:#bbb">arg1</span> != token)) {
+</span></span><span style="display:flex;"><span>            prev = p;
+</span></span><span style="display:flex;"><span>            p = p.<span style="color:#bbb">next</span>;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">if</span> (p == <span style="color:#6ab825;font-weight:bold">null</span>) {
+</span></span><span style="display:flex;"><span>            <span style="color:#6ab825;font-weight:bold">throw</span> <span style="color:#6ab825;font-weight:bold">new</span> IllegalStateException(<span style="color:#ed9d13">&#34;The specified message queue synchronization &#34;</span>
+</span></span><span style="display:flex;"><span>                    + <span style="color:#ed9d13">&#34; barrier token has not been posted or has already been removed.&#34;</span>);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">final</span> <span style="color:#6ab825;font-weight:bold">boolean</span> needWake;
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">if</span> (prev != <span style="color:#6ab825;font-weight:bold">null</span>) {
+</span></span><span style="display:flex;"><span>            prev.<span style="color:#bbb">next</span> = p.<span style="color:#bbb">next</span>;
+</span></span><span style="display:flex;"><span>            needWake = <span style="color:#6ab825;font-weight:bold">false</span>;
+</span></span><span style="display:flex;"><span>        } <span style="color:#6ab825;font-weight:bold">else</span> {
+</span></span><span style="display:flex;"><span>            mMessages = p.<span style="color:#bbb">next</span>;
+</span></span><span style="display:flex;"><span>            needWake = mMessages == <span style="color:#6ab825;font-weight:bold">null</span> || mMessages.<span style="color:#bbb">target</span> != <span style="color:#6ab825;font-weight:bold">null</span>;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        p.<span style="color:#bbb">recycleUnchecked</span>();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#999;font-style:italic">// If the loop is quitting then it is already awake.
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>        <span style="color:#999;font-style:italic">// We can assume mPtr != 0 when mQuitting is false.
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>        <span style="color:#6ab825;font-weight:bold">if</span> (needWake &amp;&amp; !mQuitting) {
+</span></span><span style="display:flex;"><span>            nativeWake(mPtr);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>同步屏障会阻塞当前队列，直到移除屏障队列才恢复运行。<code>postSyncBarrier()</code> 和 <code>removeSyncBarrier(token)</code> 都是隐藏的方法，只能通过反射的方式调用。</p>
+<p>async Handler 在 enqueue Message 时会调用 Message.setAsynchronous(true) 方法。</p>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#999;font-style:italic">// Handler.java
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span><span style="color:#6ab825;font-weight:bold">private</span> <span style="color:#6ab825;font-weight:bold">boolean</span> <span style="color:#447fcf">enqueueMessage</span>(<span style="color:#ffa500">@NonNull</span> MessageQueue queue, <span style="color:#ffa500">@NonNull</span> Message msg, <span style="color:#6ab825;font-weight:bold">long</span> uptimeMillis) {
+</span></span><span style="display:flex;"><span>    msg.<span style="color:#bbb">target</span> = <span style="color:#6ab825;font-weight:bold">this</span>;
+</span></span><span style="display:flex;"><span>    msg.<span style="color:#bbb">workSourceUid</span> = ThreadLocalWorkSource.<span style="color:#bbb">getUid</span>();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#999;font-style:italic">// async Handler =&gt; mAsynchronous = true
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>    <span style="color:#6ab825;font-weight:bold">if</span> (mAsynchronous) {
+</span></span><span style="display:flex;"><span>        msg.<span style="color:#bbb">setAsynchronous</span>(<span style="color:#6ab825;font-weight:bold">true</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">return</span> queue.<span style="color:#bbb">enqueueMessage</span>(msg, uptimeMillis);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>那么为何 asynchronous 的 Message 可以立即执行呢，我们可以在 <code>MessageQueue.enqueueMessage()</code> 的实现中看到:</p>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#999;font-style:italic">// android/os/MessageQueue.java
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span><span style="color:#6ab825;font-weight:bold">boolean</span> <span style="color:#447fcf">enqueueMessage</span>(Message msg, <span style="color:#6ab825;font-weight:bold">long</span> when) {
+</span></span><span style="display:flex;"><span>    ...
+</span></span><span style="display:flex;"><span>    msg.<span style="color:#bbb">markInUse</span>();
+</span></span><span style="display:flex;"><span>    msg.<span style="color:#bbb">when</span> = when;
+</span></span><span style="display:flex;"><span>    Message p = mMessages;
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">boolean</span> needWake;
+</span></span><span style="display:flex;"><span>    ...
+</span></span><span style="display:flex;"><span>    <span style="color:#999;font-style:italic">// Inserted within the middle of the queue.  Usually we don&#39;t have to wake
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>    <span style="color:#999;font-style:italic">// up the event queue unless there is a barrier at the head of the queue
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>    <span style="color:#999;font-style:italic">// and the message is the earliest asynchronous message in the queue.
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>    needWake = mBlocked &amp;&amp; p.<span style="color:#bbb">target</span> == <span style="color:#6ab825;font-weight:bold">null</span> &amp;&amp; msg.<span style="color:#bbb">isAsynchronous</span>();
+</span></span><span style="display:flex;"><span>    Message prev;
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">for</span> (;;) {
+</span></span><span style="display:flex;"><span>        prev = p;
+</span></span><span style="display:flex;"><span>        p = p.<span style="color:#bbb">next</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">if</span> (p == <span style="color:#6ab825;font-weight:bold">null</span> || when &lt; p.<span style="color:#bbb">when</span>) {
+</span></span><span style="display:flex;"><span>            <span style="color:#6ab825;font-weight:bold">break</span>;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">if</span> (needWake &amp;&amp; p.<span style="color:#bbb">isAsynchronous</span>()) {
+</span></span><span style="display:flex;"><span>            needWake = <span style="color:#6ab825;font-weight:bold">false</span>;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    msg.<span style="color:#bbb">next</span> = p; <span style="color:#999;font-style:italic">// invariant: p == prev.next
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>    prev.<span style="color:#bbb">next</span> = msg;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#999;font-style:italic">// We can assume mPtr != 0 because mQuitting is false.
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>    <span style="color:#6ab825;font-weight:bold">if</span> (needWake) {
+</span></span><span style="display:flex;"><span>        nativeWake(mPtr);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>如果队列是 block 的情况，异步消息入列时会唤起队列，此外，在 MessageQueue.next() 中，我们可以看到:</p>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>Message <span style="color:#447fcf">next</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#999;font-style:italic">// Return here if the message loop has already quit and been disposed.
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>    <span style="color:#999;font-style:italic">// This can happen if the application tries to restart a looper after quit
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>    <span style="color:#999;font-style:italic">// which is not supported.
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>    <span style="color:#6ab825;font-weight:bold">final</span> <span style="color:#6ab825;font-weight:bold">long</span> ptr = mPtr;
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">if</span> (ptr == 0) {
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">return</span> <span style="color:#6ab825;font-weight:bold">null</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">int</span> pendingIdleHandlerCount = -1; <span style="color:#999;font-style:italic">// -1 only during first iteration
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>    <span style="color:#6ab825;font-weight:bold">int</span> nextPollTimeoutMillis = 0;
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">for</span> (;;) {
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">if</span> (nextPollTimeoutMillis != 0) {
+</span></span><span style="display:flex;"><span>            Binder.<span style="color:#bbb">flushPendingCommands</span>();
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#999;font-style:italic">// 1.nextPollTimeoutMillis 不为 0 则阻塞
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>        nativePollOnce(ptr, nextPollTimeoutMillis);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">synchronized</span> (<span style="color:#6ab825;font-weight:bold">this</span>) {
+</span></span><span style="display:flex;"><span>            <span style="color:#999;font-style:italic">// Try to retrieve the next message.  Return if found.
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>            <span style="color:#6ab825;font-weight:bold">final</span> <span style="color:#6ab825;font-weight:bold">long</span> now = SystemClock.<span style="color:#bbb">uptimeMillis</span>();
+</span></span><span style="display:flex;"><span>            Message prevMsg = <span style="color:#6ab825;font-weight:bold">null</span>;
+</span></span><span style="display:flex;"><span>            Message msg = mMessages;
+</span></span><span style="display:flex;"><span>            <span style="color:#999;font-style:italic">// 2.判断是否为同步屏障消息
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>            <span style="color:#6ab825;font-weight:bold">if</span> (msg != <span style="color:#6ab825;font-weight:bold">null</span> &amp;&amp; msg.<span style="color:#bbb">target</span> == <span style="color:#6ab825;font-weight:bold">null</span>) {
+</span></span><span style="display:flex;"><span>                <span style="color:#999;font-style:italic">// 3.是同步屏障消息，遍历队列跳过同步消息，找出异步消息
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>                <span style="color:#999;font-style:italic">// Stalled by a barrier.  Find the next asynchronous message in the queue.
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>                <span style="color:#6ab825;font-weight:bold">do</span> {
+</span></span><span style="display:flex;"><span>                    prevMsg = msg;
+</span></span><span style="display:flex;"><span>                    msg = msg.<span style="color:#bbb">next</span>;
+</span></span><span style="display:flex;"><span>                } <span style="color:#6ab825;font-weight:bold">while</span> (msg != <span style="color:#6ab825;font-weight:bold">null</span> &amp;&amp; !msg.<span style="color:#bbb">isAsynchronous</span>());
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>            <span style="color:#999;font-style:italic">// 4.正常消息处理，判断是否有延时
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>            <span style="color:#6ab825;font-weight:bold">if</span> (msg != <span style="color:#6ab825;font-weight:bold">null</span>) {
+</span></span><span style="display:flex;"><span>                <span style="color:#6ab825;font-weight:bold">if</span> (now &lt; msg.<span style="color:#bbb">when</span>) {
+</span></span><span style="display:flex;"><span>                    <span style="color:#999;font-style:italic">// Next message is not ready.  Set a timeout to wake up when it is ready.
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>                    nextPollTimeoutMillis = (<span style="color:#6ab825;font-weight:bold">int</span>) Math.<span style="color:#bbb">min</span>(msg.<span style="color:#bbb">when</span> - now, Integer.<span style="color:#bbb">MAX_VALUE</span>);
+</span></span><span style="display:flex;"><span>                } <span style="color:#6ab825;font-weight:bold">else</span> {
+</span></span><span style="display:flex;"><span>                    <span style="color:#999;font-style:italic">// Got a message.
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>                    mBlocked = <span style="color:#6ab825;font-weight:bold">false</span>;
+</span></span><span style="display:flex;"><span>                    <span style="color:#6ab825;font-weight:bold">if</span> (prevMsg != <span style="color:#6ab825;font-weight:bold">null</span>) {
+</span></span><span style="display:flex;"><span>                        prevMsg.<span style="color:#bbb">next</span> = msg.<span style="color:#bbb">next</span>;
+</span></span><span style="display:flex;"><span>                    } <span style="color:#6ab825;font-weight:bold">else</span> {
+</span></span><span style="display:flex;"><span>                        mMessages = msg.<span style="color:#bbb">next</span>;
+</span></span><span style="display:flex;"><span>                    }
+</span></span><span style="display:flex;"><span>                    msg.<span style="color:#bbb">next</span> = <span style="color:#6ab825;font-weight:bold">null</span>;
+</span></span><span style="display:flex;"><span>                    <span style="color:#6ab825;font-weight:bold">if</span> (DEBUG) Log.<span style="color:#bbb">v</span>(TAG, <span style="color:#ed9d13">&#34;Returning message: &#34;</span> + msg);
+</span></span><span style="display:flex;"><span>                    msg.<span style="color:#bbb">markInUse</span>();
+</span></span><span style="display:flex;"><span>                    <span style="color:#6ab825;font-weight:bold">return</span> msg;
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>            } <span style="color:#6ab825;font-weight:bold">else</span> {
+</span></span><span style="display:flex;"><span>                <span style="color:#999;font-style:italic">// 没有消息，那么循环走到 1 那里会一直阻塞
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>                <span style="color:#999;font-style:italic">// No more messages.
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>                nextPollTimeoutMillis = -1;
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#999;font-style:italic">// 我们可以 call looper.quit() 来结束
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>            <span style="color:#999;font-style:italic">// Process the quit message now that all pending messages have been handled.
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>            <span style="color:#6ab825;font-weight:bold">if</span> (mQuitting) {
+</span></span><span style="display:flex;"><span>                dispose();
+</span></span><span style="display:flex;"><span>                <span style="color:#6ab825;font-weight:bold">return</span> <span style="color:#6ab825;font-weight:bold">null</span>;
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            ...
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#999;font-style:italic">// While calling an idle handler, a new message could have been delivered
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>        <span style="color:#999;font-style:italic">// so go back and look again for a pending message without waiting.
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>        nextPollTimeoutMillis = 0;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><ul>
+<li>这里首先判断了 MessageQueue 的头部是不是同步屏障
+<ul>
+<li>如果头部 msg 是同步屏障，那么会遍历链表，跳过同步消息，获取队列里面的异步消息，
+<ul>
+<li>如果遍历后没有异步消息，那么此时 msg 为空，会走到注释 5，<code>nextPollTimeoutMillis</code> 设置为 -1，然后循环到执行 <code>nativePollOnce(ptr, nextPollTimeoutMillis)</code> 开始阻塞队列</li>
+</ul>
+</li>
+<li>如果头部 msg 不是同步屏障，那么会判断 msg 是否为空，不为空的话会正常处理消息，为空则同样走到注释 5</li>
+</ul>
+</li>
+<li>如果有异步消息，那么会和处理同步消息一样，先判断是否有延时，有延时则 <code>nextPollTimeoutMillis</code> 会被赋值，没延时则会返回 msg。</li>
+</ul>
+<p>返回的 msg 会交给 <code>msg.target</code> 即 handler 处理。</p>
+<h3 id="同步屏障在系统中的应用">同步屏障在系统中的应用</h3>
+<p>系统一些优先级高的操作会使用到同步屏障，如 View 在绘制时会调用 <code>ViewRootImpl.scheduleTraversals()</code> 方法，往 MessageQueue 中插入同步屏障，绘制完成后移除同步屏障。</p>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#999;font-style:italic">// android/view/ViewRootImpl.java
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span><span style="color:#6ab825;font-weight:bold">void</span> <span style="color:#447fcf">scheduleTraversals</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">if</span> (!mTraversalScheduled) {
+</span></span><span style="display:flex;"><span>        mTraversalScheduled = <span style="color:#6ab825;font-weight:bold">true</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#999;font-style:italic">// 插入同步屏障
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>        mTraversalBarrier = mHandler.<span style="color:#bbb">getLooper</span>().<span style="color:#bbb">getQueue</span>().<span style="color:#bbb">postSyncBarrier</span>();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#999;font-style:italic">// mTraversalRunnable 中 run 了 doTraversal() 方法
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>        mChoreographer.<span style="color:#bbb">postCallback</span>(
+</span></span><span style="display:flex;"><span>                Choreographer.<span style="color:#bbb">CALLBACK_TRAVERSAL</span>, mTraversalRunnable, <span style="color:#6ab825;font-weight:bold">null</span>);
+</span></span><span style="display:flex;"><span>        notifyRendererOfFramePending();
+</span></span><span style="display:flex;"><span>        pokeDrawLockIfNeeded();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">void</span> <span style="color:#447fcf">unscheduleTraversals</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">if</span> (mTraversalScheduled) {
+</span></span><span style="display:flex;"><span>        mTraversalScheduled = <span style="color:#6ab825;font-weight:bold">false</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#999;font-style:italic">// 移除同步屏障
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>        mHandler.<span style="color:#bbb">getLooper</span>().<span style="color:#bbb">getQueue</span>().<span style="color:#bbb">removeSyncBarrier</span>(mTraversalBarrier);
+</span></span><span style="display:flex;"><span>        mChoreographer.<span style="color:#bbb">removeCallbacks</span>(
+</span></span><span style="display:flex;"><span>                Choreographer.<span style="color:#bbb">CALLBACK_TRAVERSAL</span>, mTraversalRunnable, <span style="color:#6ab825;font-weight:bold">null</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">void</span> <span style="color:#447fcf">doTraversal</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">if</span> (mTraversalScheduled) {
+</span></span><span style="display:flex;"><span>        mTraversalScheduled = <span style="color:#6ab825;font-weight:bold">false</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#999;font-style:italic">// 移除同步屏障
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>        mHandler.<span style="color:#bbb">getLooper</span>().<span style="color:#bbb">getQueue</span>().<span style="color:#bbb">removeSyncBarrier</span>(mTraversalBarrier);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        ...
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        performTraversals();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        ...
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>为了保证 View 的绘制过程不被主线程其他任务影响，View 在绘制前会往 MessageQueue 插入同步屏障，然后再注册 VSYNC 信号监听，<code>Choreographer$FrameDisplayEventReceiver</code> 用来接收 VSYNC 信号：</p>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#999;font-style:italic">// android/view/Choreographer.java
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>
+</span></span><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">private</span> <span style="color:#6ab825;font-weight:bold">final</span> <span style="color:#6ab825;font-weight:bold">class</span> <span style="color:#447fcf;text-decoration:underline">FrameDisplayEventReceiver</span> <span style="color:#6ab825;font-weight:bold">extends</span> DisplayEventReceiver <span style="color:#6ab825;font-weight:bold">implements</span> Runnable {
+</span></span><span style="display:flex;"><span>    ...
+</span></span><span style="display:flex;"><span>    <span style="color:#ffa500">@Override</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">public</span> <span style="color:#6ab825;font-weight:bold">void</span> <span style="color:#447fcf">onVsync</span>(<span style="color:#6ab825;font-weight:bold">long</span> timestampNanos, <span style="color:#6ab825;font-weight:bold">long</span> physicalDisplayId, <span style="color:#6ab825;font-weight:bold">int</span> frame, VsyncEventData vsyncEventData) {
+</span></span><span style="display:flex;"><span>        ...
+</span></span><span style="display:flex;"><span>        mTimestampNanos = timestampNanos;
+</span></span><span style="display:flex;"><span>        mFrame = frame;
+</span></span><span style="display:flex;"><span>        mLastVsyncEventData = vsyncEventData;
+</span></span><span style="display:flex;"><span>        Message msg = Message.<span style="color:#bbb">obtain</span>(mHandler, <span style="color:#6ab825;font-weight:bold">this</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#999;font-style:italic">// 发送异步消息
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>        msg.<span style="color:#bbb">setAsynchronous</span>(<span style="color:#6ab825;font-weight:bold">true</span>);
+</span></span><span style="display:flex;"><span>        mHandler.<span style="color:#bbb">sendMessageAtTime</span>(msg, timestampNanos / TimeUtils.<span style="color:#bbb">NANOS_PER_MS</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ffa500">@Override</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">public</span> <span style="color:#6ab825;font-weight:bold">void</span> <span style="color:#447fcf">run</span>() {
+</span></span><span style="display:flex;"><span>        mHavePendingVsync = <span style="color:#6ab825;font-weight:bold">false</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#999;font-style:italic">// 借助同步屏障 + 异步消息，doFrame 会优先执行
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>        doFrame(mTimestampNanos, mFrame, mLastVsyncEventData);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p><code>doFrame()</code> 是 View 真正开始绘制的地方，会调用 ViewRootImpl 的 <code>doTraversal()</code>, 从而调用 <code>performTraversals()</code>，<code>performTraversals()</code> 会调用我们熟悉的 <code>onMeasure()</code>、<code>onLayout()</code>、<code>onDraw()</code>。</p>
+<p>这里还可以延伸 VSYNC 信号原理，以及为什么要等 VSYNC 信号回调才开始 View 的绘制流程、掉帧的原理、屏幕的双缓冲、三缓冲等。</p>
+
+</article>
+
+
+      
+        <div class="my-4">
+    
+    <a href="https://zacash.cn/tags/handler/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 me-2 hover:text-eureka">#handler</a>
+    
+</div>
+      
+
+      
+
+
+
+      
+
+      
+  <div
+    class="-mx-2 mt-4 flex flex-col border-t px-2 pt-4 md:flex-row md:justify-between"
+  >
+    <div>
+      
+        <span class="text-primary-text block font-bold"
+          >Previous</span
+        >
+        <a href="https://zacash.cn/posts/activity-launch/" class="block">Activity Start</a>
+      
+    </div>
+    <div class="mt-4 md:mt-0 md:text-right">
+      
+        <span class="text-primary-text block font-bold">Next</span>
+        <a href="https://zacash.cn/posts/handler-in-code/" class="block">Handler in Details</a>
+      
+    </div>
+  </div>
+
+
+      
+
+
+
+    </div>
+    
+
+    
+    
+      <div
+        class="lg:col-start-2 bg-secondary-bg prose col-span-2 rounded p-6 lg:col-span-6"
+      >
+        <h3>See Also</h3>
+        
+          <a href="https://zacash.cn/posts/handler-in-code/" class="no-underline">Handler in Details</a>
+          <br />
+        
+      </div>
+    
+  </div>
+
+  
+
+          </div>
+        </div>
+      
+    </main>
+    <footer class="pl-scrollbar">
+      <div class="mx-auto w-full max-w-screen-xl"><div class="text-center p-6 pin-b">
+    <p class="text-sm text-tertiary-text">Copyright Zac &copy; 2022
+ &middot;  Powered by the <a href="https://github.com/wangchucheng/hugo-eureka" class="hover:text-eureka">Eureka</a> theme for <a href="https://gohugo.io" class="hover:text-eureka">Hugo</a></p>
+</div></div>
+    </footer>
+  </body>
+</html>

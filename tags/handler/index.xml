@@ -10,11 +10,11 @@
 </copyright>
     <lastBuildDate>Tue, 14 Apr 2020 21:53:54 +0800</lastBuildDate><atom:link href="https://zacash.cn/tags/handler/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Handler in Action</title>
-      <link>https://zacash.cn/posts/handler-in-action/</link>
+      <title>Handler in Depth</title>
+      <link>https://zacash.cn/posts/handler-in-depth/</link>
       <pubDate>Tue, 14 Apr 2020 21:53:54 +0800</pubDate>
       
-      <guid>https://zacash.cn/posts/handler-in-action/</guid>
+      <guid>https://zacash.cn/posts/handler-in-depth/</guid>
       <description>Handler 在使用时常见的问题
 1.Memory Leaks 1.1 背景 Handler 在使用下面这种实现方式处理消息时:
 class MainActivity: Activity() {   private val mLeakedHandler = object: Handler() {  override fun handleMessage(msg: Message) {  super.handleMessage(msg)  }  } Android Lint 会发出这样的警告: This Handler class should be static or leaks might occur(anonymous android.os.Handler)

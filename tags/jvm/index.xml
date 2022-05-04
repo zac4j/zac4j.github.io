@@ -45,11 +45,11 @@ Extension 的子类加载器。它负责加载 App 层级的类，它加载在 c
     </item>
     
     <item>
-      <title>JVM Mechanics</title>
-      <link>https://zacash.cn/posts/jvm-mechanics/</link>
+      <title>JVM Basic - Compiler</title>
+      <link>https://zacash.cn/posts/jvm-basic-compiler/</link>
       <pubDate>Fri, 17 Jul 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://zacash.cn/posts/jvm-mechanics/</guid>
+      <guid>https://zacash.cn/posts/jvm-basic-compiler/</guid>
       <description>&lt;p&gt;Class 文件的结构&lt;/p&gt;</description>
     </item>
     
