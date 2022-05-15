@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>basic on Zac&#39;s blog</title>
-    <link>https://zacash.cn/categories/basic/</link>
-    <description>Recent content in basic on Zac&#39;s blog</description>
+    <title>fundamental on Zac&#39;s blog</title>
+    <link>https://zacash.cn/tags/fundamental/</link>
+    <description>Recent content in fundamental on Zac&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>Copyright Zac &amp;copy; 2022
 </copyright>
-    <lastBuildDate>Fri, 03 Jul 2020 09:28:31 +0800</lastBuildDate><atom:link href="https://zacash.cn/categories/basic/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 03 Jul 2020 09:28:31 +0800</lastBuildDate><atom:link href="https://zacash.cn/tags/fundamental/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Java Basic</title>
       <link>https://zacash.cn/posts/java-basic/</link>
@@ -23,36 +23,6 @@
   🌟实际要求：平时对源码的深挖意识即技术钻研和批判性思维
   考察目的：
  基础知识的扎实程度 候选人对技术的热情    2. String、StringBuffer、StringBuilder 有什么区别？ 经典回答  String 是典型的 Immutable 类，被声明为 final class，所有属性也都是 final 的，因此类似拼接、裁剪字符串的操作都会产生新的 String 对象，过多的进行这种操作对应用性能有影响。 StringBuffer 为了解决 String 拼接产生对象而提供的类，我们可以用 append 或 add 方法，进行字符串的拼接，StringBuffer 本质是线程安全的序列，它保证了线程安全，也随之带来额外的性能开销，所以除非有线程安全的需要，不然推荐使用 StringBuilder。 StringBuilder 是 Java 1.</description>
-    </item>
-    
-    <item>
-      <title>Git Basic</title>
-      <link>https://zacash.cn/posts/git-basic/</link>
-      <pubDate>Fri, 15 May 2020 15:55:52 +0800</pubDate>
-      
-      <guid>https://zacash.cn/posts/git-basic/</guid>
-      <description>Problem Solving Authentication   Clear saved account &amp;amp; password
-Error: fatal:Authentication failed for &#39;remote-url&#39;
-git config --system --unset credential.helper
-  Save account &amp;amp; password
-git config --global credential.helper store
-  Remote   Check remote url
-git remote -v
-  Update remote url
-git remote set-url origin newRepoUrl
-  </description>
-    </item>
-    
-    <item>
-      <title>Hugo Basic</title>
-      <link>https://zacash.cn/posts/hugo-basic/</link>
-      <pubDate>Sat, 04 Apr 2020 09:25:04 +0800</pubDate>
-      
-      <guid>https://zacash.cn/posts/hugo-basic/</guid>
-      <description>Add new content hugo new posts/article-name.md
-Article meta info --- title: &amp;#34;New Article&amp;#34; date: 2020-04-04T09:25:04+08:00 description: &amp;#34;Hugo 的简单用法&amp;#34; tags: [&amp;#34;hugo&amp;#34;, &amp;#34;pages&amp;#34;] categories: [&amp;#34;hugo&amp;#34;] draft: true --- Start server with drafts enabled hugo server -D
-Customize the theme Open up config.toml in a text editor:
-baseURL = &amp;#34;https://example.org/&amp;#34;languageCode = &amp;#34;en-us&amp;#34;title = &amp;#34;My New Hugo Site&amp;#34;theme = &amp;#34;ananke&amp;#34;Build static pages hugo -D output will be in ./public/ directory by default (-d/--destination flag to change it, or set publishdir in the config file)</description>
     </item>
     
   </channel>

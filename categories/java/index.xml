@@ -42,7 +42,10 @@ JVM 栈 (Stacks) 每个线程都有一个私有的 JVM 栈，与线程同时创�
       <pubDate>Wed, 23 Mar 2022 08:44:28 +0800</pubDate>
       
       <guid>https://zacash.cn/posts/jvm-basic-classloader/</guid>
-      <description>类加载器（ClassLoader） 什么是类加载器 类加载器是 JRE 的一部分，负责在运行时将 Java 类动态加载到 JVM，有了类加载器，JVM 无需了解底层文件或文件系统即可运行Java程序。
+      <description>类加载顾名思义就是把类加载到 JVM 中，而输入一段二进制流到内存，之后经过一番解析、处理转化成可用的 class 类，这就是类加载要做的事情。
+二进制流可以来源于 class 文件，或者通过字节码工具生成的字节码或者来自于网络都行，只要符合格式的二进制流，JVM 来者不拒。
+类加载流程分为加载、连接、初始化三个阶段，连接还能拆分为：验证、准备、解析三个阶段。
+类加载器（ClassLoader） 什么是类加载器 类加载器是 JRE 的一部分，负责在运行时将 Java 类动态加载到 JVM，有了类加载器，JVM 无需了解底层文件或文件系统即可运行Java程序。
 类加载器不会一次将全部类加载到内存里，而是在程序需要时加载。
 JVM 内置的类加载器类型   Bootstrap class loader
 每个 JVM 实现必须有一个 bootstrap 类加载器。它负责 JDK 内部类，通常是 rt.jar 和位于 JAVA_HOME/jre/lib 目录下的其他核心类，该路径通常被称为引导路径(bootstrap path)。该类加载器由 C/C++ 语言实现。
@@ -50,9 +53,7 @@ JVM 内置的类加载器类型   Bootstrap class loader
 Bootstrap 的子类加载器，它加载扩展目录 JAVA_HOME/jre/lib/ext 或 java.ext.dirs 指定路径下的类。它在 sun.misc.Launcher$ExtClassLoader 类中由 Java 语言实现。
   System/Application class loader
 Extension 的子类加载器。它负责加载 App 层级的类，它加载在 classpath 环境变量、-classpath、-cp 命令行选项中找到的文件。它在 sun.misc.Launcher$AppClassLoader 类中由 Java 语言实现。
-  自定义的类加载器 在需要从本地或网络加载类的场景，我们可能需要使用自定义类加载器。
-使用场景 自定义类加载器不仅对在运行时加载类有帮助，还包括：
- 修改现有字节码，如织入代理 动态创建适合用户需求的类。如 JDBC 中，通过动态类加载完成不同驱动实现(driver implementations)之间的切换。 实现类版本控制机制，如为具有相同名称和包名的类加载不同的字节码（热修复）。这可以通过 URL 类加载器或自定义加载器完成。  我们可以自定义类加载器实现指定类的加载：</description>
+  自定义的类加载器 在需要从本地或网络加载类的场景，我们可能需要使用自定义类加载器。</description>
     </item>
     
     <item>
@@ -62,6 +63,15 @@ Extension 的子类加载器。它负责加载 App 层级的类，它加载在 c
       
       <guid>https://zacash.cn/posts/threads-and-locks/</guid>
       <description>&lt;p&gt;Threads are created and managed by the classes Thread and ThreadGroup. Creating a Thread object creates a thread, and that is the only way to create a thread. When the thread is created, it is not yet active; it begins to run when its start method is called.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>JVM Basic - Compiler</title>
+      <link>https://zacash.cn/posts/jvm-basic-compiler/</link>
+      <pubDate>Fri, 17 Jul 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://zacash.cn/posts/jvm-basic-compiler/</guid>
+      <description>&lt;p&gt;Class 文件的结构&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -77,7 +87,7 @@ Extension 的子类加载器。它负责加载 App 层级的类，它加载在 c
   考察点：equals 的概念
   🌟实际要求：平时对源码的深挖意识即技术钻研和批判性思维
   考察目的：
- 基础知识的扎实程度 候选人对技术的热情    2.Java 中操作字符串有那些类？它们之间有什么区别？  主要有：String，StringBuilder，StringBuffer 区别：StringBuffer 和 StringBuilder 都继承自 AbstractStringBuilder，StringBuffer 具备线程安全性  加分项：String 源码分析  String 是 final 关键字修饰 -&amp;gt; 对象的值不可变 -&amp;gt; 每次操作都会生成新的对象 StringBuffer 和 StringBuilder 对象的值可变，但拼接字符串开销比较小   加分项：StringBuffer 线程安全性分析（查源码、找 synchronized、线程锁）   使用场景：并发必选 StringBuffer，迭代必选 StringBuilder，普通场景选 String，避免中途不必要的类型转换开销  3.</description>
+ 基础知识的扎实程度 候选人对技术的热情    2. String、StringBuffer、StringBuilder 有什么区别？ 经典回答  String 是典型的 Immutable 类，被声明为 final class，所有属性也都是 final 的，因此类似拼接、裁剪字符串的操作都会产生新的 String 对象，过多的进行这种操作对应用性能有影响。 StringBuffer 为了解决 String 拼接产生对象而提供的类，我们可以用 append 或 add 方法，进行字符串的拼接，StringBuffer 本质是线程安全的序列，它保证了线程安全，也随之带来额外的性能开销，所以除非有线程安全的需要，不然推荐使用 StringBuilder。 StringBuilder 是 Java 1.</description>
     </item>
     
   </channel>

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-<title>executor | Zac&#39;s blog</title>
+<title>concurrent | Zac&#39;s blog</title>
 
 <meta name="generator" content="Hugo Eureka 0.9.1" />
 <link rel="stylesheet" href="https://zacash.cn/css/eureka.min.6a378a23360d238dc3ef4df2f5cd718093f02c10c9c7eb2437c29701cd8d389ab6da5d9f21bdd3afa305fd56c1235017.css" integrity="sha384-ajeKIzYNI43D703y9c1xgJPwLBDJx&#43;skN8KXAc2NOJq22l2fIb3Tr6MF/VbBI1AX">
@@ -61,12 +61,12 @@
   "itemListElement": [{
       "@type": "ListItem",
       "position": 1 ,
-      "name":"Tags",
-      "item":"https://zacash.cn/tags/"},{
+      "name":"Categories",
+      "item":"https://zacash.cn/categories/"},{
       "@type": "ListItem",
       "position": 2 ,
-      "name":"executor",
-      "item":"https://zacash.cn/tags/executor/"}]
+      "name":"concurrent",
+      "item":"https://zacash.cn/categories/concurrent/"}]
 }
 </script>
 
@@ -83,17 +83,35 @@
             "name": "Intro to Executor",
             "description": "Introduction to Executor",
             "url": "https://zacash.cn/posts/intro-to-executor/"
+        },{
+            "@type":"ListItem",
+            "position":  2 ,
+            "name": "Process, Threads and Locks",
+            "description": "Process, Threads and locks",
+            "url": "https://zacash.cn/posts/threads-and-locks/"
+        },{
+            "@type":"ListItem",
+            "position":  3 ,
+            "name": "Intro to ConcurrentHashMap",
+            "description": "HashMap introduction",
+            "url": "https://zacash.cn/posts/intro-to-concurrenthashmap/"
+        },{
+            "@type":"ListItem",
+            "position":  4 ,
+            "name": "Coroutines Introduction",
+            "description": "Coroutines Intro",
+            "url": "https://zacash.cn/posts/coroutines-introduction/"
         }
     ]
 }
-</script><meta property="og:title" content="executor | Zac&#39;s blog" />
+</script><meta property="og:title" content="concurrent | Zac&#39;s blog" />
 <meta property="og:type" content="website" />
 
 
 <meta property="og:image" content="https://zacash.cn/images/icon.png">
 
 
-<meta property="og:url" content="https://zacash.cn/tags/executor/" />
+<meta property="og:url" content="https://zacash.cn/categories/concurrent/" />
 
 
 
@@ -121,10 +139,10 @@
 
 
 
-<meta property="article:section" content="tags" />
+<meta property="article:section" content="categories" />
 
 
-<link rel="alternate" type="application/rss+xml" href="https://zacash.cn/tags/executor/index.xml" title="Zac's blog" />
+<link rel="alternate" type="application/rss+xml" href="https://zacash.cn/categories/concurrent/index.xml" title="Zac's blog" />
 
 
   <body class="flex min-h-screen flex-col">
@@ -147,8 +165,8 @@
         class="hidden block md:flex md:grow md:justify-between md:items-center w-full md:w-auto text-primary-text z-20">
         <div class="md:flex md:h-16 text-sm md:grow pb-4 md:pb-0 border-b md:border-b-0">
             <a href="/posts/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  me-4">Posts</a>
-            <a href="/tags/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  selected-menu-item  me-4">Tags</a>
-            <a href="/categories/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  me-4">Categories</a>
+            <a href="/tags/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  me-4">Tags</a>
+            <a href="/categories/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  selected-menu-item  me-4">Categories</a>
             <a href="/#about" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  me-4">About</a>
         </div>
 
@@ -201,7 +219,7 @@
         <div class="pl-scrollbar">
           <div class="mx-auto w-full max-w-screen-xl lg:px-4 xl:px-8">
   <article class="prose mx-6 my-8">
-  <h1>executor</h1>
+  <h1>concurrent</h1>
   
 </article>
 
@@ -241,6 +259,174 @@
       
         <a href="https://zacash.cn/categories/java/" class="hover:text-eureka"
           >java</a
+        >
+      
+        
+          <span>, </span>
+        <a href="https://zacash.cn/categories/concurrent/" class="hover:text-eureka"
+          >concurrent</a
+        >
+      
+    </div>
+  
+
+  
+</div>
+
+  
+</div>
+
+  </div>
+
+  
+</div>
+  </div>
+  
+  <div class="py-6">
+    <div class="flex flex-col-reverse lg:flex-row justify-between">
+  
+  <div class="w-full ">
+    <div class="prose">
+  <a href="https://zacash.cn/posts/threads-and-locks/" class="no-underline">
+    <h3 class="mt-0">Process, Threads and Locks</h3>
+  </a>
+  
+    Process, Threads and locks
+  
+
+  
+    <div
+  class="text-tertiary-text not-prose mt-2 flex flex-row flex-wrap items-center"
+>
+  <div class="me-6 my-2">
+    <i class="fas fa-calendar me-1"></i>
+    <span
+      >2020-07-27</span
+    >
+  </div>
+  <div class="me-6 my-2">
+    <i class="fas fa-clock me-1"></i>
+    <span>10 min read</span>
+  </div>
+
+  
+    <div class="me-6 my-2">
+      <i class="fas fa-folder me-1"></i>
+      
+        <a href="https://zacash.cn/categories/java/" class="hover:text-eureka"
+          >java</a
+        >
+      
+        
+          <span>, </span>
+        <a href="https://zacash.cn/categories/concurrent/" class="hover:text-eureka"
+          >concurrent</a
+        >
+      
+    </div>
+  
+
+  
+</div>
+
+  
+</div>
+
+  </div>
+
+  
+</div>
+  </div>
+  
+  <div class="py-6">
+    <div class="flex flex-col-reverse lg:flex-row justify-between">
+  
+  <div class="w-full ">
+    <div class="prose">
+  <a href="https://zacash.cn/posts/intro-to-concurrenthashmap/" class="no-underline">
+    <h3 class="mt-0">Intro to ConcurrentHashMap</h3>
+  </a>
+  
+    HashMap introduction
+  
+
+  
+    <div
+  class="text-tertiary-text not-prose mt-2 flex flex-row flex-wrap items-center"
+>
+  <div class="me-6 my-2">
+    <i class="fas fa-calendar me-1"></i>
+    <span
+      >2020-07-15</span
+    >
+  </div>
+  <div class="me-6 my-2">
+    <i class="fas fa-clock me-1"></i>
+    <span>4 min read</span>
+  </div>
+
+  
+    <div class="me-6 my-2">
+      <i class="fas fa-folder me-1"></i>
+      
+        <a href="https://zacash.cn/categories/data-structure/" class="hover:text-eureka"
+          >data structure</a
+        >
+      
+        
+          <span>, </span>
+        <a href="https://zacash.cn/categories/concurrent/" class="hover:text-eureka"
+          >concurrent</a
+        >
+      
+    </div>
+  
+
+  
+</div>
+
+  
+</div>
+
+  </div>
+
+  
+</div>
+  </div>
+  
+  <div class="py-6">
+    <div class="flex flex-col-reverse lg:flex-row justify-between">
+  
+  <div class="w-full ">
+    <div class="prose">
+  <a href="https://zacash.cn/posts/coroutines-introduction/" class="no-underline">
+    <h3 class="mt-0">Coroutines Introduction</h3>
+  </a>
+  
+    Coroutines Intro
+  
+
+  
+    <div
+  class="text-tertiary-text not-prose mt-2 flex flex-row flex-wrap items-center"
+>
+  <div class="me-6 my-2">
+    <i class="fas fa-calendar me-1"></i>
+    <span
+      >2020-04-25</span
+    >
+  </div>
+  <div class="me-6 my-2">
+    <i class="fas fa-clock me-1"></i>
+    <span>2 min read</span>
+  </div>
+
+  
+    <div class="me-6 my-2">
+      <i class="fas fa-folder me-1"></i>
+      
+        <a href="https://zacash.cn/categories/kotlin/" class="hover:text-eureka"
+          >kotlin</a
         >
       
         

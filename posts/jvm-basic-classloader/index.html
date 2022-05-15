@@ -82,7 +82,7 @@
     },
     "headline": "JVM Basic - ClassLoader | Zac\u0027s blog","datePublished": "2022-03-23T08:44:28+08:00",
     "dateModified": "2022-03-23T08:44:28+08:00",
-    "wordCount":  289 ,
+    "wordCount":  296 ,
     "publisher": {
         "@type": "Person",
         "name": "Zac Zhu",
@@ -132,13 +132,7 @@
 
 <meta property="article:tag" content="classloader" />
 
-<meta property="article:tag" content="jvm" />
 
-
-
-
-
-<meta property="og:see_also" content="https://zacash.cn/posts/jvm-basic-compiler/" />
 
 
 
@@ -247,6 +241,12 @@
           >java</a
         >
       
+        
+          <span>, </span>
+        <a href="https://zacash.cn/categories/jvm/" class="hover:text-eureka"
+          >jvm</a
+        >
+      
     </div>
   
 
@@ -257,7 +257,11 @@
   
   
 
-  <h2 id="类加载器classloader">类加载器（ClassLoader）</h2>
+  <p>类加载顾名思义就是把类加载到 JVM 中，而输入一段二进制流到内存，之后经过一番解析、处理转化成可用的 class 类，这就是类加载要做的事情。</p>
+<p>二进制流可以来源于 class 文件，或者通过字节码工具生成的字节码或者来自于网络都行，只要符合格式的二进制流，JVM 来者不拒。</p>
+<p>类加载流程分为加载、连接、初始化三个阶段，连接还能拆分为：验证、准备、解析三个阶段。</p>
+<!-- more -->
+<h2 id="类加载器classloader">类加载器（ClassLoader）</h2>
 <h3 id="什么是类加载器">什么是类加载器</h3>
 <p>类加载器是 JRE 的一部分，负责在运行时将 Java 类动态加载到 JVM，有了类加载器，JVM 无需了解底层文件或文件系统即可运行Java程序。</p>
 <p>类加载器不会一次将全部类加载到内存里，而是在程序需要时加载。</p>
@@ -354,11 +358,11 @@
 </li>
 <li>
 <p><strong>连接（Linking）</strong></p>
-<p>执行 Verification、Preparation 和 Resolution。</p>
+<p>连接可分为:验证（Verification）、准备（Preparation）、解析（Resolution）。</p>
 <ul>
-<li>Verification：通过检查 <em>.class</em> 文件是否正确的格式化和是否由有效的编译器生成，确保该文件的正确性。如果验证失败，将抛出运行时异常：<em>java.lang.VerifyError</em>。</li>
-<li>Preparation：JVM 为类变量分配内存，并将内存初始化为默认值。</li>
-<li>Resolution：这是用直接引用(direct references)替换类型中的符号引用(symbolic references)的过程。通过搜索方法区域以找到引用的实体来完成此操作。</li>
+<li>验证：通过检查 <em>.class</em> 文件是否正确的格式化和是否由有效的编译器生成，确保该文件的正确性。如果验证失败，将抛出运行时异常：<em>java.lang.VerifyError</em>。</li>
+<li>准备：JVM 为类变量分配内存，并将内存初始化为默认值。</li>
+<li>解析：这是用直接引用(direct references)替换类型中的符号引用(symbolic references)的过程。通过搜索方法区域以找到引用的实体来完成此操作。</li>
 </ul>
 </li>
 <li>
@@ -374,8 +378,6 @@
         <div class="my-4">
     
     <a href="https://zacash.cn/tags/classloader/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 me-2 hover:text-eureka">#classloader</a>
-    
-    <a href="https://zacash.cn/tags/jvm/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 me-2 hover:text-eureka">#jvm</a>
     
 </div>
       
@@ -415,16 +417,6 @@
     
 
     
-    
-      <div
-        class="lg:col-start-2 bg-secondary-bg prose col-span-2 rounded p-6 lg:col-span-6"
-      >
-        <h3>See Also</h3>
-        
-          <a href="https://zacash.cn/posts/jvm-basic-compiler/" class="no-underline">JVM Basic - Compiler</a>
-          <br />
-        
-      </div>
     
   </div>
 

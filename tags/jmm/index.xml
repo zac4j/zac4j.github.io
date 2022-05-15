@@ -8,22 +8,21 @@
     <language>en</language>
     <copyright>Copyright Zac &amp;copy; 2022
 </copyright>
-    <lastBuildDate>Fri, 17 Jul 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://zacash.cn/tags/jmm/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 24 Mar 2022 08:44:28 +0800</lastBuildDate><atom:link href="https://zacash.cn/tags/jmm/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>JVM Basic</title>
-      <link>https://zacash.cn/posts/jvm-arch-in-a-nutshell/</link>
-      <pubDate>Fri, 17 Jul 2020 00:00:00 +0000</pubDate>
+      <title>JVM Basic - Rumtime Data Area</title>
+      <link>https://zacash.cn/posts/jvm-basic-rt-data-area/</link>
+      <pubDate>Thu, 24 Mar 2022 08:44:28 +0800</pubDate>
       
-      <guid>https://zacash.cn/posts/jvm-arch-in-a-nutshell/</guid>
-      <description>Run-Time Data Areas The PC Register JVM 可以支持多个线程同时运行，每个线程都有自己独立的 PC 寄存器(program counter register)。在任意时间点，任一线程在执行某个方法的代码，被称作该线程的当前方法(current method)。
- 如果该方法是 native 的，pc 寄存器的值是 undefined。 如果该方法不是 native 的，pc 寄存器包含当前正在执行指令的地址。  JVM 的 pc 寄存器容量足够在特定平台上保存 returnAddress 或 native 指针。
-JVM Stacks 对每个线程，JVM 在创建线程时都会创建一个私有的堆栈。JVM 仅对堆栈进行两种操作：推入(push)和弹出(pop)栈帧(frames)。JVM 堆栈的内存不必是连续的。
-线程执行的每个方法调用(method calls)都存储在对应的堆栈中，包括入参、局部变量、中间计算和其他数据。方法完成后，JVM 将从堆栈中删除对应的条目，完成所有的方法调用后，堆栈将变为空，并且在终止线程前，销毁该堆栈。
-存储在堆栈中的数据仅适用于对应线程，对别的线程不适用。因此，可以说局部数据是线程安全的。堆栈中每个条目都称为 堆栈帧(Stack Frame) 或 激活记录(Activation Record)。
- 第一版的 Java 虚拟机规范 The Java® Virtual Machine Specification, JVM 堆栈(Java Virtual Machine stack) 被称为 Java 栈(Java stack)
- JVM 规范允许Java虚拟机堆栈具有固定大小，或者根据计算要求动态伸缩。 如果Java虚拟机堆栈的大小固定，则在创建每个Java虚拟机堆栈时可以独立选择它们的大小。
-关联的异常：
-  如果线程中的计算需要比允许的 JVM 更大的堆栈，则 JVM 将抛出 StackOverflowError。</description>
+      <guid>https://zacash.cn/posts/jvm-basic-rt-data-area/</guid>
+      <description>前面说了类加载器，我们接下来看看运行时数据区(Run-Time Data Areas)
+Run-Time Data Areas The pc Register JVM 可以支持多个线程同时运行，每个线程都有自己的 pc 寄存器(program counter register)。在任意时间点，任一线程在执行某个方法的代码，即该线程的当前方法(current method)。
+ 如果该方法是 native 的，pc 寄存器的值是 undefined。 如果该方法不是 native 的，pc 寄存器包含当前正在执行指令的地址。  JVM 的 pc 寄存器容量足够在特定平台上保存 returnAddress (returnAddress 保存着指向JVM操作码指令的指针) 或 native 指针。
+JVM 栈 (Stacks) 每个线程都有一个私有的 JVM 栈，与线程同时创建。JVM 栈存储 栈帧(frames) 对于栈帧仅有两种操作：push 和 pop。JVM 栈的内存不必是连续的。
+线程执行的每个 method calls 都存储在对应的栈中，包括入参、局部变量、中间计算和其他数据。方法完成后，JVM 将从栈中删除对应的条目，完成所有的方法调用后，栈将变为空，并且在终止线程前，销毁该栈。
+存储在栈中的数据仅适用于对应线程，对别的线程不适用。因此，可以说局部数据是线程安全的。
+ 第一版的 Java 虚拟机规范 The Java® Virtual Machine Specification, JVM 栈 被称为 Java 栈 (Java stack)
+ JVM 规范允许Java虚拟机栈具有固定大小，或者根据计算要求动态伸缩。 如果Java虚拟机栈的大小固定，则在创建每个Java虚拟机栈时可以独立选择它们的大小。</description>
     </item>
     
   </channel>

@@ -32,6 +32,9 @@
     <loc>https://zacash.cn/tags/interview/</loc>
     <lastmod>2022-05-04T20:44:38+08:00</lastmod>
   </url><url>
+    <loc>https://zacash.cn/categories/concurrent/</loc>
+    <lastmod>2022-03-29T21:46:30+08:00</lastmod>
+  </url><url>
     <loc>https://zacash.cn/tags/executor/</loc>
     <lastmod>2022-03-29T21:46:30+08:00</lastmod>
   </url><url>
@@ -47,7 +50,10 @@
     <loc>https://zacash.cn/tags/threadpool/</loc>
     <lastmod>2022-03-29T21:46:30+08:00</lastmod>
   </url><url>
-    <loc>https://zacash.cn/tags/jvm/</loc>
+    <loc>https://zacash.cn/tags/jmm/</loc>
+    <lastmod>2022-03-24T08:44:28+08:00</lastmod>
+  </url><url>
+    <loc>https://zacash.cn/categories/jvm/</loc>
     <lastmod>2022-03-24T08:44:28+08:00</lastmod>
   </url><url>
     <loc>https://zacash.cn/posts/jvm-basic-rt-data-area/</loc>
@@ -200,7 +206,7 @@
     <loc>https://zacash.cn/posts/websocket-and-long-polling/</loc>
     <lastmod>2020-07-21T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://zacash.cn/categories/jvm/</loc>
+    <loc>https://zacash.cn/tags/compiler/</loc>
     <lastmod>2020-07-17T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://zacash.cn/posts/jvm-basic-compiler/</loc>
@@ -243,6 +249,9 @@
     <lastmod>2020-07-04T11:08:11+08:00</lastmod>
   </url><url>
     <loc>https://zacash.cn/categories/basic/</loc>
+    <lastmod>2020-07-03T09:28:31+08:00</lastmod>
+  </url><url>
+    <loc>https://zacash.cn/tags/fundamental/</loc>
     <lastmod>2020-07-03T09:28:31+08:00</lastmod>
   </url><url>
     <loc>https://zacash.cn/tags/java/</loc>

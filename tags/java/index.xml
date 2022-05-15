@@ -22,7 +22,7 @@
   考察点：equals 的概念
   🌟实际要求：平时对源码的深挖意识即技术钻研和批判性思维
   考察目的：
- 基础知识的扎实程度 候选人对技术的热情    2.Java 中操作字符串有那些类？它们之间有什么区别？  主要有：String，StringBuilder，StringBuffer 区别：StringBuffer 和 StringBuilder 都继承自 AbstractStringBuilder，StringBuffer 具备线程安全性  加分项：String 源码分析  String 是 final 关键字修饰 -&amp;gt; 对象的值不可变 -&amp;gt; 每次操作都会生成新的对象 StringBuffer 和 StringBuilder 对象的值可变，但拼接字符串开销比较小   加分项：StringBuffer 线程安全性分析（查源码、找 synchronized、线程锁）   使用场景：并发必选 StringBuffer，迭代必选 StringBuilder，普通场景选 String，避免中途不必要的类型转换开销  3.</description>
+ 基础知识的扎实程度 候选人对技术的热情    2. String、StringBuffer、StringBuilder 有什么区别？ 经典回答  String 是典型的 Immutable 类，被声明为 final class，所有属性也都是 final 的，因此类似拼接、裁剪字符串的操作都会产生新的 String 对象，过多的进行这种操作对应用性能有影响。 StringBuffer 为了解决 String 拼接产生对象而提供的类，我们可以用 append 或 add 方法，进行字符串的拼接，StringBuffer 本质是线程安全的序列，它保证了线程安全，也随之带来额外的性能开销，所以除非有线程安全的需要，不然推荐使用 StringBuilder。 StringBuilder 是 Java 1.</description>
     </item>
     
   </channel>
