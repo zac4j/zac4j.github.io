@@ -82,7 +82,7 @@
     },
     "headline": "Intro to HashMap | Zac\u0027s blog","datePublished": "2020-07-15T15:11:27+08:00",
     "dateModified": "2020-07-15T15:11:27+08:00",
-    "wordCount":  1049 ,
+    "wordCount":  1432 ,
     "publisher": {
         "@type": "Person",
         "name": "Zac Zhu",
@@ -236,7 +236,7 @@
   </div>
   <div class="me-6 my-2">
     <i class="fas fa-clock me-1"></i>
-    <span>5 min read</span>
+    <span>7 min read</span>
   </div>
 
   
@@ -258,48 +258,62 @@
   
 
   <p>Hash table based implementation of the Map interface.  This implementation provides all of the optional map operations, and permits null values and the null key.</p>
-<h2 id="hashmap-brief-intro">HashMap Brief Intro</h2>
+<p>理解源码，专注于以下几个方面：</p>
+<ul>
+<li>理解 Map 相关类似整体结构，尤其是有序数据结构的一些要点。</li>
+<li>从源码分析 HashMap 的设计和实现要点，理解容量、负载因子等，为什么需要这些参数，如何影响 Map 的性能，实践中如何取舍等。</li>
+<li>理解树化改造的相关原理和改进原因。</li>
+</ul>
+<h2 id="hashmap-源码注释">HashMap 源码注释</h2>
 <p>The HashMap class is roughly equivalent to Hashtable, except that it is unsynchronized and permits nulls. This class makes no guarantees as to the order of the map; in particular, it does not guarantee that the order will remain constant over time.</p>
 <p>HashMap 和 HashTable 大致等效，除了 HashMap 是非同步的，以及允许空值。无法保证顺序随着时间的推移保持不变。</p>
 <p>This implementation provides <strong>constant-time</strong> performance for the basic operations (get and put),assuming the hash function disperses the elements properly among the buckets.</p>
-<p>假设 hash 函数将元素分散在正确的 bucket 中，HashMap 对于基本操作(get 或 put) 会提供恒定时间的性能。</p>
-<h3 id="何为-constant-time">何为 constant time</h3>
-<p>constant time 是表示时间复杂度的一个示例，常见时间复杂度的描述：</p>
+<p>假设 hash 函数将元素分散在正确的 bucket 中，HashMap 对于基本操作(get 或 put) 会提供常数时间的性能。</p>
+<h3 id="何为常数时间-constant-time">何为常数时间 Constant Time</h3>
+<p>常数时间是表示时间复杂度的一个示例，常见时间复杂度的描述：</p>
 <table>
 <thead>
 <tr>
 <th>Time complexity</th>
 <th>Time description</th>
+<th>时间描述</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>O(1)</td>
 <td>Constant time</td>
+<td>常数时间</td>
 </tr>
 <tr>
 <td>O(log n)</td>
 <td>Logarithmic time</td>
+<td>对数时间</td>
 </tr>
 <tr>
 <td>O(n)</td>
 <td>Linear time</td>
+<td>线性时间</td>
 </tr>
 <tr>
 <td>O(n log n)</td>
 <td>Pseudo-linear time</td>
+<td>伪线性时间</td>
 </tr>
 <tr>
 <td>O(n^c)</td>
 <td>Polynomial time</td>
+<td>多项式时间</td>
 </tr>
 <tr>
 <td>O(c^n)</td>
 <td>Exponential time</td>
+<td>指数时间</td>
 </tr>
 <tr>
 <td>O(n!)</td>
 <td>Factorial time</td>
+<td>阶乘时间</td>
 </tr>
 </tbody>
 </table>
@@ -324,9 +338,9 @@
 <p>If the initial capacity is greater than the maximum number of entries divided by the load factor, no rehash operations will ever occur.</p>
 <p>如果初始容量大于最大条目数除以负载因子，则将不会发生任何映射操作。</p>
 <p>If many mappings are to be stored in a HashMap instance, creating it with a sufficiently large capacity will allow the mappings to be stored more efficiently than letting it perform automatic rehashing as needed to grow the table.</p>
-<p>如果将许多映射关系存储在 HashMap 实例中，创建足够大容量的 map 将比让其按需自动增长哈希表重新映射，更有效的存储映射。</p>
+<p>如果将许多映射关系存储在 HashMap 实例中，创建足够大起始容量的 map 将比让其按需自动增长哈希表重新映射，更有效的存储映射。</p>
 <p>Note that using many keys with the same {@code hashCode()} is a sure way to slow down performance of any hash table. To ameliorate impact, when keys are {@link Comparable}, this class may use comparison order among keys to help break ties.</p>
-<p>注意，使用许多具有相同 hashCode 的键是降低任何哈希表性能的方法。为了改善影响，当键是 <em>Comparable</em> 时，此类可以使用键之间的比较顺序来帮助打破平衡。</p>
+<p>注意，使用许多具有相同 hashcode 的键是降低任何哈希表性能的方法。为了改善影响，当键是 <em>Comparable</em> 时，此类可以使用键之间的比较顺序来帮助打破束缚。</p>
 <p>Note that this implementation is not synchronized. If multiple threads access a hash map concurrently, and at least one of the threads modifies the map structurally, it must be synchronized externally. (A structural modification is any operation that adds or deletes one or more mappings; merely changing the value associated with a key that an instance already contains is not a structural modification.) This is typically accomplished by synchronizing on some object that naturally encapsulates the map.</p>
 <p>注意，这个实现并不是同步的。如果多线程同时访问 hash map，并且至少有一个线程在结构上修改了 map，则必须在外部进行同步。（结构型修改是指增删一个或多个映射关系，更新某个 key 对应的值并不是结构型修改）。通常是对封装 map 的某个对象加同步来实现。</p>
 <p>If no such object exists, the map should be &ldquo;wrapped&rdquo; using the {@link Collections#synchronizedMap Collections.synchronizedMap} method.  This is best done at creation time, to prevent accidental unsynchronized access to the map: Map m = Collections.synchronizedMap(new HashMap(&hellip;));</p>
@@ -337,12 +351,35 @@
 <p>Note that the fail-fast behavior of an iterator cannot be guaranteed as it is, generally speaking, impossible to make any hard guarantees in the presence of unsynchronized concurrent modification.  Fail-fast iterators throw ConcurrentModificationException on a best-effort basis. Therefore, it would be wrong to write a program that depended on this exception for its correctness: the fail-fast behavior of iterators should be used only to detect bugs.</p>
 <p>注意不能保证迭代器的 fast fail 行为，一般来说，在存在不同步的并发修改情况下，不可能作出任何严格的保证。因此，编写依赖于此异常的程序的正确性是错误的：迭代器的 fast fail 行为仅用于错误检测。</p>
 <p>This class is a member of the <a href="https://docs.oracle.com/javase/8/docs/technotes/guides/collections/index.html">Java Collections Framework</a></p>
-<h2 id="hashmap-code-implementation">HashMap code implementation</h2>
+<h2 id="map-的整体结构">Map 的整体结构</h2>
+<p><img src="/img/map.webp" alt="map"></p>
+<p>HashMap 等其他 Map 实现都扩展了 AbstractMap，大部分 Map 的使用场景，就是 put、get 或者 remove，而对顺序没有特别的要求，HashMap 在这种情况下就是最优选择。对顺序有要求的情况，可以选择 LinkedHashMap 和 TreeMap，两者的实现非常不同。</p>
+<p>LinkedHashMap 通常提供的是遍历顺序符合插入顺序，它的实现是通过为键值对维护一个双向链表。通过特定的构造函数，我们可以创建反映访问顺序的实例，如 put、get、compute 等，都算作“访问”。</p>
+<p>如我们构建一个空间占用敏感的资源池，希望可以自动将最不常访问的对象释放掉，可以利用 LinkedHashMap 提供的机制来实现：</p>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">public</span> <span style="color:#6ab825;font-weight:bold">class</span> <span style="color:#447fcf;text-decoration:underline">AutoCleanMapSample</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">public</span> <span style="color:#6ab825;font-weight:bold">static</span> <span style="color:#6ab825;font-weight:bold">void</span> <span style="color:#447fcf">main</span>(String[] args) {
+</span></span><span style="display:flex;"><span>        LinkedHashMap&lt;String, String&gt; accessOrderedMap = <span style="color:#6ab825;font-weight:bold">new</span> LinkedHashMap&lt;String, String&gt;(16, 0.<span style="color:#bbb">75F</span>, <span style="color:#6ab825;font-weight:bold">true</span>){
+</span></span><span style="display:flex;"><span>            <span style="color:#ffa500">@Override</span>           
+</span></span><span style="display:flex;"><span>            <span style="color:#6ab825;font-weight:bold">protected</span> <span style="color:#6ab825;font-weight:bold">boolean</span> <span style="color:#447fcf">removeEldestEntry</span>(Map.<span style="color:#bbb">Entry</span>&lt;String, String&gt; eldest) {
+</span></span><span style="display:flex;"><span>                 <span style="color:#999;font-style:italic">// 实现自定义删除策略，否则行为就和普遍Map没有区别
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>                 <span style="color:#6ab825;font-weight:bold">return</span> size() &gt; 3;
+</span></span><span style="display:flex;"><span>                }        
+</span></span><span style="display:flex;"><span>            };
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>对于 TreeMap，它的整体顺序是由 key 的顺序关系决定的，通过 Comparator 或 Comparable 来决定。</p>
+<h2 id="hashmap-源码实现">HashMap 源码实现</h2>
 <p>主要围绕几个问题来进行</p>
-<p>HashMap 的底层实现
-HashMap 在 JDK1.7 和 JDK1.8 的底层实现是不一样的，在 JDK1.7 中，HashMap 使用的是数组 + 链表实现的，JDK1.8 中使用的是数组+链表或红黑树实现。</p>
+<ul>
+<li>HashMap 内部实现基本点分析</li>
+<li>容量（capacity）和负载系数（load factor）</li>
+<li>树化</li>
+</ul>
+<h3 id="hashmap-的内部结构">HashMap 的内部结构</h3>
+<p>HashMap 在 JDK 7 和 JDK 8 的底层实现是不一样的，在 JDK 7 中，HashMap 使用的是数组 + 链表实现的，JDK 8 中使用的是数组+链表或红黑树实现。</p>
 <p>JDK 7 中的实现如图：
 <img src="/img/HashMapStructure.webp" alt="jdk7"></p>
+<p>HashMap 可以看作是数组（Node&lt;K,V&gt; table）和链表结合组成的复合结构，数组被分为一个个 bucket，通过 hashcode 决定了键值对在这个数组的寻址；hashcode 相同的键值对，以链表的形式存储。</p>
 <p>每个 Node 包含的内容为:</p>
 <div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">static</span> <span style="color:#6ab825;font-weight:bold">class</span> <span style="color:#447fcf;text-decoration:underline">Node</span>&lt;K,V&gt; <span style="color:#6ab825;font-weight:bold">implements</span> Map.<span style="color:#bbb">Entry</span>&lt;K,V&gt; {
 </span></span><span style="display:flex;"><span>    <span style="color:#999;font-style:italic">// hashcode of key
@@ -357,8 +394,10 @@ HashMap 在 JDK1.7 和 JDK1.8 的底层实现是不一样的，在 JDK1.7 中，
 </span></span><span style="display:flex;"><span>                   <span style="color:#6ab825;font-weight:bold">boolean</span> evict) {
 </span></span><span style="display:flex;"><span>    Node&lt;K,V&gt;[] tab; Node&lt;K,V&gt; p; <span style="color:#6ab825;font-weight:bold">int</span> n, i;
 </span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">if</span> ((tab = table) == <span style="color:#6ab825;font-weight:bold">null</span> || (n = tab.<span style="color:#bbb">length</span>) == 0)
-</span></span><span style="display:flex;"><span>        n = (tab = resize()).<span style="color:#bbb">length</span>;
-</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">if</span> ((p = tab[i = (n - 1) &amp; hash]) == <span style="color:#6ab825;font-weight:bold">null</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#999;font-style:italic">// table 为 null 时，resize 负责初始化 table（lazy-load：第一次 putVal 时才初始化 table）
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>        n = (tab = resize()).<span style="color:#bbb">length</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#999;font-style:italic">// Node 在 table 内的位置取决于 (n - 1) &amp; hash
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>    <span style="color:#6ab825;font-weight:bold">if</span> ((p = tab[i = (n - 1) &amp; hash]) == <span style="color:#6ab825;font-weight:bold">null</span>)
 </span></span><span style="display:flex;"><span>        tab[i] = newNode(hash, key, value, <span style="color:#6ab825;font-weight:bold">null</span>);
 </span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">else</span> {
 </span></span><span style="display:flex;"><span>        Node&lt;K,V&gt; e; K k;
@@ -371,7 +410,8 @@ HashMap 在 JDK1.7 和 JDK1.8 的底层实现是不一样的，在 JDK1.7 中，
 </span></span><span style="display:flex;"><span>            <span style="color:#6ab825;font-weight:bold">for</span> (<span style="color:#6ab825;font-weight:bold">int</span> binCount = 0; ; ++binCount) {
 </span></span><span style="display:flex;"><span>                <span style="color:#6ab825;font-weight:bold">if</span> ((e = p.<span style="color:#bbb">next</span>) == <span style="color:#6ab825;font-weight:bold">null</span>) {
 </span></span><span style="display:flex;"><span>                    p.<span style="color:#bbb">next</span> = newNode(hash, key, value, <span style="color:#6ab825;font-weight:bold">null</span>);
-</span></span><span style="display:flex;"><span>                    <span style="color:#6ab825;font-weight:bold">if</span> (binCount &gt;= TREEIFY_THRESHOLD - 1) <span style="color:#999;font-style:italic">// -1 for 1st
+</span></span><span style="display:flex;"><span>                    <span style="color:#999;font-style:italic">// 大于 TREEIFY_THRESHOLD（8），且 size 大于 64 时链表转换红黑树
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>                    <span style="color:#6ab825;font-weight:bold">if</span> (binCount &gt;= TREEIFY_THRESHOLD - 1) <span style="color:#999;font-style:italic">// -1 for 1st
 </span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>                        treeifyBin(tab, hash);
 </span></span><span style="display:flex;"><span>                    <span style="color:#6ab825;font-weight:bold">break</span>;
 </span></span><span style="display:flex;"><span>                }
@@ -391,11 +431,72 @@ HashMap 在 JDK1.7 和 JDK1.8 的底层实现是不一样的，在 JDK1.7 中，
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>    ++modCount;
 </span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">if</span> (++size &gt; threshold)
-</span></span><span style="display:flex;"><span>        resize();
+</span></span><span style="display:flex;"><span>        <span style="color:#999;font-style:italic">// resize 负责扩容
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>        resize();
 </span></span><span style="display:flex;"><span>    afterNodeInsertion(evict);
 </span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">return</span> <span style="color:#6ab825;font-weight:bold">null</span>;
 </span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div>
+</span></span></code></pre></div><p>仔细观察 putVal 方法入参 hash 的源头会发现，它并不是 key 本身的 hashcode，而是来自 HashMap 内部的一个 hash 方法。</p>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">static</span> <span style="color:#6ab825;font-weight:bold">final</span> <span style="color:#6ab825;font-weight:bold">int</span> <span style="color:#447fcf">hash</span>(Object kye) {
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">int</span> h;
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">return</span> (key == <span style="color:#6ab825;font-weight:bold">null</span>) ? 0 : (h = key.<span style="color:#bbb">hashCode</span>()) ^ (h &gt;&gt;&gt;16;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>为何这里需要将高位数据移位到低位进行异或远算呢？</p>
+<p>这种方式能避免只取低位进行计算的结果，通常我们的n都不会很大，如果直接拿hashcode的值，那么高位的哈希值其实是没有参与进来的；这样将自己的高位与低于异或，其实是混合了高低位，变相了保留了高位的信息，以此来加大低位的随机性</p>
+<h3 id="hashmap-扩容流程">HashMap 扩容流程</h3>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">final</span> Node&lt;K,V&gt;[] <span style="color:#447fcf">resize</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#999;font-style:italic">// ...
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>    <span style="color:#6ab825;font-weight:bold">else</span> <span style="color:#6ab825;font-weight:bold">if</span> ((newCap = oldCap &lt;&lt; 1) &lt; MAXIMUM_CAPACIY &amp;&amp;
+</span></span><span style="display:flex;"><span>                oldCap &gt;= DEFAULT_INITIAL_CAPAITY)
+</span></span><span style="display:flex;"><span>        newThr = oldThr &lt;&lt; 1; <span style="color:#999;font-style:italic">// double there
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>       <span style="color:#999;font-style:italic">// ... 
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>    <span style="color:#6ab825;font-weight:bold">else</span> <span style="color:#6ab825;font-weight:bold">if</span> (oldThr &gt; 0) <span style="color:#999;font-style:italic">// initial capacity was placed in threshold
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>        newCap = oldThr;
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">else</span> {  
+</span></span><span style="display:flex;"><span>        <span style="color:#999;font-style:italic">// zero initial threshold signifies using defaults
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>        newCap = DEFAULT_INITIAL_CAPAITY;
+</span></span><span style="display:flex;"><span>        <span style="color:#999;font-style:italic">// 以默认值计算 threshold
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>        newThr = (<span style="color:#6ab825;font-weight:bold">int</span>)(DEFAULT_LOAD_FACTOR* DEFAULT_INITIAL_CAPACITY<span style="color:#a61717;background-color:#e3d2d2">；</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">if</span> (newThr == 0) {
+</span></span><span style="display:flex;"><span>        <span style="color:#999;font-style:italic">// threshold = capacity x load factor
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>        <span style="color:#6ab825;font-weight:bold">float</span> ft = (<span style="color:#6ab825;font-weight:bold">float</span>)newCap * loadFator;
+</span></span><span style="display:flex;"><span>        newThr = (newCap &lt; MAXIMUM_CAPACITY &amp;&amp; ft &lt; (<span style="color:#6ab825;font-weight:bold">float</span>)MAXIMUM_CAPACITY ?(<span style="color:#6ab825;font-weight:bold">int</span>)ft : Integer.<span style="color:#bbb">MAX_VALUE</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    threshold = neThr;
+</span></span><span style="display:flex;"><span>    Node&lt;K,V&gt;[] newTab = (Node&lt;K,V&gt;[])<span style="color:#6ab825;font-weight:bold">new</span> Node[newap];
+</span></span><span style="display:flex;"><span>    table = n<span style="color:#a61717;background-color:#e3d2d2">；</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#999;font-style:italic">// 移动到新的数组结构e数组结构 
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>}
+</span></span></code></pre></div><p>观察源码，我们可以得到要点：</p>
+<ul>
+<li>threshold = capacity x loadFactor，如果构造 HashMap 时未指定这两个值，那么就以默认值计算</li>
+<li>threshold 通常以倍数进行调整（newThr = oldThr &laquo; 1），根据 putVal 中的逻辑，当元素个数超过 threshold 大小时，则<strong>扩容(resize)</strong>。</li>
+<li>扩容后，需要将老的数组中的元素重新放到新的数组，这是扩容的一个<strong>主要开销</strong>来源</li>
+</ul>
+<h3 id="capacityload-factor-和-treeify">Capacity、Load Factor 和 Treeify</h3>
+<p>为什么需要在乎 capacity 和 loadFactor 呢，因为这两个值直接决定了可用 bucket 的数量，空的 bucket 太多会浪费空间，如果使用的太满则会影响操作性能。假设极端情况下，只有一个 bucket，那么它就退化成了链表，完全不能提供所谓常数时间（Constant Time）的性能。</p>
+<p>treeify 对应的逻辑自 putVal 和 treeifyBin 中</p>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">final</span> <span style="color:#6ab825;font-weight:bold">void</span> <span style="color:#447fcf">treeifyBin</span>(Node&lt;K,V&gt;[] tab, <span style="color:#6ab825;font-weight:bold">int</span> hash) {
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">int</span> n, index; Node&lt;K,V&gt; e;
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">if</span> (tab == <span style="color:#6ab825;font-weight:bold">null</span> || (n = tab.<span style="color:#bbb">length</span>) &lt; MIN_TREEIFY_CAPACITY)
+</span></span><span style="display:flex;"><span>        resize();
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">else</span> <span style="color:#6ab825;font-weight:bold">if</span> ((e = tab[index = (n - 1) &amp; hash]) != <span style="color:#6ab825;font-weight:bold">null</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#999;font-style:italic">//树化改造逻辑
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>上面精简的 treeify 方法，可以理解为，当 bin 的数量大于 TREEIFY_THRESHOLD 时：</p>
+<ul>
+<li>如果容量小于 MIN_TREEIFY_CAPACITY，会进行扩容</li>
+<li>如果容量大于 MIN_TREEIFY_CAPACITY，会进行树化改造</li>
+</ul>
+<p>那么 HashMap 为什么要树化呢？</p>
+<p>本质这是个<strong>安全问题</strong>。因为在元素放置过程中，如果一个对象哈希冲突，都会放置到一个桶里，则会形成一个链表，我们知道链表查询是线性的 O(n)，会影响存取性能。</p>
+<p>而在现实世界，构造哈希冲突的数据并不是非常负责的事情，恶意代码就可以利用这些数据大量与服务端交互，导致服务端 CPU 大量占用，这就构成了哈希碰撞拒绝服务攻击。</p>
+<blockquote>
+<p>Java8 的 HashMap 的数据存储是链表+红黑树的组合，如果数据量小于 64 则只有链表，如果数据量大于 64，且某个桶链表的数据量大于8，那么该处会转换为红黑树。 红黑树的插入、删除、查找各种操作性能都比较稳定。哈希碰撞频繁，导致链表过长，查询时间陡升，黑客则会利用这个『漏洞』来攻击服务器，让服务器CPU被大量占用，从而引起了安全问题。 而树化(使用红黑树）能将时间复杂度降到对数时间 O(logn)，从而避免查询时间过长。</p>
+</blockquote>
 </article>
 
 
