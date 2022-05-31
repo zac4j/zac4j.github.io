@@ -8,18 +8,7 @@
     <language>en</language>
     <copyright>Copyright Zac &amp;copy; 2022
 </copyright>
-    <lastBuildDate>Tue, 29 Mar 2022 21:46:30 +0800</lastBuildDate><atom:link href="https://zacash.cn/categories/concurrent/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>Intro to Executor</title>
-      <link>https://zacash.cn/posts/intro-to-executor/</link>
-      <pubDate>Tue, 29 Mar 2022 21:46:30 +0800</pubDate>
-      
-      <guid>https://zacash.cn/posts/intro-to-executor/</guid>
-      <description>Executor, ExecutorService, Executors 通常我们执行多个 Runnable task 会使用这种形式：
-val t1 = Thread {  // Runnable task1 }  val t2 = Thread {  // Runnable task2 }  t1.start() t2.start() 如果是执行 N 个 Runnable tasks，对每个 Runnable task 创建一个 Thread 执行显然不合适，我们可以通过实现 Executor 接口来编排 Runnable task 的执行：
-class SerialExecutor(private val executor: Executor): Executor {   private val tasks: ArrayDeque&amp;lt;Runnable&amp;gt; = ArrayDeque()  private var active: Runnable? = null   @Synchronized  override fun execute(r: Runnable?</description>
-    </item>
-    
+    <lastBuildDate>Mon, 27 Jul 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://zacash.cn/categories/concurrent/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Process, Threads and Locks</title>
       <link>https://zacash.cn/posts/threads-and-locks/</link>
@@ -27,15 +16,6 @@ class SerialExecutor(private val executor: Executor): Executor {   private val t
       
       <guid>https://zacash.cn/posts/threads-and-locks/</guid>
       <description>&lt;p&gt;Threads are created and managed by the classes Thread and ThreadGroup. Creating a Thread object creates a thread, and that is the only way to create a thread. When the thread is created, it is not yet active; it begins to run when its start method is called.&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>Intro to ConcurrentHashMap</title>
-      <link>https://zacash.cn/posts/intro-to-concurrenthashmap/</link>
-      <pubDate>Wed, 15 Jul 2020 15:11:27 +0800</pubDate>
-      
-      <guid>https://zacash.cn/posts/intro-to-concurrenthashmap/</guid>
-      <description>&lt;p&gt;Hash table based implementation of the Map interface.  This implementation provides all of the optional map operations, and permits null values and the null key.&lt;/p&gt;</description>
     </item>
     
     <item>

@@ -8,18 +8,7 @@
     <language>en</language>
     <copyright>Copyright Zac &amp;copy; 2022
 </copyright>
-    <lastBuildDate>Tue, 29 Mar 2022 21:46:30 +0800</lastBuildDate><atom:link href="https://zacash.cn/tags/thread/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>Intro to Executor</title>
-      <link>https://zacash.cn/posts/intro-to-executor/</link>
-      <pubDate>Tue, 29 Mar 2022 21:46:30 +0800</pubDate>
-      
-      <guid>https://zacash.cn/posts/intro-to-executor/</guid>
-      <description>Executor, ExecutorService, Executors 通常我们执行多个 Runnable task 会使用这种形式：
-val t1 = Thread {  // Runnable task1 }  val t2 = Thread {  // Runnable task2 }  t1.start() t2.start() 如果是执行 N 个 Runnable tasks，对每个 Runnable task 创建一个 Thread 执行显然不合适，我们可以通过实现 Executor 接口来编排 Runnable task 的执行：
-class SerialExecutor(private val executor: Executor): Executor {   private val tasks: ArrayDeque&amp;lt;Runnable&amp;gt; = ArrayDeque()  private var active: Runnable? = null   @Synchronized  override fun execute(r: Runnable?</description>
-    </item>
-    
+    <lastBuildDate>Mon, 27 Jul 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://zacash.cn/tags/thread/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Process, Threads and Locks</title>
       <link>https://zacash.cn/posts/threads-and-locks/</link>

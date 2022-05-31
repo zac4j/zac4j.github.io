@@ -32,23 +32,8 @@
     <loc>https://zacash.cn/tags/interview/</loc>
     <lastmod>2022-05-04T20:44:38+08:00</lastmod>
   </url><url>
-    <loc>https://zacash.cn/categories/concurrent/</loc>
-    <lastmod>2022-03-29T21:46:30+08:00</lastmod>
-  </url><url>
-    <loc>https://zacash.cn/tags/executor/</loc>
-    <lastmod>2022-03-29T21:46:30+08:00</lastmod>
-  </url><url>
-    <loc>https://zacash.cn/posts/intro-to-executor/</loc>
-    <lastmod>2022-03-29T21:46:30+08:00</lastmod>
-  </url><url>
     <loc>https://zacash.cn/categories/java/</loc>
-    <lastmod>2022-03-29T21:46:30+08:00</lastmod>
-  </url><url>
-    <loc>https://zacash.cn/tags/thread/</loc>
-    <lastmod>2022-03-29T21:46:30+08:00</lastmod>
-  </url><url>
-    <loc>https://zacash.cn/tags/threadpool/</loc>
-    <lastmod>2022-03-29T21:46:30+08:00</lastmod>
+    <lastmod>2022-03-24T08:44:28+08:00</lastmod>
   </url><url>
     <loc>https://zacash.cn/tags/jmm/</loc>
     <lastmod>2022-03-24T08:44:28+08:00</lastmod>
@@ -185,6 +170,9 @@
     <loc>https://zacash.cn/posts/lambdas-and-high-order-functions/</loc>
     <lastmod>2020-08-09T00:00:00+00:00</lastmod>
   </url><url>
+    <loc>https://zacash.cn/categories/concurrent/</loc>
+    <lastmod>2020-07-27T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>https://zacash.cn/tags/lock/</loc>
     <lastmod>2020-07-27T00:00:00+00:00</lastmod>
   </url><url>
@@ -192,6 +180,9 @@
     <lastmod>2020-07-27T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://zacash.cn/posts/threads-and-locks/</loc>
+    <lastmod>2020-07-27T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://zacash.cn/tags/thread/</loc>
     <lastmod>2020-07-27T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://zacash.cn/tags/network/</loc>
@@ -212,16 +203,10 @@
     <loc>https://zacash.cn/posts/jvm-basic-compiler/</loc>
     <lastmod>2020-07-17T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://zacash.cn/tags/concurrenthashmap/</loc>
-    <lastmod>2020-07-15T15:11:27+08:00</lastmod>
-  </url><url>
     <loc>https://zacash.cn/categories/data-structure/</loc>
     <lastmod>2020-07-15T15:11:27+08:00</lastmod>
   </url><url>
     <loc>https://zacash.cn/tags/hashmap/</loc>
-    <lastmod>2020-07-15T15:11:27+08:00</lastmod>
-  </url><url>
-    <loc>https://zacash.cn/posts/intro-to-concurrenthashmap/</loc>
     <lastmod>2020-07-15T15:11:27+08:00</lastmod>
   </url><url>
     <loc>https://zacash.cn/posts/intro-to-hashmap/</loc>
