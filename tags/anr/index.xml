@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>anr on Zac&#39;s blog</title>
+    <link>https://zacash.cn/tags/anr/</link>
+    <description>Recent content in anr on Zac&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>Copyright Zac &amp;copy; 2022
+</copyright>
+    <lastBuildDate>Tue, 12 Apr 2022 20:54:32 +0800</lastBuildDate><atom:link href="https://zacash.cn/tags/anr/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>ANR Intro</title>
+      <link>https://zacash.cn/posts/anr-intro/</link>
+      <pubDate>Tue, 12 Apr 2022 20:54:32 +0800</pubDate>
+      
+      <guid>https://zacash.cn/posts/anr-intro/</guid>
+      <description>ANR 原理
+ANR 的触发场景 // com/android/server/am/ActivityManagerService.java // 1.Broadcast 广播前台 10s 内未执行，后台 60s 内未执行 // How long we allow a receiver to run before giving up on it. static final int BROADCAST_FG_TIMEOUT = 10*1000; static final int BROADCAST_BG_TIMEOUT = 60*1000; // 2.输入事件分发超过 5s，这里可以包括按键输入和触摸输入 // How long we wait until we timeout on key dispatching. static final int KEY_DISPATCHING_TIMEOUT = 5*1000;  // com/android/server/am/ActiveServices.java // 3.前台服务超过 20s 未执行，后台服务超过 200s 未执行 // How long we wait for a service to finish executing.</description>
+    </item>
+    
+  </channel>
+</rss>

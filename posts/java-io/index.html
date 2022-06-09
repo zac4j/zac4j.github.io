@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  dir="ltr"
+  
+><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<title>Java IO | Zac&#39;s blog</title>
+
+<meta name="generator" content="Hugo Eureka 0.9.1" />
+<link rel="stylesheet" href="https://zacash.cn/css/eureka.min.6a378a23360d238dc3ef4df2f5cd718093f02c10c9c7eb2437c29701cd8d389ab6da5d9f21bdd3afa305fd56c1235017.css" integrity="sha384-ajeKIzYNI43D703y9c1xgJPwLBDJx&#43;skN8KXAc2NOJq22l2fIb3Tr6MF/VbBI1AX">
+<script defer src="https://zacash.cn/js/eureka.min.f1639ee98d6cbd85b2b5f034d27320da962002ff83159ed4e01dbc5948c42a1ab26c2d6e74c66e93f5cec4d24dbd166d.js" integrity="sha384-8WOe6Y1svYWytfA00nMg2pYgAv&#43;DFZ7U4B28WUjEKhqybC1udMZuk/XOxNJNvRZt"></script>
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload"
+  href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Noto+Serif+SC:wght@400;600;700&display=swap"
+  as="style" onload="this.onload=null;this.rel='stylesheet'">
+
+
+
+
+<script defer type="text/javascript" src="https://zacash.cn/js/fontawesome.min.1c5a4674b042785ed214cf0818a81724c6b37442fd61b0ed039237b93de25ed5103fc8079a05770648ccc9c66c4f540a.js" integrity="sha384-HFpGdLBCeF7SFM8IGKgXJMazdEL9YbDtA5I3uT3iXtUQP8gHmgV3BkjMycZsT1QK"></script>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/katex.min.css"
+   integrity="sha384-MlJdn/WNKDGXveldHDdyRP1R4CTHr3FeuDNfhsLPYrq2t0UBkUdK2jyTnXPEK1NQ"  media="print"
+  onload="this.media='all';this.onload=null" crossorigin>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/katex.min.js" 
+  integrity="sha384-VQ8d8WVFw0yHhCk5E8I86oOhv48xLpnDZx5T9GogA/Y84DcCKWXDmSDfn13bzFZY"  crossorigin></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/contrib/auto-render.min.js"
+   integrity="sha384-&#43;XBljXPPiv&#43;OzfbB3cVmLHf4hdUFHlWNZN5spNQ7rmHTXpd7WvJum6fIACpNNfIR"  crossorigin></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    renderMathInElement(document.body, {
+      delimiters: [
+        { left: "$$", right: "$$", display: true },
+        { left: "$", right: "$", display: false },
+        { left: "\\(", right: "\\)", display: false },
+        { left: "\\[", right: "\\]", display: true }
+      ],
+    });
+  });
+</script>
+
+
+<script defer src="https://cdn.jsdelivr.net/npm/mermaid@8.14.0/dist/mermaid.min.js" 
+  integrity="sha384-atOyb0FxAgN9LyAc6PEf9BjgwLISyansgdH8/VXQH8p2o5vfrRgmGIJ2Sg22L0A0"  crossorigin></script>
+
+
+<link rel="icon" type="image/png" sizes="32x32" href="https://zacash.cn/images/icon_huef3b68b5a9c9f864bc324bf255658730_3276_32x32_fill_box_center_3.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://zacash.cn/images/icon_huef3b68b5a9c9f864bc324bf255658730_3276_180x180_fill_box_center_3.png">
+
+<meta name="description"
+  content="Intro to Java IO">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+      "@type": "ListItem",
+      "position": 1 ,
+      "name":"Posts",
+      "item":"https://zacash.cn/posts/"},{
+      "@type": "ListItem",
+      "position": 2 ,
+      "name":"Java IO",
+      "item":"https://zacash.cn/posts/java-io/"}]
+}
+</script>
+
+
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://zacash.cn/posts/java-io/"
+    },
+    "headline": "Java IO | Zac\u0027s blog","datePublished": "2022-05-26T08:59:56+08:00",
+    "dateModified": "2022-05-26T08:59:56+08:00",
+    "wordCount":  502 ,
+    "publisher": {
+        "@type": "Person",
+        "name": "Zac Zhu",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://zacash.cn/images/icon.png"
+        }
+        },
+    "description": "Intro to Java IO"
+}
+</script><meta property="og:title" content="Java IO | Zac&#39;s blog" />
+<meta property="og:type" content="article" />
+
+
+<meta property="og:image" content="https://zacash.cn/images/icon.png">
+
+
+<meta property="og:url" content="https://zacash.cn/posts/java-io/" />
+
+
+
+<meta property="og:description" content="Intro to Java IO" />
+
+
+
+<meta property="og:locale" content="en" />
+
+
+
+
+<meta property="og:site_name" content="Zac&#39;s blog" />
+
+
+
+
+
+
+<meta property="article:published_time" content="2022-05-26T08:59:56&#43;08:00" />
+
+
+<meta property="article:modified_time" content="2022-05-26T08:59:56&#43;08:00" />
+
+
+
+<meta property="article:section" content="posts" />
+
+
+<meta property="article:tag" content="java" />
+
+<meta property="article:tag" content="io" />
+
+<meta property="article:tag" content="nio" />
+
+
+
+
+
+<meta property="og:see_also" content="https://zacash.cn/posts/java-basic/" />
+
+
+
+
+  <body class="flex min-h-screen flex-col">
+    <header
+      class="min-h-16 pl-scrollbar bg-secondary-bg fixed z-50 flex w-full items-center shadow-sm"
+    >
+      <div class="mx-auto w-full max-w-screen-xl"><script>
+    let storageColorScheme = localStorage.getItem("lightDarkMode")
+    if (((storageColorScheme == 'Auto' || storageColorScheme == null) && window.matchMedia("(prefers-color-scheme: dark)").matches) || storageColorScheme == "Dark") {
+        document.getElementsByTagName('html')[0].classList.add('dark')
+    }
+</script>
+<nav class="flex items-center justify-between flex-wrap px-4 py-4 md:py-0">
+    <a href="/" class="me-6 text-primary-text text-xl font-bold">Zac&#39;s blog</a>
+    <button id="navbar-btn" class="md:hidden flex items-center px-3 py-2" aria-label="Open Navbar">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <div id="target"
+        class="hidden block md:flex md:grow md:justify-between md:items-center w-full md:w-auto text-primary-text z-20">
+        <div class="md:flex md:h-16 text-sm md:grow pb-4 md:pb-0 border-b md:border-b-0">
+            <a href="/posts/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  selected-menu-item  me-4">Posts</a>
+            <a href="/tags/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  me-4">Tags</a>
+            <a href="/categories/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  me-4">Categories</a>
+            <a href="/#about" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  me-4">About</a>
+        </div>
+
+        <div class="flex">
+            <div class="relative pt-4 md:pt-0">
+                <div class="cursor-pointer hover:text-eureka" id="lightDarkMode">
+                    <i class="fas fa-adjust"></i>
+                </div>
+                <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-30" id="is-open">
+                </div>
+                <div class="absolute flex flex-col start-0 md:start-auto end-auto md:end-0 hidden bg-secondary-bg w-48 rounded py-2 border border-tertiary-bg cursor-pointer z-40"
+                    id='lightDarkOptions'>
+                    <span class="px-4 py-1 hover:text-eureka" name="Light">Light</span>
+                    <span class="px-4 py-1 hover:text-eureka" name="Dark">Dark</span>
+                    <span class="px-4 py-1 hover:text-eureka" name="Auto">Auto</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-0" id="is-open-mobile">
+    </div>
+
+</nav>
+<script>
+    
+    let element = document.getElementById('lightDarkMode')
+    if (storageColorScheme == null || storageColorScheme == 'Auto') {
+        document.addEventListener('DOMContentLoaded', () => {
+            window.matchMedia("(prefers-color-scheme: dark)").addEventListener('change', switchDarkMode)
+        })
+    } else if (storageColorScheme == "Light") {
+        element.firstElementChild.classList.remove('fa-adjust')
+        element.firstElementChild.setAttribute("data-icon", 'sun')
+        element.firstElementChild.classList.add('fa-sun')
+    } else if (storageColorScheme == "Dark") {
+        element.firstElementChild.classList.remove('fa-adjust')
+        element.firstElementChild.setAttribute("data-icon", 'moon')
+        element.firstElementChild.classList.add('fa-moon')
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        getcolorscheme();
+        switchBurger();
+    });
+</script>
+</div>
+    </header>
+    <main class="grow pt-16">
+        <div class="pl-scrollbar">
+          <div class="mx-auto w-full max-w-screen-xl lg:px-4 xl:px-8">
+  
+  
+  <div class="grid grid-cols-2 gap-4 lg:grid-cols-8 lg:pt-12">
+    <div
+      class="lg:col-start-2 bg-secondary-bg col-span-2 rounded px-6 py-8 lg:col-span-6"
+    >
+      <article class="prose">
+  <h1 class="mb-4">Java IO</h1>
+
+  <div
+  class="text-tertiary-text not-prose mt-2 flex flex-row flex-wrap items-center"
+>
+  <div class="me-6 my-2">
+    <i class="fas fa-calendar me-1"></i>
+    <span
+      >2022-05-26</span
+    >
+  </div>
+  <div class="me-6 my-2">
+    <i class="fas fa-clock me-1"></i>
+    <span>3 min read</span>
+  </div>
+
+  
+    <div class="me-6 my-2">
+      <i class="fas fa-folder me-1"></i>
+      
+        <a href="https://zacash.cn/categories/java/" class="hover:text-eureka"
+          >java</a
+        >
+      
+    </div>
+  
+
+  
+</div>
+
+
+  
+  
+
+  <p>Java IO 方式有很多种，基于不同的 IO 抽象模型和交互方式，可以进行简单区分。</p>
+<ul>
+<li>
+<p>Blocking IO，主要实现是在 java.io 包，基于流模型实现，提供了我们熟知的如 File、InputStream、OutputStream 等抽象。交互方式是同步、阻塞的方式，也就是说，在读取 InputStream 或者写入 OutputStream 时，在读写操作完成前，线程会一直阻塞，它们之间的调用是可靠的线性顺序。</p>
+<p>java.io 包的好处是代码比较简单、直观，缺点是 IO 效率和扩展性存在局限性，容易成为应用性能的瓶颈。很多时候，人们也把 java.net 下面提供的部分网络 API，如 Socket、HttpURLConnection 也归类到同步阻塞 IO 类库，因为网络通信同样是 IO 行为。</p>
+</li>
+<li>
+<p>Non-blocking IO，主要实现在 java.nio 包，于 Java 1.4 引入，通常称 NIO 框架，提供了 Channel、Selector、Buffer 等新的抽象，可以构建多路复用的、同步非阻塞 IO 程序，同时提供了更接近操作系统底层的高性能数据操作方式。</p>
+<p>NIO 在 Java7 中有了进一步的改进，也就是 NIO2，引入了异步非阻塞 IO 方式，又称为 AIO（Asynchronous IO）。异步 IO 操作基于事件和回调机制，可以简单理解为，应用操作直接返回，而不是阻塞在那里，当后台处理完成，操作系统会通知线程进行后续工作。</p>
+</li>
+</ul>
+<h2 id="一些基本概念">一些基本概念</h2>
+<ul>
+<li><strong>同步</strong>（synchronous）简单来说，同步是一种可靠的有序运行机制，当我们进行同步操作时，后续的任务时等待当前调用返回，才会进行下一步。</li>
+<li><strong>异步</strong>（asynchronous）与同步相反，其他任务不需要等待当前调用翻译，通常依靠<strong>事件</strong>、<strong>回调</strong>等机制来实现任务间次序关系。</li>
+<li><strong>阻塞</strong>（blocking） 在进行阻塞操作时，当前线程会处于阻塞状态，无法从事其他任务，只有当条件就绪才能继续，如 Socket 新连接建立完毕，或数据读取、写入操作完成。</li>
+<li><strong>非阻塞</strong>（non-blocking）非阻塞不管 IO 操作是否结束，直接返回，相应操作在后台继续处理。</li>
+</ul>
+<h2 id="java-io-简介">Java IO 简介</h2>
+<p>Java IO 简单的类图如下：</p>
+<p><img src="/img/java-io.webp" alt="java-io"></p>
+<h3 id="日常开发常用的一些类的要点">日常开发常用的一些类的要点</h3>
+<p>根据类图我们知道很多 IO 工具类都实现了 <strong>Closeable</strong> 接口，因为需要进行资源的释放。例如，打开 <strong>FileInputStream</strong>，就会获取相应的文件描述符（<strong>FileDescriptor</strong>），需要利用 try-with-resources，try-finally 等机制保证 FileInputStream 被明确关闭，进而相应的文件描述符也会失效，否则将导致资源无法被释放。</p>
+<p><strong>InputStream/OutputStream</strong> 用于读取或写入字节，如加载图片、下载文件等；而 <strong>Reader/Writer</strong> 则是用于操作字符，增加了字符编解码等功能，适用于从文件读取或写入文本信息。本质上 PC 的操作都是字节，不管是网络通信还是文件读取，Reader/Writer 相当于构建了应用逻辑和原始数据之间的桥梁。</p>
+<p><strong>BufferedOutputStream</strong> 等带缓冲区的实现，可以避免频繁的磁盘读写，进而提高 IO 处理效率。这种设计利用了缓冲区，将批量数据进行一次操作，需要<strong>注意的是使用中不要忘记 flush</strong>。</p>
+<h2 id="java-nio-简介">Java NIO 简介</h2>
+<h3 id="nio-的基本组成">NIO 的基本组成</h3>
+<ul>
+<li>
+<p><strong>Buffer</strong> 高效的数据容器，除了 bool 类型，所有原始数据类型都有相应的 Buffer 实现。</p>
+</li>
+<li>
+<p><strong>Channel</strong> 类似在 Linux 操作系统上看到的文件描述符，是 NIO 中用来支持批量式 IO 操作的一种抽象。</p>
+<p>File 或 Socket，通常也被认为是比较高层次的抽象，而 <strong>Channel 则是操作系统底层的一种抽象</strong>，这也使得 NIO 得以充分利用现代操作系统底层机制，获得特定场景的性能优化，例如 DMA（Direct Memory Access）等。不同层次的抽象是相互关联的，我们可以利用 Socket 获取 Channel，反之亦然。</p>
+</li>
+<li>
+<p><strong>Selector</strong> NIO实现多路复用的基础，它提供了一种高效机制：可以检测注册在 Selector 上的多个 Channel 中，是否有 Channel 处于就绪状态，进而实现了单线程对多 Channel 的高效管理。<strong>Selector 同样是基于底层操作系统机制</strong>，不同模式、不同版本都存在区别，例如在 Linux 上的实现基于 epoll，而在 Windows 上 AIO 模式则依赖于 iocp.</p>
+</li>
+<li>
+<p><strong>Charset</strong> 提供 Unicode 字符串定义，NIO 也提供了相应的 encode/decode 等，例如下面的例子：</p>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>Charset.<span style="color:#bbb">defaultCharset</span>().<span style="color:#bbb">encode</span>(<span style="color:#ed9d13">&#34;Sample&#34;</span>);
+</span></span></code></pre></div></li>
+</ul>
+<h3 id="nio-能解决什么问题">NIO 能解决什么问题</h3>
+<p>我们通过一个例子来分析为什么需要 NIO，为什么需要多路复用。</p>
+<p>用<strong>IO 实现</strong>一个简单的 Socket 服务器实现：</p>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">import</span> <span style="color:#447fcf;text-decoration:underline">java.io.BufferedReader</span>;
+</span></span><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">import</span> <span style="color:#447fcf;text-decoration:underline">java.io.IOException</span>;
+</span></span><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">import</span> <span style="color:#447fcf;text-decoration:underline">java.io.InputStreamReader</span>;
+</span></span><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">import</span> <span style="color:#447fcf;text-decoration:underline">java.io.PrintWriter</span>;
+</span></span><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">import</span> <span style="color:#447fcf;text-decoration:underline">java.net.InetAddress</span>;
+</span></span><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">import</span> <span style="color:#447fcf;text-decoration:underline">java.net.ServerSocket</span>;
+</span></span><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">import</span> <span style="color:#447fcf;text-decoration:underline">java.net.Socket</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"> * @author: zac
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"> * @date: 2022/5/30
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"> */</span>
+</span></span><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">public</span> <span style="color:#6ab825;font-weight:bold">class</span> <span style="color:#447fcf;text-decoration:underline">SampleServer</span> <span style="color:#6ab825;font-weight:bold">extends</span> Thread {
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">private</span> ServerSocket socket;
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">public</span> <span style="color:#6ab825;font-weight:bold">int</span> <span style="color:#447fcf">getPort</span>() {
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">return</span> socket.<span style="color:#bbb">getLocalPort</span>();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">public</span> <span style="color:#6ab825;font-weight:bold">void</span> <span style="color:#447fcf">run</span>() {
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">try</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#999;font-style:italic">// a.启动 server
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>            <span style="color:#999;font-style:italic">// 端口 0 表示自动绑定一个空闲端口
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>            socket = <span style="color:#6ab825;font-weight:bold">new</span> ServerSocket(0);
+</span></span><span style="display:flex;"><span>            <span style="color:#6ab825;font-weight:bold">while</span>(<span style="color:#6ab825;font-weight:bold">true</span>) {
+</span></span><span style="display:flex;"><span>                <span style="color:#999;font-style:italic">// 调用 accept 方法，阻塞等待 client 连接
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>                RequestHandler handler = <span style="color:#6ab825;font-weight:bold">new</span> RequestHandler(socket.<span style="color:#bbb">accept</span>());
+</span></span><span style="display:flex;"><span>                handler.<span style="color:#bbb">start</span>();
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        } <span style="color:#6ab825;font-weight:bold">catch</span> (IOException e) {
+</span></span><span style="display:flex;"><span>            e.<span style="color:#bbb">printStackTrace</span>();
+</span></span><span style="display:flex;"><span>        } <span style="color:#6ab825;font-weight:bold">finally</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#6ab825;font-weight:bold">if</span>(socket != <span style="color:#6ab825;font-weight:bold">null</span>) {
+</span></span><span style="display:flex;"><span>                <span style="color:#6ab825;font-weight:bold">try</span> {
+</span></span><span style="display:flex;"><span>                    socket.<span style="color:#bbb">close</span>();
+</span></span><span style="display:flex;"><span>                } <span style="color:#6ab825;font-weight:bold">catch</span> (IOException e) {
+</span></span><span style="display:flex;"><span>                    e.<span style="color:#bbb">printStackTrace</span>();
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">public</span> <span style="color:#6ab825;font-weight:bold">static</span> <span style="color:#6ab825;font-weight:bold">void</span> <span style="color:#447fcf">main</span>(String[] args) <span style="color:#6ab825;font-weight:bold">throws</span> IOException{
+</span></span><span style="display:flex;"><span>        SampleServer server = <span style="color:#6ab825;font-weight:bold">new</span> SampleServer();
+</span></span><span style="display:flex;"><span>        server.<span style="color:#bbb">start</span>();
+</span></span><span style="display:flex;"><span>        <span style="color:#999;font-style:italic">// 利用 socket 模拟一个简单的 client，只进行连接、读取、打印。
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>        <span style="color:#6ab825;font-weight:bold">try</span> (Socket client = <span style="color:#6ab825;font-weight:bold">new</span> Socket(InetAddress.<span style="color:#bbb">getLocalHost</span>(), server.<span style="color:#bbb">getPort</span>())) {
+</span></span><span style="display:flex;"><span>            BufferedReader bufferedReader = <span style="color:#6ab825;font-weight:bold">new</span> BufferedReader(<span style="color:#6ab825;font-weight:bold">new</span> InputStreamReader(client.<span style="color:#bbb">getInputStream</span>()));
+</span></span><span style="display:flex;"><span>            bufferedReader.<span style="color:#bbb">lines</span>().<span style="color:#bbb">forEach</span>(System.<span style="color:#bbb">out</span>::println);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">class</span> <span style="color:#447fcf;text-decoration:underline">RequestHandler</span> <span style="color:#6ab825;font-weight:bold">extends</span> Thread {
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">private</span> Socket socket;
+</span></span><span style="display:flex;"><span>    RequestHandler(Socket socket) {
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">this</span>.<span style="color:#bbb">socket</span> = socket;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#ffa500">@Override</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">public</span> <span style="color:#6ab825;font-weight:bold">void</span> <span style="color:#447fcf">run</span>() {
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">try</span> (PrintWriter out = <span style="color:#6ab825;font-weight:bold">new</span> PrintWriter(socket.<span style="color:#bbb">getOutputStream</span>());) {
+</span></span><span style="display:flex;"><span>            out.<span style="color:#bbb">println</span>(<span style="color:#ed9d13">&#34;This message send from server!&#34;</span>);
+</span></span><span style="display:flex;"><span>            out.<span style="color:#bbb">flush</span>();
+</span></span><span style="display:flex;"><span>        } <span style="color:#6ab825;font-weight:bold">catch</span>(Exception e) {
+</span></span><span style="display:flex;"><span>            e.<span style="color:#bbb">printStackTrace</span>();
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>这个方案在扩展性方面，会存在什么问题呢？</p>
+<p>我们知道 Java 目前的线程实现是比较重量级的，启动或者销毁一个线程是有明显开销的，每个线程都有单独的线程栈等结构，需要占用非常明显的内存，所以每一个 client 启动一个线程会显得比较浪费。</p>
+<p>那么，我们可以引入线程池机制来改造 server 的 run 方法</p>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">public</span> <span style="color:#6ab825;font-weight:bold">class</span> <span style="color:#447fcf;text-decoration:underline">SampleServer</span> <span style="color:#6ab825;font-weight:bold">extends</span> Thread {
+</span></span><span style="display:flex;"><span>    ...
+</span></span><span style="display:flex;"><span>    <span style="color:#999;font-style:italic">// 端口 0 表示自动绑定一个空闲端口
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>    socket = <span style="color:#6ab825;font-weight:bold">new</span> ServerSocket(0);
+</span></span><span style="display:flex;"><span>    executor = Executors.<span style="color:#bbb">newFixedThreadPool</span>(8);
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">while</span>(<span style="color:#6ab825;font-weight:bold">true</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#999;font-style:italic">// 调用 accept 方法，阻塞等待 client 连接
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>        RequestHandler handler = <span style="color:#6ab825;font-weight:bold">new</span> RequestHandler(socket.<span style="color:#bbb">accept</span>());
+</span></span><span style="display:flex;"><span>        executor.<span style="color:#bbb">execute</span>(handler);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    ...
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>如果连接数并不多，只有最多几百个连接的普通应用，这种模式往往可以工作的很好，但是如果连接数急剧上升，这种实现方式就无法很好地工作了，因为线程上下文切换开销会在高并发时变得很明显，这是同步阻塞方式的低扩展性劣势。</p>
+<p>利用 <strong>NIO 多路复用机制</strong>，我们可以用另一种思路实现：</p>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#999;font-style:italic">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"> * NIOServer
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"> */</span>
+</span></span><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">public</span> <span style="color:#6ab825;font-weight:bold">class</span> <span style="color:#447fcf;text-decoration:underline">NIOServer</span> <span style="color:#6ab825;font-weight:bold">extends</span> Thread{
+</span></span><span style="display:flex;"><span>    <span style="color:#ffa500">@Override</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">public</span> <span style="color:#6ab825;font-weight:bold">void</span> <span style="color:#447fcf">run</span>() {
+</span></span><span style="display:flex;"><span>        <span style="color:#999;font-style:italic">// 通过 Selector.open() 创建了一个 Selector，作为类似调度员的角色
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>        <span style="color:#6ab825;font-weight:bold">try</span> (Selector selector = Selector.<span style="color:#bbb">open</span>();
+</span></span><span style="display:flex;"><span>        ServerSocketChannel serverSocket = ServerSocketChannel.<span style="color:#bbb">open</span>();){
+</span></span><span style="display:flex;"><span>            serverSocket.<span style="color:#bbb">bind</span>(<span style="color:#6ab825;font-weight:bold">new</span> InetSocketAddress(InetAddress.<span style="color:#bbb">getLocalHost</span>(), 1234));
+</span></span><span style="display:flex;"><span>            <span style="color:#999;font-style:italic">// 设置非阻塞模式，向 selector 注册 channel
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>            serverSocket.<span style="color:#bbb">configureBlocking</span>(<span style="color:#6ab825;font-weight:bold">false</span>);
+</span></span><span style="display:flex;"><span>            <span style="color:#999;font-style:italic">// 注册到 Selector，并说明关注点
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>            serverSocket.<span style="color:#bbb">register</span>(selector, SelectionKey.<span style="color:#bbb">OP_ACCEPT</span>);
+</span></span><span style="display:flex;"><span>            <span style="color:#6ab825;font-weight:bold">while</span> (<span style="color:#6ab825;font-weight:bold">true</span>) {
+</span></span><span style="display:flex;"><span>                <span style="color:#999;font-style:italic">// 阻塞等待就绪的 channel
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>                selector.<span style="color:#bbb">select</span>();
+</span></span><span style="display:flex;"><span>                Set&lt;SelectionKey&gt; keys = selector.<span style="color:#bbb">selectedKeys</span>();
+</span></span><span style="display:flex;"><span>                Iterator&lt;SelectionKey&gt; iter = keys.<span style="color:#bbb">iterator</span>();
+</span></span><span style="display:flex;"><span>                <span style="color:#6ab825;font-weight:bold">while</span> (iter.<span style="color:#bbb">hasNext</span>()) {
+</span></span><span style="display:flex;"><span>                    SelectionKey key = iter.<span style="color:#bbb">next</span>();
+</span></span><span style="display:flex;"><span>                    <span style="color:#6ab825;font-weight:bold">try</span>( ServerSocketChannel server = (ServerSocketChannel)key.<span style="color:#bbb">channel</span>()) {
+</span></span><span style="display:flex;"><span>                        SocketChannel client = server.<span style="color:#bbb">accept</span>();
+</span></span><span style="display:flex;"><span>                        client.<span style="color:#bbb">write</span>(Charset.<span style="color:#bbb">defaultCharset</span>().<span style="color:#bbb">encode</span>(<span style="color:#ed9d13">&#34;This message send from client&#34;</span>));
+</span></span><span style="display:flex;"><span>                    }
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        } <span style="color:#6ab825;font-weight:bold">catch</span> (Exception e) {
+</span></span><span style="display:flex;"><span>            e.<span style="color:#bbb">printStackTrace</span>();
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>通过比较 IO 和 NIO 的实现，我们可以了解到，IO 同步阻塞模式，需要多线程切换来实现多任务处理。而 NIO 则是利用了单线程轮询事件的机制，通过高效地定位就绪的 Channel，来决定做什么，仅仅 select 阶段是阻塞的，可以有效避免大量客户端连接时，频繁线程切换带来的问题，应用的扩展能力有了非常大的提高。</p>
+<h2 id="面试扩展">面试扩展</h2>
+<p>对于 BIO、NIO、AIO 我们可以在很多地方展开：</p>
+<ul>
+<li>基础 API 功能与设计。</li>
+<li>NIO 和 NIO2 的基本组成。</li>
+<li>给定场景，分别用不同的模型实现，分析 BIO、NIO 等模式的设计和实现原理。</li>
+<li>NIO 提供的高性能数据操作方式是基于什么原理，如何使用？</li>
+<li>你觉得 NIO 自身实现存在哪些问题？有什么改进的想法吗？</li>
+</ul>
+
+</article>
+
+
+      
+        <div class="my-4">
+    
+    <a href="https://zacash.cn/tags/java/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 me-2 hover:text-eureka">#java</a>
+    
+    <a href="https://zacash.cn/tags/io/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 me-2 hover:text-eureka">#io</a>
+    
+    <a href="https://zacash.cn/tags/nio/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 me-2 hover:text-eureka">#nio</a>
+    
+</div>
+      
+
+      
+
+
+
+      
+
+      
+  <div
+    class="-mx-2 mt-4 flex flex-col border-t px-2 pt-4 md:flex-row md:justify-between"
+  >
+    <div>
+      
+        <span class="text-primary-text block font-bold"
+          >Previous</span
+        >
+        <a href="https://zacash.cn/posts/java-file/" class="block">Java File</a>
+      
+    </div>
+    <div class="mt-4 md:mt-0 md:text-right">
+      
+        <span class="text-primary-text block font-bold">Next</span>
+        <a href="https://zacash.cn/posts/intro-to-concurrenthashmap/" class="block">Intro to ConcurrentHashMap</a>
+      
+    </div>
+  </div>
+
+
+      
+
+
+
+    </div>
+    
+
+    
+    
+      <div
+        class="lg:col-start-2 bg-secondary-bg prose col-span-2 rounded p-6 lg:col-span-6"
+      >
+        <h3>See Also</h3>
+        
+          <a href="https://zacash.cn/posts/java-basic/" class="no-underline">Java Basic</a>
+          <br />
+        
+      </div>
+    
+  </div>
+
+  
+
+          </div>
+        </div>
+      
+    </main>
+    <footer class="pl-scrollbar">
+      <div class="mx-auto w-full max-w-screen-xl"><div class="text-center p-6 pin-b">
+    <p class="text-sm text-tertiary-text">Copyright Zac &copy; 2022
+ &middot;  Powered by the <a href="https://github.com/wangchucheng/hugo-eureka" class="hover:text-eureka">Eureka</a> theme for <a href="https://gohugo.io" class="hover:text-eureka">Hugo</a></p>
+</div></div>
+    </footer>
+  </body>
+</html>

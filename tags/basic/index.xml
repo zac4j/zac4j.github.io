@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>basic on Zac&#39;s blog</title>
+    <link>https://zacash.cn/tags/basic/</link>
+    <description>Recent content in basic on Zac&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>Copyright Zac &amp;copy; 2022
+</copyright>
+    <lastBuildDate>Mon, 18 Apr 2022 21:28:09 +0800</lastBuildDate><atom:link href="https://zacash.cn/tags/basic/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>JVM a brief intro</title>
+      <link>https://zacash.cn/posts/jvm-brief-intro/</link>
+      <pubDate>Mon, 18 Apr 2022 21:28:09 +0800</pubDate>
+      
+      <guid>https://zacash.cn/posts/jvm-brief-intro/</guid>
+      <description>&lt;p&gt;JVM 全称是 Java Virtual Machine，JVM 有2个作用：第一是运行并管理 Java 源码文件所生成的 class 文件，第二是在不用的操作系统上，安装不同平台的 JVM，从而实现 Java 跨平台的保障。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

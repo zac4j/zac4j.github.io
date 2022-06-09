@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>vector on Zac&#39;s blog</title>
+    <link>https://zacash.cn/tags/vector/</link>
+    <description>Recent content in vector on Zac&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>Copyright Zac &amp;copy; 2022
+</copyright>
+    <lastBuildDate>Tue, 14 Apr 2020 18:48:34 +0800</lastBuildDate><atom:link href="https://zacash.cn/tags/vector/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Java List and Vector</title>
+      <link>https://zacash.cn/posts/list-and-vector/</link>
+      <pubDate>Tue, 14 Apr 2020 18:48:34 +0800</pubDate>
+      
+      <guid>https://zacash.cn/posts/list-and-vector/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

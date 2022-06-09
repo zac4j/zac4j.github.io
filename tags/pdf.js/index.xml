@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>pdf.js on Zac&#39;s blog</title>
+    <link>https://zacash.cn/tags/pdf.js/</link>
+    <description>Recent content in pdf.js on Zac&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>Copyright Zac &amp;copy; 2022
+</copyright>
+    <lastBuildDate>Mon, 29 Mar 2021 20:03:37 +0800</lastBuildDate><atom:link href="https://zacash.cn/tags/pdf.js/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Integrate pdf.js in Android</title>
+      <link>https://zacash.cn/posts/integrate-pdfjs-in-android/</link>
+      <pubDate>Mon, 29 Mar 2021 20:03:37 +0800</pubDate>
+      
+      <guid>https://zacash.cn/posts/integrate-pdfjs-in-android/</guid>
+      <description>Quick start Preparetion   Add pdf.js dependencies to project assets folder:
+ pdf.js pdf.work.js pdf_viewer.js pdf_viewer.css cmaps(optional)    Also add mobile-viewer files to assets folder to customize pdf viewer:
+ images viewer.html viewer.css viewer.js    Customize pdf viewer In viewer.html file, update dependencies path in head element:
+&amp;lt;link rel=&amp;#34;stylesheet&amp;#34; href=&amp;#34;pdf_viewer.css&amp;#34;&amp;gt;  &amp;lt;script src=&amp;#34;pdf.js&amp;#34;&amp;gt;&amp;lt;/script&amp;gt; &amp;lt;script src=&amp;#34;pdf_viewer.js&amp;#34;&amp;gt;&amp;lt;/script&amp;gt; In viewer.js file, update CMAPS path and worker src:
+... const CMAP_URL = &amp;#34;../../node_modules/pdfjs-dist/cmaps/&amp;#34;; ... pdfjsLib.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  dir="ltr"
+  
+><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<title>Java synchronized in Depth | Zac&#39;s blog</title>
+
+<meta name="generator" content="Hugo Eureka 0.9.1" />
+<link rel="stylesheet" href="https://zacash.cn/css/eureka.min.6a378a23360d238dc3ef4df2f5cd718093f02c10c9c7eb2437c29701cd8d389ab6da5d9f21bdd3afa305fd56c1235017.css" integrity="sha384-ajeKIzYNI43D703y9c1xgJPwLBDJx&#43;skN8KXAc2NOJq22l2fIb3Tr6MF/VbBI1AX">
+<script defer src="https://zacash.cn/js/eureka.min.f1639ee98d6cbd85b2b5f034d27320da962002ff83159ed4e01dbc5948c42a1ab26c2d6e74c66e93f5cec4d24dbd166d.js" integrity="sha384-8WOe6Y1svYWytfA00nMg2pYgAv&#43;DFZ7U4B28WUjEKhqybC1udMZuk/XOxNJNvRZt"></script>
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload"
+  href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Noto+Serif+SC:wght@400;600;700&display=swap"
+  as="style" onload="this.onload=null;this.rel='stylesheet'">
+
+
+
+
+<script defer type="text/javascript" src="https://zacash.cn/js/fontawesome.min.1c5a4674b042785ed214cf0818a81724c6b37442fd61b0ed039237b93de25ed5103fc8079a05770648ccc9c66c4f540a.js" integrity="sha384-HFpGdLBCeF7SFM8IGKgXJMazdEL9YbDtA5I3uT3iXtUQP8gHmgV3BkjMycZsT1QK"></script>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/katex.min.css"
+   integrity="sha384-MlJdn/WNKDGXveldHDdyRP1R4CTHr3FeuDNfhsLPYrq2t0UBkUdK2jyTnXPEK1NQ"  media="print"
+  onload="this.media='all';this.onload=null" crossorigin>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/katex.min.js" 
+  integrity="sha384-VQ8d8WVFw0yHhCk5E8I86oOhv48xLpnDZx5T9GogA/Y84DcCKWXDmSDfn13bzFZY"  crossorigin></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/contrib/auto-render.min.js"
+   integrity="sha384-&#43;XBljXPPiv&#43;OzfbB3cVmLHf4hdUFHlWNZN5spNQ7rmHTXpd7WvJum6fIACpNNfIR"  crossorigin></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    renderMathInElement(document.body, {
+      delimiters: [
+        { left: "$$", right: "$$", display: true },
+        { left: "$", right: "$", display: false },
+        { left: "\\(", right: "\\)", display: false },
+        { left: "\\[", right: "\\]", display: true }
+      ],
+    });
+  });
+</script>
+
+
+<script defer src="https://cdn.jsdelivr.net/npm/mermaid@8.14.0/dist/mermaid.min.js" 
+  integrity="sha384-atOyb0FxAgN9LyAc6PEf9BjgwLISyansgdH8/VXQH8p2o5vfrRgmGIJ2Sg22L0A0"  crossorigin></script>
+
+
+<link rel="icon" type="image/png" sizes="32x32" href="https://zacash.cn/images/icon_huef3b68b5a9c9f864bc324bf255658730_3276_32x32_fill_box_center_3.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://zacash.cn/images/icon_huef3b68b5a9c9f864bc324bf255658730_3276_180x180_fill_box_center_3.png">
+
+<meta name="description"
+  content="The JVM implementation of synchronized keyword">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+      "@type": "ListItem",
+      "position": 1 ,
+      "name":"Posts",
+      "item":"https://zacash.cn/posts/"},{
+      "@type": "ListItem",
+      "position": 2 ,
+      "name":"Java synchronized in Depth",
+      "item":"https://zacash.cn/posts/synchronized-in-depth/"}]
+}
+</script>
+
+
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://zacash.cn/posts/synchronized-in-depth/"
+    },
+    "headline": "Java synchronized in Depth | Zac\u0027s blog","datePublished": "2022-06-07T21:50:12+08:00",
+    "dateModified": "2022-06-07T21:50:12+08:00",
+    "wordCount":  1600 ,
+    "publisher": {
+        "@type": "Person",
+        "name": "Zac Zhu",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://zacash.cn/images/icon.png"
+        }
+        },
+    "description": "The JVM implementation of synchronized keyword"
+}
+</script><meta property="og:title" content="Java synchronized in Depth | Zac&#39;s blog" />
+<meta property="og:type" content="article" />
+
+
+<meta property="og:image" content="https://zacash.cn/images/icon.png">
+
+
+<meta property="og:url" content="https://zacash.cn/posts/synchronized-in-depth/" />
+
+
+
+<meta property="og:description" content="The JVM implementation of synchronized keyword" />
+
+
+
+<meta property="og:locale" content="en" />
+
+
+
+
+<meta property="og:site_name" content="Zac&#39;s blog" />
+
+
+
+
+
+
+<meta property="article:published_time" content="2022-06-07T21:50:12&#43;08:00" />
+
+
+<meta property="article:modified_time" content="2022-06-07T21:50:12&#43;08:00" />
+
+
+
+<meta property="article:section" content="posts" />
+
+
+<meta property="article:tag" content="lock" />
+
+<meta property="article:tag" content="async" />
+
+<meta property="article:tag" content="thread" />
+
+
+
+
+
+<meta property="og:see_also" content="https://zacash.cn/posts/synchronized-and-locks/" />
+
+<meta property="og:see_also" content="https://zacash.cn/posts/threads-and-locks/" />
+
+<meta property="og:see_also" content="https://zacash.cn/posts/intro-to-executor/" />
+
+
+
+
+  <body class="flex min-h-screen flex-col">
+    <header
+      class="min-h-16 pl-scrollbar bg-secondary-bg fixed z-50 flex w-full items-center shadow-sm"
+    >
+      <div class="mx-auto w-full max-w-screen-xl"><script>
+    let storageColorScheme = localStorage.getItem("lightDarkMode")
+    if (((storageColorScheme == 'Auto' || storageColorScheme == null) && window.matchMedia("(prefers-color-scheme: dark)").matches) || storageColorScheme == "Dark") {
+        document.getElementsByTagName('html')[0].classList.add('dark')
+    }
+</script>
+<nav class="flex items-center justify-between flex-wrap px-4 py-4 md:py-0">
+    <a href="/" class="me-6 text-primary-text text-xl font-bold">Zac&#39;s blog</a>
+    <button id="navbar-btn" class="md:hidden flex items-center px-3 py-2" aria-label="Open Navbar">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <div id="target"
+        class="hidden block md:flex md:grow md:justify-between md:items-center w-full md:w-auto text-primary-text z-20">
+        <div class="md:flex md:h-16 text-sm md:grow pb-4 md:pb-0 border-b md:border-b-0">
+            <a href="/posts/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  selected-menu-item  me-4">Posts</a>
+            <a href="/tags/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  me-4">Tags</a>
+            <a href="/categories/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  me-4">Categories</a>
+            <a href="/#about" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  me-4">About</a>
+        </div>
+
+        <div class="flex">
+            <div class="relative pt-4 md:pt-0">
+                <div class="cursor-pointer hover:text-eureka" id="lightDarkMode">
+                    <i class="fas fa-adjust"></i>
+                </div>
+                <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-30" id="is-open">
+                </div>
+                <div class="absolute flex flex-col start-0 md:start-auto end-auto md:end-0 hidden bg-secondary-bg w-48 rounded py-2 border border-tertiary-bg cursor-pointer z-40"
+                    id='lightDarkOptions'>
+                    <span class="px-4 py-1 hover:text-eureka" name="Light">Light</span>
+                    <span class="px-4 py-1 hover:text-eureka" name="Dark">Dark</span>
+                    <span class="px-4 py-1 hover:text-eureka" name="Auto">Auto</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-0" id="is-open-mobile">
+    </div>
+
+</nav>
+<script>
+    
+    let element = document.getElementById('lightDarkMode')
+    if (storageColorScheme == null || storageColorScheme == 'Auto') {
+        document.addEventListener('DOMContentLoaded', () => {
+            window.matchMedia("(prefers-color-scheme: dark)").addEventListener('change', switchDarkMode)
+        })
+    } else if (storageColorScheme == "Light") {
+        element.firstElementChild.classList.remove('fa-adjust')
+        element.firstElementChild.setAttribute("data-icon", 'sun')
+        element.firstElementChild.classList.add('fa-sun')
+    } else if (storageColorScheme == "Dark") {
+        element.firstElementChild.classList.remove('fa-adjust')
+        element.firstElementChild.setAttribute("data-icon", 'moon')
+        element.firstElementChild.classList.add('fa-moon')
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        getcolorscheme();
+        switchBurger();
+    });
+</script>
+</div>
+    </header>
+    <main class="grow pt-16">
+        <div class="pl-scrollbar">
+          <div class="mx-auto w-full max-w-screen-xl lg:px-4 xl:px-8">
+  
+  
+  <div class="grid grid-cols-2 gap-4 lg:grid-cols-8 lg:pt-12">
+    <div
+      class="lg:col-start-2 bg-secondary-bg col-span-2 rounded px-6 py-8 lg:col-span-6"
+    >
+      <article class="prose">
+  <h1 class="mb-4">Java synchronized in Depth</h1>
+
+  <div
+  class="text-tertiary-text not-prose mt-2 flex flex-row flex-wrap items-center"
+>
+  <div class="me-6 my-2">
+    <i class="fas fa-calendar me-1"></i>
+    <span
+      >2022-06-07</span
+    >
+  </div>
+  <div class="me-6 my-2">
+    <i class="fas fa-clock me-1"></i>
+    <span>8 min read</span>
+  </div>
+
+  
+    <div class="me-6 my-2">
+      <i class="fas fa-folder me-1"></i>
+      
+        <a href="https://zacash.cn/categories/java/" class="hover:text-eureka"
+          >java</a
+        >
+      
+        
+          <span>, </span>
+        <a href="https://zacash.cn/categories/concurrent/" class="hover:text-eureka"
+          >concurrent</a
+        >
+      
+    </div>
+  
+
+  
+</div>
+
+
+  
+  
+
+  <p>根据上篇 <a href="/posts/synchronized-and-locks/">Intro to Java synchronized and Locks</a> 的介绍，我们知道 synchronized 代码块是由一对 monitorenter/monitorexit 指令实现，Monitor 对象是同步的<a href="https://docs.oracle.com/javase/specs/jls/se10/html/jls-8.html#d5e13622">基本实现单元</a>。</p>
+<!-- more -->
+<h2 id="基本表现">基本表现</h2>
+<p>在 Java6 以前，Monitor 的实现完全依赖操作系统内部的互斥锁，因为需要进行用户态到内核态的切换，所以同步操作是一个无差别的重量级操作。现代 JDK 中，JVM 对此进行了大刀阔斧的改进，提供了三种不同的 Monitor 实现，也就是常说的三种不同的锁：偏斜锁（Biased Locking）、轻量级锁和重量级锁，大大改进了 Monitor 的性能。</p>
+<p>所谓锁的升级、降级，就是 JVM 优化 synchronized 运行的机制，当 JVM 检测到不同的竞争状态时，会自动切换到适合的锁实现，这种切换就是锁的升级、降级。</p>
+<p>当没有竞争出现时，默认会使用偏斜锁。JVM 会利用 CAS（Compare and Swap）操作，在对象头上的 Mark Word 部分设置线程 ID，以表示这个对象偏向于当前线程，所以并不涉及真正的互斥锁。这样做的假设是基于在很多场景中，大部分对象生命周期中最多会被一个现场锁定，使用偏斜锁可以降低无竞争开销。</p>
+<p>如果有另外的线程试图锁定某个已被偏斜过的对象，JVM 就需要撤销（revoke）偏斜锁，并切换到轻量级锁实现。轻量级锁依赖 CAS 操作 Mark Word 来试图获取锁，如果重试成功，就使用普通的轻量级锁；否则，进一步升级为重量级锁。</p>
+<h2 id="内部实现">内部实现</h2>
+<p>synchronized 是 JVM 内部 Intrinsic Lock，所以偏斜锁、轻量级锁、重量级锁的代码实现，并不在核心类库部分，而是在 JVM 代码中。</p>
+<p>Java 代码运行可能是解释模式也可能是编译模式，所以对应的同步逻辑实现，也会分散在不同模块下，比如解释器的版本就是<a href="http://hg.openjdk.java.net/jdk/jdk/file/6659a8f57d78/src/hotspot/share/interpreter/interpreterRuntime.cpp">interpreterRuntime</a></p>
+<p>首先，synchronized 的行为是 JVM runtime 的一部分，所以我们先找到 Runtime 相关的功能实现。通过搜索 &ldquo;monitor_enter&rdquo; 或 &ldquo;Monitor Enter&rdquo; 可以很直观的定位到：</p>
+<ul>
+<li><a href="http://hg.openjdk.java.net/jdk/jdk/file/6659a8f57d78/src/hotspot/share/runtime/sharedRuntime.cpp">sharedRuntime.cpp</a>/hpp, 是解释器和编译器运行时的基类。</li>
+<li><a href="https://hg.openjdk.java.net/jdk/jdk/file/896e80158d35/src/hotspot/share/runtime/synchronizer.cpp">synchronizer.cpp</a>/hpp, JVM 同步相关的各种基础逻辑。</li>
+</ul>
+<p>在 sharedRuntime.cpp 中，下面代码体现了 synchronized 的主要逻辑：</p>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>Handle <span style="color:#447fcf">h_obj</span>(THREAD, obj);
+</span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic">// UseBiasedLocking 在 JVM 启动时可以指定是否开启偏斜锁
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span><span style="color:#6ab825;font-weight:bold">if</span> (UseBiasedLocking) {
+</span></span><span style="display:flex;"><span>    <span style="color:#999;font-style:italic">// Retry fast entry if bias is revoked to avoid unnecessary inflation
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>    ObjectSynchronizer::fast_enter(h_obj, lock, <span style="color:#24909d">true</span>, CHECK);
+</span></span><span style="display:flex;"><span>} <span style="color:#6ab825;font-weight:bold">else</span> {
+</span></span><span style="display:flex;"><span>    ObjectSynchronizer::slow_enter(h_obj, lock, CHECK);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>偏斜锁并不适合所有应用场景，撤销操作（revoke）是比较重的行为，只有当存在较多不会真正竞争的 synchronized 块时，才能体现出明显改善。偏斜锁会延缓 JIT 预热的过程，所以很多性能测试中会显式地关闭偏斜锁，命令如下：</p>
+<pre tabindex="0"><code class="language-terminal" data-lang="terminal">-xx:-UseBiasedLocking
+</code></pre><p>fast_enter 是偏斜锁获取路径，slow_enter 则是绕过偏斜锁，直接进入轻量级锁获取逻辑。</p>
+<p>fast_enter 的实现在 <a href="https://hg.openjdk.java.net/jdk/jdk/file/896e80158d35/src/hotspot/share/runtime/synchronizer.cpp">synchronizer.cpp</a> 中：</p>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#999;font-style:italic">// -----------------------------------------------------------------------------
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic">//  Fast Monitor Enter/Exit
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic">// This the fast monitor enter. The interpreter and compiler use
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic">// some assembly copies of this code. Make sure update those code
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic">// if the following function is changed. The implementation is
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic">// extremely sensitive to race condition. Be careful.
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>
+</span></span><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">void</span> ObjectSynchronizer::fast_enter(Handle obj, BasicLock* lock,
+</span></span><span style="display:flex;"><span>                                    <span style="color:#6ab825;font-weight:bold">bool</span> attempt_rebias, TRAPS) {
+</span></span><span style="display:flex;"><span>  <span style="color:#6ab825;font-weight:bold">if</span> (UseBiasedLocking) {
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">if</span> (!SafepointSynchronize::is_at_safepoint()) {
+</span></span><span style="display:flex;"><span>      BiasedLocking::Condition cond = BiasedLocking::revoke_and_rebias(obj, attempt_rebias, THREAD);
+</span></span><span style="display:flex;"><span>      <span style="color:#6ab825;font-weight:bold">if</span> (cond == BiasedLocking::BIAS_REVOKED_AND_REBIASED) {
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">return</span>;
+</span></span><span style="display:flex;"><span>      }
+</span></span><span style="display:flex;"><span>    } <span style="color:#6ab825;font-weight:bold">else</span> {
+</span></span><span style="display:flex;"><span>      assert(!attempt_rebias, <span style="color:#ed9d13">&#34;can not rebias toward VM thread&#34;</span>);
+</span></span><span style="display:flex;"><span>      BiasedLocking::revoke_at_safepoint(obj);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    assert(!obj-&gt;mark()-&gt;has_bias_pattern(), <span style="color:#ed9d13">&#34;biases should be revoked by now&#34;</span>);
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  slow_enter(obj, lock, THREAD);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>我们分析下上面的逻辑：</p>
+<ul>
+<li><a href="http://hg.openjdk.java.net/jdk/jdk/file/6659a8f57d78/src/hotspot/share/runtime/biasedLocking.cpp">BiasedLocking</a> 定义了偏斜锁相关操作，revoke_and_rebias 是获取偏斜锁的入口方法，revoke_at_safepoint 则定义了当检测到安全点时的处理逻辑。</li>
+<li>BiasedLocking 通过 CAS 设置 Mark Word，对象头中 Mark Word 的结构如图：
+<img src="/img/markword.webp" alt="markword"></li>
+<li>如果偏斜锁获取失败，进入 slow_enter，偏斜锁升级为轻量级锁。</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#999;font-style:italic">// -----------------------------------------------------------------------------
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic">// Interpreter/Compiler Slow Case
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic">// This routine is used to handle interpreter/compiler slow case
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic">// We don&#39;t need to use fast path here, because it must have been
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic">// failed in the interpreter/compiler code.
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span><span style="color:#6ab825;font-weight:bold">void</span> ObjectSynchronizer::slow_enter(Handle obj, BasicLock* lock, TRAPS) {
+</span></span><span style="display:flex;"><span>  markOop mark = obj-&gt;mark();
+</span></span><span style="display:flex;"><span>  assert(!mark-&gt;has_bias_pattern(), <span style="color:#ed9d13">&#34;should not see bias pattern here&#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#6ab825;font-weight:bold">if</span> (mark-&gt;is_neutral()) {
+</span></span><span style="display:flex;"><span>    <span style="color:#999;font-style:italic">// Anticipate successful CAS -- the ST of the displaced mark must
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>    <span style="color:#999;font-style:italic">// be visible &lt;= the ST performed by the CAS.
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>    <span style="color:#999;font-style:italic">// 将目前的 mark word 复制到 displaced header 上
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>    lock-&gt;set_displaced_header(mark);
+</span></span><span style="display:flex;"><span>    <span style="color:#999;font-style:italic">// 利用 CAS 设置对象的 mark word
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>    <span style="color:#6ab825;font-weight:bold">if</span> (mark == obj()-&gt;cas_set_mark((markOop) lock, mark)) {
+</span></span><span style="display:flex;"><span>      <span style="color:#6ab825;font-weight:bold">return</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#999;font-style:italic">// Fall through to inflate() ...
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>    <span style="color:#999;font-style:italic">// 检查存在竞争
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>  } <span style="color:#6ab825;font-weight:bold">else</span> <span style="color:#447fcf">if</span> (mark-&gt;has_locker() &amp;&amp;
+</span></span><span style="display:flex;"><span>             THREAD-&gt;is_lock_owned((address)mark-&gt;locker())) {
+</span></span><span style="display:flex;"><span>    assert(lock != mark-&gt;locker(), <span style="color:#ed9d13">&#34;must not re-lock the same lock&#34;</span>);
+</span></span><span style="display:flex;"><span>    assert(lock != (BasicLock*)obj-&gt;mark(), <span style="color:#ed9d13">&#34;don&#39;t relock with same BasicLock&#34;</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#999;font-style:italic">// 清除 mark
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>    lock-&gt;set_displaced_header(<span style="color:#24909d">NULL</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">return</span>;
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#999;font-style:italic">// The object header will never be displaced to this lock,
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>  <span style="color:#999;font-style:italic">// so it does not matter what the value is, except that it
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>  <span style="color:#999;font-style:italic">// must be non-zero to avoid looking like a re-entrant lock,
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>  <span style="color:#999;font-style:italic">// and must not look locked either.
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>  <span style="color:#999;font-style:italic">// 重置 displaced header
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>  lock-&gt;set_displaced_header(markOopDesc::unused_mark());
+</span></span><span style="display:flex;"><span>  ObjectSynchronizer::inflate(THREAD,
+</span></span><span style="display:flex;"><span>                              obj(),
+</span></span><span style="display:flex;"><span>                              inflate_cause_monitor_enter)-&gt;enter(THREAD);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><ul>
+<li>设置 displaced header，然后利用 cas_set_mark 设置对象 mark word</li>
+<li>否则重置 displaced header，进入 inflate() 锁膨胀阶段</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>ObjectMonitor* ObjectSynchronizer::inflate(Thread * Self,
+</span></span><span style="display:flex;"><span>                                                     oop object,
+</span></span><span style="display:flex;"><span>                                                     <span style="color:#6ab825;font-weight:bold">const</span> InflateCause cause) {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#999;font-style:italic">// Inflate mutates the heap ...
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>  <span style="color:#999;font-style:italic">// Relaxing assertion for bug 6320749.
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>  assert(Universe::verify_in_progress() ||
+</span></span><span style="display:flex;"><span>         !SafepointSynchronize::is_at_safepoint(), <span style="color:#ed9d13">&#34;invariant&#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  EventJavaMonitorInflate event;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#999;font-style:italic">// 自旋锁的由来
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>  <span style="color:#6ab825;font-weight:bold">for</span> (;;) {
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">const</span> markOop mark = object-&gt;mark();
+</span></span><span style="display:flex;"><span>    assert(!mark-&gt;has_bias_pattern(), <span style="color:#ed9d13">&#34;invariant&#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#999;font-style:italic">// The mark can be in one of the following states:
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>    <span style="color:#999;font-style:italic">// *  Inflated     - just return
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>    <span style="color:#999;font-style:italic">// *  Stack-locked - coerce it to inflated
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>    <span style="color:#999;font-style:italic">// *  INFLATING    - busy wait for conversion to complete
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>    <span style="color:#999;font-style:italic">// *  Neutral      - aggressively inflate the object.
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>    <span style="color:#999;font-style:italic">// *  BIASED       - Illegal.  We should never see this
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>
+</span></span><span style="display:flex;"><span>    <span style="color:#999;font-style:italic">// CASE: inflated
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>    <span style="color:#6ab825;font-weight:bold">if</span> (mark-&gt;has_monitor()) {
+</span></span><span style="display:flex;"><span>      ObjectMonitor * inf = mark-&gt;monitor();
+</span></span><span style="display:flex;"><span>      assert(inf-&gt;header()-&gt;is_neutral(), <span style="color:#ed9d13">&#34;invariant&#34;</span>);
+</span></span><span style="display:flex;"><span>      assert(oopDesc::equals((oop) inf-&gt;object(), object), <span style="color:#ed9d13">&#34;invariant&#34;</span>);
+</span></span><span style="display:flex;"><span>      assert(ObjectSynchronizer::verify_objmon_isinpool(inf), <span style="color:#ed9d13">&#34;monitor is invalid&#34;</span>);
+</span></span><span style="display:flex;"><span>      <span style="color:#6ab825;font-weight:bold">return</span> inf;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#999;font-style:italic">// CASE: inflation in progress - inflating over a stack-lock.
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>    <span style="color:#999;font-style:italic">// Some other thread is converting from stack-locked to inflated.
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>    <span style="color:#999;font-style:italic">// Only that thread can complete inflation -- other threads must wait.
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>    <span style="color:#999;font-style:italic">// The INFLATING value is transient.
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>    <span style="color:#999;font-style:italic">// Currently, we spin/yield/park and poll the markword, waiting for inflation to finish.
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>    <span style="color:#999;font-style:italic">// We could always eliminate polling by parking the thread on some auxiliary list.
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>    <span style="color:#6ab825;font-weight:bold">if</span> (mark == markOopDesc::INFLATING()) {
+</span></span><span style="display:flex;"><span>      ReadStableMark(object);
+</span></span><span style="display:flex;"><span>      <span style="color:#6ab825;font-weight:bold">continue</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#999;font-style:italic">// CASE: stack-locked
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>    <span style="color:#999;font-style:italic">// Could be stack-locked either by this thread or by some other thread.
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>    <span style="color:#999;font-style:italic">//
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>    <span style="color:#999;font-style:italic">// Note that we allocate the objectmonitor speculatively, _before_ attempting
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>    <span style="color:#999;font-style:italic">// to install INFLATING into the mark word.  We originally installed INFLATING,
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>    <span style="color:#999;font-style:italic">// allocated the objectmonitor, and then finally STed the address of the
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>    <span style="color:#999;font-style:italic">// objectmonitor into the mark.  This was correct, but artificially lengthened
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>    <span style="color:#999;font-style:italic">// the interval in which INFLATED appeared in the mark, thus increasing
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>    <span style="color:#999;font-style:italic">// the odds of inflation contention.
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>    <span style="color:#999;font-style:italic">//
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>    <span style="color:#999;font-style:italic">// We now use per-thread private objectmonitor free lists.
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>    <span style="color:#999;font-style:italic">// These list are reprovisioned from the global free list outside the
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>    <span style="color:#999;font-style:italic">// critical INFLATING...ST interval.  A thread can transfer
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>    <span style="color:#999;font-style:italic">// multiple objectmonitors en-mass from the global free list to its local free list.
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>    <span style="color:#999;font-style:italic">// This reduces coherency traffic and lock contention on the global free list.
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>    <span style="color:#999;font-style:italic">// Using such local free lists, it doesn&#39;t matter if the omAlloc() call appears
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>    <span style="color:#999;font-style:italic">// before or after the CAS(INFLATING) operation.
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>    <span style="color:#999;font-style:italic">// See the comments in omAlloc().
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">if</span> (mark-&gt;has_locker()) {
+</span></span><span style="display:flex;"><span>      ObjectMonitor * m = omAlloc(Self);
+</span></span><span style="display:flex;"><span>      <span style="color:#999;font-style:italic">// Optimistically prepare the objectmonitor - anticipate successful CAS
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>      <span style="color:#999;font-style:italic">// We do this before the CAS in order to minimize the length of time
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>      <span style="color:#999;font-style:italic">// in which INFLATING appears in the mark.
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>      m-&gt;Recycle();
+</span></span><span style="display:flex;"><span>      m-&gt;_Responsible  = <span style="color:#24909d">NULL</span>;
+</span></span><span style="display:flex;"><span>      m-&gt;_recursions   = <span style="color:#3677a9">0</span>;
+</span></span><span style="display:flex;"><span>      m-&gt;_SpinDuration = ObjectMonitor::Knob_SpinLimit;   <span style="color:#999;font-style:italic">// Consider: maintain by type/class
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>
+</span></span><span style="display:flex;"><span>      markOop cmp = object-&gt;cas_set_mark(markOopDesc::INFLATING(), mark);
+</span></span><span style="display:flex;"><span>      <span style="color:#6ab825;font-weight:bold">if</span> (cmp != mark) {
+</span></span><span style="display:flex;"><span>        omRelease(Self, m, <span style="color:#24909d">true</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">continue</span>;       <span style="color:#999;font-style:italic">// Interference -- just retry
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>      }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>      <span style="color:#999;font-style:italic">// We&#39;ve successfully installed INFLATING (0) into the mark-word.
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>      <span style="color:#999;font-style:italic">// This is the only case where 0 will appear in a mark-word.
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>      <span style="color:#999;font-style:italic">// Only the singular thread that successfully swings the mark-word
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>      <span style="color:#999;font-style:italic">// to 0 can perform (or more precisely, complete) inflation.
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>      <span style="color:#999;font-style:italic">//
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>      <span style="color:#999;font-style:italic">// Why do we CAS a 0 into the mark-word instead of just CASing the
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>      <span style="color:#999;font-style:italic">// mark-word from the stack-locked value directly to the new inflated state?
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>      <span style="color:#999;font-style:italic">// Consider what happens when a thread unlocks a stack-locked object.
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>      <span style="color:#999;font-style:italic">// It attempts to use CAS to swing the displaced header value from the
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>      <span style="color:#999;font-style:italic">// on-stack basiclock back into the object header.  Recall also that the
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>      <span style="color:#999;font-style:italic">// header value (hashcode, etc) can reside in (a) the object header, or
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>      <span style="color:#999;font-style:italic">// (b) a displaced header associated with the stack-lock, or (c) a displaced
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>      <span style="color:#999;font-style:italic">// header in an objectMonitor.  The inflate() routine must copy the header
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>      <span style="color:#999;font-style:italic">// value from the basiclock on the owner&#39;s stack to the objectMonitor, all
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>      <span style="color:#999;font-style:italic">// the while preserving the hashCode stability invariants.  If the owner
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>      <span style="color:#999;font-style:italic">// decides to release the lock while the value is 0, the unlock will fail
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>      <span style="color:#999;font-style:italic">// and control will eventually pass from slow_exit() to inflate.  The owner
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>      <span style="color:#999;font-style:italic">// will then spin, waiting for the 0 value to disappear.   Put another way,
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>      <span style="color:#999;font-style:italic">// the 0 causes the owner to stall if the owner happens to try to
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>      <span style="color:#999;font-style:italic">// drop the lock (restoring the header from the basiclock to the object)
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>      <span style="color:#999;font-style:italic">// while inflation is in-progress.  This protocol avoids races that might
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>      <span style="color:#999;font-style:italic">// would otherwise permit hashCode values to change or &#34;flicker&#34; for an object.
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>      <span style="color:#999;font-style:italic">// Critically, while object-&gt;mark is 0 mark-&gt;displaced_mark_helper() is stable.
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>      <span style="color:#999;font-style:italic">// 0 serves as a &#34;BUSY&#34; inflate-in-progress indicator.
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>      <span style="color:#999;font-style:italic">// fetch the displaced mark from the owner&#39;s stack.
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>      <span style="color:#999;font-style:italic">// The owner can&#39;t die or unwind past the lock while our INFLATING
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>      <span style="color:#999;font-style:italic">// object is in the mark.  Furthermore the owner can&#39;t complete
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>      <span style="color:#999;font-style:italic">// an unlock on the object, either.
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>      markOop dmw = mark-&gt;displaced_mark_helper();
+</span></span><span style="display:flex;"><span>      assert(dmw-&gt;is_neutral(), <span style="color:#ed9d13">&#34;invariant&#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>      <span style="color:#999;font-style:italic">// Setup monitor fields to proper values -- prepare the monitor
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>      m-&gt;set_header(dmw);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>      <span style="color:#999;font-style:italic">// Optimization: if the mark-&gt;locker stack address is associated
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>      <span style="color:#999;font-style:italic">// with this thread we could simply set m-&gt;_owner = Self.
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>      <span style="color:#999;font-style:italic">// Note that a thread can inflate an object
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>      <span style="color:#999;font-style:italic">// that it has stack-locked -- as might happen in wait() -- directly
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>      <span style="color:#999;font-style:italic">// with CAS.  That is, we can avoid the xchg-NULL .... ST idiom.
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>      m-&gt;set_owner(mark-&gt;locker());
+</span></span><span style="display:flex;"><span>      m-&gt;set_object(object);
+</span></span><span style="display:flex;"><span>      <span style="color:#999;font-style:italic">// TODO-FIXME: assert BasicLock-&gt;dhw != 0.
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>
+</span></span><span style="display:flex;"><span>      <span style="color:#999;font-style:italic">// Must preserve store ordering. The monitor state must
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>      <span style="color:#999;font-style:italic">// be stable at the time of publishing the monitor address.
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>      guarantee(object-&gt;mark() == markOopDesc::INFLATING(), <span style="color:#ed9d13">&#34;invariant&#34;</span>);
+</span></span><span style="display:flex;"><span>      object-&gt;release_set_mark(markOopDesc::encode(m));
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>      <span style="color:#999;font-style:italic">// Hopefully the performance counters are allocated on distinct cache lines
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>      <span style="color:#999;font-style:italic">// to avoid false sharing on MP systems ...
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>      OM_PERFDATA_OP(Inflations, inc());
+</span></span><span style="display:flex;"><span>      <span style="color:#6ab825;font-weight:bold">if</span> (log_is_enabled(Debug, monitorinflation)) {
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">if</span> (object-&gt;is_instance()) {
+</span></span><span style="display:flex;"><span>          ResourceMark rm;
+</span></span><span style="display:flex;"><span>          log_debug(monitorinflation)(<span style="color:#ed9d13">&#34;Inflating object &#34;</span> INTPTR_FORMAT <span style="color:#ed9d13">&#34; , mark &#34;</span> INTPTR_FORMAT <span style="color:#ed9d13">&#34; , type %s&#34;</span>,
+</span></span><span style="display:flex;"><span>                                      p2i(object), p2i(object-&gt;mark()),
+</span></span><span style="display:flex;"><span>                                      object-&gt;klass()-&gt;external_name());
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>      }
+</span></span><span style="display:flex;"><span>      <span style="color:#6ab825;font-weight:bold">if</span> (event.should_commit()) {
+</span></span><span style="display:flex;"><span>        post_monitor_inflate_event(&amp;event, object, cause);
+</span></span><span style="display:flex;"><span>      }
+</span></span><span style="display:flex;"><span>      <span style="color:#6ab825;font-weight:bold">return</span> m;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#999;font-style:italic">// CASE: neutral
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>    <span style="color:#999;font-style:italic">// TODO-FIXME: for entry we currently inflate and then try to CAS _owner.
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>    <span style="color:#999;font-style:italic">// If we know we&#39;re inflating for entry it&#39;s better to inflate by swinging a
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>    <span style="color:#999;font-style:italic">// pre-locked objectMonitor pointer into the object header.   A successful
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>    <span style="color:#999;font-style:italic">// CAS inflates the object *and* confers ownership to the inflating thread.
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>    <span style="color:#999;font-style:italic">// In the current implementation we use a 2-step mechanism where we CAS()
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>    <span style="color:#999;font-style:italic">// to inflate and then CAS() again to try to swing _owner from NULL to Self.
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>    <span style="color:#999;font-style:italic">// An inflateTry() method that we could call from fast_enter() and slow_enter()
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>    <span style="color:#999;font-style:italic">// would be useful.
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>
+</span></span><span style="display:flex;"><span>    assert(mark-&gt;is_neutral(), <span style="color:#ed9d13">&#34;invariant&#34;</span>);
+</span></span><span style="display:flex;"><span>    ObjectMonitor * m = omAlloc(Self);
+</span></span><span style="display:flex;"><span>    <span style="color:#999;font-style:italic">// prepare m for installation - set monitor to initial state
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>    m-&gt;Recycle();
+</span></span><span style="display:flex;"><span>    m-&gt;set_header(mark);
+</span></span><span style="display:flex;"><span>    m-&gt;set_owner(<span style="color:#24909d">NULL</span>);
+</span></span><span style="display:flex;"><span>    m-&gt;set_object(object);
+</span></span><span style="display:flex;"><span>    m-&gt;_recursions   = <span style="color:#3677a9">0</span>;
+</span></span><span style="display:flex;"><span>    m-&gt;_Responsible  = <span style="color:#24909d">NULL</span>;
+</span></span><span style="display:flex;"><span>    m-&gt;_SpinDuration = ObjectMonitor::Knob_SpinLimit;       <span style="color:#999;font-style:italic">// consider: keep metastats by type/class
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">if</span> (object-&gt;cas_set_mark(markOopDesc::encode(m), mark) != mark) {
+</span></span><span style="display:flex;"><span>      m-&gt;set_object(<span style="color:#24909d">NULL</span>);
+</span></span><span style="display:flex;"><span>      m-&gt;set_owner(<span style="color:#24909d">NULL</span>);
+</span></span><span style="display:flex;"><span>      m-&gt;Recycle();
+</span></span><span style="display:flex;"><span>      omRelease(Self, m, <span style="color:#24909d">true</span>);
+</span></span><span style="display:flex;"><span>      m = <span style="color:#24909d">NULL</span>;
+</span></span><span style="display:flex;"><span>      <span style="color:#6ab825;font-weight:bold">continue</span>;
+</span></span><span style="display:flex;"><span>      <span style="color:#999;font-style:italic">// interference - the markword changed - just retry.
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>      <span style="color:#999;font-style:italic">// The state-transitions are one-way, so there&#39;s no chance of
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>      <span style="color:#999;font-style:italic">// live-lock -- &#34;Inflated&#34; is an absorbing state.
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#999;font-style:italic">// Hopefully the performance counters are allocated on distinct
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>    <span style="color:#999;font-style:italic">// cache lines to avoid false sharing on MP systems ...
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>    OM_PERFDATA_OP(Inflations, inc());
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">if</span> (log_is_enabled(Debug, monitorinflation)) {
+</span></span><span style="display:flex;"><span>      <span style="color:#6ab825;font-weight:bold">if</span> (object-&gt;is_instance()) {
+</span></span><span style="display:flex;"><span>        ResourceMark rm;
+</span></span><span style="display:flex;"><span>        log_debug(monitorinflation)(<span style="color:#ed9d13">&#34;Inflating object &#34;</span> INTPTR_FORMAT <span style="color:#ed9d13">&#34; , mark &#34;</span> INTPTR_FORMAT <span style="color:#ed9d13">&#34; , type %s&#34;</span>,
+</span></span><span style="display:flex;"><span>                                    p2i(object), p2i(object-&gt;mark()),
+</span></span><span style="display:flex;"><span>                                    object-&gt;klass()-&gt;external_name());
+</span></span><span style="display:flex;"><span>      }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">if</span> (event.should_commit()) {
+</span></span><span style="display:flex;"><span>      post_monitor_inflate_event(&amp;event, object, cause);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">return</span> m;
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div>
+</article>
+
+
+      
+        <div class="my-4">
+    
+    <a href="https://zacash.cn/tags/lock/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 me-2 hover:text-eureka">#lock</a>
+    
+    <a href="https://zacash.cn/tags/async/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 me-2 hover:text-eureka">#async</a>
+    
+    <a href="https://zacash.cn/tags/thread/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 me-2 hover:text-eureka">#thread</a>
+    
+</div>
+      
+
+      
+
+
+
+      
+
+      
+  <div
+    class="-mx-2 mt-4 flex flex-col border-t px-2 pt-4 md:flex-row md:justify-between"
+  >
+    <div>
+      
+        <span class="text-primary-text block font-bold"
+          >Previous</span
+        >
+        <a href="https://zacash.cn/posts/java-in-a-nutshell/" class="block">Java in a Nutshell</a>
+      
+    </div>
+    <div class="mt-4 md:mt-0 md:text-right">
+      
+        <span class="text-primary-text block font-bold">Next</span>
+        <a href="https://zacash.cn/posts/java-file/" class="block">Java File</a>
+      
+    </div>
+  </div>
+
+
+      
+
+
+
+    </div>
+    
+
+    
+    
+      <div
+        class="lg:col-start-2 bg-secondary-bg prose col-span-2 rounded p-6 lg:col-span-6"
+      >
+        <h3>See Also</h3>
+        
+          <a href="https://zacash.cn/posts/synchronized-and-locks/" class="no-underline">Intro to Java synchronized and Locks</a>
+          <br />
+        
+          <a href="https://zacash.cn/posts/threads-and-locks/" class="no-underline">Process, Threads and Locks</a>
+          <br />
+        
+          <a href="https://zacash.cn/posts/intro-to-executor/" class="no-underline">Intro to Executor</a>
+          <br />
+        
+      </div>
+    
+  </div>
+
+  
+
+          </div>
+        </div>
+      
+    </main>
+    <footer class="pl-scrollbar">
+      <div class="mx-auto w-full max-w-screen-xl"><div class="text-center p-6 pin-b">
+    <p class="text-sm text-tertiary-text">Copyright Zac &copy; 2022
+ &middot;  Powered by the <a href="https://github.com/wangchucheng/hugo-eureka" class="hover:text-eureka">Eureka</a> theme for <a href="https://gohugo.io" class="hover:text-eureka">Hugo</a></p>
+</div></div>
+    </footer>
+  </body>
+</html>

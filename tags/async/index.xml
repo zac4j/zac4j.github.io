@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>async on Zac&#39;s blog</title>
+    <link>https://zacash.cn/tags/async/</link>
+    <description>Recent content in async on Zac&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>Copyright Zac &amp;copy; 2022
+</copyright>
+    <lastBuildDate>Tue, 07 Jun 2022 21:50:12 +0800</lastBuildDate><atom:link href="https://zacash.cn/tags/async/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Java synchronized in Depth</title>
+      <link>https://zacash.cn/posts/synchronized-in-depth/</link>
+      <pubDate>Tue, 07 Jun 2022 21:50:12 +0800</pubDate>
+      
+      <guid>https://zacash.cn/posts/synchronized-in-depth/</guid>
+      <description>根据上篇 Intro to Java synchronized and Locks 的介绍，我们知道 synchronized 代码块是由一对 monitorenter/monitorexit 指令实现，Monitor 对象是同步的基本实现单元。
+基本表现 在 Java6 以前，Monitor 的实现完全依赖操作系统内部的互斥锁，因为需要进行用户态到内核态的切换，所以同步操作是一个无差别的重量级操作。现代 JDK 中，JVM 对此进行了大刀阔斧的改进，提供了三种不同的 Monitor 实现，也就是常说的三种不同的锁：偏斜锁（Biased Locking）、轻量级锁和重量级锁，大大改进了 Monitor 的性能。
+所谓锁的升级、降级，就是 JVM 优化 synchronized 运行的机制，当 JVM 检测到不同的竞争状态时，会自动切换到适合的锁实现，这种切换就是锁的升级、降级。
+当没有竞争出现时，默认会使用偏斜锁。JVM 会利用 CAS（Compare and Swap）操作，在对象头上的 Mark Word 部分设置线程 ID，以表示这个对象偏向于当前线程，所以并不涉及真正的互斥锁。这样做的假设是基于在很多场景中，大部分对象生命周期中最多会被一个现场锁定，使用偏斜锁可以降低无竞争开销。
+如果有另外的线程试图锁定某个已被偏斜过的对象，JVM 就需要撤销（revoke）偏斜锁，并切换到轻量级锁实现。轻量级锁依赖 CAS 操作 Mark Word 来试图获取锁，如果重试成功，就使用普通的轻量级锁；否则，进一步升级为重量级锁。
+内部实现 synchronized 是 JVM 内部 Intrinsic Lock，所以偏斜锁、轻量级锁、重量级锁的代码实现，并不在核心类库部分，而是在 JVM 代码中。
+Java 代码运行可能是解释模式也可能是编译模式，所以对应的同步逻辑实现，也会分散在不同模块下，比如解释器的版本就是interpreterRuntime
+首先，synchronized 的行为是 JVM runtime 的一部分，所以我们先找到 Runtime 相关的功能实现。通过搜索 &amp;ldquo;monitor_enter&amp;rdquo; 或 &amp;ldquo;Monitor Enter&amp;rdquo; 可以很直观的定位到：
+ sharedRuntime.cpp/hpp, 是解释器和编译器运行时的基类。 synchronizer.</description>
+    </item>
+    
+    <item>
+      <title>Intro to Java synchronized and Locks</title>
+      <link>https://zacash.cn/posts/synchronized-and-locks/</link>
+      <pubDate>Mon, 09 May 2022 19:53:23 +0800</pubDate>
+      
+      <guid>https://zacash.cn/posts/synchronized-and-locks/</guid>
+      <description>锁作为并发工具之一，我们至少需要掌握：
+ 理解什么是线程安全 synchronized、ReentrantLock 等机制的基本使用与案例。 synchronized、ReentrantLock 底层实现 理解锁膨胀、降级；理解偏斜锁、自旋锁、轻量级锁、重量级锁等概念 掌握 juc 并发包各种不同实现和案例分析。  谈谈什么是线程安全 按照《Java 并发编程实战》（Java Concurrency in Practice）书中的定义，线程安全是一个多线程环境下正确性的概念，也就是保证多线程环境下共享的、可修改的状态的正确性。
+线程安全需要保证几个基本特性：
+ 原子性：简单说就是相关操作不会中途被其他线程干扰，一般通过同步机制实现 可见性：是一个现场修改了某个共享变量，其状态能够立即被其他线程知晓，通常被解释为将线程本地状态反映到主内存上，volatile 就是负责保证可见性的。 有序性：是保证线程内串行语义，避免指令重排等。  我们先看一段会有线程安全问题的例子：
+public class ThreadIssueSample {   public int sharedState;  public void doUnsafeAction() {  while(sharedState &amp;lt; 10000) {  int former = sharedState++;  int latter = sharedState;  if (former != latter - 1) {  System.out.println(&amp;#34;Observe race condition, former is &amp;#34; + former + &amp;#34;, latter is &amp;#34; + latter);  }  }  }   public static void main(String[] args) throws InterruptedException {  ThreadIssueSample sample = new ThreadIssueSample();  Thread t1 = new Thread() {  public void run() {  sample.</description>
+    </item>
+    
+  </channel>
+</rss>

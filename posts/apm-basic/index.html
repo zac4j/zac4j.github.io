@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  dir="ltr"
+  
+><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<title>Apm Basic | Zac&#39;s blog</title>
+
+<meta name="generator" content="Hugo Eureka 0.9.1" />
+<link rel="stylesheet" href="https://zacash.cn/css/eureka.min.6a378a23360d238dc3ef4df2f5cd718093f02c10c9c7eb2437c29701cd8d389ab6da5d9f21bdd3afa305fd56c1235017.css" integrity="sha384-ajeKIzYNI43D703y9c1xgJPwLBDJx&#43;skN8KXAc2NOJq22l2fIb3Tr6MF/VbBI1AX">
+<script defer src="https://zacash.cn/js/eureka.min.f1639ee98d6cbd85b2b5f034d27320da962002ff83159ed4e01dbc5948c42a1ab26c2d6e74c66e93f5cec4d24dbd166d.js" integrity="sha384-8WOe6Y1svYWytfA00nMg2pYgAv&#43;DFZ7U4B28WUjEKhqybC1udMZuk/XOxNJNvRZt"></script>
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload"
+  href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Noto+Serif+SC:wght@400;600;700&display=swap"
+  as="style" onload="this.onload=null;this.rel='stylesheet'">
+
+
+
+
+<script defer type="text/javascript" src="https://zacash.cn/js/fontawesome.min.1c5a4674b042785ed214cf0818a81724c6b37442fd61b0ed039237b93de25ed5103fc8079a05770648ccc9c66c4f540a.js" integrity="sha384-HFpGdLBCeF7SFM8IGKgXJMazdEL9YbDtA5I3uT3iXtUQP8gHmgV3BkjMycZsT1QK"></script>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/katex.min.css"
+   integrity="sha384-MlJdn/WNKDGXveldHDdyRP1R4CTHr3FeuDNfhsLPYrq2t0UBkUdK2jyTnXPEK1NQ"  media="print"
+  onload="this.media='all';this.onload=null" crossorigin>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/katex.min.js" 
+  integrity="sha384-VQ8d8WVFw0yHhCk5E8I86oOhv48xLpnDZx5T9GogA/Y84DcCKWXDmSDfn13bzFZY"  crossorigin></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/contrib/auto-render.min.js"
+   integrity="sha384-&#43;XBljXPPiv&#43;OzfbB3cVmLHf4hdUFHlWNZN5spNQ7rmHTXpd7WvJum6fIACpNNfIR"  crossorigin></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    renderMathInElement(document.body, {
+      delimiters: [
+        { left: "$$", right: "$$", display: true },
+        { left: "$", right: "$", display: false },
+        { left: "\\(", right: "\\)", display: false },
+        { left: "\\[", right: "\\]", display: true }
+      ],
+    });
+  });
+</script>
+
+
+<script defer src="https://cdn.jsdelivr.net/npm/mermaid@8.14.0/dist/mermaid.min.js" 
+  integrity="sha384-atOyb0FxAgN9LyAc6PEf9BjgwLISyansgdH8/VXQH8p2o5vfrRgmGIJ2Sg22L0A0"  crossorigin></script>
+
+
+<link rel="icon" type="image/png" sizes="32x32" href="https://zacash.cn/images/icon_huef3b68b5a9c9f864bc324bf255658730_3276_32x32_fill_box_center_3.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://zacash.cn/images/icon_huef3b68b5a9c9f864bc324bf255658730_3276_180x180_fill_box_center_3.png">
+
+<meta name="description"
+  content="Intro to app performance management">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+      "@type": "ListItem",
+      "position": 1 ,
+      "name":"Posts",
+      "item":"https://zacash.cn/posts/"},{
+      "@type": "ListItem",
+      "position": 2 ,
+      "name":"Apm Basic",
+      "item":"https://zacash.cn/posts/apm-basic/"}]
+}
+</script>
+
+
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://zacash.cn/posts/apm-basic/"
+    },
+    "headline": "Apm Basic | Zac\u0027s blog","datePublished": "2022-04-20T08:54:05+08:00",
+    "dateModified": "2022-04-20T08:54:05+08:00",
+    "wordCount":  368 ,
+    "publisher": {
+        "@type": "Person",
+        "name": "Zac Zhu",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://zacash.cn/images/icon.png"
+        }
+        },
+    "description": "Intro to app performance management"
+}
+</script><meta property="og:title" content="Apm Basic | Zac&#39;s blog" />
+<meta property="og:type" content="article" />
+
+
+<meta property="og:image" content="https://zacash.cn/images/icon.png">
+
+
+<meta property="og:url" content="https://zacash.cn/posts/apm-basic/" />
+
+
+
+<meta property="og:description" content="Intro to app performance management" />
+
+
+
+<meta property="og:locale" content="en" />
+
+
+
+
+<meta property="og:site_name" content="Zac&#39;s blog" />
+
+
+
+
+
+
+<meta property="article:published_time" content="2022-04-20T08:54:05&#43;08:00" />
+
+
+<meta property="article:modified_time" content="2022-04-20T08:54:05&#43;08:00" />
+
+
+
+<meta property="article:section" content="posts" />
+
+
+<meta property="article:tag" content="apm" />
+
+<meta property="article:tag" content="performance" />
+
+<meta property="article:tag" content="optimization" />
+
+
+
+
+
+
+  <body class="flex min-h-screen flex-col">
+    <header
+      class="min-h-16 pl-scrollbar bg-secondary-bg fixed z-50 flex w-full items-center shadow-sm"
+    >
+      <div class="mx-auto w-full max-w-screen-xl"><script>
+    let storageColorScheme = localStorage.getItem("lightDarkMode")
+    if (((storageColorScheme == 'Auto' || storageColorScheme == null) && window.matchMedia("(prefers-color-scheme: dark)").matches) || storageColorScheme == "Dark") {
+        document.getElementsByTagName('html')[0].classList.add('dark')
+    }
+</script>
+<nav class="flex items-center justify-between flex-wrap px-4 py-4 md:py-0">
+    <a href="/" class="me-6 text-primary-text text-xl font-bold">Zac&#39;s blog</a>
+    <button id="navbar-btn" class="md:hidden flex items-center px-3 py-2" aria-label="Open Navbar">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <div id="target"
+        class="hidden block md:flex md:grow md:justify-between md:items-center w-full md:w-auto text-primary-text z-20">
+        <div class="md:flex md:h-16 text-sm md:grow pb-4 md:pb-0 border-b md:border-b-0">
+            <a href="/posts/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  selected-menu-item  me-4">Posts</a>
+            <a href="/tags/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  me-4">Tags</a>
+            <a href="/categories/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  me-4">Categories</a>
+            <a href="/#about" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  me-4">About</a>
+        </div>
+
+        <div class="flex">
+            <div class="relative pt-4 md:pt-0">
+                <div class="cursor-pointer hover:text-eureka" id="lightDarkMode">
+                    <i class="fas fa-adjust"></i>
+                </div>
+                <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-30" id="is-open">
+                </div>
+                <div class="absolute flex flex-col start-0 md:start-auto end-auto md:end-0 hidden bg-secondary-bg w-48 rounded py-2 border border-tertiary-bg cursor-pointer z-40"
+                    id='lightDarkOptions'>
+                    <span class="px-4 py-1 hover:text-eureka" name="Light">Light</span>
+                    <span class="px-4 py-1 hover:text-eureka" name="Dark">Dark</span>
+                    <span class="px-4 py-1 hover:text-eureka" name="Auto">Auto</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-0" id="is-open-mobile">
+    </div>
+
+</nav>
+<script>
+    
+    let element = document.getElementById('lightDarkMode')
+    if (storageColorScheme == null || storageColorScheme == 'Auto') {
+        document.addEventListener('DOMContentLoaded', () => {
+            window.matchMedia("(prefers-color-scheme: dark)").addEventListener('change', switchDarkMode)
+        })
+    } else if (storageColorScheme == "Light") {
+        element.firstElementChild.classList.remove('fa-adjust')
+        element.firstElementChild.setAttribute("data-icon", 'sun')
+        element.firstElementChild.classList.add('fa-sun')
+    } else if (storageColorScheme == "Dark") {
+        element.firstElementChild.classList.remove('fa-adjust')
+        element.firstElementChild.setAttribute("data-icon", 'moon')
+        element.firstElementChild.classList.add('fa-moon')
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        getcolorscheme();
+        switchBurger();
+    });
+</script>
+</div>
+    </header>
+    <main class="grow pt-16">
+        <div class="pl-scrollbar">
+          <div class="mx-auto w-full max-w-screen-xl lg:px-4 xl:px-8">
+  
+  
+  <div class="grid grid-cols-2 gap-4 lg:grid-cols-8 lg:pt-12">
+    <div
+      class="lg:col-start-2 bg-secondary-bg col-span-2 rounded px-6 py-8 lg:col-span-6"
+    >
+      <article class="prose">
+  <h1 class="mb-4">Apm Basic</h1>
+
+  <div
+  class="text-tertiary-text not-prose mt-2 flex flex-row flex-wrap items-center"
+>
+  <div class="me-6 my-2">
+    <i class="fas fa-calendar me-1"></i>
+    <span
+      >2022-04-20</span
+    >
+  </div>
+  <div class="me-6 my-2">
+    <i class="fas fa-clock me-1"></i>
+    <span>2 min read</span>
+  </div>
+
+  
+    <div class="me-6 my-2">
+      <i class="fas fa-folder me-1"></i>
+      
+        <a href="https://zacash.cn/categories/android/" class="hover:text-eureka"
+          >android</a
+        >
+      
+    </div>
+  
+
+  
+</div>
+
+
+  
+  
+
+  <h2 id="启动优化">启动优化</h2>
+<p>如果要你负责一款 App 的启动性能优化，你会如何去规划整体的优化方法？你可能一个想到很多方面的细节点，比如：</p>
+<ul>
+<li>
+<p>优化主线程耗时</p>
+</li>
+<li>
+<p>减少布局层级</p>
+</li>
+<li>
+<p>对某些启动任务做按需加载或预加载</p>
+</li>
+<li>
+<p>避免主线程 IO</p>
+</li>
+<li>
+<p>对线程进行优化</p>
+</li>
+<li>
+<p>分析工具帮助定位性能问题</p>
+</li>
+<li>
+<p>Lock trace 锁信息</p>
+<ul>
+<li>多线程同步等锁</li>
+<li>Java 层的锁，无论是同步方法还是同步块，最终都会走到虚拟机的 MonitorEnter 和 MonitorExit，在 MonitorEnter 中实现了多种状态的切换，包括从无锁到轻锁，轻锁中的偏向和重入，出现竞争并超过自旋的次数后升级成重锁分配 monitor 对象，其中 art 的自旋不是真的自旋，而是用 <code>sched_yield</code> 主动让出 CPU 等待下次调度。</li>
+</ul>
+</li>
+<li>
+<p>IO trace IO耗时</p>
+<ul>
+<li>IO 操作读写哪些文件</li>
+<li>IO 读写执行时常</li>
+</ul>
+</li>
+<li>
+<p>Binder trace</p>
+<ul>
+<li>Sleep 带来的耗时，处于 sleep 状态，进程通常是在等锁或是 Binder 调用耗时导致，通常在线下，可以通过开启 <code>tracing/events/binder</code></li>
+</ul>
+</li>
+<li>
+<p>App atrace</p>
+</li>
+<li>
+<p>Linux ftrace</p>
+</li>
+<li>
+<p>Android Framework atrace</p>
+</li>
+</ul>
+<p>性能优化工具</p>
+<ul>
+<li>Systrace Android 4.3(API level 18) and higher
+<ul>
+<li>Method
+<ul>
+<li>Trace.beginSection</li>
+<li>Trace.endSection</li>
+</ul>
+</li>
+<li>Data from Android kernel
+<ul>
+<li>CPU scheduler</li>
+<li>disk activity</li>
+<li>app threads</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Perfetto Android 10 and higher</li>
+<li>TraceView</li>
+<li>CPU Profiler</li>
+<li>RheaTracer</li>
+</ul>
+<p>Questions</p>
+<h3 id="相关技术">相关技术</h3>
+<ul>
+<li>
+<p>文件描述符 file descriptor</p>
+<ul>
+<li>Linux 系统中打开文件就会获得文件描述符，它是个很小的非负整数。每个进程在 PCB(Process Control Block) 中保存着一份文件描述符表，文件描述符就是这个表的索引，每个表项都有一个指向已打开文件的指针。</li>
+<li>__fdget_pos &ndash; linux 文件读操作
+<ul>
+<li>原因是在开启 Systrace 后，由于所有线程的 trace 都会写入同一个文件，所有线程会同步竞争内核态的文件 pos 锁导致。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><a href="https://mp.weixin.qq.com/s/dbseDMO3tqNPtSvBB5UL3Q">字节码插桩技术</a></p>
+<ul>
+<li>在 Java 层通过记录方法首末位置时间戳、所在线程等信息。将数据异步记录到文件。</li>
+</ul>
+</li>
+<li>
+<p>Android native hook</p>
+<ul>
+<li>有两种实现方式:
+<ul>
+<li>PLT hook
+<ul>
+<li>project: xHook</li>
+</ul>
+</li>
+<li>inline hook
+<ul>
+<li>project: cydia substrate</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>实现原理
+<ul>
+<li>涉及so动态链接过程与ELF文件格式，汇编指令等</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>静态代码插桩技术自动添加 trace，分析 App 运行时耗时性能分析工具</p>
+</li>
+<li>
+<p>Trace file</p>
+<ul>
+<li>ThreadName</li>
+<li>ThreadId</li>
+<li>Time seconds</li>
+<li>B|E(begin or end)</li>
+<li>ProcessId</li>
+<li>Tag</li>
+</ul>
+</li>
+</ul>
+<p>System-wide tracing on Android and Linux</p>
+<ul>
+<li><code>ftrace</code> <a href="https://www.kernel.org/doc/Documentation/trace/ftrace.txt">Linux&rsquo;s kernel tracing</a>, allows to record kernel events into trace.</li>
+<li><code>atrace</code> 收集服务和应用中的用户空间注释
+<ul>
+<li>Android system and app trace events</li>
+<li>[Java/Kotlin apps(SDK)][sdk]: <code>android.os.Trace</code></li>
+<li>Native processes(NDK)[ndk]:</li>
+</ul>
+</li>
+<li>使用 <code>heapprofd</code> 收集服务和应用的本地内存使用情况信息</li>
+</ul>
+<p>atrace</p>
+<p><img src="/img/atrace.png" alt="atrace"></p>
+<p>线程调度状态</p>
+<ul>
+<li>Running：线程正常执行代码逻辑</li>
+<li>Runnable：可执行状态，等待调度，如果长时间调度不到，CPU 繁忙</li>
+<li>Sleeping：休眠，一般是在等待事件驱动</li>
+<li>Uninterruptible Sleep：不可中断的休眠，需要看 args 的描述来确定当时的状态</li>
+<li>Uninterruptible Sleep - Block I/O：IO 阻塞</li>
+</ul>
+<p>IO 耗时</p>
+<p>冷启动耗时，占比最长的是进程处于D状态（Uninterruptible Sleep，PS 查看进程状态显示 D，俗称D状态）的时间，这部分耗时通常占启动总耗时的 40% 左右，进程处于 D 状态通常在等待 IO，比如磁盘 IO，外设 IO，正常因为得不到 IO 的响应，进程才进入 Uninterruptible Sleep 状态，所以要想使得进程从 Uninterruptible Sleep 状态恢复，就得使进程等待 IO 恢复。</p>
+<p>插桩性能优化</p>
+<ul>
+<li>支持自定义插桩作用域，减少 Trace 对于其他无关模块的运行损耗</li>
+<li>针对 Trace 数据出现不闭合的问题，<em>对 catch 代码块进行全插桩</em></li>
+<li>针对高频调用函数，可以选择性的添加到黑名单中，提高运行时性能</li>
+<li>为支持生产使用，采用在 proguard 后进行插桩，由于函数内联优化，相较于混淆前插桩数量可以减少 2.6%</li>
+<li>在编译阶段通过分析字节码信息，过滤掉不耗时函数的插桩</li>
+</ul>
+<p>优化 Trace 写入性能</p>
+<p>开启 atrace 后，所有线程会将所有的 trace 都写入到 trace_marker 文件，会带来  IO 损耗剧增，掩盖了真实的性能问题，原因是所有线程都在短时间向 trace_marker 文件进行写入操作，同时竞争内核态 pos 锁，导致获取到的 trace 文件无法真实反映性能问题。</p>
+<p>优化的方式是，将原本直接写入内核态文件的 Trace 在用户态进行拦截，缓存起来，再以异步 IO 的方式转储。既避免了大量用户态与内核态切换带来的上下文损耗，又避免了直接 IO 带来的 IO 损耗。</p>
+<h2 id="内存优化">内存优化</h2>
+<p>OOM 归因分类：</p>
+<p><img src="/img/oom_reason.png" alt="oom"></p>
+<p>其中 pthread_create 和 fd 数量不足均为 native 内存限制导致的 Java 层崩溃，可以对这部分内存问题做针对性优化：</p>
+<ul>
+<li>线程收敛、监控</li>
+<li>线程栈泄漏自动修复</li>
+<li>FD 泄漏监控</li>
+<li>虚拟内存监控、优化</li>
+<li>app 64位专项</li>
+</ul>
+<h3 id="堆内存治理思路">堆内存治理思路</h3>
+<p>Java 堆内存超限主要分为两类：</p>
+<ul>
+<li>
+<p>堆内存单次分配过大/多次分配累计过大</p>
+<p>触发这类问题的原因有数据异常导致单词内存分配过大超限，如一些是 StringBuilder 拼接累计大小过大等等，解决的思路也比较简单，问题就在当前的堆栈。</p>
+</li>
+<li>
+<p>堆内存累积分配触顶</p>
+<p>这类问题的问题堆栈比较分散，在任何内存分配的场景上都有可能会被触发，那些高频的内存分配节点发生的概率会更高，比如 Bitmap 分配内存。这类 OOM 的根本原因是内存累积占用过多，而当前的问题堆栈只是引发 OOM 最后的一环，并不是问题所在。所以这类问题我们需要分析整体的内存分配情况，从中找到不合理的内存使用（比如内存泄漏、大对象、过多小对象、大图等）。</p>
+</li>
+</ul>
+<h3 id="工具建设">工具建设</h3>
+<p>线下目前主流分析内存泄漏的工具有：</p>
+<ul>
+<li>Android Studio Memory Profiler</li>
+<li>LeakCanary
+<ul>
+<li>缺点：
+<ul>
+<li>检测出来内存泄漏过多，没有比较好的优先级排序，研发解决不及时，问题容易堆积</li>
+<li>Android 端 HPROF 的获取依赖原生的 Debug.dumpHprof，dump 过程会挂起主线程导致明显卡顿，使用体验较差</li>
+<li>LeakCanary 基于 Shark 引擎分析，分析速度较慢，分析过程还会影响进程内存占用</li>
+<li>分析结果较为单一，仅仅只能分析出 Fragment、Activity 的内存泄漏，像大对象、过多小对象导致的 OOM 无法分析。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Memory Analyzer</li>
+</ul>
+<p>线上分析内存泄漏的思路</p>
+<p>在发生 OOM 或者内存触顶等条件下，通过用户无感知 dump 内存的 HPROF 文件，为了减少对 App 运行时影响，通过裁剪 HPROF 回传，在服务端对 HPROF 文件进行分析，分析出内存泄漏、大对象、小对象、图片问题并按照泄漏链路进行归因，根据大数据分析按照用户泄漏发生次数、泄漏大小、总大小等维度排序，推进业务研发按照优先级顺序来建立消费流程。</p>
+<h4 id="hprof-收集">HPROF 收集</h4>
+<p>为了解决 dump 挂起进程的问题，我们可以采用子进程 dump + fileObserver 的方式完成 dump 采集和监听。</p>
+<p>在 fork 子进程之前先 <code>suspend</code>获取主进程中的线程拷贝，通过 fork 系统调用创建子进程让子进程拥有父进程的拷贝，然后 fork 出的子进程中调用 Hprof 的 <code>DumpHeap</code> 函数即可完成把耗时的 dump 操作在放在子进程。由于 <code>suspend</code> 和 <code>resume</code> 是系统函数，抖音<strong>通过自研的 native hook 工具</strong>对 libart.so <a href="https://mp.weixin.qq.com/s/LytCXxiX8e07N9MGI9dPkg">hook 获取系统</a>调用。由于写入是在子进程完成的，我们通过 Android 提供的 fileObsever 文件写入进行监控获取 dump 完成时机。</p>
+
+</article>
+
+
+      
+        <div class="my-4">
+    
+    <a href="https://zacash.cn/tags/apm/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 me-2 hover:text-eureka">#apm</a>
+    
+    <a href="https://zacash.cn/tags/performance/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 me-2 hover:text-eureka">#performance</a>
+    
+    <a href="https://zacash.cn/tags/optimization/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 me-2 hover:text-eureka">#optimization</a>
+    
+</div>
+      
+
+      
+
+
+
+      
+
+      
+  <div
+    class="-mx-2 mt-4 flex flex-col border-t px-2 pt-4 md:flex-row md:justify-between"
+  >
+    <div>
+      
+        <span class="text-primary-text block font-bold"
+          >Previous</span
+        >
+        <a href="https://zacash.cn/posts/android-interview-catalog/" class="block">Android Interview Catalog</a>
+      
+    </div>
+    <div class="mt-4 md:mt-0 md:text-right">
+      
+        <span class="text-primary-text block font-bold">Next</span>
+        <a href="https://zacash.cn/posts/jvm-brief-intro/" class="block">JVM a brief intro</a>
+      
+    </div>
+  </div>
+
+
+      
+
+
+
+    </div>
+    
+
+    
+    
+  </div>
+
+  
+
+          </div>
+        </div>
+      
+    </main>
+    <footer class="pl-scrollbar">
+      <div class="mx-auto w-full max-w-screen-xl"><div class="text-center p-6 pin-b">
+    <p class="text-sm text-tertiary-text">Copyright Zac &copy; 2022
+ &middot;  Powered by the <a href="https://github.com/wangchucheng/hugo-eureka" class="hover:text-eureka">Eureka</a> theme for <a href="https://gohugo.io" class="hover:text-eureka">Hugo</a></p>
+</div></div>
+    </footer>
+  </body>
+</html>

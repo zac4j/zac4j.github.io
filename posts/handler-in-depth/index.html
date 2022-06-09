@@ -82,7 +82,7 @@
     },
     "headline": "Handler in Depth | Zac\u0027s blog","datePublished": "2020-04-14T21:53:54+08:00",
     "dateModified": "2020-04-14T21:53:54+08:00",
-    "wordCount":  1419 ,
+    "wordCount":  1420 ,
     "publisher": {
         "@type": "Person",
         "name": "Zac Zhu",
@@ -267,6 +267,7 @@
 </span></span><span style="display:flex;"><span>            <span style="color:#6ab825;font-weight:bold">super</span>.handleMessage(msg)
 </span></span><span style="display:flex;"><span>        }
 </span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p><a href="https://tools.android.com/tips/lint-checks">Android Lint</a> 会发出这样的警告: <code>This Handler class should be static or leaks might occur(anonymous android.os.Handler)</code></p>
 <p>我们在 Handler 构造方法里可以看到：</p>
 <div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">public</span> <span style="color:#447fcf">Handler</span>(<span style="color:#ffa500">@Nullable</span> Callback callback, <span style="color:#6ab825;font-weight:bold">boolean</span> async) {

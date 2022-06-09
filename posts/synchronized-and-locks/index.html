@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  dir="ltr"
+  
+><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<title>Intro to Java synchronized and Locks | Zac&#39;s blog</title>
+
+<meta name="generator" content="Hugo Eureka 0.9.1" />
+<link rel="stylesheet" href="https://zacash.cn/css/eureka.min.6a378a23360d238dc3ef4df2f5cd718093f02c10c9c7eb2437c29701cd8d389ab6da5d9f21bdd3afa305fd56c1235017.css" integrity="sha384-ajeKIzYNI43D703y9c1xgJPwLBDJx&#43;skN8KXAc2NOJq22l2fIb3Tr6MF/VbBI1AX">
+<script defer src="https://zacash.cn/js/eureka.min.f1639ee98d6cbd85b2b5f034d27320da962002ff83159ed4e01dbc5948c42a1ab26c2d6e74c66e93f5cec4d24dbd166d.js" integrity="sha384-8WOe6Y1svYWytfA00nMg2pYgAv&#43;DFZ7U4B28WUjEKhqybC1udMZuk/XOxNJNvRZt"></script>
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload"
+  href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Noto+Serif+SC:wght@400;600;700&display=swap"
+  as="style" onload="this.onload=null;this.rel='stylesheet'">
+
+
+
+
+<script defer type="text/javascript" src="https://zacash.cn/js/fontawesome.min.1c5a4674b042785ed214cf0818a81724c6b37442fd61b0ed039237b93de25ed5103fc8079a05770648ccc9c66c4f540a.js" integrity="sha384-HFpGdLBCeF7SFM8IGKgXJMazdEL9YbDtA5I3uT3iXtUQP8gHmgV3BkjMycZsT1QK"></script>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/katex.min.css"
+   integrity="sha384-MlJdn/WNKDGXveldHDdyRP1R4CTHr3FeuDNfhsLPYrq2t0UBkUdK2jyTnXPEK1NQ"  media="print"
+  onload="this.media='all';this.onload=null" crossorigin>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/katex.min.js" 
+  integrity="sha384-VQ8d8WVFw0yHhCk5E8I86oOhv48xLpnDZx5T9GogA/Y84DcCKWXDmSDfn13bzFZY"  crossorigin></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/contrib/auto-render.min.js"
+   integrity="sha384-&#43;XBljXPPiv&#43;OzfbB3cVmLHf4hdUFHlWNZN5spNQ7rmHTXpd7WvJum6fIACpNNfIR"  crossorigin></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    renderMathInElement(document.body, {
+      delimiters: [
+        { left: "$$", right: "$$", display: true },
+        { left: "$", right: "$", display: false },
+        { left: "\\(", right: "\\)", display: false },
+        { left: "\\[", right: "\\]", display: true }
+      ],
+    });
+  });
+</script>
+
+
+<script defer src="https://cdn.jsdelivr.net/npm/mermaid@8.14.0/dist/mermaid.min.js" 
+  integrity="sha384-atOyb0FxAgN9LyAc6PEf9BjgwLISyansgdH8/VXQH8p2o5vfrRgmGIJ2Sg22L0A0"  crossorigin></script>
+
+
+<link rel="icon" type="image/png" sizes="32x32" href="https://zacash.cn/images/icon_huef3b68b5a9c9f864bc324bf255658730_3276_32x32_fill_box_center_3.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://zacash.cn/images/icon_huef3b68b5a9c9f864bc324bf255658730_3276_180x180_fill_box_center_3.png">
+
+<meta name="description"
+  content="Intro to Java synchronized and ReentrantLock">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+      "@type": "ListItem",
+      "position": 1 ,
+      "name":"Posts",
+      "item":"https://zacash.cn/posts/"},{
+      "@type": "ListItem",
+      "position": 2 ,
+      "name":"Intro to Java synchronized and Locks",
+      "item":"https://zacash.cn/posts/synchronized-and-locks/"}]
+}
+</script>
+
+
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://zacash.cn/posts/synchronized-and-locks/"
+    },
+    "headline": "Intro to Java synchronized and Locks | Zac\u0027s blog","datePublished": "2022-05-09T19:53:23+08:00",
+    "dateModified": "2022-05-09T19:53:23+08:00",
+    "wordCount":  506 ,
+    "publisher": {
+        "@type": "Person",
+        "name": "Zac Zhu",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://zacash.cn/images/icon.png"
+        }
+        },
+    "description": "Intro to Java synchronized and ReentrantLock"
+}
+</script><meta property="og:title" content="Intro to Java synchronized and Locks | Zac&#39;s blog" />
+<meta property="og:type" content="article" />
+
+
+<meta property="og:image" content="https://zacash.cn/images/icon.png">
+
+
+<meta property="og:url" content="https://zacash.cn/posts/synchronized-and-locks/" />
+
+
+
+<meta property="og:description" content="Intro to Java synchronized and ReentrantLock" />
+
+
+
+<meta property="og:locale" content="en" />
+
+
+
+
+<meta property="og:site_name" content="Zac&#39;s blog" />
+
+
+
+
+
+
+<meta property="article:published_time" content="2022-05-09T19:53:23&#43;08:00" />
+
+
+<meta property="article:modified_time" content="2022-05-09T19:53:23&#43;08:00" />
+
+
+
+<meta property="article:section" content="posts" />
+
+
+<meta property="article:tag" content="lock" />
+
+<meta property="article:tag" content="async" />
+
+<meta property="article:tag" content="thread" />
+
+
+
+
+
+<meta property="og:see_also" content="https://zacash.cn/posts/threads-and-locks/" />
+
+<meta property="og:see_also" content="https://zacash.cn/posts/intro-to-executor/" />
+
+
+
+
+  <body class="flex min-h-screen flex-col">
+    <header
+      class="min-h-16 pl-scrollbar bg-secondary-bg fixed z-50 flex w-full items-center shadow-sm"
+    >
+      <div class="mx-auto w-full max-w-screen-xl"><script>
+    let storageColorScheme = localStorage.getItem("lightDarkMode")
+    if (((storageColorScheme == 'Auto' || storageColorScheme == null) && window.matchMedia("(prefers-color-scheme: dark)").matches) || storageColorScheme == "Dark") {
+        document.getElementsByTagName('html')[0].classList.add('dark')
+    }
+</script>
+<nav class="flex items-center justify-between flex-wrap px-4 py-4 md:py-0">
+    <a href="/" class="me-6 text-primary-text text-xl font-bold">Zac&#39;s blog</a>
+    <button id="navbar-btn" class="md:hidden flex items-center px-3 py-2" aria-label="Open Navbar">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <div id="target"
+        class="hidden block md:flex md:grow md:justify-between md:items-center w-full md:w-auto text-primary-text z-20">
+        <div class="md:flex md:h-16 text-sm md:grow pb-4 md:pb-0 border-b md:border-b-0">
+            <a href="/posts/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  selected-menu-item  me-4">Posts</a>
+            <a href="/tags/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  me-4">Tags</a>
+            <a href="/categories/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  me-4">Categories</a>
+            <a href="/#about" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  me-4">About</a>
+        </div>
+
+        <div class="flex">
+            <div class="relative pt-4 md:pt-0">
+                <div class="cursor-pointer hover:text-eureka" id="lightDarkMode">
+                    <i class="fas fa-adjust"></i>
+                </div>
+                <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-30" id="is-open">
+                </div>
+                <div class="absolute flex flex-col start-0 md:start-auto end-auto md:end-0 hidden bg-secondary-bg w-48 rounded py-2 border border-tertiary-bg cursor-pointer z-40"
+                    id='lightDarkOptions'>
+                    <span class="px-4 py-1 hover:text-eureka" name="Light">Light</span>
+                    <span class="px-4 py-1 hover:text-eureka" name="Dark">Dark</span>
+                    <span class="px-4 py-1 hover:text-eureka" name="Auto">Auto</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-0" id="is-open-mobile">
+    </div>
+
+</nav>
+<script>
+    
+    let element = document.getElementById('lightDarkMode')
+    if (storageColorScheme == null || storageColorScheme == 'Auto') {
+        document.addEventListener('DOMContentLoaded', () => {
+            window.matchMedia("(prefers-color-scheme: dark)").addEventListener('change', switchDarkMode)
+        })
+    } else if (storageColorScheme == "Light") {
+        element.firstElementChild.classList.remove('fa-adjust')
+        element.firstElementChild.setAttribute("data-icon", 'sun')
+        element.firstElementChild.classList.add('fa-sun')
+    } else if (storageColorScheme == "Dark") {
+        element.firstElementChild.classList.remove('fa-adjust')
+        element.firstElementChild.setAttribute("data-icon", 'moon')
+        element.firstElementChild.classList.add('fa-moon')
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        getcolorscheme();
+        switchBurger();
+    });
+</script>
+</div>
+    </header>
+    <main class="grow pt-16">
+        <div class="pl-scrollbar">
+          <div class="mx-auto w-full max-w-screen-xl lg:px-4 xl:px-8">
+  
+  
+  <div class="grid grid-cols-2 gap-4 lg:grid-cols-8 lg:pt-12">
+    <div
+      class="lg:col-start-2 bg-secondary-bg col-span-2 rounded px-6 py-8 lg:col-span-6"
+    >
+      <article class="prose">
+  <h1 class="mb-4">Intro to Java synchronized and Locks</h1>
+
+  <div
+  class="text-tertiary-text not-prose mt-2 flex flex-row flex-wrap items-center"
+>
+  <div class="me-6 my-2">
+    <i class="fas fa-calendar me-1"></i>
+    <span
+      >2022-05-09</span
+    >
+  </div>
+  <div class="me-6 my-2">
+    <i class="fas fa-clock me-1"></i>
+    <span>3 min read</span>
+  </div>
+
+  
+    <div class="me-6 my-2">
+      <i class="fas fa-folder me-1"></i>
+      
+        <a href="https://zacash.cn/categories/java/" class="hover:text-eureka"
+          >java</a
+        >
+      
+        
+          <span>, </span>
+        <a href="https://zacash.cn/categories/concurrent/" class="hover:text-eureka"
+          >concurrent</a
+        >
+      
+    </div>
+  
+
+  
+</div>
+
+
+  
+  
+
+  <p>锁作为并发工具之一，我们至少需要掌握：</p>
+<ul>
+<li>理解什么是线程安全</li>
+<li>synchronized、ReentrantLock 等机制的基本使用与案例。</li>
+<li>synchronized、ReentrantLock 底层实现</li>
+<li>理解锁膨胀、降级；理解偏斜锁、自旋锁、轻量级锁、重量级锁等概念</li>
+<li>掌握 juc 并发包各种不同实现和案例分析。</li>
+</ul>
+<h2 id="谈谈什么是线程安全">谈谈什么是线程安全</h2>
+<p>按照《Java 并发编程实战》（Java Concurrency in Practice）书中的定义，线程安全是一个多线程环境下正确性的概念，也就是保证多线程环境下共享的、可修改的状态的正确性。</p>
+<p>线程安全需要保证几个基本特性：</p>
+<ul>
+<li><strong>原子性</strong>：简单说就是相关操作不会中途被其他线程干扰，一般通过同步机制实现</li>
+<li><strong>可见性</strong>：是一个现场修改了某个共享变量，其状态能够立即被其他线程知晓，通常被解释为将线程本地状态反映到主内存上，volatile 就是负责保证可见性的。</li>
+<li><strong>有序性</strong>：是保证线程内串行语义，避免指令重排等。</li>
+</ul>
+<p>我们先看一段会有线程安全问题的例子：</p>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">public</span> <span style="color:#6ab825;font-weight:bold">class</span> <span style="color:#447fcf;text-decoration:underline">ThreadIssueSample</span> {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#6ab825;font-weight:bold">public</span> <span style="color:#6ab825;font-weight:bold">int</span> sharedState;
+</span></span><span style="display:flex;"><span>  <span style="color:#6ab825;font-weight:bold">public</span> <span style="color:#6ab825;font-weight:bold">void</span> <span style="color:#447fcf">doUnsafeAction</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">while</span>(sharedState &lt; 10000) {
+</span></span><span style="display:flex;"><span>      <span style="color:#6ab825;font-weight:bold">int</span> former = sharedState++;
+</span></span><span style="display:flex;"><span>      <span style="color:#6ab825;font-weight:bold">int</span> latter = sharedState;
+</span></span><span style="display:flex;"><span>      <span style="color:#6ab825;font-weight:bold">if</span> (former != latter - 1) {
+</span></span><span style="display:flex;"><span>          System.<span style="color:#bbb">out</span>.<span style="color:#bbb">println</span>(<span style="color:#ed9d13">&#34;Observe race condition, former is &#34;</span> + former + <span style="color:#ed9d13">&#34;, latter is &#34;</span> + latter);
+</span></span><span style="display:flex;"><span>      }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#6ab825;font-weight:bold">public</span> <span style="color:#6ab825;font-weight:bold">static</span> <span style="color:#6ab825;font-weight:bold">void</span> <span style="color:#447fcf">main</span>(String[] args) <span style="color:#6ab825;font-weight:bold">throws</span> InterruptedException {
+</span></span><span style="display:flex;"><span>    ThreadIssueSample sample = <span style="color:#6ab825;font-weight:bold">new</span> ThreadIssueSample();
+</span></span><span style="display:flex;"><span>    Thread t1 = <span style="color:#6ab825;font-weight:bold">new</span> Thread() {
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">public</span> <span style="color:#6ab825;font-weight:bold">void</span> <span style="color:#447fcf">run</span>() {
+</span></span><span style="display:flex;"><span>          sample.<span style="color:#bbb">doUnsafeAction</span>();
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    };
+</span></span><span style="display:flex;"><span>    Thread t2 = <span style="color:#6ab825;font-weight:bold">new</span> Thread() {
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">public</span> <span style="color:#6ab825;font-weight:bold">void</span> <span style="color:#447fcf">run</span>() {
+</span></span><span style="display:flex;"><span>          sample.<span style="color:#bbb">doUnsafeAction</span>();
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    };
+</span></span><span style="display:flex;"><span>    t1.<span style="color:#bbb">start</span>();
+</span></span><span style="display:flex;"><span>    t2.<span style="color:#bbb">start</span>();
+</span></span><span style="display:flex;"><span>    t1.<span style="color:#bbb">join</span>();
+</span></span><span style="display:flex;"><span>    t2.<span style="color:#bbb">join</span>();
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>运行这段代码，打印出的 log 表示出现了线程安全问题：</p>
+<blockquote>
+<p>Observed race condition, former is 7655, latter is 7650</p>
+</blockquote>
+<p>我们可以将赋值过程用 synchronized 保护起来，使用 this 作为互斥单元，就可以避免线程并发的去修改 sharedState.</p>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">synchronized</span>(<span style="color:#6ab825;font-weight:bold">this</span>) {
+</span></span><span style="display:flex;"><span>  <span style="color:#999;font-style:italic">// ...
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>  <span style="color:#6ab825;font-weight:bold">int</span> former = sharedState++;
+</span></span><span style="display:flex;"><span>  <span style="color:#6ab825;font-weight:bold">int</span> latter = sharedState;
+</span></span><span style="display:flex;"><span>  <span style="color:#6ab825;font-weight:bold">if</span> (former != latter - 1) {
+</span></span><span style="display:flex;"><span>      System.<span style="color:#bbb">out</span>.<span style="color:#bbb">println</span>(<span style="color:#ed9d13">&#34;Observe race condition, former is &#34;</span> + former + <span style="color:#ed9d13">&#34;, latter is &#34;</span> + latter);
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  <span style="color:#999;font-style:italic">// ...
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>}
+</span></span></code></pre></div><p>使用 javap 反编译，可以看到 Java 利用了 <strong>monitorenter/monitorexit</strong> 实现了同步语义：</p>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>11: astore_1
+</span></span><span style="display:flex;"><span>12: monitorenter
+</span></span><span style="display:flex;"><span>13: aload_0
+</span></span><span style="display:flex;"><span>14: dup
+</span></span><span style="display:flex;"><span>15: getfield    <span style="color:#a61717;background-color:#e3d2d2">#</span>2                <span style="color:#999;font-style:italic">// Field sharedState:I
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>18: dup_x1
+</span></span><span style="display:flex;"><span><span style="color:#a61717;background-color:#e3d2d2">…</span>
+</span></span><span style="display:flex;"><span>56: monitorexit
+</span></span></code></pre></div><p>我们再看看 ReentrantLock，什么是再入呢？它表示当一个线程试图获取一个它已经获取的锁时，这个获取动作就自动成功，这个是对锁粒度的一个概念，也就是锁的持有是以线程为单位而不是基于调用次数。Java 锁实现强调再入性是为了和 pthread 的行为进行区分。</p>
+<p>我们可以在创建再入锁时设置<strong>公平性（fairness）</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>ReentrantLock fairLock = <span style="color:#6ab825;font-weight:bold">new</span> ReentrantLock(<span style="color:#6ab825;font-weight:bold">true</span>);
+</span></span><span style="display:flex;"><span>fairLock.<span style="color:#bbb">lock</span>();
+</span></span><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">try</span> {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>} <span style="color:#6ab825;font-weight:bold">finally</span> {
+</span></span><span style="display:flex;"><span>  fairLock.<span style="color:#bbb">unlock</span>();
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>这里的公平性是指，在竞争场景中，当公平性为真时，会倾向于将锁赋予等待时间最久的线程。公平性是减少线程“饥饿”（个别线程长期等待锁，却始终无法获取）情况发生的一个办法。</p>
+<p>如果使用 synchronized，则无法进行公平性选择，其永远是不公平的，这也是主流操作系统调度的选择。通用场景中，公平性未必有想象的那么重要，Java 默认的调度策略很少会导致“饥饿“发生。与此同时，若要保证公平性则会引入额外开销，自然会导致一定的吞吐量下降。所以，只有程序确实有公平性需求的时候，才有必要指定它。</p>
+<p>ReentrantLock 相比 synchronized 可以进行精细的同步操作，如：</p>
+<ul>
+<li>带超时的获取锁尝试</li>
+<li>可以判断是否有线程，或者某个特定线程，在排队等待获取锁</li>
+<li>可以响应中断请求等</li>
+<li>&hellip;</li>
+</ul>
+<p>juc 包中还有<strong>条件变量</strong>（java.util.concurrent.Condition），如果说 ReentrantLock 是 synchronized 的替代选择，Condition 则是将 wait、notify、notifyAll 等操作转化为相应的对象，将复杂而晦涩的同步操作转变为直观可控的对象行为。</p>
+<p>我们可以通过 ArrayBlockingQueue 源码直观看到 ReentrantLock 和 Condition 的使用。</p>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"> * Condition for waiting takes
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"> */</span> 
+</span></span><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">private</span> <span style="color:#6ab825;font-weight:bold">final</span> Condition notEmpty;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"> * Condition for waiting puts
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"> */</span> 
+</span></span><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">private</span> <span style="color:#6ab825;font-weight:bold">final</span> Condition notFull;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">public</span> <span style="color:#447fcf">ArrayBlockingQueue</span>(<span style="color:#6ab825;font-weight:bold">int</span> capacity, <span style="color:#6ab825;font-weight:bold">boolean</span> fair) {
+</span></span><span style="display:flex;"><span>  <span style="color:#6ab825;font-weight:bold">if</span>(capacity &lt;= 0) {
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">throw</span> <span style="color:#6ab825;font-weight:bold">new</span> IllegalArgumentException();
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  <span style="color:#6ab825;font-weight:bold">this</span>.<span style="color:#bbb">items</span> = <span style="color:#6ab825;font-weight:bold">new</span> Object[capacity];
+</span></span><span style="display:flex;"><span>  lock = <span style="color:#6ab825;font-weight:bold">new</span> ReentrantLock(fair);
+</span></span><span style="display:flex;"><span>  notEmpty = lock.<span style="color:#bbb">newCondition</span>();
+</span></span><span style="display:flex;"><span>  notFull = lock.<span style="color:#bbb">newCondition</span>();
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>两个条件变量是从同一再入锁创建出来，然后使用在特定的操作中，如下 take 方法，判断和等待条件满足：</p>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">public</span> E <span style="color:#447fcf">take</span>() <span style="color:#6ab825;font-weight:bold">throws</span> InterruptedException {
+</span></span><span style="display:flex;"><span>  <span style="color:#6ab825;font-weight:bold">final</span> ReentrantLock lock = <span style="color:#6ab825;font-weight:bold">this</span>.<span style="color:#bbb">lock</span>;
+</span></span><span style="display:flex;"><span>  lock.<span style="color:#bbb">lockInterruptibly</span>();
+</span></span><span style="display:flex;"><span>  <span style="color:#6ab825;font-weight:bold">try</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">while</span>(count == 0) {
+</span></span><span style="display:flex;"><span>      notEmpty.<span style="color:#bbb">await</span>();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">return</span> dequeue();
+</span></span><span style="display:flex;"><span>  } <span style="color:#6ab825;font-weight:bold">finally</span> {
+</span></span><span style="display:flex;"><span>    lock.<span style="color:#bbb">unlock</span>();
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>当队列为空时，试图 take 的线程的正确行为应该是等待入列发生，而不是直接返回，这是 BlockingQueue 的语义，使用条件 notEmpty 就可以优雅的实现这一逻辑。</p>
+<p>那么怎么保证入列触发后续 take 操作呢？我们可以看 enqueue 的实现：</p>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">private</span> <span style="color:#6ab825;font-weight:bold">void</span> <span style="color:#447fcf">enqueue</span>(E e) {
+</span></span><span style="display:flex;"><span>  <span style="color:#999;font-style:italic">// assert lock.isHeldByCurrentThread();
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>  <span style="color:#999;font-style:italic">// assert lock.getHoldCount() == 1;
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>  <span style="color:#999;font-style:italic">// assert items[putIndex] == null;
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>  <span style="color:#6ab825;font-weight:bold">final</span> Object[] items = <span style="color:#6ab825;font-weight:bold">this</span>.<span style="color:#bbb">items</span>;
+</span></span><span style="display:flex;"><span>  items[putIndex] = e;
+</span></span><span style="display:flex;"><span>  <span style="color:#6ab825;font-weight:bold">if</span> (++putIndex == items.<span style="color:#bbb">length</span>) putIndex = 0;
+</span></span><span style="display:flex;"><span>  count++;
+</span></span><span style="display:flex;"><span>  <span style="color:#999;font-style:italic">// 通知 await 的线程，非空条件已满足
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>  notEmpty.<span style="color:#bbb">signal</span>();
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>通过 <strong>signal/await</strong> 的组合，完成了条件判断和通知等待线程，非常顺畅就完成了状态流转。</p>
+<p>从性能上看，synchronized <strong>早期比较低效</strong>，对比 ReentrantLock，大多数场景性能都相差较大。但在 Java6 中对其进行了非常多的改进，在高竞争情况下，ReentrantLock 仍然有一定优势。</p>
+<p>synchronized 和 ReentrantLock 有什么区别？</p>
+<p>synchronized 是 Java 内建的同步机制，所以有人称为 Intrinsic Locking，它提供了互斥的语义和可见性，当一个线程已经获取当前锁时，其他试图获取的线程只能等待或者阻塞在那里。</p>
+<p>在 Java 5 以前，synchronized 是仅有的同步手段，在代码中 synchronized 可以修饰方法，也可以修饰代码块，本质上 synchronized 方法等同于把方法全部语句用 synchronized 块包起来。</p>
+<p>ReentrantLock 通常称为再入锁，Java 5 开始提供的锁实现，它的语义和 synchronized 基本相同。再入锁通过调用 lock() 方法获取，需要注意调用 unlock() 方法释放，不然会一直持有该锁。</p>
+<p>Java 对一个对象加锁，锁是什么东西？
+什么是锁竞争？</p>
+<ul>
+<li>如果多个线程轮流获取一个锁，如果每次获取锁的时候都很顺利，没有发生阻塞，那么就不存在锁竞争。只有当某线程尝试获取锁的时候，发现该锁已经被占用，只能等待其释放，这才发生了锁竞争。</li>
+</ul>
+<h2 id="悲观锁与乐观锁">悲观锁与乐观锁</h2>
+<p>悲观锁阻塞事务，乐观锁回滚重试</p>
+<ul>
+<li>
+<p>悲观锁</p>
+<ul>
+<li>每次拿数据时都认为别人会修改，所以每次拿数据都会上锁，这样别人想拿数据就会被挡住，直到悲观锁被释放。</li>
+</ul>
+</li>
+<li>
+<p>乐观锁</p>
+<ul>
+<li>每次拿数据都认为别人不会修改，所以不会上锁，但是想要更新数据时，会在更新前检查从读取到更新这段时间数据是否被别人修改过。如果修改过，则重新读取，再次尝试更新，循环上述步骤直到更新成功。</li>
+<li>伪代码：</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>var data = 111;
+</span></span><span style="display:flex;"><span>var flag = <span style="color:#6ab825;font-weight:bold">true</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">while</span>(flag) {
+</span></span><span style="display:flex;"><span>  val oldValue = data;
+</span></span><span style="display:flex;"><span>  val newValue = modify(data);
+</span></span><span style="display:flex;"><span>  <span style="color:#999;font-style:italic">// CAS = Compare-and-Swap 比较并替换
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>  <span style="color:#6ab825;font-weight:bold">if</span>(data == oldValue) {
+</span></span><span style="display:flex;"><span>    data = newValue;
+</span></span><span style="display:flex;"><span>    flag = <span style="color:#6ab825;font-weight:bold">false</span>;
+</span></span><span style="display:flex;"><span>  } <span style="color:#6ab825;font-weight:bold">else</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#999;font-style:italic">// do nothing
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div></li>
+</ul>
+<p>因为整个过程并没有加锁-解锁的操作，因此乐观锁策略也被称为无锁编程，它仅仅是一个循环重试CAS算法而已。</p>
+<p>自旋锁</p>
+<p>所谓自旋，就是一个 for(;;) 无限循环，当然和乐观锁不同哈</p>
+<p>synchronized 锁升级：偏向锁 -&gt; 轻量级锁 -&gt; 重量级锁</p>
+<p>初次执行 synchronized 代码块时，锁对象变成偏向锁（通过 CAS 修改对象头里的锁标志位），字面意思是“偏向于第一个获得它的线程”的锁。执行同步代码块后，线程并不会主动释放偏向锁。当第二次到达同步代码块时，线程会判断此时持有锁的线程是否为自己（对象头里也含有持有锁的线程 ID），如果是则正常往下执行。由于之前没有释放锁，这里也就不需要重新加锁。如果自始至终使用锁的线程只有一个，很明显偏向锁几乎没有额外开销，性能极高。</p>
+<p>一旦有第二个线程加入锁竞争，偏向锁就升级为轻量级锁（自旋锁）。在轻量级锁状态下继续锁竞争，没有抢到锁的线程将自旋，即不停地循环判断锁是否能够被成功获取。获取锁的操作，其实就是通过 CAS 修改对象头里的锁标识位。先比较当前锁标识位是否为“释放”，如果是则将其设置为“锁定”，比较并设置是原子性发生的。这就算抢到锁了，然后线程将当前锁的持有者信息修改为自己。</p>
+<p>长时间的自旋操作是非常消耗资源的，一个线程持有锁，其他线程就只能在原地空耗 CPU，执行不了任何有效的任务，这种现象叫忙等（busy-waiting）。如果多个线程用一个锁，但是没有发生锁竞争，或者发生很轻微的锁竞争，那么 synchronized 就用轻量级锁，允许短时间的忙等现象。这是一种折中的做法，短时间的忙等，换取线程在用户态（user mode）和内核态（kernel mode）之间切换的开销。</p>
+<p>显然，忙等也是有限度的（有个计数器记录自旋次数，默认允许循环10次）。如果锁竞争情况严重，某个达到最大自旋次数的线程，会将轻量级锁升级为重量级锁（依然是 CAS 修改锁标志位，但不修改持有锁的线程 ID）。当后续线程尝试获取锁时，发现被占用的锁是重量级锁，则直接将自己挂起（而不是忙等），等待将来被唤醒。</p>
+<p>可再入锁（递归锁）</p>
+<p>可再入锁的字面意思是“可以重新进入的锁”，即允许同一个线程多次获取同一把锁。</p>
+<p>Reference：</p>
+<ul>
+<li><a href="https://zhuanlan.zhihu.com/p/71156910">https://zhuanlan.zhihu.com/p/71156910</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/451061367">https://zhuanlan.zhihu.com/p/451061367</a></li>
+<li><a href="https://xie.infoq.cn/article/d9479ba8900bd7645c035d006">https://xie.infoq.cn/article/d9479ba8900bd7645c035d006</a></li>
+</ul>
+
+</article>
+
+
+      
+        <div class="my-4">
+    
+    <a href="https://zacash.cn/tags/lock/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 me-2 hover:text-eureka">#lock</a>
+    
+    <a href="https://zacash.cn/tags/async/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 me-2 hover:text-eureka">#async</a>
+    
+    <a href="https://zacash.cn/tags/thread/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 me-2 hover:text-eureka">#thread</a>
+    
+</div>
+      
+
+      
+
+
+
+      
+
+      
+  <div
+    class="-mx-2 mt-4 flex flex-col border-t px-2 pt-4 md:flex-row md:justify-between"
+  >
+    <div>
+      
+        <span class="text-primary-text block font-bold"
+          >Previous</span
+        >
+        <a href="https://zacash.cn/posts/java-basic-reflection/" class="block">Java Reflection</a>
+      
+    </div>
+    <div class="mt-4 md:mt-0 md:text-right">
+      
+        <span class="text-primary-text block font-bold">Next</span>
+        <a href="https://zacash.cn/posts/how-to-write-better-resume/" class="block">How to Write A Better Resume</a>
+      
+    </div>
+  </div>
+
+
+      
+
+
+
+    </div>
+    
+
+    
+    
+      <div
+        class="lg:col-start-2 bg-secondary-bg prose col-span-2 rounded p-6 lg:col-span-6"
+      >
+        <h3>See Also</h3>
+        
+          <a href="https://zacash.cn/posts/threads-and-locks/" class="no-underline">Process, Threads and Locks</a>
+          <br />
+        
+          <a href="https://zacash.cn/posts/intro-to-executor/" class="no-underline">Intro to Executor</a>
+          <br />
+        
+      </div>
+    
+  </div>
+
+  
+
+          </div>
+        </div>
+      
+    </main>
+    <footer class="pl-scrollbar">
+      <div class="mx-auto w-full max-w-screen-xl"><div class="text-center p-6 pin-b">
+    <p class="text-sm text-tertiary-text">Copyright Zac &copy; 2022
+ &middot;  Powered by the <a href="https://github.com/wangchucheng/hugo-eureka" class="hover:text-eureka">Eureka</a> theme for <a href="https://gohugo.io" class="hover:text-eureka">Hugo</a></p>
+</div></div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>file on Zac&#39;s blog</title>
+    <link>https://zacash.cn/tags/file/</link>
+    <description>Recent content in file on Zac&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>Copyright Zac &amp;copy; 2022
+</copyright>
+    <lastBuildDate>Tue, 31 May 2022 21:37:14 +0800</lastBuildDate><atom:link href="https://zacash.cn/tags/file/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Java File</title>
+      <link>https://zacash.cn/posts/java-file/</link>
+      <pubDate>Tue, 31 May 2022 21:37:14 +0800</pubDate>
+      
+      <guid>https://zacash.cn/posts/java-file/</guid>
+      <description>我们先来比较 IO 和 NIO 两种写入文件的实现：
+ 使用 IO 实现：  public void copyFile(File source, File dest) throws IOException {  try(InputStream in = new FileInputStream(source);  OutputStream out = new FileOutputStream(dest);) {  byte[] buffer = new byte[1024];  int length;  while((length = is.read(buffer)) &amp;gt;0) {  os.write(buffer, 0, length);  }  } }  利用 NIO 实现：  public void copyFile(File source, File dest) throws IOException {  try(FileChannel inChannel = new FileInputStream(source).</description>
+    </item>
+    
+  </channel>
+</rss>

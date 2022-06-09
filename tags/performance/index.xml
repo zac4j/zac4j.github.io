@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>performance on Zac&#39;s blog</title>
+    <link>https://zacash.cn/tags/performance/</link>
+    <description>Recent content in performance on Zac&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>Copyright Zac &amp;copy; 2022
+</copyright>
+    <lastBuildDate>Wed, 20 Apr 2022 08:54:05 +0800</lastBuildDate><atom:link href="https://zacash.cn/tags/performance/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Apm Basic</title>
+      <link>https://zacash.cn/posts/apm-basic/</link>
+      <pubDate>Wed, 20 Apr 2022 08:54:05 +0800</pubDate>
+      
+      <guid>https://zacash.cn/posts/apm-basic/</guid>
+      <description>启动优化 如果要你负责一款 App 的启动性能优化，你会如何去规划整体的优化方法？你可能一个想到很多方面的细节点，比如：
+  优化主线程耗时
+  减少布局层级
+  对某些启动任务做按需加载或预加载
+  避免主线程 IO
+  对线程进行优化
+  分析工具帮助定位性能问题
+  Lock trace 锁信息
+ 多线程同步等锁 Java 层的锁，无论是同步方法还是同步块，最终都会走到虚拟机的 MonitorEnter 和 MonitorExit，在 MonitorEnter 中实现了多种状态的切换，包括从无锁到轻锁，轻锁中的偏向和重入，出现竞争并超过自旋的次数后升级成重锁分配 monitor 对象，其中 art 的自旋不是真的自旋，而是用 sched_yield 主动让出 CPU 等待下次调度。    IO trace IO耗时
+ IO 操作读写哪些文件 IO 读写执行时常    Binder trace
+ Sleep 带来的耗时，处于 sleep 状态，进程通常是在等锁或是 Binder 调用耗时导致，通常在线下，可以通过开启 tracing/events/binder    App atrace
+  Linux ftrace</description>
+    </item>
+    
+  </channel>
+</rss>
