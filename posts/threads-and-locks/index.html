@@ -82,7 +82,7 @@
     },
     "headline": "Process, Threads and Locks | Zac\u0027s blog","datePublished": "2020-07-27T00:00:00+00:00",
     "dateModified": "2020-07-27T00:00:00+00:00",
-    "wordCount":  1949 ,
+    "wordCount":  2145 ,
     "publisher": {
         "@type": "Person",
         "name": "Zac Zhu",
@@ -234,7 +234,7 @@
   </div>
   <div class="me-6 my-2">
     <i class="fas fa-clock me-1"></i>
-    <span>10 min read</span>
+    <span>11 min read</span>
   </div>
 
   
@@ -430,6 +430,7 @@ Exception table:
 <p>Most implementations of the Java virtual machine run as a single process. A Java application can create additional processes using a <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/ProcessBuilder.html">ProcessBuilder</a> object. Multiprocess applications are beyond the scope of this lesson.</p>
 <p>大多数的 Jvm 实现都是以单个进程运行的。Java 应用可以使用 <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/ProcessBuilder.html">ProcessBuilder</a> 创建新的进程，不过多进程应用不在这里的讨论范围。</p>
 <h3 id="threads">Threads</h3>
+<h3 id="什么是线程">什么是线程？</h3>
 <p>从操作系统角度，线程是系统任务调度的最小单元，一个进程可以包含多个线程，作为任务的真正运作者，有自己的栈（Stack）、寄存器（Register）、本地存储（Thread Local）等，但是会和进程内其他线程共享文件描述符、虚拟地址空间等。</p>
 <p>在具体实现中，线程还分为内核线程、用户线程，Java 的线程实现其实是与虚拟机相关的。对于 Oracle JDK，其线程也经历了一个演进的过程，基本上在 Java 1.2 之后，JDK 已经抛弃了早期的<a href="https://en.wikipedia.org/wiki/Green_threads">Green Thread</a>，也就是用户调度的线程，现在的模型是一对一映射到操作系统内核线程。</p>
 <p>通过 Thread 的源码，我们可以发现其操作逻辑大部分是以 JNI 形式调用的本地代码：</p>
@@ -438,12 +439,28 @@ Exception table:
 </span></span><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">private</span> <span style="color:#6ab825;font-weight:bold">native</span> <span style="color:#6ab825;font-weight:bold">void</span> <span style="color:#447fcf">setPriority0</span>(<span style="color:#6ab825;font-weight:bold">int</span> newPriority);
 </span></span><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">private</span> <span style="color:#6ab825;font-weight:bold">native</span> <span style="color:#6ab825;font-weight:bold">void</span> <span style="color:#447fcf">interrupt0</span>();
 </span></span></code></pre></div><p>这种实现有利有弊，总体上来说，Java 语言得益于精细粒度的线程和相关的并发操作，其构建高扩展性的大型应用的能力已经毋庸置疑。但是，其复杂性也提高了并发编程的门槛，近几年 Go 语言等提供了协程（coroutine），大大提高了构建并发应用的效率。于此同时，Java 也在 Loom 项目中，孕育新的轻量级用户线程（Fiber）等机制。</p>
-<p>我们以线程最基本使用的例子开始：</p>
+<h3 id="线程的生命周期">线程的生命周期</h3>
+<p>Java 5 开始，线程状态定义在 java.lang.Thread.State 中，分别是：</p>
+<ul>
+<li>New 表示线程被创建出来，还没真正启动的状态，可以认为是 Java 内部的状态</li>
+<li>Runnable 表示线程已经在 JVM 中执行，由于执行需要计算资源，它可能正在运行，也可能在等待系统分配给它 CPU 片段，在就绪度队列中排队。</li>
+<li>Blocked <strong>阻塞</strong>表示线程在等待 monitor lock，例如，线程试图通过 synchronized 去获取某个锁，但是其他线程已经独占了，那么当前线程就会处于阻塞状态。</li>
+<li>Waiting 表示正在<strong>等待</strong>其他线程采取动作。例如，在生产者-消费者模型中，当任务条件未满足时，会让当前消费者先 wait，生产者去准备任务数据，准备完成后，通过 notify 动作，通知消费线程可以继续工作。</li>
+<li>TIMED_WAIT 进入条件和等待状态类似，但是调用的是存在超时条件的方法，比如 wait 或 join 等方法的指定超时版本，如：</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">public</span> <span style="color:#6ab825;font-weight:bold">final</span> <span style="color:#6ab825;font-weight:bold">native</span> <span style="color:#6ab825;font-weight:bold">void</span> <span style="color:#447fcf">wait</span>(<span style="color:#6ab825;font-weight:bold">long</span> timeout) <span style="color:#6ab825;font-weight:bold">throws</span> InterruptedException;
+</span></span></code></pre></div><ul>
+<li>TERMINATED 不管是意外退出还是正常执行结束，线程已经完成任务，终止运行。</li>
+</ul>
+<p>在第二次调用 satrt 方法的时候，线程可能处于终止或者其他状态，但是不论如何，都是不可以再次启动的。</p>
+<h3 id="线程的使用">线程的使用</h3>
+<h4 id="基本用例">基本用例</h4>
+<p>我们以线程最基本的用例开始：</p>
 <div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>Runnable task = () -&gt; {System.<span style="color:#bbb">out</span>.<span style="color:#bbb">print</span>(<span style="color:#ed9d13">&#34;new created task&#34;</span>);};
 </span></span><span style="display:flex;"><span>Thread t1 = <span style="color:#6ab825;font-weight:bold">new</span> Thread(task);
 </span></span><span style="display:flex;"><span>t1.<span style="color:#bbb">start</span>();
 </span></span><span style="display:flex;"><span>t1.<span style="color:#bbb">join</span>();
-</span></span></code></pre></div><p>使用 Runnable 的好处是，不会受 Java 不支持多继承的限制，重用代码实现，当我们需要重复执行相应逻辑时优点明显。而且可以方便的和 Executor 之类的框架结合使用，比如上面例子的逻辑可以完全写成下面的结构：</p>
+</span></span></code></pre></div><p>使用 Runnable 的好处是，不会受 Java 不持多继承的限制，重用代码实现，当我们需要重复执行相应逻辑时优点明显。而且可以方便的和 Executor 之类的框架结合使用，比如上面例子的逻辑可以完全写成下面的结构：</p>
 <div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>Future future = Executors.<span style="color:#bbb">newsingleThreadExecutor</span>()
 </span></span><span style="display:flex;"><span>  .<span style="color:#bbb">submit</span>(task);
 </span></span><span style="display:flex;"><span>  .<span style="color:#bbb">get</span>();
@@ -453,40 +470,91 @@ Exception table:
 <li>线程自身的方法，除了 start，还有多个 join 方法，等待线程结束；yield 是告诉调度器，主动让出 CPU；另外，就是一些已经被标记为 deprecated 的 resume、stop、suspend 之类的方法，比如在最新的 JDK 实现中，destroy/stop 方法已被移除</li>
 <li>基类 Object 提供了一些基础的 wait/notify/notifyAll 方法。如果我们持有某个对象的 Monitor 锁，调用 wait 会让当前线程处于等待状态，直到其他线程 notify 或者 notifyAll。所以，本质上是提供了 Monitor 的获取和释放的能力，是基本的线程间通信方式。</li>
 </ul>
+<p>状态和 Object 方法的关系图：</p>
+<p><img src="/img/obj-thread-state.webp" alt="state"></p>
+<h4 id="守护线程">守护线程</h4>
+<p>有时候应用中需要一个长期驻留的服务程序，但是不希望其影响应用退出，就可以将其设置为<strong>守护线程</strong>（Daemon Thread），如果 JVM 发现只有守护线程存在时，将结束进程。</p>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>Thread dt = <span style="color:#6ab825;font-weight:bold">new</span> Thread();
+</span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic">// 必须在启动前设置 daemon flag
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>dt.<span style="color:#bbb">setDaemon</span>(<span style="color:#6ab825;font-weight:bold">true</span>);
+</span></span><span style="display:flex;"><span>dt.<span style="color:#bbb">start</span>();
+</span></span></code></pre></div><h4 id="spurious-wakeup">Spurious wakeup</h4>
+<p>在多核 CPU 系统中，线程等待存在一种可能，就是在没有任何线程广播或者发出信号的情况下，线程就被唤醒，如果处理不当就会出现诡异的并发问题，所以在线程等待的过程中，建议采用下面的模版来写：</p>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#999;font-style:italic">// 推荐
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span><span style="color:#6ab825;font-weight:bold">while</span>(isCondition) {
+</span></span><span style="display:flex;"><span>  waitForCondition();
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic">// 不推荐
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span><span style="color:#6ab825;font-weight:bold">if</span> (isCondition()) {
+</span></span><span style="display:flex;"><span>  waitForCondition();
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Thread.onSpinWait() Java 9 引入的特性。自旋锁（spin-wait，busy-waiting），也可以认为其不算是一种锁，而是一种针对短期等待的性能优化技术。<code>onSpinWait()</code> 没有任何行为上的保证，而是对 JVM 的一种暗示，JVM 可以利用 CPU 的 pause 指令进一步提高性能，性能特别敏感的应用可以关注。</p>
+<h4 id="threadlocal">ThreadLocal</h4>
+<p>慎用 ThreadLocal，这是 Java 提供的一种保证线程私有信息的机制，因为其在整个线程生命周期内有效，所以可以方便地在一个线程关联的不同业务模块之前传递信息，比如事务 ID、Cookie 等上下文信息。</p>
+<p>数据存储于线程相关的 ThreadLocalMap，内部条目是弱引用：</p>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">static</span> <span style="color:#6ab825;font-weight:bold">class</span> <span style="color:#447fcf;text-decoration:underline">ThreadLocalMap</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#6ab825;font-weight:bold">static</span> <span style="color:#6ab825;font-weight:bold">class</span> <span style="color:#447fcf;text-decoration:underline">Entry</span> <span style="color:#6ab825;font-weight:bold">extends</span> WeakReference&lt;ThreadLocal&lt;?&gt;&gt; {
+</span></span><span style="display:flex;"><span>    <span style="color:#999;font-style:italic">// The value associate with this ThreadLocal.
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>    Object value;
+</span></span><span style="display:flex;"><span>    Entry(ThreadLocal&lt;?&gt; k, Object v) {
+</span></span><span style="display:flex;"><span>      <span style="color:#6ab825;font-weight:bold">super</span>(k);
+</span></span><span style="display:flex;"><span>      value = v;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>当 key 为 null 时，该条目就变成“废弃条目”，相关 value 的回收，往往依赖于几个关键点，即 set、remove、rehash.</p>
+<p>下面是 set 方法简单的示例：</p>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">private</span> <span style="color:#6ab825;font-weight:bold">void</span> <span style="color:#447fcf">set</span>(ThreadLocal&lt;?&gt; key, Object value) {
+</span></span><span style="display:flex;"><span>  Entry[] tab = table;
+</span></span><span style="display:flex;"><span>  <span style="color:#6ab825;font-weight:bold">int</span> len = tab.<span style="color:#bbb">length</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#6ab825;font-weight:bold">int</span> i = key.<span style="color:#bbb">threadLocalHashCode</span> &amp; (len-1);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#6ab825;font-weight:bold">for</span> (Entry e = tab[i];; <span style="color:#a61717;background-color:#e3d2d2">…</span>) {
+</span></span><span style="display:flex;"><span>      <span style="color:#999;font-style:italic">//…
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>      <span style="color:#6ab825;font-weight:bold">if</span> (k == <span style="color:#6ab825;font-weight:bold">null</span>) {ß
+</span></span><span style="display:flex;"><span>          <span style="color:#999;font-style:italic">// 替换废弃条目
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>          replaceStaleEntry(key, value, i);
+</span></span><span style="display:flex;"><span>          <span style="color:#6ab825;font-weight:bold">return</span>;
+</span></span><span style="display:flex;"><span>      }
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  tab[i] = <span style="color:#6ab825;font-weight:bold">new</span> Entry(key, value);
+</span></span><span style="display:flex;"><span>  <span style="color:#6ab825;font-weight:bold">int</span> sz = ++size;
+</span></span><span style="display:flex;"><span>  <span style="color:#999;font-style:italic">// 扫描并清理发现的废弃条目，并检查容量是否超限
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>  <span style="color:#6ab825;font-weight:bold">if</span> (!cleanSomeSlots(i, sz) &amp;&amp; sz &gt;= threshold)
+</span></span><span style="display:flex;"><span>      rehash();<span style="color:#999;font-style:italic">// 清理废弃条目，如果仍然超限，则扩容（加倍）
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>}
+</span></span></code></pre></div><p>具体的逻辑实现在 cleanSomeSlots 和 expungeStaleEntry 方法中。</p>
+<p>通常弱引用都会和引用队列配合清理机制使用，ThreadLocal 是个例外，stale entry 的回收依赖于显式地出发，否则就要等待线程结束，进而回收相应 ThreadLocalMap！这就是很多 OOM 的来源，所以通常都会建议，应用一定要自己负责 remove，并且不要和线程池配合，因为 worker 线程往往是不会退出的。</p>
 <h4 id="thread-objects">Thread Objects</h4>
 <p>每个线程都与一个 <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Thread.html">Thread</a> 相关。有两种策略使用 <em>Thread</em> 对象创建并发应用。</p>
 <ul>
 <li>直接控制线程的创建和管理，每次应用需要启动异步任务时，只需实例化 <em>Thread</em>。</li>
 <li>要从应用的其他部分抽象线程管理，将应用的任务传递给 <em>executor</em>。</li>
 </ul>
-<h3 id="deadlock">DeadLock</h3>
-<p>High level：</p>
-<p>死锁是指有两个或两个以上的线程在执行过程中去争夺同样一个共享资源造成的相互等待的一个现象。如果没有外部的干预，线程会一直阻塞，无法往下去执行，这样一直处于相互等待资源的线程，我们称为死锁线程。
-导致死锁的条件有4个，这4个条件同时满足就会产生死锁：</p>
-<ul>
-<li>互斥条件：共享资源 A 和 B 只能被一个线程占用</li>
-<li>请求和保持条件：线程 t1 已经取得共享资源 X，在等待共享资源 Y 的时候，不释放共享资源 X</li>
-<li>不可抢占条件：其他线程不能强行抢占线程 t1 占有的资源</li>
-<li>循环等待条件：线程 t1 等待线程 t2 占有的资源，线程 t2 等待线程 t1 占有的资源就是循环等待</li>
-</ul>
-<p>这些条件导致死锁之后，只能通过人工干预来解决，比如说重启服务或 kill 掉这个线程，而按照死锁发生的 4 个条件，我们只需要破坏其中任意一种就能解决死锁问题，不过互斥条件是没办法破坏的，因为它的互斥锁的基本约束，而其他的三个条件都有办法来破坏：</p>
-<ul>
-<li>破坏请求和保持条件：
-<ul>
-<li>我们可以一次性申请所有的资源，这样就不存在锁要等待了</li>
-</ul>
-</li>
-<li>破坏不可抢占条件：
-<ul>
-<li>占用部分资源的线程在进一步申请其他资源的时候，如果申请不到，我们可以主动去释放它占有的资源</li>
-</ul>
-</li>
-<li>破坏循环等待条件：
-<ul>
-<li>可以按序申请资源来预防，按序申请是指资源是有线性顺序的，申请的时候，可以先申请资源序号小的，然后再去申请资源序号大的，这样线性化之后，自然就不存在循环了</li>
-</ul>
-</li>
-</ul>
+<h3 id="死锁">死锁</h3>
+<!-- damn style -->
+<!-- Below content I learn/copy from zhihu, not like this damn answer style
+死锁是指有两个或两个以上的线程在执行过程中去争夺同样一个共享资源造成的相互等待的一个现象。如果没有外部的干预，线程会一直阻塞，无法往下去执行，这样一直处于相互等待资源的线程，我们称为死锁线程。
+导致死锁的条件有4个，这4个条件同时满足就会产生死锁：
+
++ 互斥条件：共享资源 A 和 B 只能被一个线程占用
++ 请求和保持条件：线程 t1 已经取得共享资源 X，在等待共享资源 Y 的时候，不释放共享资源 X
++ 不可抢占条件：其他线程不能强行抢占线程 t1 占有的资源
++ 循环等待条件：线程 t1 等待线程 t2 占有的资源，线程 t2 等待线程 t1 占有的资源就是循环等待
+
+这些条件导致死锁之后，只能通过人工干预来解决，比如说重启服务或 kill 掉这个线程，而按照死锁发生的 4 个条件，我们只需要破坏其中任意一种就能解决死锁问题，不过互斥条件是没办法破坏的，因为它的互斥锁的基本约束，而其他的三个条件都有办法来破坏：
+
++ 破坏请求和保持条件：
+  + 我们可以一次性申请所有的资源，这样就不存在锁要等待了
++ 破坏不可抢占条件：
+  + 占用部分资源的线程在进一步申请其他资源的时候，如果申请不到，我们可以主动去释放它占有的资源
++ 破坏循环等待条件：
+  + 可以按序申请资源来预防，按序申请是指资源是有线性顺序的，申请的时候，可以先申请资源序号小的，然后再去申请资源序号大的，这样线性化之后，自然就不存在循环了 -->
+<!-- good style -->
+<p>死锁是一种特定的程序状态，在实体之间，由于循环依赖导致彼此一直处于等待之中，没有任何个体可以继续前进。死锁不仅仅是在线程之间会发生，存在资源独占的进程之间同样也可能出现死锁。通常来说，我们大多聚焦在多线程场景中的死锁，指两个或多个线程之间，由于互相持有对方需要的锁，而永久处于阻塞的状态。</p>
+<p><img src="/img/deadlock.webp" alt="deadlock"></p>
+<p>定位死锁最常见的方式就是利用 jstack 等工具获取线程栈，然后定位互相之间的依赖关系，进而找到死锁。如果是比较明显的死锁，往往 jstack 等就能直接定位，类似 jConsole 可以在图形界面进行有限的死锁检测。</p>
 </article>
 
 
