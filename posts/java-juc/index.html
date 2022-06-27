@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  dir="ltr"
+  
+><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<title>Intro to Java Juc | Zac&#39;s blog</title>
+
+<meta name="generator" content="Hugo Eureka 0.9.1" />
+<link rel="stylesheet" href="https://zacash.cn/css/eureka.min.6a378a23360d238dc3ef4df2f5cd718093f02c10c9c7eb2437c29701cd8d389ab6da5d9f21bdd3afa305fd56c1235017.css" integrity="sha384-ajeKIzYNI43D703y9c1xgJPwLBDJx&#43;skN8KXAc2NOJq22l2fIb3Tr6MF/VbBI1AX">
+<script defer src="https://zacash.cn/js/eureka.min.f1639ee98d6cbd85b2b5f034d27320da962002ff83159ed4e01dbc5948c42a1ab26c2d6e74c66e93f5cec4d24dbd166d.js" integrity="sha384-8WOe6Y1svYWytfA00nMg2pYgAv&#43;DFZ7U4B28WUjEKhqybC1udMZuk/XOxNJNvRZt"></script>
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload"
+  href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Noto+Serif+SC:wght@400;600;700&display=swap"
+  as="style" onload="this.onload=null;this.rel='stylesheet'">
+
+
+
+
+<script defer type="text/javascript" src="https://zacash.cn/js/fontawesome.min.1c5a4674b042785ed214cf0818a81724c6b37442fd61b0ed039237b93de25ed5103fc8079a05770648ccc9c66c4f540a.js" integrity="sha384-HFpGdLBCeF7SFM8IGKgXJMazdEL9YbDtA5I3uT3iXtUQP8gHmgV3BkjMycZsT1QK"></script>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/katex.min.css"
+   integrity="sha384-MlJdn/WNKDGXveldHDdyRP1R4CTHr3FeuDNfhsLPYrq2t0UBkUdK2jyTnXPEK1NQ"  media="print"
+  onload="this.media='all';this.onload=null" crossorigin>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/katex.min.js" 
+  integrity="sha384-VQ8d8WVFw0yHhCk5E8I86oOhv48xLpnDZx5T9GogA/Y84DcCKWXDmSDfn13bzFZY"  crossorigin></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/contrib/auto-render.min.js"
+   integrity="sha384-&#43;XBljXPPiv&#43;OzfbB3cVmLHf4hdUFHlWNZN5spNQ7rmHTXpd7WvJum6fIACpNNfIR"  crossorigin></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    renderMathInElement(document.body, {
+      delimiters: [
+        { left: "$$", right: "$$", display: true },
+        { left: "$", right: "$", display: false },
+        { left: "\\(", right: "\\)", display: false },
+        { left: "\\[", right: "\\]", display: true }
+      ],
+    });
+  });
+</script>
+
+
+<script defer src="https://cdn.jsdelivr.net/npm/mermaid@8.14.0/dist/mermaid.min.js" 
+  integrity="sha384-atOyb0FxAgN9LyAc6PEf9BjgwLISyansgdH8/VXQH8p2o5vfrRgmGIJ2Sg22L0A0"  crossorigin></script>
+
+
+<link rel="icon" type="image/png" sizes="32x32" href="https://zacash.cn/images/icon_huef3b68b5a9c9f864bc324bf255658730_3276_32x32_fill_box_center_3.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://zacash.cn/images/icon_huef3b68b5a9c9f864bc324bf255658730_3276_180x180_fill_box_center_3.png">
+
+<meta name="description"
+  content="Intro to classes in java.util.concurrent package">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+      "@type": "ListItem",
+      "position": 1 ,
+      "name":"Posts",
+      "item":"https://zacash.cn/posts/"},{
+      "@type": "ListItem",
+      "position": 2 ,
+      "name":"Intro to Java Juc",
+      "item":"https://zacash.cn/posts/java-juc/"}]
+}
+</script>
+
+
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://zacash.cn/posts/java-juc/"
+    },
+    "headline": "Intro to Java Juc | Zac\u0027s blog","datePublished": "2022-06-14T15:24:53+08:00",
+    "dateModified": "2022-06-14T15:24:53+08:00",
+    "wordCount":  609 ,
+    "publisher": {
+        "@type": "Person",
+        "name": "Zac Zhu",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://zacash.cn/images/icon.png"
+        }
+        },
+    "description": "Intro to classes in java.util.concurrent package"
+}
+</script><meta property="og:title" content="Intro to Java Juc | Zac&#39;s blog" />
+<meta property="og:type" content="article" />
+
+
+<meta property="og:image" content="https://zacash.cn/images/icon.png">
+
+
+<meta property="og:url" content="https://zacash.cn/posts/java-juc/" />
+
+
+
+<meta property="og:description" content="Intro to classes in java.util.concurrent package" />
+
+
+
+<meta property="og:locale" content="en" />
+
+
+
+
+<meta property="og:site_name" content="Zac&#39;s blog" />
+
+
+
+
+
+
+<meta property="article:published_time" content="2022-06-14T15:24:53&#43;08:00" />
+
+
+<meta property="article:modified_time" content="2022-06-14T15:24:53&#43;08:00" />
+
+
+
+<meta property="article:section" content="posts" />
+
+
+<meta property="article:tag" content="java" />
+
+<meta property="article:tag" content="juc" />
+
+
+
+
+
+<meta property="og:see_also" content="https://zacash.cn/posts/java-file/" />
+
+<meta property="og:see_also" content="https://zacash.cn/posts/java-io/" />
+
+<meta property="og:see_also" content="https://zacash.cn/posts/java-basic/" />
+
+
+
+
+  <body class="flex min-h-screen flex-col">
+    <header
+      class="min-h-16 pl-scrollbar bg-secondary-bg fixed z-50 flex w-full items-center shadow-sm"
+    >
+      <div class="mx-auto w-full max-w-screen-xl"><script>
+    let storageColorScheme = localStorage.getItem("lightDarkMode")
+    if (((storageColorScheme == 'Auto' || storageColorScheme == null) && window.matchMedia("(prefers-color-scheme: dark)").matches) || storageColorScheme == "Dark") {
+        document.getElementsByTagName('html')[0].classList.add('dark')
+    }
+</script>
+<nav class="flex items-center justify-between flex-wrap px-4 py-4 md:py-0">
+    <a href="/" class="me-6 text-primary-text text-xl font-bold">Zac&#39;s blog</a>
+    <button id="navbar-btn" class="md:hidden flex items-center px-3 py-2" aria-label="Open Navbar">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <div id="target"
+        class="hidden block md:flex md:grow md:justify-between md:items-center w-full md:w-auto text-primary-text z-20">
+        <div class="md:flex md:h-16 text-sm md:grow pb-4 md:pb-0 border-b md:border-b-0">
+            <a href="/posts/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  selected-menu-item  me-4">Posts</a>
+            <a href="/tags/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  me-4">Tags</a>
+            <a href="/categories/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  me-4">Categories</a>
+            <a href="/#about" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  me-4">About</a>
+        </div>
+
+        <div class="flex">
+            <div class="relative pt-4 md:pt-0">
+                <div class="cursor-pointer hover:text-eureka" id="lightDarkMode">
+                    <i class="fas fa-adjust"></i>
+                </div>
+                <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-30" id="is-open">
+                </div>
+                <div class="absolute flex flex-col start-0 md:start-auto end-auto md:end-0 hidden bg-secondary-bg w-48 rounded py-2 border border-tertiary-bg cursor-pointer z-40"
+                    id='lightDarkOptions'>
+                    <span class="px-4 py-1 hover:text-eureka" name="Light">Light</span>
+                    <span class="px-4 py-1 hover:text-eureka" name="Dark">Dark</span>
+                    <span class="px-4 py-1 hover:text-eureka" name="Auto">Auto</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-0" id="is-open-mobile">
+    </div>
+
+</nav>
+<script>
+    
+    let element = document.getElementById('lightDarkMode')
+    if (storageColorScheme == null || storageColorScheme == 'Auto') {
+        document.addEventListener('DOMContentLoaded', () => {
+            window.matchMedia("(prefers-color-scheme: dark)").addEventListener('change', switchDarkMode)
+        })
+    } else if (storageColorScheme == "Light") {
+        element.firstElementChild.classList.remove('fa-adjust')
+        element.firstElementChild.setAttribute("data-icon", 'sun')
+        element.firstElementChild.classList.add('fa-sun')
+    } else if (storageColorScheme == "Dark") {
+        element.firstElementChild.classList.remove('fa-adjust')
+        element.firstElementChild.setAttribute("data-icon", 'moon')
+        element.firstElementChild.classList.add('fa-moon')
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        getcolorscheme();
+        switchBurger();
+    });
+</script>
+</div>
+    </header>
+    <main class="grow pt-16">
+        <div class="pl-scrollbar">
+          <div class="mx-auto w-full max-w-screen-xl lg:px-4 xl:px-8">
+  
+  
+  <div class="grid grid-cols-2 gap-4 lg:grid-cols-8 lg:pt-12">
+    <div
+      class="lg:col-start-2 bg-secondary-bg col-span-2 rounded px-6 py-8 lg:col-span-6"
+    >
+      <article class="prose">
+  <h1 class="mb-4">Intro to Java Juc</h1>
+
+  <div
+  class="text-tertiary-text not-prose mt-2 flex flex-row flex-wrap items-center"
+>
+  <div class="me-6 my-2">
+    <i class="fas fa-calendar me-1"></i>
+    <span
+      >2022-06-14</span
+    >
+  </div>
+  <div class="me-6 my-2">
+    <i class="fas fa-clock me-1"></i>
+    <span>3 min read</span>
+  </div>
+
+  
+    <div class="me-6 my-2">
+      <i class="fas fa-folder me-1"></i>
+      
+        <a href="https://zacash.cn/categories/java/" class="hover:text-eureka"
+          >java</a
+        >
+      
+    </div>
+  
+
+  
+</div>
+
+
+  
+  
+
+  <p>juc 通常指 java.util.concurrent 并发包，这个包集中了 Java 并发的各种基础工具类，具体包括几个方面：</p>
+<ul>
+<li>提供了比 synchronized 更高级的各种同步结构，包括 CountDownLatch、CyclicBarrier、Semaphore 等，可以实现更加丰富的多线程操作，比如利用 Semaphore 作为资源控制器，限制同时急性工作的线程数量。</li>
+<li>各种线程安全的容器，如 ConcurrentHashMap、有序的 ConcurrentSkipListMap，或者类似快照机制，实现线程安全的动态数组 CopyOnWriteArrayList 等。</li>
+<li>各种并发队列的实现，如各种 BlockingQueue 实现，比较典型的 ArrayBlockingQueue、SynchronousQueue 或针对特定场景的 PriorityBlockingQueue 等。</li>
+<li>Executor 框架，可以创建各种不同类型的线程池，调度任务运行等，绝大部分情况下，不再需要自己从头实现线程池和任务调度器。</li>
+</ul>
+<!-- more -->
+<p>我们进行多线程编程，无非是达到几个目的：</p>
+<ul>
+<li>利用多线程提高程序的扩展能力，以达到业务对吞吐量的要求。</li>
+<li>协调线程间调度、交互，以完成业务逻辑</li>
+<li>线程间传递数据和状态，这同样是实现业务逻辑的需要。</li>
+</ul>
+<h3 id="semaphore">Semaphore</h3>
+<p>Semaphore 提供了 Java 版本的信号量实现，它通过控制一定数量的允许（permit）的方式，来达到限制通用资源访问的目的。可以想象一种场景，我们在机场等出租车排队时，当很多空闲出租车就位时，为防止过度拥挤，调度员指挥排队等待上车的人群一次进来5人上车，等这5人坐车出发，再放进来下一批，这和 Semaphore 的工作原理类似。</p>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">import</span> <span style="color:#447fcf;text-decoration:underline">java.util.concurrent.Semaphore</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">public</span> <span style="color:#6ab825;font-weight:bold">class</span> <span style="color:#447fcf;text-decoration:underline">SemaphoreSample</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">public</span> <span style="color:#6ab825;font-weight:bold">static</span> <span style="color:#6ab825;font-weight:bold">void</span> <span style="color:#447fcf">main</span>(String[] args) {
+</span></span><span style="display:flex;"><span>        Semaphore semaphore = <span style="color:#6ab825;font-weight:bold">new</span> Semaphore(0);
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">for</span> (<span style="color:#6ab825;font-weight:bold">int</span> i = 0; i &lt; 10; i++) {
+</span></span><span style="display:flex;"><span>            Thread t = <span style="color:#6ab825;font-weight:bold">new</span> Thread(<span style="color:#6ab825;font-weight:bold">new</span> AbnormalSemaphoreWorker(semaphore));
+</span></span><span style="display:flex;"><span>            t.<span style="color:#bbb">start</span>();
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        System.<span style="color:#bbb">out</span>.<span style="color:#bbb">println</span>(<span style="color:#ed9d13">&#34;Action...Go!&#34;</span>);
+</span></span><span style="display:flex;"><span>        semaphore.<span style="color:#bbb">release</span>(5);
+</span></span><span style="display:flex;"><span>        System.<span style="color:#bbb">out</span>.<span style="color:#bbb">println</span>(<span style="color:#ed9d13">&#34;Wait for permits off&#34;</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">while</span> (semaphore.<span style="color:#bbb">availablePermits</span>() != 0) {
+</span></span><span style="display:flex;"><span>            <span style="color:#6ab825;font-weight:bold">try</span> {
+</span></span><span style="display:flex;"><span>                Thread.<span style="color:#bbb">sleep</span>(100L);
+</span></span><span style="display:flex;"><span>            } <span style="color:#6ab825;font-weight:bold">catch</span> (Exception e) {
+</span></span><span style="display:flex;"><span>                e.<span style="color:#bbb">printStackTrace</span>();
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        System.<span style="color:#bbb">out</span>.<span style="color:#bbb">println</span>(<span style="color:#ed9d13">&#34;Action...Go again!&#34;</span>);
+</span></span><span style="display:flex;"><span>        semaphore.<span style="color:#bbb">release</span>(5);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">class</span> <span style="color:#447fcf;text-decoration:underline">AbnormalSemaphoreWorker</span> <span style="color:#6ab825;font-weight:bold">implements</span> Runnable {
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">private</span> String name;
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">private</span> Semaphore semaphore;
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">public</span> <span style="color:#447fcf">AbnormalSemaphoreWorker</span>(Semaphore semaphore) {
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">this</span>.<span style="color:#bbb">semaphore</span> = semaphore;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ffa500">@Override</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">public</span> <span style="color:#6ab825;font-weight:bold">void</span> <span style="color:#447fcf">run</span>() {
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">try</span> {
+</span></span><span style="display:flex;"><span>            semaphore.<span style="color:#bbb">acquire</span>();
+</span></span><span style="display:flex;"><span>            log(<span style="color:#ed9d13">&#34;Executed!&#34;</span>);
+</span></span><span style="display:flex;"><span>        } <span style="color:#6ab825;font-weight:bold">catch</span> (Exception e) {
+</span></span><span style="display:flex;"><span>            e.<span style="color:#bbb">printStackTrace</span>();
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">private</span> <span style="color:#6ab825;font-weight:bold">void</span> <span style="color:#447fcf">log</span>(String msg) {
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">if</span> (name == <span style="color:#6ab825;font-weight:bold">null</span>) {
+</span></span><span style="display:flex;"><span>            name = Thread.<span style="color:#bbb">currentThread</span>().<span style="color:#bbb">getName</span>();
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        System.<span style="color:#bbb">out</span>.<span style="color:#bbb">println</span>(name + <span style="color:#ed9d13">&#34; &#34;</span> + msg);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>上面的代码侧重演示 Semaphore 的功能和局限性，包含了很多多线程编码中的反实践，比如使用了 sleep 来协调任务执行，而且使用轮询调用 avaliablePermits 来检测信号量获取情况，这都是很低效并且脆弱的，通常只在测试或者诊断场景。</p>
+<p>Semaphore 的工作逻辑是，首先线程试图获取工作许可，得到许可则执行任务，然后释放许可，这时等待许可的其他线程，就可以获得许可进入工作状态，直到全部处理结束。编译运行，我们就能看到 Semaphore 的允许机制对工作线程的限制。</p>
+<p>总的来说，Semaphore 就是个计数器，其基本逻辑基于 acquire/release，并没有太复杂的同步逻辑。</p>
+<p>如果 Semaphore 的数值初始化为 1，那么一个线程就可以通过 acquire 进入互斥状态，本质上和互斥锁是非常相似的。但是区别也非常明显，比如互斥锁是持有者，而对于 Semaphore 这种计数器结构，虽然有类似功能，但其实不存在真正意义的持有者，除非对其进行扩展包装。</p>
+<h3 id="countdownlatch-和-cyclicbarrier">CountDownLatch 和 CyclicBarrier</h3>
+<h4 id="基本区别">基本区别</h4>
+<ul>
+<li>CountDownLatch 不可以重置，所以无法重用；而 CyclicBarrier 可以重用。</li>
+<li>CountDownLatch 的基本操作组合是 countDown/await。调用 await 的线程阻塞等待 countDown 足够的次数，不管你是一个线程还是多个线程里 countDown，只要次数足够即可。<strong>CountDownLatch 操作的重点是事件</strong>。</li>
+<li>CyclicBarrier 的基本操作组合，是 await，当所有的 parties 都调用了 await，才会继续进行任务，并自动进行重置。正常情况下，CyclicBarrier 的重置都是自动发生的，如果调用 reset 方法，但还有线程在等待，就会导致等待线程被打扰，抛出 BrokenBarrierException 异常。<strong>CyclicBarrier 侧重点是线程</strong>，而不是调用事件，它的典型应用场景是用来等待并发线程结束。</li>
+</ul>
+<p>继续机场排队等车的场景，假设有 10 个人排队，我们将其分成 5 人一组，通过 CountDownLatch 来协调批次，我们可以这样实现：</p>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">import</span> <span style="color:#447fcf;text-decoration:underline">java.util.concurrent.CountDownLatch</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">public</span> <span style="color:#6ab825;font-weight:bold">class</span> <span style="color:#447fcf;text-decoration:underline">LatchSample</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">public</span> <span style="color:#6ab825;font-weight:bold">static</span> <span style="color:#6ab825;font-weight:bold">void</span> <span style="color:#447fcf">main</span>(String[] args) <span style="color:#6ab825;font-weight:bold">throws</span> InterruptedException {
+</span></span><span style="display:flex;"><span>        CountDownLatch latch = <span style="color:#6ab825;font-weight:bold">new</span> CountDownLatch(6);
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">for</span> (<span style="color:#6ab825;font-weight:bold">int</span> i = 0; i &lt; 5; i++) {
+</span></span><span style="display:flex;"><span>            Thread t = <span style="color:#6ab825;font-weight:bold">new</span> Thread(<span style="color:#6ab825;font-weight:bold">new</span> FirstBatchWorker(latch));
+</span></span><span style="display:flex;"><span>            t.<span style="color:#bbb">start</span>();
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">for</span> (<span style="color:#6ab825;font-weight:bold">int</span> i = 0; i &lt; 5; i++) {
+</span></span><span style="display:flex;"><span>            Thread t = <span style="color:#6ab825;font-weight:bold">new</span> Thread(<span style="color:#6ab825;font-weight:bold">new</span> SecondBatchWorker(latch));
+</span></span><span style="display:flex;"><span>            t.<span style="color:#bbb">start</span>();
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">while</span> (latch.<span style="color:#bbb">getCount</span>() != 1) {
+</span></span><span style="display:flex;"><span>            Thread.<span style="color:#bbb">sleep</span>(100L);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        System.<span style="color:#bbb">out</span>.<span style="color:#bbb">println</span>(<span style="color:#ed9d13">&#34;Wait for first batch finish&#34;</span>);
+</span></span><span style="display:flex;"><span>        latch.<span style="color:#bbb">countDown</span>();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">class</span> <span style="color:#447fcf;text-decoration:underline">FirstBatchWorker</span> <span style="color:#6ab825;font-weight:bold">implements</span> Runnable {
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">private</span> CountDownLatch latch;
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">public</span> <span style="color:#447fcf">FirstBatchWorker</span>(CountDownLatch latch) {
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">this</span>.<span style="color:#bbb">latch</span> = latch;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ffa500">@Override</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">public</span> <span style="color:#6ab825;font-weight:bold">void</span> <span style="color:#447fcf">run</span>() {
+</span></span><span style="display:flex;"><span>        System.<span style="color:#bbb">out</span>.<span style="color:#bbb">println</span>(<span style="color:#ed9d13">&#34;First batch executed!&#34;</span>);
+</span></span><span style="display:flex;"><span>        latch.<span style="color:#bbb">countDown</span>();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">class</span> <span style="color:#447fcf;text-decoration:underline">SecondBatchWorker</span> <span style="color:#6ab825;font-weight:bold">implements</span> Runnable {
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">private</span> CountDownLatch latch;
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">public</span> <span style="color:#447fcf">SecondBatchWorker</span>(CountDownLatch latch) {
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">this</span>.<span style="color:#bbb">latch</span> = latch;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ffa500">@Override</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">public</span> <span style="color:#6ab825;font-weight:bold">void</span> <span style="color:#447fcf">run</span>() {
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">try</span> {
+</span></span><span style="display:flex;"><span>            latch.<span style="color:#bbb">await</span>();
+</span></span><span style="display:flex;"><span>            System.<span style="color:#bbb">out</span>.<span style="color:#bbb">println</span>(<span style="color:#ed9d13">&#34;Second batch executed!&#34;</span>);
+</span></span><span style="display:flex;"><span>        } <span style="color:#6ab825;font-weight:bold">catch</span> (Exception e) {
+</span></span><span style="display:flex;"><span>            e.<span style="color:#bbb">printStackTrace</span>();
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>CountDownLatch 的调度方式相对简单，后一批次的线程进行 await，等待前一批 countDown 足够多次。这个例子也从侧面体现了它的局限性，虽然它也能支持10个人排队的情况，但是因为不能重用，如果要支持更多人排队，那么就不能依赖一个 CountDownLatch 进行了。其运行结果如下：</p>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#ccc">First batch executed!
+</span></span></span><span style="display:flex;"><span><span style="color:#ccc">First batch executed!
+</span></span></span><span style="display:flex;"><span><span style="color:#ccc">First batch executed!
+</span></span></span><span style="display:flex;"><span><span style="color:#ccc">First batch executed!
+</span></span></span><span style="display:flex;"><span><span style="color:#ccc">First batch executed!
+</span></span></span><span style="display:flex;"><span><span style="color:#ccc">Wait for first batch finish
+</span></span></span><span style="display:flex;"><span><span style="color:#ccc">Second batch executed!
+</span></span></span><span style="display:flex;"><span><span style="color:#ccc">Second batch executed!
+</span></span></span><span style="display:flex;"><span><span style="color:#ccc">Second batch executed!
+</span></span></span><span style="display:flex;"><span><span style="color:#ccc">Second batch executed!
+</span></span></span><span style="display:flex;"><span><span style="color:#ccc">Second batch executed!
+</span></span></span></code></pre></div><p>如果用 CyclicBarrier 来实现：</p>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">import</span> <span style="color:#447fcf;text-decoration:underline">java.util.concurrent.BrokenBarrierException</span>;
+</span></span><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">import</span> <span style="color:#447fcf;text-decoration:underline">java.util.concurrent.CyclicBarrier</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">public</span> <span style="color:#6ab825;font-weight:bold">class</span> <span style="color:#447fcf;text-decoration:underline">CyclicBarrierSample</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">public</span> <span style="color:#6ab825;font-weight:bold">static</span> <span style="color:#6ab825;font-weight:bold">void</span> <span style="color:#447fcf">main</span>(String[] args) {
+</span></span><span style="display:flex;"><span>        CyclicBarrier barrier = <span style="color:#6ab825;font-weight:bold">new</span> CyclicBarrier(5, <span style="color:#6ab825;font-weight:bold">new</span> Runnable() {
+</span></span><span style="display:flex;"><span>            <span style="color:#999;font-style:italic">// 屏障触发时执行该 action
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>            <span style="color:#ffa500">@Override</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#6ab825;font-weight:bold">public</span> <span style="color:#6ab825;font-weight:bold">void</span> <span style="color:#447fcf">run</span>() {
+</span></span><span style="display:flex;"><span>                System.<span style="color:#bbb">out</span>.<span style="color:#bbb">println</span>(<span style="color:#ed9d13">&#34;Action...Go again&#34;</span>);
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        });
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">for</span> (<span style="color:#6ab825;font-weight:bold">int</span> i = 0; i &lt; 5; i++) {
+</span></span><span style="display:flex;"><span>            Thread t = <span style="color:#6ab825;font-weight:bold">new</span> Thread(<span style="color:#6ab825;font-weight:bold">new</span> CyclicWorker(barrier));
+</span></span><span style="display:flex;"><span>            t.<span style="color:#bbb">start</span>();
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">static</span> <span style="color:#6ab825;font-weight:bold">class</span> <span style="color:#447fcf;text-decoration:underline">CyclicWorker</span> <span style="color:#6ab825;font-weight:bold">implements</span> Runnable {
+</span></span><span style="display:flex;"><span>        <span style="color:#999;font-style:italic">// 编队总数
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>        <span style="color:#6ab825;font-weight:bold">private</span> <span style="color:#6ab825;font-weight:bold">static</span> <span style="color:#6ab825;font-weight:bold">final</span> <span style="color:#6ab825;font-weight:bold">int</span> GROUP_COUNT = 2;
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">private</span> CyclicBarrier barrier;
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">public</span> <span style="color:#447fcf">CyclicWorker</span>(CyclicBarrier barrier) {
+</span></span><span style="display:flex;"><span>            <span style="color:#6ab825;font-weight:bold">this</span>.<span style="color:#bbb">barrier</span> = barrier;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ffa500">@Override</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">public</span> <span style="color:#6ab825;font-weight:bold">void</span> <span style="color:#447fcf">run</span>() {
+</span></span><span style="display:flex;"><span>            <span style="color:#6ab825;font-weight:bold">try</span> {
+</span></span><span style="display:flex;"><span>                <span style="color:#6ab825;font-weight:bold">for</span> (<span style="color:#6ab825;font-weight:bold">int</span> i = 0; i &lt; GROUP_COUNT; i++) {
+</span></span><span style="display:flex;"><span>                    System.<span style="color:#bbb">out</span>.<span style="color:#bbb">println</span>(<span style="color:#ed9d13">&#34;Executed!&#34;</span>);
+</span></span><span style="display:flex;"><span>                    barrier.<span style="color:#bbb">await</span>();
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>            } <span style="color:#6ab825;font-weight:bold">catch</span> (BrokenBarrierException e) {
+</span></span><span style="display:flex;"><span>                e.<span style="color:#bbb">printStackTrace</span>();
+</span></span><span style="display:flex;"><span>            } <span style="color:#6ab825;font-weight:bold">catch</span> (InterruptedException e) {
+</span></span><span style="display:flex;"><span>                e.<span style="color:#bbb">printStackTrace</span>();
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>执行结果如下：</p>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#ccc">Executed!
+</span></span></span><span style="display:flex;"><span><span style="color:#ccc">Executed!
+</span></span></span><span style="display:flex;"><span><span style="color:#ccc">Executed!
+</span></span></span><span style="display:flex;"><span><span style="color:#ccc">Executed!
+</span></span></span><span style="display:flex;"><span><span style="color:#ccc">Executed!
+</span></span></span><span style="display:flex;"><span><span style="color:#ccc">Action...Go again
+</span></span></span><span style="display:flex;"><span><span style="color:#ccc">Executed!
+</span></span></span><span style="display:flex;"><span><span style="color:#ccc">Executed!
+</span></span></span><span style="display:flex;"><span><span style="color:#ccc">Executed!
+</span></span></span><span style="display:flex;"><span><span style="color:#ccc">Executed!
+</span></span></span><span style="display:flex;"><span><span style="color:#ccc">Executed!
+</span></span></span><span style="display:flex;"><span><span style="color:#ccc">Action...Go again
+</span></span></span></code></pre></div><p>因为 CyclicBarrier 会自动进行重置，所以这个逻辑可以自然支持更多人排队。</p>
+<h3 id="concurrenthashmap-和-concurrentskiplistmap">ConcurrentHashMap 和 ConcurrentSkipListMap</h3>
+<p>并发包内提供了线程安全的 Map、List 和 Set, 结构如下：</p>
+<p><img src="/img/concurrent-collect.webp" alt="coll"></p>
+<p>从命名上大概分为 Concurrent*、CopyOnWrite*、Blocking 等三类，同样是线程安全容器，可以简单认为：</p>
+<ul>
+<li>Concurrent 类型没有类似 CopyOnWrite 之类容器相对较重的修改开销。</li>
+<li>Concurrent 提供了较低的遍历一致性，即所谓的弱一致性，例如，当利用迭代器遍历时，如果容器发生修改，迭代器仍然可以继续进行遍历</li>
+<li>与弱一致性对应的，就是我们介绍过的同步容器常见的行为“fail-fast”，也就是检测到容器在遍历过程中发生了修改，则抛出“ConcurrentModificationException”，不再继续遍历。</li>
+<li>弱一致性的另一个体现是，size 等操作准确性是有限的，未必是 100% 准确的。</li>
+</ul>
+<p>如果我们侧重于 Map 放入或获取的速度，而不在乎顺序，大多数推荐使用 ConcurrentHashMap，反之则使用 ConcurrentSkipListMap；如果我们需要对大量数据进行频繁的修改 ConcurrentSkipListMap 也可能变现出优势。我们前面提到普通无顺序场景使用 HashMap，有顺序场景则可以选择 TreeMap。</p>
+<p>关于 CopyOnWrite 容器，其实 CopyOnWriteArraySet 是通过包装 CopyOnWriteArrayList 实现的，CopyOnWrite 的意思就是，当我们进行修改操作时，如 add、set、remove，都会拷贝原数组，修改后替换原来的数组，通过这种防御性的方式，实现另类的线程安全。我们可以看下 add 方法的实现：</p>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">public</span> <span style="color:#6ab825;font-weight:bold">boolean</span> <span style="color:#447fcf">add</span>(E e) {
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">synchronized</span> (lock){
+</span></span><span style="display:flex;"><span>        Object[] elements = getArray();
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">int</span> len = elements.<span style="color:#bbb">length</span>;
+</span></span><span style="display:flex;"><span>        Object[] newElements = Arrays.<span style="color:#bbb">copyOf</span>(elements, len + 1);
+</span></span><span style="display:flex;"><span>        newElements[len] = e;
+</span></span><span style="display:flex;"><span>        setArray(newElements);
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">return</span> <span style="color:#6ab825;font-weight:bold">true</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">final</span> <span style="color:#6ab825;font-weight:bold">void</span> <span style="color:#447fcf">setArray</span>(Object[] a) {
+</span></span><span style="display:flex;"><span>    array = a;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>这种数据结构，比较适合读多写少的操作，不然修改的开销还是非常明显的。</p>
+
+</article>
+
+
+      
+        <div class="my-4">
+    
+    <a href="https://zacash.cn/tags/java/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 me-2 hover:text-eureka">#java</a>
+    
+    <a href="https://zacash.cn/tags/juc/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 me-2 hover:text-eureka">#juc</a>
+    
+</div>
+      
+
+      
+
+
+
+      
+
+      
+  <div
+    class="-mx-2 mt-4 flex flex-col border-t px-2 pt-4 md:flex-row md:justify-between"
+  >
+    <div>
+      
+        <span class="text-primary-text block font-bold"
+          >Previous</span
+        >
+        <a href="https://zacash.cn/posts/java-blocking-queue/" class="block">Java Blocking Queue</a>
+      
+    </div>
+    <div class="mt-4 md:mt-0 md:text-right">
+      
+        <span class="text-primary-text block font-bold">Next</span>
+        <a href="https://zacash.cn/posts/java-file/" class="block">Java File</a>
+      
+    </div>
+  </div>
+
+
+      
+
+
+
+    </div>
+    
+
+    
+    
+      <div
+        class="lg:col-start-2 bg-secondary-bg prose col-span-2 rounded p-6 lg:col-span-6"
+      >
+        <h3>See Also</h3>
+        
+          <a href="https://zacash.cn/posts/java-file/" class="no-underline">Java File</a>
+          <br />
+        
+          <a href="https://zacash.cn/posts/java-io/" class="no-underline">Java IO</a>
+          <br />
+        
+          <a href="https://zacash.cn/posts/java-basic/" class="no-underline">Java Basic</a>
+          <br />
+        
+      </div>
+    
+  </div>
+
+  
+
+          </div>
+        </div>
+      
+    </main>
+    <footer class="pl-scrollbar">
+      <div class="mx-auto w-full max-w-screen-xl"><div class="text-center p-6 pin-b">
+    <p class="text-sm text-tertiary-text">Copyright Zac &copy; 2022
+ &middot;  Powered by the <a href="https://github.com/wangchucheng/hugo-eureka" class="hover:text-eureka">Eureka</a> theme for <a href="https://gohugo.io" class="hover:text-eureka">Hugo</a></p>
+</div></div>
+    </footer>
+  </body>
+</html>

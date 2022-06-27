@@ -8,7 +8,67 @@
     <language>en</language>
     <copyright>Copyright Zac &amp;copy; 2022
 </copyright>
-    <lastBuildDate>Wed, 04 May 2022 21:01:59 +0800</lastBuildDate><atom:link href="https://zacash.cn/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 19 Jun 2022 20:38:57 +0800</lastBuildDate><atom:link href="https://zacash.cn/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Java Blocking Queue</title>
+      <link>https://zacash.cn/posts/java-blocking-queue/</link>
+      <pubDate>Sun, 19 Jun 2022 20:38:57 +0800</pubDate>
+      
+      <guid>https://zacash.cn/posts/java-blocking-queue/</guid>
+      <description>ConcurrentLinkedQueue 和 LinkedBlockingQueue 有什么区别
+ Concurrent 类型基于 lock-free，在常见的多线程访问场景，一般可以提供较高吞吐量。 LinkedBlockingQueue 内部则是基于锁，并提供了 BlockingQueue 的等待性方法。  线程安全队列一览 常见的集合中 LinkedList 是个 Deque，只不过不是线程安全的。
+下图展示了 Java 并发类库提供的各种线程安全队列实现：
+Deque Deque 侧重点是支持队列头尾都进行插入和删除，所以提供了特定的方法，如：
+ 尾部插入时需要的 addLast(e)、offerLast(e). 尾部删除所需要的 removeLast()、pollLast().  juc 包中绝大部分 Queue 都实现了 BlockingQueue 接口。在常规队列操作基础上，Blocking 意味着其提供了特定的等待性操作，获取时（take）等待元素进队，或者插入时（put）等待队列出现空位。
+/** * 获取并移除队列头结点 */ E take() throws InterruptedException;  /** * 插入元素，如果队列已满，则等待直到队列出现空闲空间 */ void put(E e) throws InterruptedException; 另一个 BlockingQueue 经常被考察的点，就是是否有界（Bounded、Unbounded），这一点也往往会影响我们在应用开发中的选择。
+ ArrayBlockingQueue 是最典型的有界队列，其内部以 final 的数组保存数据，数组的大小就决定了队列的边界，所以我们在创建 ArrayBlockingQueue 时，都要指定容量，如：  public ArrayBlockingQueue(int capacity, boolean fair)  LinkedBlockingQueue 基于有界的逻辑实现，不过其默认初始容量为 Integer.MAX_VALUE，成为无界队列。 SynchronousQueue 每个删除操作都要等待插入操作，反之每个插入操作也都要等待删除操纵。那么这个队列的容量时多少呢？0.</description>
+    </item>
+    
+    <item>
+      <title>Intro to Java Juc</title>
+      <link>https://zacash.cn/posts/java-juc/</link>
+      <pubDate>Tue, 14 Jun 2022 15:24:53 +0800</pubDate>
+      
+      <guid>https://zacash.cn/posts/java-juc/</guid>
+      <description>juc 通常指 java.util.concurrent 并发包，这个包集中了 Java 并发的各种基础工具类，具体包括几个方面：
+ 提供了比 synchronized 更高级的各种同步结构，包括 CountDownLatch、CyclicBarrier、Semaphore 等，可以实现更加丰富的多线程操作，比如利用 Semaphore 作为资源控制器，限制同时急性工作的线程数量。 各种线程安全的容器，如 ConcurrentHashMap、有序的 ConcurrentSkipListMap，或者类似快照机制，实现线程安全的动态数组 CopyOnWriteArrayList 等。 各种并发队列的实现，如各种 BlockingQueue 实现，比较典型的 ArrayBlockingQueue、SynchronousQueue 或针对特定场景的 PriorityBlockingQueue 等。 Executor 框架，可以创建各种不同类型的线程池，调度任务运行等，绝大部分情况下，不再需要自己从头实现线程池和任务调度器。  我们进行多线程编程，无非是达到几个目的：
+ 利用多线程提高程序的扩展能力，以达到业务对吞吐量的要求。 协调线程间调度、交互，以完成业务逻辑 线程间传递数据和状态，这同样是实现业务逻辑的需要。  Semaphore Semaphore 提供了 Java 版本的信号量实现，它通过控制一定数量的允许（permit）的方式，来达到限制通用资源访问的目的。可以想象一种场景，我们在机场等出租车排队时，当很多空闲出租车就位时，为防止过度拥挤，调度员指挥排队等待上车的人群一次进来5人上车，等这5人坐车出发，再放进来下一批，这和 Semaphore 的工作原理类似。
+import java.util.concurrent.Semaphore;  public class SemaphoreSample {  public static void main(String[] args) {  Semaphore semaphore = new Semaphore(0);  for (int i = 0; i &amp;lt; 10; i++) {  Thread t = new Thread(new AbnormalSemaphoreWorker(semaphore));  t.</description>
+    </item>
+    
+    <item>
+      <title>Java File</title>
+      <link>https://zacash.cn/posts/java-file/</link>
+      <pubDate>Tue, 31 May 2022 21:37:14 +0800</pubDate>
+      
+      <guid>https://zacash.cn/posts/java-file/</guid>
+      <description>我们先来比较 IO 和 NIO 两种写入文件的实现：
+ 使用 IO 实现：  public void copyFile(File source, File dest) throws IOException {  try(InputStream in = new FileInputStream(source);  OutputStream out = new FileOutputStream(dest);) {  byte[] buffer = new byte[1024];  int length;  while((length = is.read(buffer)) &amp;gt;0) {  os.write(buffer, 0, length);  }  } }  利用 NIO 实现：  public void copyFile(File source, File dest) throws IOException {  try(FileChannel inChannel = new FileInputStream(source).</description>
+    </item>
+    
+    <item>
+      <title>Java IO</title>
+      <link>https://zacash.cn/posts/java-io/</link>
+      <pubDate>Thu, 26 May 2022 08:59:56 +0800</pubDate>
+      
+      <guid>https://zacash.cn/posts/java-io/</guid>
+      <description>Java IO 方式有很多种，基于不同的 IO 抽象模型和交互方式，可以进行简单区分。
+  Blocking IO，主要实现是在 java.io 包，基于流模型实现，提供了我们熟知的如 File、InputStream、OutputStream 等抽象。交互方式是同步、阻塞的方式，也就是说，在读取 InputStream 或者写入 OutputStream 时，在读写操作完成前，线程会一直阻塞，它们之间的调用是可靠的线性顺序。
+java.io 包的好处是代码比较简单、直观，缺点是 IO 效率和扩展性存在局限性，容易成为应用性能的瓶颈。很多时候，人们也把 java.net 下面提供的部分网络 API，如 Socket、HttpURLConnection 也归类到同步阻塞 IO 类库，因为网络通信同样是 IO 行为。
+  Non-blocking IO，主要实现在 java.nio 包，于 Java 1.4 引入，通常称 NIO 框架，提供了 Channel、Selector、Buffer 等新的抽象，可以构建多路复用的、同步非阻塞 IO 程序，同时提供了更接近操作系统底层的高性能数据操作方式。
+NIO 在 Java7 中有了进一步的改进，也就是 NIO2，引入了异步非阻塞 IO 方式，又称为 AIO（Asynchronous IO）。异步 IO 操作基于事件和回调机制，可以简单理解为，应用操作直接返回，而不是阻塞在那里，当后台处理完成，操作系统会通知线程进行后续工作。
+  一些基本概念  同步（synchronous）简单来说，同步是一种可靠的有序运行机制，当我们进行同步操作时，后续的任务时等待当前调用返回，才会进行下一步。 异步（asynchronous）与同步相反，其他任务不需要等待当前调用返回，通常依靠事件、回调等机制来实现任务间次序关系。 阻塞（blocking） 在进行阻塞操作时，当前线程会处于阻塞状态，无法从事其他任务，只有当条件就绪才能继续，如 Socket 新连接建立完毕，或数据读取、写入操作完成。 非阻塞（non-blocking）非阻塞不管 IO 操作是否结束，直接返回，相应操作在后台继续处理。  Java IO 简介 Java IO 简单的类图如下：</description>
+    </item>
+    
+    <item>
+      <title>Intro to ConcurrentHashMap</title>
+      <link>https://zacash.cn/posts/intro-to-concurrenthashmap/</link>
+      <pubDate>Mon, 23 May 2022 15:11:27 +0800</pubDate>
+      
+      <guid>https://zacash.cn/posts/intro-to-concurrenthashmap/</guid>
+      <description>&lt;p&gt;Java 提供了不同层面的线程安全支持。在传统集合框架内部，除了 Hashtable 等容器，还提供了同步包装器（Synchronized Wrapper），我们可以通过 Collections 工具类提供的包装方法来获取同步包装器，如 Collections.synchronizedMap，但是它们利用的都是粗粒度的同步方式，在高并发情况下，性能比较底下。&lt;/p&gt;</description>
+    </item>
+    
     <item>
       <title>How to Write A Better Resume</title>
       <link>https://zacash.cn/posts/how-to-write-better-resume/</link>

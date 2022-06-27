@@ -8,7 +8,16 @@
     <language>en</language>
     <copyright>Copyright Zac &amp;copy; 2022
 </copyright>
-    <lastBuildDate>Mon, 27 Jul 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://zacash.cn/categories/concurrent/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 23 May 2022 15:11:27 +0800</lastBuildDate><atom:link href="https://zacash.cn/categories/concurrent/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Intro to ConcurrentHashMap</title>
+      <link>https://zacash.cn/posts/intro-to-concurrenthashmap/</link>
+      <pubDate>Mon, 23 May 2022 15:11:27 +0800</pubDate>
+      
+      <guid>https://zacash.cn/posts/intro-to-concurrenthashmap/</guid>
+      <description>&lt;p&gt;Java 提供了不同层面的线程安全支持。在传统集合框架内部，除了 Hashtable 等容器，还提供了同步包装器（Synchronized Wrapper），我们可以通过 Collections 工具类提供的包装方法来获取同步包装器，如 Collections.synchronizedMap，但是它们利用的都是粗粒度的同步方式，在高并发情况下，性能比较底下。&lt;/p&gt;</description>
+    </item>
+    
     <item>
       <title>Process, Threads and Locks</title>
       <link>https://zacash.cn/posts/threads-and-locks/</link>

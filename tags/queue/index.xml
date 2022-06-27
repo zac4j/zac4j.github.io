@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>queue on Zac&#39;s blog</title>
+    <link>https://zacash.cn/tags/queue/</link>
+    <description>Recent content in queue on Zac&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>Copyright Zac &amp;copy; 2022
+</copyright>
+    <lastBuildDate>Sun, 19 Jun 2022 20:38:57 +0800</lastBuildDate><atom:link href="https://zacash.cn/tags/queue/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Java Blocking Queue</title>
+      <link>https://zacash.cn/posts/java-blocking-queue/</link>
+      <pubDate>Sun, 19 Jun 2022 20:38:57 +0800</pubDate>
+      
+      <guid>https://zacash.cn/posts/java-blocking-queue/</guid>
+      <description>ConcurrentLinkedQueue 和 LinkedBlockingQueue 有什么区别
+ Concurrent 类型基于 lock-free，在常见的多线程访问场景，一般可以提供较高吞吐量。 LinkedBlockingQueue 内部则是基于锁，并提供了 BlockingQueue 的等待性方法。  线程安全队列一览 常见的集合中 LinkedList 是个 Deque，只不过不是线程安全的。
+下图展示了 Java 并发类库提供的各种线程安全队列实现：
+Deque Deque 侧重点是支持队列头尾都进行插入和删除，所以提供了特定的方法，如：
+ 尾部插入时需要的 addLast(e)、offerLast(e). 尾部删除所需要的 removeLast()、pollLast().  juc 包中绝大部分 Queue 都实现了 BlockingQueue 接口。在常规队列操作基础上，Blocking 意味着其提供了特定的等待性操作，获取时（take）等待元素进队，或者插入时（put）等待队列出现空位。
+/** * 获取并移除队列头结点 */ E take() throws InterruptedException;  /** * 插入元素，如果队列已满，则等待直到队列出现空闲空间 */ void put(E e) throws InterruptedException; 另一个 BlockingQueue 经常被考察的点，就是是否有界（Bounded、Unbounded），这一点也往往会影响我们在应用开发中的选择。
+ ArrayBlockingQueue 是最典型的有界队列，其内部以 final 的数组保存数据，数组的大小就决定了队列的边界，所以我们在创建 ArrayBlockingQueue 时，都要指定容量，如：  public ArrayBlockingQueue(int capacity, boolean fair)  LinkedBlockingQueue 基于有界的逻辑实现，不过其默认初始容量为 Integer.MAX_VALUE，成为无界队列。 SynchronousQueue 每个删除操作都要等待插入操作，反之每个插入操作也都要等待删除操纵。那么这个队列的容量时多少呢？0.</description>
+    </item>
+    
+  </channel>
+</rss>

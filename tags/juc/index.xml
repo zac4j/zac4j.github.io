@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>juc on Zac&#39;s blog</title>
+    <link>https://zacash.cn/tags/juc/</link>
+    <description>Recent content in juc on Zac&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>Copyright Zac &amp;copy; 2022
+</copyright>
+    <lastBuildDate>Tue, 14 Jun 2022 15:24:53 +0800</lastBuildDate><atom:link href="https://zacash.cn/tags/juc/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Intro to Java Juc</title>
+      <link>https://zacash.cn/posts/java-juc/</link>
+      <pubDate>Tue, 14 Jun 2022 15:24:53 +0800</pubDate>
+      
+      <guid>https://zacash.cn/posts/java-juc/</guid>
+      <description>juc 通常指 java.util.concurrent 并发包，这个包集中了 Java 并发的各种基础工具类，具体包括几个方面：
+ 提供了比 synchronized 更高级的各种同步结构，包括 CountDownLatch、CyclicBarrier、Semaphore 等，可以实现更加丰富的多线程操作，比如利用 Semaphore 作为资源控制器，限制同时急性工作的线程数量。 各种线程安全的容器，如 ConcurrentHashMap、有序的 ConcurrentSkipListMap，或者类似快照机制，实现线程安全的动态数组 CopyOnWriteArrayList 等。 各种并发队列的实现，如各种 BlockingQueue 实现，比较典型的 ArrayBlockingQueue、SynchronousQueue 或针对特定场景的 PriorityBlockingQueue 等。 Executor 框架，可以创建各种不同类型的线程池，调度任务运行等，绝大部分情况下，不再需要自己从头实现线程池和任务调度器。  我们进行多线程编程，无非是达到几个目的：
+ 利用多线程提高程序的扩展能力，以达到业务对吞吐量的要求。 协调线程间调度、交互，以完成业务逻辑 线程间传递数据和状态，这同样是实现业务逻辑的需要。  Semaphore Semaphore 提供了 Java 版本的信号量实现，它通过控制一定数量的允许（permit）的方式，来达到限制通用资源访问的目的。可以想象一种场景，我们在机场等出租车排队时，当很多空闲出租车就位时，为防止过度拥挤，调度员指挥排队等待上车的人群一次进来5人上车，等这5人坐车出发，再放进来下一批，这和 Semaphore 的工作原理类似。
+import java.util.concurrent.Semaphore;  public class SemaphoreSample {  public static void main(String[] args) {  Semaphore semaphore = new Semaphore(0);  for (int i = 0; i &amp;lt; 10; i++) {  Thread t = new Thread(new AbnormalSemaphoreWorker(semaphore));  t.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  dir="ltr"
+  
+><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<title>Java Blocking Queue | Zac&#39;s blog</title>
+
+<meta name="generator" content="Hugo Eureka 0.9.1" />
+<link rel="stylesheet" href="https://zacash.cn/css/eureka.min.6a378a23360d238dc3ef4df2f5cd718093f02c10c9c7eb2437c29701cd8d389ab6da5d9f21bdd3afa305fd56c1235017.css" integrity="sha384-ajeKIzYNI43D703y9c1xgJPwLBDJx&#43;skN8KXAc2NOJq22l2fIb3Tr6MF/VbBI1AX">
+<script defer src="https://zacash.cn/js/eureka.min.f1639ee98d6cbd85b2b5f034d27320da962002ff83159ed4e01dbc5948c42a1ab26c2d6e74c66e93f5cec4d24dbd166d.js" integrity="sha384-8WOe6Y1svYWytfA00nMg2pYgAv&#43;DFZ7U4B28WUjEKhqybC1udMZuk/XOxNJNvRZt"></script>
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload"
+  href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Noto+Serif+SC:wght@400;600;700&display=swap"
+  as="style" onload="this.onload=null;this.rel='stylesheet'">
+
+
+
+
+<script defer type="text/javascript" src="https://zacash.cn/js/fontawesome.min.1c5a4674b042785ed214cf0818a81724c6b37442fd61b0ed039237b93de25ed5103fc8079a05770648ccc9c66c4f540a.js" integrity="sha384-HFpGdLBCeF7SFM8IGKgXJMazdEL9YbDtA5I3uT3iXtUQP8gHmgV3BkjMycZsT1QK"></script>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/katex.min.css"
+   integrity="sha384-MlJdn/WNKDGXveldHDdyRP1R4CTHr3FeuDNfhsLPYrq2t0UBkUdK2jyTnXPEK1NQ"  media="print"
+  onload="this.media='all';this.onload=null" crossorigin>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/katex.min.js" 
+  integrity="sha384-VQ8d8WVFw0yHhCk5E8I86oOhv48xLpnDZx5T9GogA/Y84DcCKWXDmSDfn13bzFZY"  crossorigin></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/contrib/auto-render.min.js"
+   integrity="sha384-&#43;XBljXPPiv&#43;OzfbB3cVmLHf4hdUFHlWNZN5spNQ7rmHTXpd7WvJum6fIACpNNfIR"  crossorigin></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    renderMathInElement(document.body, {
+      delimiters: [
+        { left: "$$", right: "$$", display: true },
+        { left: "$", right: "$", display: false },
+        { left: "\\(", right: "\\)", display: false },
+        { left: "\\[", right: "\\]", display: true }
+      ],
+    });
+  });
+</script>
+
+
+<script defer src="https://cdn.jsdelivr.net/npm/mermaid@8.14.0/dist/mermaid.min.js" 
+  integrity="sha384-atOyb0FxAgN9LyAc6PEf9BjgwLISyansgdH8/VXQH8p2o5vfrRgmGIJ2Sg22L0A0"  crossorigin></script>
+
+
+<link rel="icon" type="image/png" sizes="32x32" href="https://zacash.cn/images/icon_huef3b68b5a9c9f864bc324bf255658730_3276_32x32_fill_box_center_3.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://zacash.cn/images/icon_huef3b68b5a9c9f864bc324bf255658730_3276_180x180_fill_box_center_3.png">
+
+<meta name="description"
+  content="Intro to Java Blocking Queue">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+      "@type": "ListItem",
+      "position": 1 ,
+      "name":"Posts",
+      "item":"https://zacash.cn/posts/"},{
+      "@type": "ListItem",
+      "position": 2 ,
+      "name":"Java Blocking Queue",
+      "item":"https://zacash.cn/posts/java-blocking-queue/"}]
+}
+</script>
+
+
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://zacash.cn/posts/java-blocking-queue/"
+    },
+    "headline": "Java Blocking Queue | Zac\u0027s blog","datePublished": "2022-06-19T20:38:57+08:00",
+    "dateModified": "2022-06-19T20:38:57+08:00",
+    "wordCount":  430 ,
+    "publisher": {
+        "@type": "Person",
+        "name": "Zac Zhu",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://zacash.cn/images/icon.png"
+        }
+        },
+    "description": "Intro to Java Blocking Queue"
+}
+</script><meta property="og:title" content="Java Blocking Queue | Zac&#39;s blog" />
+<meta property="og:type" content="article" />
+
+
+<meta property="og:image" content="https://zacash.cn/images/icon.png">
+
+
+<meta property="og:url" content="https://zacash.cn/posts/java-blocking-queue/" />
+
+
+
+<meta property="og:description" content="Intro to Java Blocking Queue" />
+
+
+
+<meta property="og:locale" content="en" />
+
+
+
+
+<meta property="og:site_name" content="Zac&#39;s blog" />
+
+
+
+
+
+
+<meta property="article:published_time" content="2022-06-19T20:38:57&#43;08:00" />
+
+
+<meta property="article:modified_time" content="2022-06-19T20:38:57&#43;08:00" />
+
+
+
+<meta property="article:section" content="posts" />
+
+
+<meta property="article:tag" content="java" />
+
+<meta property="article:tag" content="blocking" />
+
+<meta property="article:tag" content="queue" />
+
+
+
+
+
+<meta property="og:see_also" content="https://zacash.cn/posts/java-juc/" />
+
+<meta property="og:see_also" content="https://zacash.cn/posts/java-file/" />
+
+<meta property="og:see_also" content="https://zacash.cn/posts/java-io/" />
+
+<meta property="og:see_also" content="https://zacash.cn/posts/java-basic/" />
+
+
+
+
+  <body class="flex min-h-screen flex-col">
+    <header
+      class="min-h-16 pl-scrollbar bg-secondary-bg fixed z-50 flex w-full items-center shadow-sm"
+    >
+      <div class="mx-auto w-full max-w-screen-xl"><script>
+    let storageColorScheme = localStorage.getItem("lightDarkMode")
+    if (((storageColorScheme == 'Auto' || storageColorScheme == null) && window.matchMedia("(prefers-color-scheme: dark)").matches) || storageColorScheme == "Dark") {
+        document.getElementsByTagName('html')[0].classList.add('dark')
+    }
+</script>
+<nav class="flex items-center justify-between flex-wrap px-4 py-4 md:py-0">
+    <a href="/" class="me-6 text-primary-text text-xl font-bold">Zac&#39;s blog</a>
+    <button id="navbar-btn" class="md:hidden flex items-center px-3 py-2" aria-label="Open Navbar">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <div id="target"
+        class="hidden block md:flex md:grow md:justify-between md:items-center w-full md:w-auto text-primary-text z-20">
+        <div class="md:flex md:h-16 text-sm md:grow pb-4 md:pb-0 border-b md:border-b-0">
+            <a href="/posts/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  selected-menu-item  me-4">Posts</a>
+            <a href="/tags/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  me-4">Tags</a>
+            <a href="/categories/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  me-4">Categories</a>
+            <a href="/#about" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  me-4">About</a>
+        </div>
+
+        <div class="flex">
+            <div class="relative pt-4 md:pt-0">
+                <div class="cursor-pointer hover:text-eureka" id="lightDarkMode">
+                    <i class="fas fa-adjust"></i>
+                </div>
+                <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-30" id="is-open">
+                </div>
+                <div class="absolute flex flex-col start-0 md:start-auto end-auto md:end-0 hidden bg-secondary-bg w-48 rounded py-2 border border-tertiary-bg cursor-pointer z-40"
+                    id='lightDarkOptions'>
+                    <span class="px-4 py-1 hover:text-eureka" name="Light">Light</span>
+                    <span class="px-4 py-1 hover:text-eureka" name="Dark">Dark</span>
+                    <span class="px-4 py-1 hover:text-eureka" name="Auto">Auto</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-0" id="is-open-mobile">
+    </div>
+
+</nav>
+<script>
+    
+    let element = document.getElementById('lightDarkMode')
+    if (storageColorScheme == null || storageColorScheme == 'Auto') {
+        document.addEventListener('DOMContentLoaded', () => {
+            window.matchMedia("(prefers-color-scheme: dark)").addEventListener('change', switchDarkMode)
+        })
+    } else if (storageColorScheme == "Light") {
+        element.firstElementChild.classList.remove('fa-adjust')
+        element.firstElementChild.setAttribute("data-icon", 'sun')
+        element.firstElementChild.classList.add('fa-sun')
+    } else if (storageColorScheme == "Dark") {
+        element.firstElementChild.classList.remove('fa-adjust')
+        element.firstElementChild.setAttribute("data-icon", 'moon')
+        element.firstElementChild.classList.add('fa-moon')
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        getcolorscheme();
+        switchBurger();
+    });
+</script>
+</div>
+    </header>
+    <main class="grow pt-16">
+        <div class="pl-scrollbar">
+          <div class="mx-auto w-full max-w-screen-xl lg:px-4 xl:px-8">
+  
+  
+  <div class="grid grid-cols-2 gap-4 lg:grid-cols-8 lg:pt-12">
+    <div
+      class="lg:col-start-2 bg-secondary-bg col-span-2 rounded px-6 py-8 lg:col-span-6"
+    >
+      <article class="prose">
+  <h1 class="mb-4">Java Blocking Queue</h1>
+
+  <div
+  class="text-tertiary-text not-prose mt-2 flex flex-row flex-wrap items-center"
+>
+  <div class="me-6 my-2">
+    <i class="fas fa-calendar me-1"></i>
+    <span
+      >2022-06-19</span
+    >
+  </div>
+  <div class="me-6 my-2">
+    <i class="fas fa-clock me-1"></i>
+    <span>3 min read</span>
+  </div>
+
+  
+    <div class="me-6 my-2">
+      <i class="fas fa-folder me-1"></i>
+      
+        <a href="https://zacash.cn/categories/java/" class="hover:text-eureka"
+          >java</a
+        >
+      
+    </div>
+  
+
+  
+</div>
+
+
+  
+  
+
+  <p>ConcurrentLinkedQueue 和 LinkedBlockingQueue 有什么区别</p>
+<ul>
+<li>Concurrent 类型基于 lock-free，在常见的多线程访问场景，一般可以提供较高吞吐量。</li>
+<li>LinkedBlockingQueue 内部则是基于锁，并提供了 BlockingQueue 的等待性方法。</li>
+</ul>
+<h2 id="线程安全队列一览">线程安全队列一览</h2>
+<p>常见的集合中 LinkedList 是个 Deque，只不过不是线程安全的。</p>
+<p>下图展示了 Java 并发类库提供的各种线程安全队列实现：</p>
+<p><img src="/img/thread-safe-collection.webp" alt="tsc"></p>
+<h3 id="deque">Deque</h3>
+<p>Deque 侧重点是支持<strong>队列头尾</strong>都进行插入和删除，所以提供了特定的方法，如：</p>
+<ul>
+<li>尾部插入时需要的 addLast(e)、offerLast(e).</li>
+<li>尾部删除所需要的 removeLast()、pollLast().</li>
+</ul>
+<p>juc 包中绝大部分 Queue 都实现了 BlockingQueue 接口。在常规队列操作基础上，Blocking 意味着其提供了特定的等待性操作，获取时（take）等待元素进队，或者插入时（put）等待队列出现空位。</p>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#999;font-style:italic">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"> * 获取并移除队列头结点
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"> */</span>
+</span></span><span style="display:flex;"><span>E <span style="color:#447fcf">take</span>() <span style="color:#6ab825;font-weight:bold">throws</span> InterruptedException;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"> * 插入元素，如果队列已满，则等待直到队列出现空闲空间
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"> */</span>
+</span></span><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">void</span> <span style="color:#447fcf">put</span>(E e) <span style="color:#6ab825;font-weight:bold">throws</span> InterruptedException;
+</span></span></code></pre></div><p>另一个 BlockingQueue 经常被考察的点，就是是否有界（Bounded、Unbounded），这一点也往往会影响我们在应用开发中的选择。</p>
+<ul>
+<li>ArrayBlockingQueue 是最典型的有界队列，其内部以 final 的数组保存数据，数组的大小就决定了队列的边界，所以我们在创建 ArrayBlockingQueue 时，都要指定容量，如：</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">public</span> <span style="color:#447fcf">ArrayBlockingQueue</span>(<span style="color:#6ab825;font-weight:bold">int</span> capacity, <span style="color:#6ab825;font-weight:bold">boolean</span> fair)
+</span></span></code></pre></div><ul>
+<li>LinkedBlockingQueue 基于有界的逻辑实现，不过其默认初始容量为 <code>Integer.MAX_VALUE</code>，成为无界队列。</li>
+<li>SynchronousQueue 每个删除操作都要等待插入操作，反之每个插入操作也都要等待删除操纵。那么这个队列的容量时多少呢？0.</li>
+<li>PriorityBlockingQueue 是无边界的优先队列，其大小受系统资源影响。</li>
+<li>DelayedQueue 和 LinkedTransferQueue 同样是无边界队列。对于无边界的队列，有一个自然的结果，就是 put 操作永远也不会发生其他 BlockingQueue 的那种等待情况。</li>
+</ul>
+<p>我们看下 LinkedBlockingQueue 的实现：</p>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#999;font-style:italic">/** Lock held by take, poll, etc */</span>
+</span></span><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">private</span> <span style="color:#6ab825;font-weight:bold">final</span> ReentrantLock takeLock = <span style="color:#6ab825;font-weight:bold">new</span> ReentrantLock();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic">/** Wait queue for waiting takes */</span>
+</span></span><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">private</span> <span style="color:#6ab825;font-weight:bold">final</span> Condition notEmpty = takeLock.<span style="color:#bbb">newCondition</span>();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic">/** Lock held by put, offer, etc */</span>
+</span></span><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">private</span> <span style="color:#6ab825;font-weight:bold">final</span> ReentrantLock putLock = <span style="color:#6ab825;font-weight:bold">new</span> ReentrantLock();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic">/** Wait queue for waiting puts */</span>
+</span></span><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">private</span> <span style="color:#6ab825;font-weight:bold">final</span> Condition notFull = putLock.<span style="color:#bbb">newCondition</span>();
+</span></span></code></pre></div><p>我们之前提到过 ArrayBlockingQueue 中的 notEmpty、notFull 都是同一个再入锁的条件变量，而 LinkedBlockingQueue 则改进了锁操作的粒度，头、尾操作使用不同的锁，所以在通用场景下，它的吞吐量相对要更好一些。</p>
+<p>下面 take 方法与 ArrayBlockingQueue 中的实现，也是有不同的，由于其内部结构是链表，需要自己维护元素的数量值：</p>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">public</span> E <span style="color:#447fcf">take</span>() <span style="color:#6ab825;font-weight:bold">throws</span> InterruptedException {
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">final</span> E x;
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">final</span> <span style="color:#6ab825;font-weight:bold">int</span> c;
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">final</span> AtomicInteger count = <span style="color:#6ab825;font-weight:bold">this</span>.<span style="color:#bbb">count</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">final</span> ReentrantLock takeLock = <span style="color:#6ab825;font-weight:bold">this</span>.<span style="color:#bbb">takeLock</span>;
+</span></span><span style="display:flex;"><span>    takeLock.<span style="color:#bbb">lockInterruptibly</span>();
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">try</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">while</span> (count.<span style="color:#bbb">get</span>() == 0) {
+</span></span><span style="display:flex;"><span>            notEmpty.<span style="color:#bbb">await</span>();
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        x = dequeue();
+</span></span><span style="display:flex;"><span>        c = count.<span style="color:#bbb">getAndDecrement</span>();
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">if</span> (c &gt; 1) {
+</span></span><span style="display:flex;"><span>            notEmpty.<span style="color:#bbb">signal</span>();
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    } <span style="color:#6ab825;font-weight:bold">finally</span> {
+</span></span><span style="display:flex;"><span>        takeLock.<span style="color:#bbb">unlock</span>();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">if</span> (c == capacity) {
+</span></span><span style="display:flex;"><span>        signalNotFull();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">return</span> x;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>类似 ConcurrentLinkedQueue 等，则是基于 CAS 的无锁技术，不需要在每个操作时使用锁，所以扩展性变现要更加优异。</p>
+<p>相对比较另类的 SynchronousQueue，Java6 中，其实现发生了非常大的变化，利用 CAS 替换掉了原本基于锁的逻辑，同步开销比较小。它是 Executors.newCachedThreadPool() 的默认队列。</p>
+<h3 id="队列使用场景与典型用例">队列使用场景与典型用例</h3>
+<p>在实际开发中，Queue 被广泛用于生产者-消费者场景，比如利用 BlockingQueue 来实现，由于其提供的等待机制，我们可以少做很多协调性的工作，可以参考如下示例：</p>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">import</span> <span style="color:#447fcf;text-decoration:underline">java.util.concurrent.ArrayBlockingQueue</span>;
+</span></span><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">import</span> <span style="color:#447fcf;text-decoration:underline">java.util.concurrent.BlockingQueue</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">import</span> <span style="color:#447fcf;text-decoration:underline">com.oracle.jrockit.jfr.Producer</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">public</span> <span style="color:#6ab825;font-weight:bold">class</span> <span style="color:#447fcf;text-decoration:underline">ConsumerProducer</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">private</span> <span style="color:#6ab825;font-weight:bold">static</span> <span style="color:#6ab825;font-weight:bold">final</span> String EXIT = <span style="color:#ed9d13">&#34;Good bye!&#34;</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">public</span> <span style="color:#6ab825;font-weight:bold">static</span> <span style="color:#6ab825;font-weight:bold">void</span> <span style="color:#447fcf">main</span>(String[] args) {
+</span></span><span style="display:flex;"><span>        BlockingQueue&lt;String&gt; queue = <span style="color:#6ab825;font-weight:bold">new</span> ArrayBlockingQueue&lt;&gt;(3);
+</span></span><span style="display:flex;"><span>        Producer producer = <span style="color:#6ab825;font-weight:bold">new</span> Producer(queue);
+</span></span><span style="display:flex;"><span>        Consumer consumer = <span style="color:#6ab825;font-weight:bold">new</span> Consumer(queue);
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">new</span> Thread(producer).<span style="color:#bbb">start</span>();
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">new</span> Thread(consumer).<span style="color:#bbb">start</span>();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">static</span> <span style="color:#6ab825;font-weight:bold">class</span> <span style="color:#447fcf;text-decoration:underline">Producer</span> <span style="color:#6ab825;font-weight:bold">implements</span> Runnable {
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">private</span> BlockingQueue&lt;String&gt; queue;
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">public</span> <span style="color:#447fcf">Producer</span>(BlockingQueue&lt;String&gt; q) {
+</span></span><span style="display:flex;"><span>            <span style="color:#6ab825;font-weight:bold">this</span>.<span style="color:#bbb">queue</span> = q;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ffa500">@Override</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">public</span> <span style="color:#6ab825;font-weight:bold">void</span> <span style="color:#447fcf">run</span>() {
+</span></span><span style="display:flex;"><span>            <span style="color:#6ab825;font-weight:bold">for</span> (<span style="color:#6ab825;font-weight:bold">int</span> i = 0; i &lt; 20; i++) {
+</span></span><span style="display:flex;"><span>                <span style="color:#6ab825;font-weight:bold">try</span> {
+</span></span><span style="display:flex;"><span>                    Thread.<span style="color:#bbb">sleep</span>(5L);
+</span></span><span style="display:flex;"><span>                    String msg = <span style="color:#ed9d13">&#34;Message&#34;</span> + i;
+</span></span><span style="display:flex;"><span>                    System.<span style="color:#bbb">out</span>.<span style="color:#bbb">println</span>(<span style="color:#ed9d13">&#34;Produced new item: &#34;</span> + msg);
+</span></span><span style="display:flex;"><span>                    queue.<span style="color:#bbb">put</span>(msg);
+</span></span><span style="display:flex;"><span>                } <span style="color:#6ab825;font-weight:bold">catch</span> (Exception e) {
+</span></span><span style="display:flex;"><span>                    e.<span style="color:#bbb">printStackTrace</span>();
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#6ab825;font-weight:bold">try</span> {
+</span></span><span style="display:flex;"><span>                System.<span style="color:#bbb">out</span>.<span style="color:#bbb">println</span>(<span style="color:#ed9d13">&#34;OK funs over!&#34;</span>);
+</span></span><span style="display:flex;"><span>                queue.<span style="color:#bbb">put</span>(EXIT);
+</span></span><span style="display:flex;"><span>            } <span style="color:#6ab825;font-weight:bold">catch</span> (Exception e) {
+</span></span><span style="display:flex;"><span>                e.<span style="color:#bbb">printStackTrace</span>();
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">static</span> <span style="color:#6ab825;font-weight:bold">class</span> <span style="color:#447fcf;text-decoration:underline">Consumer</span> <span style="color:#6ab825;font-weight:bold">implements</span> Runnable {
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">private</span> BlockingQueue&lt;String&gt; queue;
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">public</span> <span style="color:#447fcf">Consumer</span>(BlockingQueue&lt;String&gt; q) {
+</span></span><span style="display:flex;"><span>            <span style="color:#6ab825;font-weight:bold">this</span>.<span style="color:#bbb">queue</span> = q;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ffa500">@Override</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">public</span> <span style="color:#6ab825;font-weight:bold">void</span> <span style="color:#447fcf">run</span>() {
+</span></span><span style="display:flex;"><span>            <span style="color:#6ab825;font-weight:bold">try</span> {
+</span></span><span style="display:flex;"><span>                String msg;
+</span></span><span style="display:flex;"><span>                <span style="color:#6ab825;font-weight:bold">while</span> (!EXIT.<span style="color:#bbb">equalsIgnoreCase</span>((msg = queue.<span style="color:#bbb">take</span>()))) {
+</span></span><span style="display:flex;"><span>                    System.<span style="color:#bbb">out</span>.<span style="color:#bbb">println</span>(<span style="color:#ed9d13">&#34;Consumed item: &#34;</span> + msg);
+</span></span><span style="display:flex;"><span>                    Thread.<span style="color:#bbb">sleep</span>(10L);
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>                System.<span style="color:#bbb">out</span>.<span style="color:#bbb">println</span>(<span style="color:#ed9d13">&#34;OK got exit msg!&#34;</span>);
+</span></span><span style="display:flex;"><span>            } <span style="color:#6ab825;font-weight:bold">catch</span> (Exception e) {
+</span></span><span style="display:flex;"><span>                e.<span style="color:#bbb">printStackTrace</span>();
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>上面是一个典型的生产者-消费者模型，如果使用非 Blocking 的队列，那么我们就要自己去实现轮询、条件判断（如检查 poll 返回值是否 null）等逻辑，如果没有特别的场景要求，Blocking 实现起来代码更加简单、直观。</p>
+<h3 id="各种-blocking-的使用场景">各种 Blocking 的使用场景</h3>
+<p>以 LinkedBlockingQueue、ArrayBlockingQueue 和 SynchronousQueue 为例，我们根据需求可以从多方考量：</p>
+<ul>
+<li>从队列边界要求看，ArrayBlockingQueue 有明确的容量限制，而 LinkedBlockingQueue 则取决于我们是否在创建时指定，SynchronousQueue 则不能缓存任何元素。</li>
+<li>从空间利用效率看，数据结构的 ArrayBlockingQueue 要比 LinkedBlockingQueue 紧凑，因为不需要创建节点，但是其初始分配阶段就需要一段连续的空间，所以初始内存需求更大。</li>
+<li>通用场景中，LinkedBlockingQueue 的吞吐量一般优于 ArrayBlockingQueue，因为它实现了更加细粒度的锁操作。</li>
+<li>ArrayBlockingQueue 实现比较简单，性能更好预测，属于表现稳定的结构。</li>
+<li>如果我们需要实现两个线程之间接力性（handoff）的场景，除了 CountDownLatch，SynchronousQueue 也是完美符合这种场景的，而且线程间协调和数据传输统一起来，代码更加规范。</li>
+<li>很多时候 SynchronousQueue 的性能表现，往往大大超过其他实现，尤其是在队列元素较小的场景。</li>
+</ul>
+
+</article>
+
+
+      
+        <div class="my-4">
+    
+    <a href="https://zacash.cn/tags/java/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 me-2 hover:text-eureka">#java</a>
+    
+    <a href="https://zacash.cn/tags/blocking/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 me-2 hover:text-eureka">#blocking</a>
+    
+    <a href="https://zacash.cn/tags/queue/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 me-2 hover:text-eureka">#queue</a>
+    
+</div>
+      
+
+      
+
+
+
+      
+
+      
+  <div
+    class="-mx-2 mt-4 flex flex-col border-t px-2 pt-4 md:flex-row md:justify-between"
+  >
+    <div>
+      
+    </div>
+    <div class="mt-4 md:mt-0 md:text-right">
+      
+        <span class="text-primary-text block font-bold">Next</span>
+        <a href="https://zacash.cn/posts/java-juc/" class="block">Intro to Java Juc</a>
+      
+    </div>
+  </div>
+
+
+      
+
+
+
+    </div>
+    
+
+    
+    
+      <div
+        class="lg:col-start-2 bg-secondary-bg prose col-span-2 rounded p-6 lg:col-span-6"
+      >
+        <h3>See Also</h3>
+        
+          <a href="https://zacash.cn/posts/java-juc/" class="no-underline">Intro to Java Juc</a>
+          <br />
+        
+          <a href="https://zacash.cn/posts/java-file/" class="no-underline">Java File</a>
+          <br />
+        
+          <a href="https://zacash.cn/posts/java-io/" class="no-underline">Java IO</a>
+          <br />
+        
+          <a href="https://zacash.cn/posts/java-basic/" class="no-underline">Java Basic</a>
+          <br />
+        
+      </div>
+    
+  </div>
+
+  
+
+          </div>
+        </div>
+      
+    </main>
+    <footer class="pl-scrollbar">
+      <div class="mx-auto w-full max-w-screen-xl"><div class="text-center p-6 pin-b">
+    <p class="text-sm text-tertiary-text">Copyright Zac &copy; 2022
+ &middot;  Powered by the <a href="https://github.com/wangchucheng/hugo-eureka" class="hover:text-eureka">Eureka</a> theme for <a href="https://gohugo.io" class="hover:text-eureka">Hugo</a></p>
+</div></div>
+    </footer>
+  </body>
+</html>

@@ -273,7 +273,7 @@
 <h2 id="一些基本概念">一些基本概念</h2>
 <ul>
 <li><strong>同步</strong>（synchronous）简单来说，同步是一种可靠的有序运行机制，当我们进行同步操作时，后续的任务时等待当前调用返回，才会进行下一步。</li>
-<li><strong>异步</strong>（asynchronous）与同步相反，其他任务不需要等待当前调用翻译，通常依靠<strong>事件</strong>、<strong>回调</strong>等机制来实现任务间次序关系。</li>
+<li><strong>异步</strong>（asynchronous）与同步相反，其他任务不需要等待当前调用返回，通常依靠<strong>事件</strong>、<strong>回调</strong>等机制来实现任务间次序关系。</li>
 <li><strong>阻塞</strong>（blocking） 在进行阻塞操作时，当前线程会处于阻塞状态，无法从事其他任务，只有当条件就绪才能继续，如 Socket 新连接建立完毕，或数据读取、写入操作完成。</li>
 <li><strong>非阻塞</strong>（non-blocking）非阻塞不管 IO 操作是否结束，直接返回，相应操作在后台继续处理。</li>
 </ul>
