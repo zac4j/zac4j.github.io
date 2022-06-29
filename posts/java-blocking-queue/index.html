@@ -82,7 +82,7 @@
     },
     "headline": "Java Blocking Queue | Zac\u0027s blog","datePublished": "2022-06-19T20:38:57+08:00",
     "dateModified": "2022-06-19T20:38:57+08:00",
-    "wordCount":  430 ,
+    "wordCount":  559 ,
     "publisher": {
         "@type": "Person",
         "name": "Zac Zhu",
@@ -173,7 +173,7 @@
             <a href="/posts/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  selected-menu-item  me-4">Posts</a>
             <a href="/tags/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  me-4">Tags</a>
             <a href="/categories/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  me-4">Categories</a>
-            <a href="/#about" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  me-4">About</a>
+            <a href="/about/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  me-4">About</a>
         </div>
 
         <div class="flex">
@@ -255,6 +255,12 @@
           >java</a
         >
       
+        
+          <span>, </span>
+        <a href="https://zacash.cn/categories/concurrent/" class="hover:text-eureka"
+          >concurrent</a
+        >
+      
     </div>
   
 
@@ -280,7 +286,7 @@
 <li>尾部插入时需要的 addLast(e)、offerLast(e).</li>
 <li>尾部删除所需要的 removeLast()、pollLast().</li>
 </ul>
-<p>juc 包中绝大部分 Queue 都实现了 BlockingQueue 接口。在常规队列操作基础上，Blocking 意味着其提供了特定的等待性操作，获取时（take）等待元素进队，或者插入时（put）等待队列出现空位。</p>
+<p>JUC 包中绝大部分 Queue 都实现了 BlockingQueue 接口。在常规队列操作基础上，Blocking 意味着其提供了特定的等待性操作，获取时（take）等待元素进队，或者插入时（put）等待队列出现空位。</p>
 <div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#999;font-style:italic">/**
 </span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"> * 获取并移除队列头结点
 </span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"> */</span>
@@ -344,8 +350,6 @@
 <p>在实际开发中，Queue 被广泛用于生产者-消费者场景，比如利用 BlockingQueue 来实现，由于其提供的等待机制，我们可以少做很多协调性的工作，可以参考如下示例：</p>
 <div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">import</span> <span style="color:#447fcf;text-decoration:underline">java.util.concurrent.ArrayBlockingQueue</span>;
 </span></span><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">import</span> <span style="color:#447fcf;text-decoration:underline">java.util.concurrent.BlockingQueue</span>;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">import</span> <span style="color:#447fcf;text-decoration:underline">com.oracle.jrockit.jfr.Producer</span>;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">public</span> <span style="color:#6ab825;font-weight:bold">class</span> <span style="color:#447fcf;text-decoration:underline">ConsumerProducer</span> {
 </span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">private</span> <span style="color:#6ab825;font-weight:bold">static</span> <span style="color:#6ab825;font-weight:bold">final</span> String EXIT = <span style="color:#ed9d13">&#34;Good bye!&#34;</span>;
@@ -417,7 +421,50 @@
 <li>如果我们需要实现两个线程之间接力性（handoff）的场景，除了 CountDownLatch，SynchronousQueue 也是完美符合这种场景的，而且线程间协调和数据传输统一起来，代码更加规范。</li>
 <li>很多时候 SynchronousQueue 的性能表现，往往大大超过其他实现，尤其是在队列元素较小的场景。</li>
 </ul>
-
+<h4 id="synchronous-handoffs-implementation">Synchronous Handoffs Implementation</h4>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">import</span> <span style="color:#447fcf;text-decoration:underline">java.util.concurrent.ExecutorService</span>;
+</span></span><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">import</span> <span style="color:#447fcf;text-decoration:underline">java.util.concurrent.Executors</span>;
+</span></span><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">import</span> <span style="color:#447fcf;text-decoration:underline">java.util.concurrent.SynchronousQueue</span>;
+</span></span><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">import</span> <span style="color:#447fcf;text-decoration:underline">java.util.concurrent.ThreadLocalRandom</span>;
+</span></span><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">import</span> <span style="color:#447fcf;text-decoration:underline">java.util.concurrent.TimeUnit</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">public</span> <span style="color:#6ab825;font-weight:bold">class</span> <span style="color:#447fcf;text-decoration:underline">HandoffSample</span> {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">private</span> <span style="color:#6ab825;font-weight:bold">static</span> ExecutorService executor = Executors.<span style="color:#bbb">newFixedThreadPool</span>(2);
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">private</span> <span style="color:#6ab825;font-weight:bold">static</span> SynchronousQueue&lt;Integer&gt; queue = <span style="color:#6ab825;font-weight:bold">new</span> SynchronousQueue&lt;&gt;();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">private</span> <span style="color:#6ab825;font-weight:bold">static</span> Runnable producer = () -&gt; {
+</span></span><span style="display:flex;"><span>        Integer producedElement = ThreadLocalRandom.<span style="color:#bbb">current</span>().<span style="color:#bbb">nextInt</span>();
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">try</span> {
+</span></span><span style="display:flex;"><span>            System.<span style="color:#bbb">out</span>.<span style="color:#bbb">println</span>(<span style="color:#ed9d13">&#34;Saving an element: &#34;</span>+ producedElement +<span style="color:#ed9d13">&#34; to the exchange point&#34;</span>);
+</span></span><span style="display:flex;"><span>            queue.<span style="color:#bbb">put</span>(producedElement);
+</span></span><span style="display:flex;"><span>        } <span style="color:#6ab825;font-weight:bold">catch</span> (InterruptedException e) {
+</span></span><span style="display:flex;"><span>            e.<span style="color:#bbb">printStackTrace</span>();
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    };
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">private</span> <span style="color:#6ab825;font-weight:bold">static</span> Runnable consumer = () -&gt; {
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">try</span> {
+</span></span><span style="display:flex;"><span>            Integer consumedElement = queue.<span style="color:#bbb">take</span>();
+</span></span><span style="display:flex;"><span>            System.<span style="color:#bbb">out</span>.<span style="color:#bbb">println</span>(<span style="color:#ed9d13">&#34;Consumed an element: &#34;</span>+ consumedElement +<span style="color:#ed9d13">&#34; from the exchange point&#34;</span>);
+</span></span><span style="display:flex;"><span>        } <span style="color:#6ab825;font-weight:bold">catch</span> (InterruptedException e) {
+</span></span><span style="display:flex;"><span>            e.<span style="color:#bbb">printStackTrace</span>();
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    };
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">public</span> <span style="color:#6ab825;font-weight:bold">static</span> <span style="color:#6ab825;font-weight:bold">void</span> <span style="color:#447fcf">main</span>(String[] args) <span style="color:#6ab825;font-weight:bold">throws</span> InterruptedException {
+</span></span><span style="display:flex;"><span>        executor.<span style="color:#bbb">execute</span>(producer);
+</span></span><span style="display:flex;"><span>        executor.<span style="color:#bbb">execute</span>(consumer);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        executor.<span style="color:#bbb">awaitTermination</span>(500L, TimeUnit.<span style="color:#bbb">MILLISECONDS</span>);
+</span></span><span style="display:flex;"><span>        executor.<span style="color:#bbb">shutdown</span>();
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">assert</span>(queue.<span style="color:#bbb">size</span>() == 0);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>打印出的 log:</p>
+<pre tabindex="0"><code class="language-log" data-lang="log">Saving an element: 466241464 to the exchange point
+Consumed an element: 466241464 from the exchange point
+</code></pre>
 </article>
 
 

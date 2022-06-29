@@ -8,7 +8,34 @@
     <language>en</language>
     <copyright>Copyright Zac &amp;copy; 2022
 </copyright>
-    <lastBuildDate>Mon, 23 May 2022 15:11:27 +0800</lastBuildDate><atom:link href="https://zacash.cn/categories/concurrent/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 19 Jun 2022 20:38:57 +0800</lastBuildDate><atom:link href="https://zacash.cn/categories/concurrent/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Java Blocking Queue</title>
+      <link>https://zacash.cn/posts/java-blocking-queue/</link>
+      <pubDate>Sun, 19 Jun 2022 20:38:57 +0800</pubDate>
+      
+      <guid>https://zacash.cn/posts/java-blocking-queue/</guid>
+      <description>ConcurrentLinkedQueue 和 LinkedBlockingQueue 有什么区别
+ Concurrent 类型基于 lock-free，在常见的多线程访问场景，一般可以提供较高吞吐量。 LinkedBlockingQueue 内部则是基于锁，并提供了 BlockingQueue 的等待性方法。  线程安全队列一览 常见的集合中 LinkedList 是个 Deque，只不过不是线程安全的。
+下图展示了 Java 并发类库提供的各种线程安全队列实现：
+Deque Deque 侧重点是支持队列头尾都进行插入和删除，所以提供了特定的方法，如：
+ 尾部插入时需要的 addLast(e)、offerLast(e). 尾部删除所需要的 removeLast()、pollLast().  JUC 包中绝大部分 Queue 都实现了 BlockingQueue 接口。在常规队列操作基础上，Blocking 意味着其提供了特定的等待性操作，获取时（take）等待元素进队，或者插入时（put）等待队列出现空位。
+/** * 获取并移除队列头结点 */ E take() throws InterruptedException;  /** * 插入元素，如果队列已满，则等待直到队列出现空闲空间 */ void put(E e) throws InterruptedException; 另一个 BlockingQueue 经常被考察的点，就是是否有界（Bounded、Unbounded），这一点也往往会影响我们在应用开发中的选择。
+ ArrayBlockingQueue 是最典型的有界队列，其内部以 final 的数组保存数据，数组的大小就决定了队列的边界，所以我们在创建 ArrayBlockingQueue 时，都要指定容量，如：  public ArrayBlockingQueue(int capacity, boolean fair)  LinkedBlockingQueue 基于有界的逻辑实现，不过其默认初始容量为 Integer.MAX_VALUE，成为无界队列。 SynchronousQueue 每个删除操作都要等待插入操作，反之每个插入操作也都要等待删除操纵。那么这个队列的容量时多少呢？0.</description>
+    </item>
+    
+    <item>
+      <title>Intro to Java Juc</title>
+      <link>https://zacash.cn/posts/java-juc/</link>
+      <pubDate>Tue, 14 Jun 2022 15:24:53 +0800</pubDate>
+      
+      <guid>https://zacash.cn/posts/java-juc/</guid>
+      <description>Juc 通常指 java.util.concurrent 并发包，这个包集中了 Java 并发的各种基础工具类，具体包括几个方面：
+ 提供了比 synchronized 更高级的各种同步结构，包括 CountDownLatch、CyclicBarrier、Semaphore 等，可以实现更加丰富的多线程操作，比如利用 Semaphore 作为资源控制器，限制同时急性工作的线程数量。 各种线程安全的容器，如 ConcurrentHashMap、有序的 ConcurrentSkipListMap，或者类似快照机制，实现线程安全的动态数组 CopyOnWriteArrayList 等。 各种并发队列的实现，如各种 BlockingQueue 实现，比较典型的 ArrayBlockingQueue、SynchronousQueue 或针对特定场景的 PriorityBlockingQueue 等。 Executor 框架，可以创建各种不同类型的线程池，调度任务运行等，绝大部分情况下，不再需要自己从头实现线程池和任务调度器。  我们进行多线程编程，无非是达到几个目的：
+ 利用多线程提高程序的扩展能力，以达到业务对吞吐量的要求。 协调线程间调度、交互，以完成业务逻辑 线程间传递数据和状态，这同样是实现业务逻辑的需要。  Semaphore Semaphore 提供了 Java 版本的信号量实现，它通过控制一定数量的允许（permit）的方式，来达到限制通用资源访问的目的。可以想象一种场景，我们在机场等出租车排队时，当很多空闲出租车就位时，为防止过度拥挤，调度员指挥排队等待上车的人群一次进来5人上车，等这5人坐车出发，再放进来下一批，这和 Semaphore 的工作原理类似。
+import java.util.concurrent.Semaphore;  public class SemaphoreSample {  public static void main(String[] args) {  Semaphore semaphore = new Semaphore(0);  for (int i = 0; i &amp;lt; 10; i++) {  Thread t = new Thread(new AbnormalSemaphoreWorker(semaphore));  t.</description>
+    </item>
+    
     <item>
       <title>Intro to ConcurrentHashMap</title>
       <link>https://zacash.cn/posts/intro-to-concurrenthashmap/</link>

@@ -8,6 +8,9 @@
     <loc>https://zacash.cn/categories/</loc>
     <lastmod>2022-06-19T20:38:57+08:00</lastmod>
   </url><url>
+    <loc>https://zacash.cn/categories/concurrent/</loc>
+    <lastmod>2022-06-19T20:38:57+08:00</lastmod>
+  </url><url>
     <loc>https://zacash.cn/tags/java/</loc>
     <lastmod>2022-06-19T20:38:57+08:00</lastmod>
   </url><url>
@@ -52,9 +55,6 @@
   </url><url>
     <loc>https://zacash.cn/tags/nio/</loc>
     <lastmod>2022-05-26T08:59:56+08:00</lastmod>
-  </url><url>
-    <loc>https://zacash.cn/categories/concurrent/</loc>
-    <lastmod>2022-05-23T15:11:27+08:00</lastmod>
   </url><url>
     <loc>https://zacash.cn/tags/concurrenthashmap/</loc>
     <lastmod>2022-05-23T15:11:27+08:00</lastmod>

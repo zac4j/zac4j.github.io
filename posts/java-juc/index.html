@@ -82,7 +82,7 @@
     },
     "headline": "Intro to Java Juc | Zac\u0027s blog","datePublished": "2022-06-14T15:24:53+08:00",
     "dateModified": "2022-06-14T15:24:53+08:00",
-    "wordCount":  609 ,
+    "wordCount":  727 ,
     "publisher": {
         "@type": "Person",
         "name": "Zac Zhu",
@@ -169,7 +169,7 @@
             <a href="/posts/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  selected-menu-item  me-4">Posts</a>
             <a href="/tags/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  me-4">Tags</a>
             <a href="/categories/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  me-4">Categories</a>
-            <a href="/#about" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  me-4">About</a>
+            <a href="/about/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  me-4">About</a>
         </div>
 
         <div class="flex">
@@ -240,7 +240,7 @@
   </div>
   <div class="me-6 my-2">
     <i class="fas fa-clock me-1"></i>
-    <span>3 min read</span>
+    <span>4 min read</span>
   </div>
 
   
@@ -249,6 +249,12 @@
       
         <a href="https://zacash.cn/categories/java/" class="hover:text-eureka"
           >java</a
+        >
+      
+        
+          <span>, </span>
+        <a href="https://zacash.cn/categories/concurrent/" class="hover:text-eureka"
+          >concurrent</a
         >
       
     </div>
@@ -261,7 +267,7 @@
   
   
 
-  <p>juc 通常指 java.util.concurrent 并发包，这个包集中了 Java 并发的各种基础工具类，具体包括几个方面：</p>
+  <p>Juc 通常指 java.util.concurrent 并发包，这个包集中了 Java 并发的各种基础工具类，具体包括几个方面：</p>
 <ul>
 <li>提供了比 synchronized 更高级的各种同步结构，包括 CountDownLatch、CyclicBarrier、Semaphore 等，可以实现更加丰富的多线程操作，比如利用 Semaphore 作为资源控制器，限制同时急性工作的线程数量。</li>
 <li>各种线程安全的容器，如 ConcurrentHashMap、有序的 ConcurrentSkipListMap，或者类似快照机制，实现线程安全的动态数组 CopyOnWriteArrayList 等。</li>
@@ -336,6 +342,46 @@
 <li>CountDownLatch 的基本操作组合是 countDown/await。调用 await 的线程阻塞等待 countDown 足够的次数，不管你是一个线程还是多个线程里 countDown，只要次数足够即可。<strong>CountDownLatch 操作的重点是事件</strong>。</li>
 <li>CyclicBarrier 的基本操作组合，是 await，当所有的 parties 都调用了 await，才会继续进行任务，并自动进行重置。正常情况下，CyclicBarrier 的重置都是自动发生的，如果调用 reset 方法，但还有线程在等待，就会导致等待线程被打扰，抛出 BrokenBarrierException 异常。<strong>CyclicBarrier 侧重点是线程</strong>，而不是调用事件，它的典型应用场景是用来等待并发线程结束。</li>
 </ul>
+<h4 id="countdownlatch-handoff-implementation">CountDownLatch Handoff Implementation</h4>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">import</span> <span style="color:#447fcf;text-decoration:underline">java.util.concurrent.CountDownLatch</span>;
+</span></span><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">import</span> <span style="color:#447fcf;text-decoration:underline">java.util.concurrent.ExecutorService</span>;
+</span></span><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">import</span> <span style="color:#447fcf;text-decoration:underline">java.util.concurrent.Executors</span>;
+</span></span><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">import</span> <span style="color:#447fcf;text-decoration:underline">java.util.concurrent.ThreadLocalRandom</span>;
+</span></span><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">import</span> <span style="color:#447fcf;text-decoration:underline">java.util.concurrent.TimeUnit</span>;
+</span></span><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">import</span> <span style="color:#447fcf;text-decoration:underline">java.util.concurrent.atomic.AtomicInteger</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">public</span> <span style="color:#6ab825;font-weight:bold">class</span> <span style="color:#447fcf;text-decoration:underline">HandoffLatchSample</span> {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">private</span> <span style="color:#6ab825;font-weight:bold">static</span> ExecutorService executor = Executors.<span style="color:#bbb">newFixedThreadPool</span>(2);
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">private</span> <span style="color:#6ab825;font-weight:bold">static</span> AtomicInteger sharedState = <span style="color:#6ab825;font-weight:bold">new</span> AtomicInteger();
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">private</span> <span style="color:#6ab825;font-weight:bold">static</span> CountDownLatch countDownLatch = <span style="color:#6ab825;font-weight:bold">new</span> CountDownLatch(1);
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">private</span> <span style="color:#6ab825;font-weight:bold">static</span> Runnable producer = () -&gt; {
+</span></span><span style="display:flex;"><span>        Integer producedElement = ThreadLocalRandom.<span style="color:#bbb">current</span>().<span style="color:#bbb">nextInt</span>();
+</span></span><span style="display:flex;"><span>        System.<span style="color:#bbb">out</span>.<span style="color:#bbb">println</span>(<span style="color:#ed9d13">&#34;Saving an element: &#34;</span> + producedElement + <span style="color:#ed9d13">&#34; to the exchange point&#34;</span>);
+</span></span><span style="display:flex;"><span>        sharedState.<span style="color:#bbb">set</span>(producedElement);
+</span></span><span style="display:flex;"><span>        countDownLatch.<span style="color:#bbb">countDown</span>();
+</span></span><span style="display:flex;"><span>    };
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">private</span> <span style="color:#6ab825;font-weight:bold">static</span> Runnable consumer = () -&gt; {
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">try</span> {
+</span></span><span style="display:flex;"><span>            countDownLatch.<span style="color:#bbb">await</span>();
+</span></span><span style="display:flex;"><span>            Integer consumedElement = sharedState.<span style="color:#bbb">get</span>();
+</span></span><span style="display:flex;"><span>            System.<span style="color:#bbb">out</span>.<span style="color:#bbb">println</span>(<span style="color:#ed9d13">&#34;consumed an element: &#34;</span> + consumedElement + <span style="color:#ed9d13">&#34; from the exchange point&#34;</span>);
+</span></span><span style="display:flex;"><span>        } <span style="color:#6ab825;font-weight:bold">catch</span> (InterruptedException e) {
+</span></span><span style="display:flex;"><span>            e.<span style="color:#bbb">printStackTrace</span>();
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    };
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">public</span> <span style="color:#6ab825;font-weight:bold">static</span> <span style="color:#6ab825;font-weight:bold">void</span> <span style="color:#447fcf">main</span>(String[] args) <span style="color:#6ab825;font-weight:bold">throws</span> InterruptedException {
+</span></span><span style="display:flex;"><span>        executor.<span style="color:#bbb">execute</span>(producer);
+</span></span><span style="display:flex;"><span>        executor.<span style="color:#bbb">execute</span>(consumer);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        executor.<span style="color:#bbb">awaitTermination</span>(500L, TimeUnit.<span style="color:#bbb">MILLISECONDS</span>);
+</span></span><span style="display:flex;"><span>        executor.<span style="color:#bbb">shutdown</span>();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h4 id="taxi-implementation">Taxi Implementation</h4>
 <p>继续机场排队等车的场景，假设有 10 个人排队，我们将其分成 5 人一组，通过 CountDownLatch 来协调批次，我们可以这样实现：</p>
 <div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">import</span> <span style="color:#447fcf;text-decoration:underline">java.util.concurrent.CountDownLatch</span>;
 </span></span><span style="display:flex;"><span>
@@ -390,18 +436,18 @@
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>CountDownLatch 的调度方式相对简单，后一批次的线程进行 await，等待前一批 countDown 足够多次。这个例子也从侧面体现了它的局限性，虽然它也能支持10个人排队的情况，但是因为不能重用，如果要支持更多人排队，那么就不能依赖一个 CountDownLatch 进行了。其运行结果如下：</p>
-<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#ccc">First batch executed!
-</span></span></span><span style="display:flex;"><span><span style="color:#ccc">First batch executed!
-</span></span></span><span style="display:flex;"><span><span style="color:#ccc">First batch executed!
-</span></span></span><span style="display:flex;"><span><span style="color:#ccc">First batch executed!
-</span></span></span><span style="display:flex;"><span><span style="color:#ccc">First batch executed!
-</span></span></span><span style="display:flex;"><span><span style="color:#ccc">Wait for first batch finish
-</span></span></span><span style="display:flex;"><span><span style="color:#ccc">Second batch executed!
-</span></span></span><span style="display:flex;"><span><span style="color:#ccc">Second batch executed!
-</span></span></span><span style="display:flex;"><span><span style="color:#ccc">Second batch executed!
-</span></span></span><span style="display:flex;"><span><span style="color:#ccc">Second batch executed!
-</span></span></span><span style="display:flex;"><span><span style="color:#ccc">Second batch executed!
-</span></span></span></code></pre></div><p>如果用 CyclicBarrier 来实现：</p>
+<pre tabindex="0"><code class="language-log" data-lang="log">First batch executed!
+First batch executed!
+First batch executed!
+First batch executed!
+First batch executed!
+Wait for first batch finish
+Second batch executed!
+Second batch executed!
+Second batch executed!
+Second batch executed!
+Second batch executed!
+</code></pre><p>如果用 <strong>CyclicBarrier</strong> 来实现：</p>
 <div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">import</span> <span style="color:#447fcf;text-decoration:underline">java.util.concurrent.BrokenBarrierException</span>;
 </span></span><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">import</span> <span style="color:#447fcf;text-decoration:underline">java.util.concurrent.CyclicBarrier</span>;
 </span></span><span style="display:flex;"><span>
@@ -445,19 +491,19 @@
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>执行结果如下：</p>
-<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#ccc">Executed!
-</span></span></span><span style="display:flex;"><span><span style="color:#ccc">Executed!
-</span></span></span><span style="display:flex;"><span><span style="color:#ccc">Executed!
-</span></span></span><span style="display:flex;"><span><span style="color:#ccc">Executed!
-</span></span></span><span style="display:flex;"><span><span style="color:#ccc">Executed!
-</span></span></span><span style="display:flex;"><span><span style="color:#ccc">Action...Go again
-</span></span></span><span style="display:flex;"><span><span style="color:#ccc">Executed!
-</span></span></span><span style="display:flex;"><span><span style="color:#ccc">Executed!
-</span></span></span><span style="display:flex;"><span><span style="color:#ccc">Executed!
-</span></span></span><span style="display:flex;"><span><span style="color:#ccc">Executed!
-</span></span></span><span style="display:flex;"><span><span style="color:#ccc">Executed!
-</span></span></span><span style="display:flex;"><span><span style="color:#ccc">Action...Go again
-</span></span></span></code></pre></div><p>因为 CyclicBarrier 会自动进行重置，所以这个逻辑可以自然支持更多人排队。</p>
+<pre tabindex="0"><code class="language-log" data-lang="log">Executed!
+Executed!
+Executed!
+Executed!
+Executed!
+Action...Go again
+Executed!
+Executed!
+Executed!
+Executed!
+Executed!
+Action...Go again
+</code></pre><p>因为 CyclicBarrier 会自动进行重置，所以这个逻辑可以自然支持更多人排队。</p>
 <h3 id="concurrenthashmap-和-concurrentskiplistmap">ConcurrentHashMap 和 ConcurrentSkipListMap</h3>
 <p>并发包内提供了线程安全的 Map、List 和 Set, 结构如下：</p>
 <p><img src="/img/concurrent-collect.webp" alt="coll"></p>
@@ -484,7 +530,7 @@
 </span></span><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">final</span> <span style="color:#6ab825;font-weight:bold">void</span> <span style="color:#447fcf">setArray</span>(Object[] a) {
 </span></span><span style="display:flex;"><span>    array = a;
 </span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>这种数据结构，比较适合读多写少的操作，不然修改的开销还是非常明显的。</p>
+</span></span></code></pre></div><p>这种数据结构，比较适合<strong>读多写少</strong>的操作，毕竟修改的开销还是非常明显的。</p>
 
 </article>
 
