@@ -8,7 +8,22 @@
     <language>en</language>
     <copyright>Copyright Zac &amp;copy; 2022
 </copyright>
-    <lastBuildDate>Sun, 19 Jun 2022 20:38:57 +0800</lastBuildDate><atom:link href="https://zacash.cn/categories/concurrent/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 29 Jun 2022 21:10:50 +0800</lastBuildDate><atom:link href="https://zacash.cn/categories/concurrent/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Java CAS and AQS</title>
+      <link>https://zacash.cn/posts/java-cas-aqs/</link>
+      <pubDate>Wed, 29 Jun 2022 21:10:50 +0800</pubDate>
+      
+      <guid>https://zacash.cn/posts/java-cas-aqs/</guid>
+      <description>AtomicInteger 的底层原理 AtomicInteger 是对 int 类型的一种封装，提供原子性的访问和更新操作，其原子性操作的实现是基于 CAS（compare-and-swap）技术。
+所谓 CAS，表现的是一系列操作的集合，获取当前数值，进行一系列运算，利用 CAS 指令试图进行更新。如果当前数值未变，代表没有其他线程进行并发修改，则更新成功。如果当前数值变了，可能出现不同的选择，要么进行重试，要么就返回一个成功或失败的结果。
+从 AtomicInteger 的内部属性来看，它依赖于 Unsafe 提供的一些底层能力，进行底层操作；以 volatile 的 value 字段，记录数值，以保证可见性。
+private static final jdk.internal.misc.Unsafe U = jdk.internal.misc.Unsafe.getUnsafe(); private static final long VALUE = U.objectFieldOffset(AtomicInteger.class, &amp;#34;value&amp;#34;); private volatile int value; 具体的原子操作细节，可以参考任意一个原子更新方法，比如下面的 getAndIncrement.
+Unsafe 会利用 value 字段的内存地址偏移，直接完成操作。
+public final int getAndIncrement() {  return U.getAndInt(this, VALUE, 1); } 因为 getAndIncrement 需要返回数值，所以需要添加失败重试逻辑。
+ public final int getAndAddInt(Object o, long offset, int delta) {  int v;  do {  v = getIntVolatile(o, offset);  } while (!</description>
+    </item>
+    
     <item>
       <title>Java Blocking Queue</title>
       <link>https://zacash.cn/posts/java-blocking-queue/</link>

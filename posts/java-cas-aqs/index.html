@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  dir="ltr"
+  
+><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<title>Java CAS and AQS | Zac&#39;s blog</title>
+
+<meta name="generator" content="Hugo Eureka 0.9.1" />
+<link rel="stylesheet" href="https://zacash.cn/css/eureka.min.6a378a23360d238dc3ef4df2f5cd718093f02c10c9c7eb2437c29701cd8d389ab6da5d9f21bdd3afa305fd56c1235017.css" integrity="sha384-ajeKIzYNI43D703y9c1xgJPwLBDJx&#43;skN8KXAc2NOJq22l2fIb3Tr6MF/VbBI1AX">
+<script defer src="https://zacash.cn/js/eureka.min.f1639ee98d6cbd85b2b5f034d27320da962002ff83159ed4e01dbc5948c42a1ab26c2d6e74c66e93f5cec4d24dbd166d.js" integrity="sha384-8WOe6Y1svYWytfA00nMg2pYgAv&#43;DFZ7U4B28WUjEKhqybC1udMZuk/XOxNJNvRZt"></script>
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload"
+  href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Noto+Serif+SC:wght@400;600;700&display=swap"
+  as="style" onload="this.onload=null;this.rel='stylesheet'">
+
+
+
+
+<script defer type="text/javascript" src="https://zacash.cn/js/fontawesome.min.1c5a4674b042785ed214cf0818a81724c6b37442fd61b0ed039237b93de25ed5103fc8079a05770648ccc9c66c4f540a.js" integrity="sha384-HFpGdLBCeF7SFM8IGKgXJMazdEL9YbDtA5I3uT3iXtUQP8gHmgV3BkjMycZsT1QK"></script>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/katex.min.css"
+   integrity="sha384-MlJdn/WNKDGXveldHDdyRP1R4CTHr3FeuDNfhsLPYrq2t0UBkUdK2jyTnXPEK1NQ"  media="print"
+  onload="this.media='all';this.onload=null" crossorigin>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/katex.min.js" 
+  integrity="sha384-VQ8d8WVFw0yHhCk5E8I86oOhv48xLpnDZx5T9GogA/Y84DcCKWXDmSDfn13bzFZY"  crossorigin></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/contrib/auto-render.min.js"
+   integrity="sha384-&#43;XBljXPPiv&#43;OzfbB3cVmLHf4hdUFHlWNZN5spNQ7rmHTXpd7WvJum6fIACpNNfIR"  crossorigin></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    renderMathInElement(document.body, {
+      delimiters: [
+        { left: "$$", right: "$$", display: true },
+        { left: "$", right: "$", display: false },
+        { left: "\\(", right: "\\)", display: false },
+        { left: "\\[", right: "\\]", display: true }
+      ],
+    });
+  });
+</script>
+
+
+<script defer src="https://cdn.jsdelivr.net/npm/mermaid@8.14.0/dist/mermaid.min.js" 
+  integrity="sha384-atOyb0FxAgN9LyAc6PEf9BjgwLISyansgdH8/VXQH8p2o5vfrRgmGIJ2Sg22L0A0"  crossorigin></script>
+
+
+<link rel="icon" type="image/png" sizes="32x32" href="https://zacash.cn/images/icon_huef3b68b5a9c9f864bc324bf255658730_3276_32x32_fill_box_center_3.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://zacash.cn/images/icon_huef3b68b5a9c9f864bc324bf255658730_3276_180x180_fill_box_center_3.png">
+
+<meta name="description"
+  content="Intro to CAS &amp; AQS in Java">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+      "@type": "ListItem",
+      "position": 1 ,
+      "name":"Posts",
+      "item":"https://zacash.cn/posts/"},{
+      "@type": "ListItem",
+      "position": 2 ,
+      "name":"Java CAS and AQS",
+      "item":"https://zacash.cn/posts/java-cas-aqs/"}]
+}
+</script>
+
+
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://zacash.cn/posts/java-cas-aqs/"
+    },
+    "headline": "Java CAS and AQS | Zac\u0027s blog","datePublished": "2022-06-29T21:10:50+08:00",
+    "dateModified": "2022-06-29T21:10:50+08:00",
+    "wordCount":  609 ,
+    "publisher": {
+        "@type": "Person",
+        "name": "Zac Zhu",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://zacash.cn/images/icon.png"
+        }
+        },
+    "description": "Intro to CAS \u0026 AQS in Java"
+}
+</script><meta property="og:title" content="Java CAS and AQS | Zac&#39;s blog" />
+<meta property="og:type" content="article" />
+
+
+<meta property="og:image" content="https://zacash.cn/images/icon.png">
+
+
+<meta property="og:url" content="https://zacash.cn/posts/java-cas-aqs/" />
+
+
+
+<meta property="og:description" content="Intro to CAS &amp; AQS in Java" />
+
+
+
+<meta property="og:locale" content="en" />
+
+
+
+
+<meta property="og:site_name" content="Zac&#39;s blog" />
+
+
+
+
+
+
+<meta property="article:published_time" content="2022-06-29T21:10:50&#43;08:00" />
+
+
+<meta property="article:modified_time" content="2022-06-29T21:10:50&#43;08:00" />
+
+
+
+<meta property="article:section" content="posts" />
+
+
+<meta property="article:tag" content="java" />
+
+<meta property="article:tag" content="cas" />
+
+<meta property="article:tag" content="aqs" />
+
+
+
+
+
+<meta property="og:see_also" content="https://zacash.cn/posts/java-blocking-queue/" />
+
+<meta property="og:see_also" content="https://zacash.cn/posts/java-juc/" />
+
+<meta property="og:see_also" content="https://zacash.cn/posts/java-file/" />
+
+<meta property="og:see_also" content="https://zacash.cn/posts/java-io/" />
+
+<meta property="og:see_also" content="https://zacash.cn/posts/java-basic/" />
+
+
+
+
+  <body class="flex min-h-screen flex-col">
+    <header
+      class="min-h-16 pl-scrollbar bg-secondary-bg fixed z-50 flex w-full items-center shadow-sm"
+    >
+      <div class="mx-auto w-full max-w-screen-xl"><script>
+    let storageColorScheme = localStorage.getItem("lightDarkMode")
+    if (((storageColorScheme == 'Auto' || storageColorScheme == null) && window.matchMedia("(prefers-color-scheme: dark)").matches) || storageColorScheme == "Dark") {
+        document.getElementsByTagName('html')[0].classList.add('dark')
+    }
+</script>
+<nav class="flex items-center justify-between flex-wrap px-4 py-4 md:py-0">
+    <a href="/" class="me-6 text-primary-text text-xl font-bold">Zac&#39;s blog</a>
+    <button id="navbar-btn" class="md:hidden flex items-center px-3 py-2" aria-label="Open Navbar">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <div id="target"
+        class="hidden block md:flex md:grow md:justify-between md:items-center w-full md:w-auto text-primary-text z-20">
+        <div class="md:flex md:h-16 text-sm md:grow pb-4 md:pb-0 border-b md:border-b-0">
+            <a href="/posts/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  selected-menu-item  me-4">Posts</a>
+            <a href="/tags/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  me-4">Tags</a>
+            <a href="/categories/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  me-4">Categories</a>
+            <a href="/about/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  me-4">About</a>
+        </div>
+
+        <div class="flex">
+            <div class="relative pt-4 md:pt-0">
+                <div class="cursor-pointer hover:text-eureka" id="lightDarkMode">
+                    <i class="fas fa-adjust"></i>
+                </div>
+                <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-30" id="is-open">
+                </div>
+                <div class="absolute flex flex-col start-0 md:start-auto end-auto md:end-0 hidden bg-secondary-bg w-48 rounded py-2 border border-tertiary-bg cursor-pointer z-40"
+                    id='lightDarkOptions'>
+                    <span class="px-4 py-1 hover:text-eureka" name="Light">Light</span>
+                    <span class="px-4 py-1 hover:text-eureka" name="Dark">Dark</span>
+                    <span class="px-4 py-1 hover:text-eureka" name="Auto">Auto</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-0" id="is-open-mobile">
+    </div>
+
+</nav>
+<script>
+    
+    let element = document.getElementById('lightDarkMode')
+    if (storageColorScheme == null || storageColorScheme == 'Auto') {
+        document.addEventListener('DOMContentLoaded', () => {
+            window.matchMedia("(prefers-color-scheme: dark)").addEventListener('change', switchDarkMode)
+        })
+    } else if (storageColorScheme == "Light") {
+        element.firstElementChild.classList.remove('fa-adjust')
+        element.firstElementChild.setAttribute("data-icon", 'sun')
+        element.firstElementChild.classList.add('fa-sun')
+    } else if (storageColorScheme == "Dark") {
+        element.firstElementChild.classList.remove('fa-adjust')
+        element.firstElementChild.setAttribute("data-icon", 'moon')
+        element.firstElementChild.classList.add('fa-moon')
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        getcolorscheme();
+        switchBurger();
+    });
+</script>
+</div>
+    </header>
+    <main class="grow pt-16">
+        <div class="pl-scrollbar">
+          <div class="mx-auto w-full max-w-screen-xl lg:px-4 xl:px-8">
+  
+  
+  <div class="grid grid-cols-2 gap-4 lg:grid-cols-8 lg:pt-12">
+    <div
+      class="lg:col-start-2 bg-secondary-bg col-span-2 rounded px-6 py-8 lg:col-span-6"
+    >
+      <article class="prose">
+  <h1 class="mb-4">Java CAS and AQS</h1>
+
+  <div
+  class="text-tertiary-text not-prose mt-2 flex flex-row flex-wrap items-center"
+>
+  <div class="me-6 my-2">
+    <i class="fas fa-calendar me-1"></i>
+    <span
+      >2022-06-29</span
+    >
+  </div>
+  <div class="me-6 my-2">
+    <i class="fas fa-clock me-1"></i>
+    <span>3 min read</span>
+  </div>
+
+  
+    <div class="me-6 my-2">
+      <i class="fas fa-folder me-1"></i>
+      
+        <a href="https://zacash.cn/categories/java/" class="hover:text-eureka"
+          >java</a
+        >
+      
+        
+          <span>, </span>
+        <a href="https://zacash.cn/categories/concurrent/" class="hover:text-eureka"
+          >concurrent</a
+        >
+      
+    </div>
+  
+
+  
+</div>
+
+
+  
+  
+
+  <h2 id="atomicinteger-的底层原理">AtomicInteger 的底层原理</h2>
+<p>AtomicInteger 是对 int 类型的一种封装，提供原子性的访问和更新操作，其原子性操作的实现是基于 CAS（<a href="https://en.wikipedia.org/wiki/Compare-and-swap">compare-and-swap</a>）技术。</p>
+<p>所谓 CAS，表现的是一系列操作的集合，获取当前数值，进行一系列运算，利用 CAS 指令试图进行更新。如果当前数值未变，代表没有其他线程进行并发修改，则更新成功。如果当前数值变了，可能出现不同的选择，要么进行重试，要么就返回一个成功或失败的结果。</p>
+<p>从 AtomicInteger 的内部属性来看，它依赖于 Unsafe 提供的一些底层能力，进行底层操作；以 volatile 的 value 字段，记录数值，以保证可见性。</p>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">private</span> <span style="color:#6ab825;font-weight:bold">static</span> <span style="color:#6ab825;font-weight:bold">final</span> jdk.<span style="color:#bbb">internal</span>.<span style="color:#bbb">misc</span>.<span style="color:#bbb">Unsafe</span> U = jdk.<span style="color:#bbb">internal</span>.<span style="color:#bbb">misc</span>.<span style="color:#bbb">Unsafe</span>.<span style="color:#bbb">getUnsafe</span>();
+</span></span><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">private</span> <span style="color:#6ab825;font-weight:bold">static</span> <span style="color:#6ab825;font-weight:bold">final</span> <span style="color:#6ab825;font-weight:bold">long</span> VALUE = U.<span style="color:#bbb">objectFieldOffset</span>(AtomicInteger.<span style="color:#bbb">class</span>, <span style="color:#ed9d13">&#34;value&#34;</span>);
+</span></span><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">private</span> <span style="color:#6ab825;font-weight:bold">volatile</span> <span style="color:#6ab825;font-weight:bold">int</span> value;
+</span></span></code></pre></div><p>具体的原子操作细节，可以参考任意一个原子更新方法，比如下面的 getAndIncrement.</p>
+<p>Unsafe 会利用 value 字段的内存地址偏移，直接完成操作。</p>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">public</span> <span style="color:#6ab825;font-weight:bold">final</span> <span style="color:#6ab825;font-weight:bold">int</span> <span style="color:#447fcf">getAndIncrement</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">return</span> U.<span style="color:#bbb">getAndInt</span>(<span style="color:#6ab825;font-weight:bold">this</span>, VALUE, 1);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>因为 getAndIncrement 需要返回数值，所以需要添加失败重试逻辑。</p>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">public</span> <span style="color:#6ab825;font-weight:bold">final</span> <span style="color:#6ab825;font-weight:bold">int</span> <span style="color:#447fcf">getAndAddInt</span>(Object o, <span style="color:#6ab825;font-weight:bold">long</span> offset, <span style="color:#6ab825;font-weight:bold">int</span> delta) {
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">int</span> v;
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">do</span> {
+</span></span><span style="display:flex;"><span>        v = getIntVolatile(o, offset);
+</span></span><span style="display:flex;"><span>    } <span style="color:#6ab825;font-weight:bold">while</span> (!weakCompareAndSetInt(o, offset, v, v + delta));
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">return</span> v;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>而类似 compareAndSet 这种返回 boolean 类型的函数，因为其返回值表现的就是是否成功，所以不需要重试:</p>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">public</span> <span style="color:#6ab825;font-weight:bold">final</span> <span style="color:#6ab825;font-weight:bold">boolean</span> <span style="color:#447fcf">compareAndSet</span>(<span style="color:#6ab825;font-weight:bold">int</span> expectedValue, <span style="color:#6ab825;font-weight:bold">int</span> newValue);
+</span></span></code></pre></div><p>CAS 是 Java 并发中所谓的 lock-free 机制的基础。</p>
+<h2 id="cas-的底层实现">CAS 的底层实现</h2>
+<p>CAS 的底层实现依赖于 CPU 提供的特定指令，不同的 CPU 体系结构还存在明显区别，比如，x86 CPU 提供 cmpxchg 指令；而在精简指令集的体系架构中，则通常是靠一对指令（如 ”load and reserve“ 和 ”store conditional“）实现的，在大多数 CPU 上 CAS 都是非常轻量级的操作，这也是其优势所在。</p>
+<!-- The author said: 大部分情况下，掌握到这个程度也就够用了，我认为没有必要让每个 Java 工程师都去了解到指令级别，我们进行抽象、分工就是为了让不同层面的开发者在开发中，可以尽量屏蔽不相关的细节。 -->
+<h3 id="cas-的应用">CAS 的应用</h3>
+<p>考虑这样一个场景，在数据库产品中，为保证索引的一致性，一个常见的选择是，保证只有一个线程能够排他性地修改一个索引分区，如何在数据库抽象层面实现呢？</p>
+<p>我们可以考虑为索引分区对象添加一个逻辑上的锁，例如，以当前独占的线程 ID 作为锁的数值，然后通过原子操作设置 lock 数值，来实现加锁和释放锁，伪代码如下：</p>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">public</span> <span style="color:#6ab825;font-weight:bold">class</span> <span style="color:#447fcf;text-decoration:underline">AtomicBTreePartition</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">private</span> <span style="color:#6ab825;font-weight:bold">volatile</span> <span style="color:#6ab825;font-weight:bold">long</span> lock;
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">public</span> <span style="color:#6ab825;font-weight:bold">void</span> <span style="color:#447fcf">acquireLock</span>();
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">public</span> <span style="color:#6ab825;font-weight:bold">void</span> <span style="color:#447fcf">releaseLock</span>();
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>那么在 Java 代码中，我们怎么实现锁操作？Cassandra 之前使用 Unsafe.monitorEnter()/monitorExit()，但 Java 9 移除了这对方法，导致其无法平滑升级 JDK 版本。目前 Java 提供了两种公共 API，可以实现 CAS 操作，比如 <strong>AtomicLongFieldUpdater</strong>, 它是基于反射机制创建，我们需要保证类型和字段名称正确。</p>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">private</span> <span style="color:#6ab825;font-weight:bold">static</span> <span style="color:#6ab825;font-weight:bold">final</span> AtomicLongFieldUpdater&lt;AtomicBTreePartition&gt; UPDATER = AtomicLongFieldUpdater.<span style="color:#bbb">newUpdater</span>(AtomicBTreePartition.<span style="color:#bbb">class</span>, <span style="color:#ed9d13">&#34;lock&#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">private</span> <span style="color:#6ab825;font-weight:bold">void</span> <span style="color:#447fcf">acquireLock</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">long</span> t = Thread.<span style="color:#bbb">currentThread</span>().<span style="color:#bbb">getId</span>();
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">while</span>(!UPDATER.<span style="color:#bbb">compareAndSet</span>(<span style="color:#6ab825;font-weight:bold">this</span>, 0L, t)){
+</span></span><span style="display:flex;"><span>        <span style="color:#999;font-style:italic">// 数据库操作可能比较慢
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>        ...
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p><a href="https://docs.oracle.com/javase/9/docs/api/java/util/concurrent/atomic/package-summary.html">Atomic 包</a>提供了最常用的原子性数据类型，甚至是引用、数组等相关原子类型和更新操作工具，是很多线程安全程序的首选。</p>
+<p>AtomicLongFieldUpdater 创建更加紧凑的计数器实现，以替代 AtomicLong. 优化永远是针对特定需求、特定目的，例如如果是针对一两个对象，那么用 AtomicLong 即可，如果是成千上万甚至更多的对象，就要考虑紧凑性的影响了。而 atomic 包提供的 LongAdder，在高度竞争环境下，可能是比 AtomicLong 更佳的选择，尽管它的本质是空间换时间。</p>
+<p>除了 AtomicLongFieldUpdater，另一个 CAS 实现是 Java 9 以后提供的 Handle API，源自 <a href="https://openjdk.org/jeps/193">JEP 193</a>，提供了各种粒度的原子或有序性的操作。我们将前面的例子修改为：</p>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">private</span> <span style="color:#6ab825;font-weight:bold">static</span> <span style="color:#6ab825;font-weight:bold">final</span> VarHandle HANDLE = MethodHandles.<span style="color:#bbb">lookup</span>().<span style="color:#bbb">findStaticVarHandle</span>(AtomicBTreePartition.<span style="color:#bbb">class</span>, <span style="color:#ed9d13">&#34;lock&#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">private</span> <span style="color:#6ab825;font-weight:bold">void</span> <span style="color:#447fcf">acquireLock</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">long</span> t = Thread.<span style="color:#bbb">currentThread</span>().<span style="color:#bbb">getId</span>();
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">while</span>(!HANDLE.<span style="color:#bbb">compareAndSet</span>(<span style="color:#6ab825;font-weight:bold">this</span>, 0L, t)) {
+</span></span><span style="display:flex;"><span>        <span style="color:#999;font-style:italic">// 数据库操作可能比较慢
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>        ...
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>一般来说，我们进行类型 CAS 操作，推荐使用 Variable Handle API 去实现，其提供了精细粒度的公共底层 API。和内部的 Unsafe API 不同，公共 API 不会发生不可预测的修改，这一点提供了对于未来产品升级和维护的基础保障。以 Cassandra 升级为例，很多额外的工作量，都是源自其使用了 Hack 而非 Solution 的方式解决问题。</p>
+<h3 id="cas-的缺陷">CAS 的缺陷</h3>
+<p>CAS 并非没有副作用，其常用的失败重试机制，隐含一个假设，即竞争情况是短暂的。大多数应用场景中，确实大部分重试只发生一次就获得成功，但总有意外的情况，所以在有需要的时候，还是要考虑限制自旋的次数，避免过度消耗 CPU。</p>
+<p>另一个就是 <a href="https://en.wikipedia.org/wiki/ABA_problem">ABA</a> 问题，只在 lock-free 算法下暴露的问题。我前面说过 CAS 是在更新时比较前值，乳沟只是恰好相同，例如期间发生了 A -&gt; B -&gt; A 的更新，仅仅判断数值时 A，可能导致不合理的修改操作。针对这种情况，Java 提供了 <a href="https://jenkov.com/tutorials/java-util-concurrent/atomicstampedreference.html">AtomicStampedReference</a> 工具类，通过为引用建立版本号（stamp）的方式，来保证 CAS 的正确性。</p>
+<h2 id="aqs">AQS</h2>
+<p>AbstractQueuedSynchronizer（AQS）是 Java 并发包中，实现各种同步结构和部分其他组成单元（如 ThreadPoolExecutor.Worker）的基础。</p>
+<p>Doug Lea 曾经介绍过 AQS 的设计初衷。从原理上，一种同步结构往往是可以利用其他结构实现的，例如使用 Semaphore 实现互斥锁。不过，对某种同步结构的倾向，会导致复杂、晦涩的实现逻辑，所以，他选择将基础的同步相关操作抽象在 AbstractQueuedSynchronizer 中，利用 AQS 为我们构建同步结构提供了范本。</p>
+<p>AQS 内部数据和方法，可以简单拆分为：</p>
+<ul>
+<li>一个 volatile 的整数成员状态，同时提供了 setState 和 getState 方法</li>
+<li>一个先入先出（FIFO）的等待线程队列，以实现多线程间竞争和等待，这是 AQS 机制的核心之一。</li>
+<li>各种基于 CAS 的基础操作方法，以及各种期望具体同步结构去实现的 acquire/release 方法。</li>
+</ul>
+<p>利用 AQS 实现一个同步结构，至少要实现两个基本类型的方法，分别是 acquire 操作，获取资源的独占权；还有就是 release 操作，释放都某个资源的独占。</p>
+<p>以 ReentrantLock 为例，它内部通过扩展 AQS 实现了 Sync 类型，以 AQS 的 state 来反映锁的持有情况。</p>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">private</span> <span style="color:#6ab825;font-weight:bold">final</span> Sync sync;
+</span></span><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">abstract</span> <span style="color:#6ab825;font-weight:bold">static</span> <span style="color:#6ab825;font-weight:bold">class</span> <span style="color:#447fcf;text-decoration:underline">Sync</span> <span style="color:#6ab825;font-weight:bold">extends</span> AbstractQueuedSynchronizer {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>下面是 ReentrantLock 对应的 acquire 和 release 操作：</p>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">public</span> <span style="color:#6ab825;font-weight:bold">void</span> <span style="color:#447fcf">lock</span>() {
+</span></span><span style="display:flex;"><span>    sync.<span style="color:#bbb">acquire</span>(1);
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">public</span> <span style="color:#6ab825;font-weight:bold">void</span> <span style="color:#447fcf">unlock</span>() {
+</span></span><span style="display:flex;"><span>    sync.<span style="color:#bbb">release</span>(1);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>整体分析 acquire 方法，其直接实现是在 AQS 内部，调用了 tryAcquire 和 acquireQueued，这是两个需要搞清楚的基本部分：</p>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">public</span> <span style="color:#6ab825;font-weight:bold">final</span> <span style="color:#6ab825;font-weight:bold">void</span> <span style="color:#447fcf">acquire</span>(<span style="color:#6ab825;font-weight:bold">int</span> arg) {
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">if</span> (!tryAcquire(arg) &amp;&amp; acquireQueued(addWaiter(Node.<span style="color:#bbb">EXCLUSIVE</span>), arg))
+</span></span><span style="display:flex;"><span>    selfInterrupt();
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>在 ReentrantLock 中，tryAcquire 逻辑实现在 NonfairSync 和 FairSync 中，分别提供了进一步的非公平或公平性方法。在 AQS 内部 tryAcquire 仅仅是个未完全实现的方法（直接抛异常），这个是留给 AQS 实现者自定义的操作。</p>
+<p>公平性在 ReentrantLock 构建时指定：</p>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">public</span> <span style="color:#447fcf">ReentrantLock</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#999;font-style:italic">// 默认是非公平锁
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>    sync = <span style="color:#6ab825;font-weight:bold">new</span> NonfairSync();
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">public</span> <span style="color:#447fcf">ReentrantLock</span>(<span style="color:#6ab825;font-weight:bold">boolean</span> fair) {
+</span></span><span style="display:flex;"><span>    sync = fair ? <span style="color:#6ab825;font-weight:bold">new</span> FairSync() : <span style="color:#6ab825;font-weight:bold">new</span> NonfairSync();
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>以非公平版的 tryAcquire 为例，其内部实现了如何配合 state 与 CAS 获取锁，对比公平版的 tryAcquire，非公平版的在锁无人占有时，并不检查是否有其他等待者，这里体现了非公平的语义。</p>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">final</span> <span style="color:#6ab825;font-weight:bold">boolean</span> <span style="color:#447fcf">nonfairTryAcquire</span>(<span style="color:#6ab825;font-weight:bold">int</span> acquires) {
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">final</span> Thread thread = Thread.<span style="color:#bbb">currentThread</span>();
+</span></span><span style="display:flex;"><span>    <span style="color:#999;font-style:italic">// 获取当前 AQS 内部状态量
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>    <span style="color:#6ab825;font-weight:bold">int</span> c = getState();
+</span></span><span style="display:flex;"><span>    <span style="color:#999;font-style:italic">// 0 表示无人占有，则直接用 CAS 修改状态位
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>    <span style="color:#6ab825;font-weight:bold">if</span> (c == 0) {
+</span></span><span style="display:flex;"><span>        <span style="color:#999;font-style:italic">// 不检查排队情况，直接争抢
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>        <span style="color:#6ab825;font-weight:bold">if</span> (compareAndSetState(0, acquires)) {
+</span></span><span style="display:flex;"><span>            <span style="color:#999;font-style:italic">// 设置当前线程独占锁
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>            setExclusiveOwnerThread(current);
+</span></span><span style="display:flex;"><span>            <span style="color:#6ab825;font-weight:bold">return</span> <span style="color:#6ab825;font-weight:bold">true</span>;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#999;font-style:italic">// 即使状态不为 0，也可能当前线程是锁持有者，因为这是再入锁
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>    } <span style="color:#6ab825;font-weight:bold">else</span> <span style="color:#6ab825;font-weight:bold">if</span> (current == getExclusiveOwnerThread()) {
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">int</span> nextc = c + acquires;
+</span></span><span style="display:flex;"><span>        <span style="color:#999;font-style:italic">// overflow
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>        <span style="color:#6ab825;font-weight:bold">if</span> (nextc &lt; 0) {
+</span></span><span style="display:flex;"><span>            <span style="color:#6ab825;font-weight:bold">throw</span> <span style="color:#6ab825;font-weight:bold">new</span> Error(<span style="color:#ed9d13">&#34;Maximum lock count exceeded&#34;</span>);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        setState(nextc);
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">return</span> <span style="color:#6ab825;font-weight:bold">true</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">return</span> <span style="color:#6ab825;font-weight:bold">false</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>我们再来看 acquireQueued，如果前面的 tryAcquire 失败，代表着锁争抢失败，进入排队竞争阶段。这里利用 FIFO 队列，实现线程间对锁的竞争的部分，是 AQS 的核心逻辑。</p>
+<p>当前线程会被包装成一个排他模式的节点（EXCLUSIVE），通过 addWaiter 方法添加到队列中。acquireQueued 的逻辑，简要来说，就是如果当前节点的前面是头节点，则试图获取锁，一切顺利则成为新的头节点；否则，有必要则等待：</p>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#6ab825;font-weight:bold">final</span> <span style="color:#6ab825;font-weight:bold">boolean</span> <span style="color:#447fcf">acquireQueued</span>(<span style="color:#6ab825;font-weight:bold">final</span> Node node, <span style="color:#6ab825;font-weight:bold">int</span> arg) {
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">boolean</span> interrupted = <span style="color:#6ab825;font-weight:bold">false</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#6ab825;font-weight:bold">try</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">for</span> (;;) {
+</span></span><span style="display:flex;"><span>            <span style="color:#999;font-style:italic">// 获取前一个节点
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>            <span style="color:#6ab825;font-weight:bold">final</span> Node p = node.<span style="color:#bbb">predecessor</span>();
+</span></span><span style="display:flex;"><span>            <span style="color:#999;font-style:italic">// 如果前一个节点是头节点，表示当前节点适合去 tryAcquire
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>            <span style="color:#6ab825;font-weight:bold">if</span> (p == head &amp;&amp; tryAcquire(arg)) {
+</span></span><span style="display:flex;"><span>                <span style="color:#999;font-style:italic">// acquire 成功，则设置新的头节点
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>                setHead(node);
+</span></span><span style="display:flex;"><span>                <span style="color:#999;font-style:italic">// 将前面节点对当前节点的引用清空
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>                p.<span style="color:#bbb">next</span> = <span style="color:#6ab825;font-weight:bold">null</span>;
+</span></span><span style="display:flex;"><span>                <span style="color:#6ab825;font-weight:bold">return</span> interrupted;
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>            <span style="color:#999;font-style:italic">// 检查是否失败后需要 park
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>            <span style="color:#6ab825;font-weight:bold">if</span> (shouldParkAfterFailedAcquire(p, node)) {
+</span></span><span style="display:flex;"><span>                interrupted |= parkAndCheckInterrupt();
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    } <span style="color:#6ab825;font-weight:bold">catch</span> (Throwable t) {
+</span></span><span style="display:flex;"><span>        <span style="color:#999;font-style:italic">// 出现异常，取消
+</span></span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"></span>        cancelAcquire(node);
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">if</span> (interrupted) {
+</span></span><span style="display:flex;"><span>            selfInterrupt();
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#6ab825;font-weight:bold">throw</span> t;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>到这里基本展现线程试图获取锁的过程，tryAcquire 是按照特定场景需要开发者去实现的部分，而线程间竞争则是 AQS 通过 Waiter 队列与 acquireQueued 提供的，在 release 方法中，同样会对队列进行对应操作。</p>
+
+</article>
+
+
+      
+        <div class="my-4">
+    
+    <a href="https://zacash.cn/tags/java/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 me-2 hover:text-eureka">#java</a>
+    
+    <a href="https://zacash.cn/tags/cas/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 me-2 hover:text-eureka">#cas</a>
+    
+    <a href="https://zacash.cn/tags/aqs/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 me-2 hover:text-eureka">#aqs</a>
+    
+</div>
+      
+
+      
+
+
+
+      
+
+      
+  <div
+    class="-mx-2 mt-4 flex flex-col border-t px-2 pt-4 md:flex-row md:justify-between"
+  >
+    <div>
+      
+    </div>
+    <div class="mt-4 md:mt-0 md:text-right">
+      
+        <span class="text-primary-text block font-bold">Next</span>
+        <a href="https://zacash.cn/posts/java-blocking-queue/" class="block">Java Blocking Queue</a>
+      
+    </div>
+  </div>
+
+
+      
+
+
+
+    </div>
+    
+
+    
+    
+      <div
+        class="lg:col-start-2 bg-secondary-bg prose col-span-2 rounded p-6 lg:col-span-6"
+      >
+        <h3>See Also</h3>
+        
+          <a href="https://zacash.cn/posts/java-blocking-queue/" class="no-underline">Java Blocking Queue</a>
+          <br />
+        
+          <a href="https://zacash.cn/posts/java-juc/" class="no-underline">Intro to Java Juc</a>
+          <br />
+        
+          <a href="https://zacash.cn/posts/java-file/" class="no-underline">Java File</a>
+          <br />
+        
+          <a href="https://zacash.cn/posts/java-io/" class="no-underline">Java IO</a>
+          <br />
+        
+          <a href="https://zacash.cn/posts/java-basic/" class="no-underline">Java Basic</a>
+          <br />
+        
+      </div>
+    
+  </div>
+
+  
+
+          </div>
+        </div>
+      
+    </main>
+    <footer class="pl-scrollbar">
+      <div class="mx-auto w-full max-w-screen-xl"><div class="text-center p-6 pin-b">
+    <p class="text-sm text-tertiary-text">Copyright Zac &copy; 2022
+ &middot;  Powered by the <a href="https://github.com/wangchucheng/hugo-eureka" class="hover:text-eureka">Eureka</a> theme for <a href="https://gohugo.io" class="hover:text-eureka">Hugo</a></p>
+</div></div>
+    </footer>
+  </body>
+</html>
